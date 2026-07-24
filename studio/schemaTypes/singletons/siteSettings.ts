@@ -21,10 +21,52 @@ export const siteSettings = defineType({
     }),
     defineField({
       name: 'address',
-      title: 'Location line',
+      title: 'Location & hours line',
       type: 'string',
-      description: 'e.g. "Auckland, New Zealand / Mon–Fri, 9am–5pm NZT"',
+      description:
+        'Short line for the contact card, e.g. "Auckland, New Zealand / Mon–Fri, 9am–5pm NZT"',
       validation: (rule) => rule.max(120),
+    }),
+    defineField({
+      name: 'businessAddress',
+      title: 'Business address',
+      type: 'object',
+      description: 'Structured address — shown on the Contact page and used for local SEO',
+      options: {collapsible: true, collapsed: false},
+      fields: [
+        defineField({
+          name: 'streetAddress',
+          title: 'Street address',
+          type: 'string',
+          validation: (rule) => rule.max(120),
+        }),
+        defineField({
+          name: 'suburb',
+          title: 'Suburb',
+          type: 'string',
+          validation: (rule) => rule.max(60),
+        }),
+        defineField({
+          name: 'city',
+          title: 'City',
+          type: 'string',
+          initialValue: 'Auckland',
+          validation: (rule) => rule.max(60),
+        }),
+        defineField({
+          name: 'postcode',
+          title: 'Postcode',
+          type: 'string',
+          validation: (rule) => rule.max(10),
+        }),
+        defineField({
+          name: 'country',
+          title: 'Country',
+          type: 'string',
+          initialValue: 'New Zealand',
+          validation: (rule) => rule.max(60),
+        }),
+      ],
     }),
     defineField({
       name: 'meetingsUrl',

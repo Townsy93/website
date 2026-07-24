@@ -48,7 +48,16 @@ export default async function RootLayout({
       "Auckland-based HubSpot implementation and RevOps agency. HubSpot Gold Partner serving New Zealand and Australia.",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Auckland",
+      ...(settings?.businessAddress?.streetAddress
+        ? { streetAddress: settings.businessAddress.streetAddress }
+        : {}),
+      ...(settings?.businessAddress?.suburb
+        ? { addressRegion: settings.businessAddress.suburb }
+        : {}),
+      addressLocality: settings?.businessAddress?.city ?? "Auckland",
+      ...(settings?.businessAddress?.postcode
+        ? { postalCode: settings.businessAddress.postcode }
+        : {}),
       addressCountry: "NZ",
     },
     areaServed: ["NZ", "AU"],

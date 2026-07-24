@@ -37,10 +37,10 @@ export function Header() {
             <Image
               src="/logo-white.png"
               alt="zippily"
-              width={110}
-              height={28}
+              width={122}
+              height={32}
               priority
-              className="h-7 w-auto"
+              className="h-8 w-auto"
             />
           </Link>
 

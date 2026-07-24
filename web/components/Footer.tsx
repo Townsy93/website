@@ -62,9 +62,9 @@ export function Footer({ settings }: { settings?: FooterSettings }) {
           <Image
             src="/logo-white.png"
             alt="zippily"
-            width={130}
-            height={33}
-            className="h-8 w-auto"
+            width={138}
+            height={36}
+            className="h-9 w-auto"
           />
           <p className="mt-3 max-w-xs text-body text-white/70">
             HubSpot implementation and RevOps for NZ &amp; AU businesses — done

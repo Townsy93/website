@@ -24,6 +24,13 @@ export type SiteSettings = {
   contactEmail: string;
   contactPhone?: string;
   address?: string;
+  businessAddress?: {
+    streetAddress?: string;
+    suburb?: string;
+    city?: string;
+    postcode?: string;
+    country?: string;
+  };
   meetingsUrl: string;
   linkedInUrl?: string;
   instagramUrl?: string;
@@ -948,6 +955,13 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   contactEmail: string;
   contactPhone?: string;
   address?: string;
+  businessAddress?: {
+    streetAddress?: string;
+    suburb?: string;
+    city?: string;
+    postcode?: string;
+    country?: string;
+  };
   meetingsUrl: string;
   linkedInUrl?: string;
   instagramUrl?: string;

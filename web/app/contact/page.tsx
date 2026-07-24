@@ -113,13 +113,31 @@ export default async function ContactPage() {
                   <dd className="mt-1 text-body">{settings.contactPhone}</dd>
                 </div>
               )}
-              {settings?.address && (
+              {(settings?.businessAddress?.streetAddress || settings?.address) && (
                 <div>
                   <dt className="text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
                     Where
                   </dt>
                   <dd className="mt-1 text-body text-white/80">
-                    {settings.address}
+                    {settings?.businessAddress?.streetAddress && (
+                      <span className="block">
+                        {[
+                          settings.businessAddress.streetAddress,
+                          settings.businessAddress.suburb,
+                          [
+                            settings.businessAddress.city,
+                            settings.businessAddress.postcode,
+                          ]
+                            .filter(Boolean)
+                            .join(" "),
+                        ]
+                          .filter(Boolean)
+                          .join(", ")}
+                      </span>
+                    )}
+                    {settings?.address && (
+                      <span className="block">{settings.address}</span>
+                    )}
                   </dd>
                 </div>
               )}
