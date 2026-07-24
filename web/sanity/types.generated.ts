@@ -1187,6 +1187,439 @@ export type LATEST_POSTS_QUERY_RESULT = Array<{
   }> | null;
 }>;
 
+// Source: ../web/sanity/queries.ts
+// Variable: SERVICE_SLUGS_QUERY
+// Query: *[_type == "service" && defined(slug.current)].slug.current
+export type SERVICE_SLUGS_QUERY_RESULT = Array<string>;
+
+// Source: ../web/sanity/queries.ts
+// Variable: SERVICE_QUERY
+// Query: *[_type == "service" && slug.current == $slug][0]{    ...,    caseStudy->{_id, client, slug, headline, resultLine, photo, status},    testimonial->{_id, quote, name, role, company, avatar},    relatedServices[]->{_id, title, slug, icon, shortDescription}  }
+export type SERVICE_QUERY_RESULT = {
+  _id: string;
+  _type: "service";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  category: "build" | "discover" | "scale";
+  icon?: string;
+  shortDescription: string;
+  whoItsFor?: string;
+  hero: Hero;
+  heroMeta?: string;
+  painPoints?: Array<
+    {
+      _key: string;
+    } & IconCard
+  >;
+  painPointsCloser?: string;
+  processSteps?: Array<
+    {
+      _key: string;
+    } & IconCard
+  >;
+  pricing?: Pricing;
+  caseStudy: {
+    _id: string;
+    client: string;
+    slug: Slug;
+    headline: string;
+    resultLine: string | null;
+    photo: ImageWithAlt | null;
+    status: "comingSoon" | "live";
+  } | null;
+  proofStat?: Stat;
+  testimonial: {
+    _id: string;
+    quote: string;
+    name: string;
+    role: string | null;
+    company: string;
+    avatar: ImageWithAlt | null;
+  } | null;
+  relatedServices: Array<{
+    _id: string;
+    title: string;
+    slug: Slug;
+    icon: string | null;
+    shortDescription: string;
+  }> | null;
+  faqs?: Array<
+    {
+      _key: string;
+    } & FaqItem
+  >;
+  ctaBanner?: CtaBanner;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: SOLUTIONS_PAGE_QUERY
+// Query: *[_type == "solutionsPage"][0]{    ...,    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, service->{title}}  }
+export type SOLUTIONS_PAGE_QUERY_RESULT = {
+  _id: string;
+  _type: "solutionsPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hero: Hero;
+  carouselHeading?: string;
+  carouselIntro?: string;
+  optimiseHeading?: string;
+  optimiseIntro?: string;
+  optimiseCards?: Array<
+    {
+      _key: string;
+    } & IconCard
+  >;
+  relatedCaseStudy: {
+    _id: string;
+    client: string;
+    slug: Slug;
+    headline: string;
+    resultLine: string | null;
+    photo: ImageWithAlt | null;
+    status: "comingSoon" | "live";
+    service: {
+      title: string;
+    };
+  } | null;
+  ctaBanner?: CtaBanner;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: HUB_OFFERINGS_QUERY
+// Query: *[_type == "hubOffering"] | order(order asc){    _id, name, eyebrow, description, icon, isFeatured,    linkedService->{title, slug}  }
+export type HUB_OFFERINGS_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  eyebrow: string;
+  description: string;
+  icon: string | null;
+  isFeatured: boolean | null;
+  linkedService: {
+    title: string;
+    slug: Slug;
+  };
+}>;
+
+// Source: ../web/sanity/queries.ts
+// Variable: INDUSTRIES_HUB_QUERY
+// Query: *[_type == "industriesHubPage"][0]{    ...,    industries[]->{_id, title, slug, icon, shortDescription, pageBuilt},    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, industry->{title}}  }
+export type INDUSTRIES_HUB_QUERY_RESULT = {
+  _id: string;
+  _type: "industriesHubPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hero: Hero;
+  gridHeading?: string;
+  gridIntro?: string;
+  industries: Array<{
+    _id: string;
+    title: string;
+    slug: Slug;
+    icon: string | null;
+    shortDescription: string;
+    pageBuilt: boolean | null;
+  }> | null;
+  whyHeading?: string;
+  whyItems?: Array<
+    {
+      _key: string;
+    } & IconCard
+  >;
+  caseStudies: Array<{
+    _id: string;
+    client: string;
+    slug: Slug;
+    headline: string;
+    resultLine: string | null;
+    photo: ImageWithAlt | null;
+    status: "comingSoon" | "live";
+    industry: {
+      title: string;
+    } | null;
+  }> | null;
+  trustLogos?: Array<
+    {
+      _key: string;
+    } & ImageWithAlt
+  >;
+  ctaBanner?: CtaBanner;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: INDUSTRY_SLUGS_QUERY
+// Query: *[_type == "industry" && defined(slug.current)].slug.current
+export type INDUSTRY_SLUGS_QUERY_RESULT = Array<string>;
+
+// Source: ../web/sanity/queries.ts
+// Variable: INDUSTRY_QUERY
+// Query: *[_type == "industry" && slug.current == $slug][0]{    ...,    caseStudy->{_id, client, slug, headline, resultLine, photo, status},    testimonial->{_id, quote, name, role, company, avatar}  }
+export type INDUSTRY_QUERY_RESULT = {
+  _id: string;
+  _type: "industry";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  icon?: string;
+  shortDescription: string;
+  pageBuilt?: boolean;
+  hero?: Hero;
+  painPoints?: Array<
+    {
+      _key: string;
+    } & IconCard
+  >;
+  howWeFixHeading?: string;
+  howWeFixBody?: BlockContent;
+  checklist?: Array<string>;
+  caseStudy: {
+    _id: string;
+    client: string;
+    slug: Slug;
+    headline: string;
+    resultLine: string | null;
+    photo: ImageWithAlt | null;
+    status: "comingSoon" | "live";
+  } | null;
+  proofStat?: Stat;
+  testimonial: {
+    _id: string;
+    quote: string;
+    name: string;
+    role: string | null;
+    company: string;
+    avatar: ImageWithAlt | null;
+  } | null;
+  faqs?: Array<
+    {
+      _key: string;
+    } & FaqItem
+  >;
+  ctaBanner?: CtaBanner;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: OUR_WORK_QUERY
+// Query: *[_type == "ourWorkPage"][0]{    ...,    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}},    videoTestimonials[]->{_id, quote, name, company, videoUrl, videoStill},    googleReviews[]->{_id, quote, name, company}  }
+export type OUR_WORK_QUERY_RESULT = {
+  _id: string;
+  _type: "ourWorkPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hero: Hero;
+  stats?: Array<
+    {
+      _key: string;
+    } & Stat
+  >;
+  caseStudies: Array<{
+    _id: string;
+    client: string;
+    slug: Slug;
+    headline: string;
+    resultLine: string | null;
+    photo: ImageWithAlt | null;
+    status: "comingSoon" | "live";
+    service: {
+      title: string;
+    };
+  }> | null;
+  videoTestimonials: Array<{
+    _id: string;
+    quote: string;
+    name: string;
+    company: string;
+    videoUrl: string | null;
+    videoStill: ImageWithAlt | null;
+  }> | null;
+  googleReviews: Array<{
+    _id: string;
+    quote: string;
+    name: string;
+    company: string;
+  }> | null;
+  googleReviewsUrl?: string;
+  ctaBanner?: CtaBanner;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: CASE_STUDY_SLUGS_QUERY
+// Query: *[_type == "caseStudy" && defined(slug.current)].slug.current
+export type CASE_STUDY_SLUGS_QUERY_RESULT = Array<string>;
+
+// Source: ../web/sanity/queries.ts
+// Variable: CASE_STUDY_QUERY
+// Query: *[_type == "caseStudy" && slug.current == $slug][0]{    ...,    service->{title, slug},    industry->{title, slug},    testimonial->{_id, quote, name, role, company, avatar}  }
+export type CASE_STUDY_QUERY_RESULT = {
+  _id: string;
+  _type: "caseStudy";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  client: string;
+  slug: Slug;
+  status: "comingSoon" | "live";
+  service: {
+    title: string;
+    slug: Slug;
+  };
+  industry: {
+    title: string;
+    slug: Slug;
+  } | null;
+  headline: string;
+  resultLine?: string;
+  stats?: Array<
+    {
+      _key: string;
+    } & Stat
+  >;
+  photo?: ImageWithAlt;
+  videoUrl?: string;
+  testimonial: {
+    _id: string;
+    quote: string;
+    name: string;
+    role: string | null;
+    company: string;
+    avatar: ImageWithAlt | null;
+  } | null;
+  body?: BlockContent;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: INSIGHT_HUB_QUERY
+// Query: *[_type == "insightHubPage"][0]{    ...,    featuredPost->{      _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,      hubs[]->{name}, author->{name, photo}    }  }
+export type INSIGHT_HUB_QUERY_RESULT = {
+  _id: string;
+  _type: "insightHubPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hero: Hero;
+  featuredPost: {
+    _id: string;
+    title: string;
+    slug: Slug;
+    topic:
+      | "ai-developments"
+      | "best-practices"
+      | "feature-spotlights"
+      | "news-and-events"
+      | "our-approach";
+    excerpt: string;
+    coverImage: ImageWithAlt;
+    publishedAt: string;
+    readTime: number;
+    hubs: Array<{
+      name: string;
+    }> | null;
+    author: {
+      name: string;
+      photo: ImageWithAlt | null;
+    };
+  } | null;
+  resourcesHeading?: string;
+  resources?: Array<{
+    title: string;
+    link?: Link;
+    _type: "resourceCard";
+    _key: string;
+  }>;
+  newsletterHeading?: string;
+  newsletterText?: string;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: ALL_POSTS_QUERY
+// Query: *[_type == "blogPost"] | order(publishedAt desc){    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,    hubs[]->{name}  }
+export type ALL_POSTS_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  slug: Slug;
+  topic:
+    | "ai-developments"
+    | "best-practices"
+    | "feature-spotlights"
+    | "news-and-events"
+    | "our-approach";
+  excerpt: string;
+  coverImage: ImageWithAlt;
+  publishedAt: string;
+  readTime: number;
+  hubs: Array<{
+    name: string;
+  }> | null;
+}>;
+
+// Source: ../web/sanity/queries.ts
+// Variable: POST_SLUGS_QUERY
+// Query: *[_type == "blogPost" && defined(slug.current)].slug.current
+export type POST_SLUGS_QUERY_RESULT = Array<string>;
+
+// Source: ../web/sanity/queries.ts
+// Variable: POST_QUERY
+// Query: *[_type == "blogPost" && slug.current == $slug][0]{    ...,    hubs[]->{name},    author->{name, role, photo},    "related": *[_type == "blogPost" && slug.current != $slug] | order(publishedAt desc)[0...3]{      _id, title, slug, topic, coverImage, publishedAt, readTime    }  }
+export type POST_QUERY_RESULT = {
+  _id: string;
+  _type: "blogPost";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  topic:
+    | "ai-developments"
+    | "best-practices"
+    | "feature-spotlights"
+    | "news-and-events"
+    | "our-approach";
+  hubs: Array<{
+    name: string;
+  }> | null;
+  author: {
+    name: string;
+    role: string;
+    photo: ImageWithAlt | null;
+  };
+  publishedAt: string;
+  readTime: number;
+  excerpt: string;
+  coverImage: ImageWithAlt;
+  dek?: string;
+  shortVersion?: Array<string>;
+  body: BlockContent;
+  seo?: Seo;
+  related: Array<{
+    _id: string;
+    title: string;
+    slug: Slug;
+    topic:
+      | "ai-developments"
+      | "best-practices"
+      | "feature-spotlights"
+      | "news-and-events"
+      | "our-approach";
+    coverImage: ImageWithAlt;
+    publishedAt: string;
+    readTime: number;
+  }>;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -1197,5 +1630,19 @@ declare module "@sanity/client" {
     '*[_type == "aboutPage"][0]{\n    ...,\n    team[]->{_id, name, role, photo, bio, outsideWork, skills, favouriteHubSpotFeature, whyTheyLoveHubSpot, linkedIn},\n    testimonials[]->{_id, quote, name, role, company, avatar}\n  }': ABOUT_PAGE_QUERY_RESULT;
     '*[_type == "contactPage"][0]': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "blogPost"] | order(publishedAt desc)[0...3]{\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': LATEST_POSTS_QUERY_RESULT;
+    '*[_type == "service" && defined(slug.current)].slug.current': SERVICE_SLUGS_QUERY_RESULT;
+    '*[_type == "service" && slug.current == $slug][0]{\n    ...,\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar},\n    relatedServices[]->{_id, title, slug, icon, shortDescription}\n  }': SERVICE_QUERY_RESULT;
+    '*[_type == "solutionsPage"][0]{\n    ...,\n    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, service->{title}}\n  }': SOLUTIONS_PAGE_QUERY_RESULT;
+    '*[_type == "hubOffering"] | order(order asc){\n    _id, name, eyebrow, description, icon, isFeatured,\n    linkedService->{title, slug}\n  }': HUB_OFFERINGS_QUERY_RESULT;
+    '*[_type == "industriesHubPage"][0]{\n    ...,\n    industries[]->{_id, title, slug, icon, shortDescription, pageBuilt},\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, industry->{title}}\n  }': INDUSTRIES_HUB_QUERY_RESULT;
+    '*[_type == "industry" && defined(slug.current)].slug.current': INDUSTRY_SLUGS_QUERY_RESULT;
+    '*[_type == "industry" && slug.current == $slug][0]{\n    ...,\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': INDUSTRY_QUERY_RESULT;
+    '*[_type == "ourWorkPage"][0]{\n    ...,\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}},\n    videoTestimonials[]->{_id, quote, name, company, videoUrl, videoStill},\n    googleReviews[]->{_id, quote, name, company}\n  }': OUR_WORK_QUERY_RESULT;
+    '*[_type == "caseStudy" && defined(slug.current)].slug.current': CASE_STUDY_SLUGS_QUERY_RESULT;
+    '*[_type == "caseStudy" && slug.current == $slug][0]{\n    ...,\n    service->{title, slug},\n    industry->{title, slug},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': CASE_STUDY_QUERY_RESULT;
+    '*[_type == "insightHubPage"][0]{\n    ...,\n    featuredPost->{\n      _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n      hubs[]->{name}, author->{name, photo}\n    }\n  }': INSIGHT_HUB_QUERY_RESULT;
+    '*[_type == "blogPost"] | order(publishedAt desc){\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': ALL_POSTS_QUERY_RESULT;
+    '*[_type == "blogPost" && defined(slug.current)].slug.current': POST_SLUGS_QUERY_RESULT;
+    '*[_type == "blogPost" && slug.current == $slug][0]{\n    ...,\n    hubs[]->{name},\n    author->{name, role, photo},\n    "related": *[_type == "blogPost" && slug.current != $slug] | order(publishedAt desc)[0...3]{\n      _id, title, slug, topic, coverImage, publishedAt, readTime\n    }\n  }': POST_QUERY_RESULT;
   }
 }

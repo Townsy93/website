@@ -43,3 +43,104 @@ export const LATEST_POSTS_QUERY = defineQuery(
     hubs[]->{name}
   }`,
 );
+
+export const SERVICE_SLUGS_QUERY = defineQuery(
+  `*[_type == "service" && defined(slug.current)].slug.current`,
+);
+
+export const SERVICE_QUERY = defineQuery(
+  `*[_type == "service" && slug.current == $slug][0]{
+    ...,
+    caseStudy->{_id, client, slug, headline, resultLine, photo, status},
+    testimonial->{_id, quote, name, role, company, avatar},
+    relatedServices[]->{_id, title, slug, icon, shortDescription}
+  }`,
+);
+
+export const SOLUTIONS_PAGE_QUERY = defineQuery(
+  `*[_type == "solutionsPage"][0]{
+    ...,
+    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, service->{title}}
+  }`,
+);
+
+export const HUB_OFFERINGS_QUERY = defineQuery(
+  `*[_type == "hubOffering"] | order(order asc){
+    _id, name, eyebrow, description, icon, isFeatured,
+    linkedService->{title, slug}
+  }`,
+);
+
+export const INDUSTRIES_HUB_QUERY = defineQuery(
+  `*[_type == "industriesHubPage"][0]{
+    ...,
+    industries[]->{_id, title, slug, icon, shortDescription, pageBuilt},
+    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, industry->{title}}
+  }`,
+);
+
+export const INDUSTRY_SLUGS_QUERY = defineQuery(
+  `*[_type == "industry" && defined(slug.current)].slug.current`,
+);
+
+export const INDUSTRY_QUERY = defineQuery(
+  `*[_type == "industry" && slug.current == $slug][0]{
+    ...,
+    caseStudy->{_id, client, slug, headline, resultLine, photo, status},
+    testimonial->{_id, quote, name, role, company, avatar}
+  }`,
+);
+
+export const OUR_WORK_QUERY = defineQuery(
+  `*[_type == "ourWorkPage"][0]{
+    ...,
+    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}},
+    videoTestimonials[]->{_id, quote, name, company, videoUrl, videoStill},
+    googleReviews[]->{_id, quote, name, company}
+  }`,
+);
+
+export const CASE_STUDY_SLUGS_QUERY = defineQuery(
+  `*[_type == "caseStudy" && defined(slug.current)].slug.current`,
+);
+
+export const CASE_STUDY_QUERY = defineQuery(
+  `*[_type == "caseStudy" && slug.current == $slug][0]{
+    ...,
+    service->{title, slug},
+    industry->{title, slug},
+    testimonial->{_id, quote, name, role, company, avatar}
+  }`,
+);
+
+export const INSIGHT_HUB_QUERY = defineQuery(
+  `*[_type == "insightHubPage"][0]{
+    ...,
+    featuredPost->{
+      _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,
+      hubs[]->{name}, author->{name, photo}
+    }
+  }`,
+);
+
+export const ALL_POSTS_QUERY = defineQuery(
+  `*[_type == "blogPost"] | order(publishedAt desc){
+    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,
+    hubs[]->{name}
+  }`,
+);
+
+export const POST_SLUGS_QUERY = defineQuery(
+  `*[_type == "blogPost" && defined(slug.current)].slug.current`,
+);
+
+export const POST_QUERY = defineQuery(
+  `*[_type == "blogPost" && slug.current == $slug][0]{
+    ...,
+    hubs[]->{name},
+    author->{name, role, photo},
+    "related": *[_type == "blogPost" && slug.current != $slug] | order(publishedAt desc)[0...3]{
+      _id, title, slug, topic, coverImage, publishedAt, readTime
+    }
+  }`,
+);
