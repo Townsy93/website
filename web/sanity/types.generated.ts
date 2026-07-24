@@ -1596,6 +1596,70 @@ export type ALL_POSTS_QUERY_RESULT = Array<{
 export type POST_SLUGS_QUERY_RESULT = Array<string>;
 
 // Source: ../web/sanity/queries.ts
+// Variable: LEGAL_PAGE_QUERY
+// Query: *[_type == "legalPage" && slug.current == $slug][0]
+export type LEGAL_PAGE_QUERY_RESULT = {
+  _id: string;
+  _type: "legalPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  body: BlockContent;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: PARTNER_INTEGRATION_QUERY
+// Query: *[_type == "partnerIntegration" && slug.current == $slug][0]{    ...,    caseStudy->{_id, client, slug, headline, resultLine, photo, status},    testimonial->{_id, quote, name, role, company, avatar}  }
+export type PARTNER_INTEGRATION_QUERY_RESULT = {
+  _id: string;
+  _type: "partnerIntegration";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  hero: Hero;
+  whatItDoes?: BlockContent;
+  whatWeSetUp?: Array<
+    {
+      _key: string;
+    } & IconCard
+  >;
+  caseStudy: {
+    _id: string;
+    client: string;
+    slug: Slug;
+    headline: string;
+    resultLine: string | null;
+    photo: ImageWithAlt | null;
+    status: "comingSoon" | "live";
+  } | null;
+  testimonial: {
+    _id: string;
+    quote: string;
+    name: string;
+    role: string | null;
+    company: string;
+    avatar: ImageWithAlt | null;
+  } | null;
+  faqs?: Array<
+    {
+      _key: string;
+    } & FaqItem
+  >;
+  ctaBanner?: CtaBanner;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: PARTNER_INTEGRATION_SLUGS_QUERY
+// Query: *[_type == "partnerIntegration" && defined(slug.current)].slug.current
+export type PARTNER_INTEGRATION_SLUGS_QUERY_RESULT = Array<string>;
+
+// Source: ../web/sanity/queries.ts
 // Variable: POST_QUERY
 // Query: *[_type == "blogPost" && slug.current == $slug][0]{    ...,    hubs[]->{name},    author->{name, role, photo},    "related": *[_type == "blogPost" && slug.current != $slug] | order(publishedAt desc)[0...3]{      _id, title, slug, topic, coverImage, publishedAt, readTime    }  }
 export type POST_QUERY_RESULT = {
@@ -1668,6 +1732,9 @@ declare module "@sanity/client" {
     '*[_type == "insightHubPage"][0]{\n    ...,\n    featuredPost->{\n      _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n      hubs[]->{name}, author->{name, photo}\n    }\n  }': INSIGHT_HUB_QUERY_RESULT;
     '*[_type == "blogPost"] | order(publishedAt desc){\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': ALL_POSTS_QUERY_RESULT;
     '*[_type == "blogPost" && defined(slug.current)].slug.current': POST_SLUGS_QUERY_RESULT;
+    '*[_type == "legalPage" && slug.current == $slug][0]': LEGAL_PAGE_QUERY_RESULT;
+    '*[_type == "partnerIntegration" && slug.current == $slug][0]{\n    ...,\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': PARTNER_INTEGRATION_QUERY_RESULT;
+    '*[_type == "partnerIntegration" && defined(slug.current)].slug.current': PARTNER_INTEGRATION_SLUGS_QUERY_RESULT;
     '*[_type == "blogPost" && slug.current == $slug][0]{\n    ...,\n    hubs[]->{name},\n    author->{name, role, photo},\n    "related": *[_type == "blogPost" && slug.current != $slug] | order(publishedAt desc)[0...3]{\n      _id, title, slug, topic, coverImage, publishedAt, readTime\n    }\n  }': POST_QUERY_RESULT;
   }
 }

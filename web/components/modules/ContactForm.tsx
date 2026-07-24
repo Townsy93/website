@@ -1,9 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import {
+  HUBSPOT_FORMS,
+  isHubSpotConfigured,
+  submitHubSpotForm,
+} from "@/lib/hubspot";
 
-// F1 — contact form. Submission wiring to HubSpot Forms lands with the
-// integrations pass; until then the success state is client-side only.
+// F1 — contact form, submitting to the HubSpot contact form via the
+// Forms API (keeps our styling; same contact record + workflows).
 export function ContactForm({
   heading,
   options,
@@ -16,6 +21,8 @@ export function ContactForm({
   successText?: string | null;
 }) {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (submitted) {
     return (
@@ -47,9 +54,37 @@ export function ContactForm({
   return (
     <form
       className="flex flex-col gap-5"
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         event.preventDefault();
-        setSubmitted(true);
+        setError(null);
+        const formGuid = HUBSPOT_FORMS.contact;
+        if (!isHubSpotConfigured(formGuid)) {
+          setSubmitted(true);
+          return;
+        }
+        const data = new FormData(event.currentTarget);
+        const value = (name: string) => String(data.get(name) ?? "");
+        setSending(true);
+        const result = await submitHubSpotForm(formGuid, {
+          firstname: value("firstName"),
+          lastname: value("lastName"),
+          email: value("email"),
+          company: value("company"),
+          phone: value("phone"),
+          how_can_we_help_: value("topic"),
+          message: [
+            value("topic") ? `How can we help: ${value("topic")}` : "",
+            value("message"),
+          ]
+            .filter(Boolean)
+            .join("\n\n"),
+        });
+        setSending(false);
+        if (result.ok) {
+          setSubmitted(true);
+        } else {
+          setError(result.message ?? "Something went wrong — please try again.");
+        }
       }}
     >
       {heading && <h2 className="text-h3">{heading}</h2>}
@@ -124,10 +159,16 @@ export function ContactForm({
       </label>
       <button
         type="submit"
-        className="self-start rounded-full bg-deep-blue px-7 py-3 text-body font-semibold text-white transition hover:bg-deep-blue/90 max-sm:w-full"
+        disabled={sending}
+        className="self-start rounded-full bg-deep-blue px-7 py-3 text-body font-semibold text-white transition hover:bg-deep-blue/90 disabled:opacity-60 max-sm:w-full"
       >
-        Let&apos;s chat →
+        {sending ? "Sending…" : "Let's chat →"}
       </button>
+      {error && (
+        <p role="alert" className="text-body font-semibold text-deep-blue">
+          {error}
+        </p>
+      )}
     </form>
   );
 }

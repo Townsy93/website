@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import { NewsletterForm } from "@/components/modules/NewsletterForm";
 
 const SERVICES_LINKS = [
   { label: "CRM implementation", href: "/services/crm-implementation" },
@@ -57,7 +59,13 @@ export function Footer({ settings }: { settings?: FooterSettings }) {
     <footer className="bg-deep-blue text-white">
       <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
         <div>
-          <p className="text-h3 lowercase">zippily</p>
+          <Image
+            src="/logo-white.png"
+            alt="zippily"
+            width={130}
+            height={33}
+            className="h-8 w-auto"
+          />
           <p className="mt-3 max-w-xs text-body text-white/70">
             HubSpot implementation and RevOps for NZ &amp; AU businesses — done
             zippily.
@@ -65,23 +73,9 @@ export function Footer({ settings }: { settings?: FooterSettings }) {
           <p className="mt-8 text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
             {settings?.newsletterHeading ?? "One useful HubSpot tip a month"}
           </p>
-          <form className="mt-3 flex gap-2">
-            <label htmlFor="newsletter-email" className="sr-only">
-              Email address
-            </label>
-            <input
-              id="newsletter-email"
-              type="email"
-              placeholder="you@company.co.nz"
-              className="w-full min-w-0 rounded-full bg-white px-4 py-2.5 text-body text-deep-blue placeholder:text-deep-blue/50"
-            />
-            <button
-              type="button"
-              className="shrink-0 rounded-full bg-deep-orange px-5 py-2.5 text-body font-semibold text-deep-blue transition hover:bg-orange-hover"
-            >
-              Sign up
-            </button>
-          </form>
+          <div className="mt-3">
+            <NewsletterForm compact />
+          </div>
           <p className="mt-2 text-caption text-white/50">No spam, ever.</p>
         </div>
 

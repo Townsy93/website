@@ -134,6 +134,22 @@ export const POST_SLUGS_QUERY = defineQuery(
   `*[_type == "blogPost" && defined(slug.current)].slug.current`,
 );
 
+export const LEGAL_PAGE_QUERY = defineQuery(
+  `*[_type == "legalPage" && slug.current == $slug][0]`,
+);
+
+export const PARTNER_INTEGRATION_QUERY = defineQuery(
+  `*[_type == "partnerIntegration" && slug.current == $slug][0]{
+    ...,
+    caseStudy->{_id, client, slug, headline, resultLine, photo, status},
+    testimonial->{_id, quote, name, role, company, avatar}
+  }`,
+);
+
+export const PARTNER_INTEGRATION_SLUGS_QUERY = defineQuery(
+  `*[_type == "partnerIntegration" && defined(slug.current)].slug.current`,
+);
+
 export const POST_QUERY = defineQuery(
   `*[_type == "blogPost" && slug.current == $slug][0]{
     ...,

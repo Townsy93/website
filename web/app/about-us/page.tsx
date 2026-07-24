@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PortableText } from "next-sanity";
 import { client } from "@/sanity/client";
 import { ABOUT_PAGE_QUERY } from "@/sanity/queries";
@@ -302,9 +303,13 @@ export default async function AboutPage() {
       <section className="bg-off-white-tan">
         <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
           <div className="flex flex-col items-center gap-6 rounded-2xl bg-white p-8 text-center shadow-sm sm:flex-row sm:text-left">
-            <span className="flex h-18 w-18 shrink-0 items-center justify-center rounded-2xl bg-deep-blue">
-              <Icon name="sparkle" className="h-8 w-8 text-sky-blue" />
-            </span>
+            <Image
+              src="/hubspot-gold-badge.png"
+              alt="HubSpot Gold Solutions Partner badge"
+              width={96}
+              height={96}
+              className="h-24 w-auto shrink-0"
+            />
             <div>
               <h2 className="text-h3">HubSpot Gold Partner</h2>
               <p className="mt-2 text-body text-deep-blue-80">

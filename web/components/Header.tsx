@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -32,12 +33,15 @@ export function Header() {
     <header className="sticky top-3 z-50 px-3">
       <div className="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-deep-blue/95 shadow-lg backdrop-blur-md">
         <div className="flex h-14 items-center justify-between gap-4 pl-6 pr-3">
-          <Link
-            href="/"
-            className="text-h4 font-semibold lowercase text-white"
-            onClick={() => setMobileOpen(false)}
-          >
-            zippily
+          <Link href="/" onClick={() => setMobileOpen(false)}>
+            <Image
+              src="/logo-white.png"
+              alt="zippily"
+              width={110}
+              height={28}
+              priority
+              className="h-7 w-auto"
+            />
           </Link>
 
           {/* Desktop nav */}
