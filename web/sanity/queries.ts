@@ -134,6 +134,41 @@ export const POST_SLUGS_QUERY = defineQuery(
   `*[_type == "blogPost" && defined(slug.current)].slug.current`,
 );
 
+// Shared projection for anything rendering an event card.
+const EVENT_CARD_FIELDS = `
+  _id, title, slug, categories, startDateTime, endDateTime, venueType,
+  shortLocation, shortDescription, cardImage, capacity, spotsRemaining
+`;
+
+export const EVENTS_PAGE_QUERY = defineQuery(
+  `{
+    "page": *[_type == "eventsPage"][0],
+    "upcoming": *[_type == "event" && startDateTime >= now()] | order(startDateTime asc){
+      ${EVENT_CARD_FIELDS}
+    },
+    "past": *[_type == "event" && startDateTime < now()] | order(startDateTime desc)[0...5]{
+      ${EVENT_CARD_FIELDS},
+      recap->{title, slug}
+    }
+  }`,
+);
+
+export const EVENT_SLUGS_QUERY = defineQuery(
+  `*[_type == "event" && defined(slug.current)].slug.current`,
+);
+
+export const EVENT_QUERY = defineQuery(
+  `{
+    "event": *[_type == "event" && slug.current == $slug][0]{
+      ...,
+      host->{name, role, photo, linkedIn},
+      recap->{title, slug}
+    },
+    "others": *[_type == "event" && slug.current != $slug && startDateTime >= now()]
+      | order(startDateTime asc)[0...2]{ ${EVENT_CARD_FIELDS} }
+  }`,
+);
+
 export const RESOURCES_QUERY = defineQuery(
   `*[_type == "resource"] | order(order asc){
     _id, title, slug, summaryBullets, updatedAt, readTimeMinutes,

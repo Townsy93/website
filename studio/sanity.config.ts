@@ -5,11 +5,12 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 import {structure, singletonTypes} from './structure'
 
-// The site the Presentation tool previews. Local dev preview by default;
-// set SANITY_STUDIO_PREVIEW_ORIGIN to the deployed site URL and redeploy
-// the studio once the domain is live.
+// The site the Presentation tool previews. Defaults to the deployed site;
+// set SANITY_STUDIO_PREVIEW_ORIGIN (e.g. http://localhost:8787) before
+// `sanity dev` to preview a local build, and update this default when the
+// real domain goes live.
 const previewOrigin =
-  process.env.SANITY_STUDIO_PREVIEW_ORIGIN ?? 'http://localhost:8787'
+  process.env.SANITY_STUDIO_PREVIEW_ORIGIN ?? 'https://website.sean-fe5.workers.dev'
 
 export default defineConfig({
   name: 'default',

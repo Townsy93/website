@@ -24,6 +24,8 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
   { source: "/case-studies/:slug", destination: "/our-work/:slug" },
   { source: "/blog", destination: "/insights" },
   { source: "/blog/:slug", destination: "/insights/:slug" },
+  // Events live at /events but sit under About us in the nav.
+  { source: "/about-us/events", destination: "/events" },
 ];
 
 const nextConfig: NextConfig = {

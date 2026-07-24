@@ -14,7 +14,7 @@ const NAV_ITEMS = [
     children: [
       { label: "About Us", href: "/about-us" },
       { label: "Careers", href: "/about-us/careers" },
-      { label: "Events", href: "/about-us/events" },
+      { label: "Events", href: "/events" },
     ],
   },
   { label: "Industries", href: "/industries" },

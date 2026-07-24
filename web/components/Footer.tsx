@@ -12,6 +12,7 @@ const SERVICES_LINKS = [
 
 const COMPANY_LINKS = [
   { label: "About us", href: "/about-us" },
+  { label: "Events", href: "/events" },
   { label: "Our work", href: "/our-work" },
   { label: "Industries", href: "/industries" },
   { label: "Careers", href: "/about-us/careers" },

@@ -24,6 +24,8 @@ export const blockContent = defineType({
         decorators: [
           {title: 'Bold', value: 'strong'},
           {title: 'Italic', value: 'em'},
+          // Hand-drawn marker underline (never a highlight-fill block).
+          {title: 'Marker', value: 'marker'},
         ],
         annotations: [
           defineArrayMember({

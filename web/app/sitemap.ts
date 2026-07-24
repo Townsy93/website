@@ -8,7 +8,8 @@ const SITEMAP_QUERY = defineQuery(
     "services": *[_type == "service" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
     "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },
     "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },
-    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt }
+    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
+    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt }
   }`,
 );
 
@@ -24,6 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/our-work", priority: 0.8 },
     { path: "/insights", priority: 0.7 },
     { path: "/resources", priority: 0.7 },
+    { path: "/events", priority: 0.7 },
     { path: "/contact", priority: 0.9 },
   ].map(({ path, priority }) => ({
     url: `${SITE_URL}${path}`,
@@ -51,5 +53,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...entries("/industries", data.industries, 0.6),
     ...entries("/our-work", data.caseStudies, 0.6),
     ...entries("/insights", data.posts, 0.5),
+    ...entries("/events", data.events, 0.6),
   ];
 }

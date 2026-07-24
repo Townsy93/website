@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { Archivo } from "next/font/google";
+import { VisualEditing } from "next-sanity/visual-editing";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -36,7 +38,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = await sanityFetch(SITE_SETTINGS_QUERY);
+  const [settings, { isEnabled: isDraftMode }] = await Promise.all([
+    sanityFetch(SITE_SETTINGS_QUERY),
+    draftMode(),
+  ]);
 
   const organizationJsonLd = {
     "@context": "https://schema.org",
@@ -76,6 +81,9 @@ export default async function RootLayout({
         <Header />
         <main className="-mt-17 flex-1">{children}</main>
         <Footer settings={settings} />
+        {/* Bridge the Studio's Presentation tool talks to. Only mounted in
+            draft mode, so published pages ship no extra JS. */}
+        {isDraftMode && <VisualEditing />}
       </body>
     </html>
   );

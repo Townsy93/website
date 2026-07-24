@@ -1,5 +1,6 @@
 import { PortableText, type PortableTextComponents } from "next-sanity";
 import { SanityImage } from "@/components/ui/SanityImage";
+import { Marker } from "@/components/ui/Marker";
 
 // Editorial rendering for blockContent (module M31): prose, H2/H3,
 // pull quotes with Sky Blue left border, figures with captions.
@@ -25,6 +26,12 @@ const components: PortableTextComponents = {
     ),
   },
   marks: {
+    // Hand-drawn marker underline, applied by editors as an inline style.
+    marker: ({ children }) => (
+      <Marker style="underline" color="sky-blue">
+        <span className="font-semibold text-deep-blue">{children}</span>
+      </Marker>
+    ),
     link: ({ children, value }) => (
       <a
         href={value?.href}

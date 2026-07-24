@@ -68,8 +68,11 @@ export type EventsPage = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  hero?: Hero;
-  intro?: BlockContent;
+  hero: Hero;
+  pastHeading?: string;
+  pastIntro?: string;
+  emptyHeading?: string;
+  emptyText?: string;
   ctaBanner?: CtaBanner;
   seo?: Seo;
 };
@@ -80,6 +83,30 @@ export type CtaBanner = {
   text?: string;
   button: Link;
   showMeetingsEmbed?: boolean;
+};
+
+export type Hero = {
+  _type: "hero";
+  eyebrow?: string;
+  heading: string;
+  emphasisPhrase?: string;
+  markerStyle?: "circle" | "underline" | "none";
+  subheading?: string;
+  image?: ImageWithAlt;
+  primaryCta?: Link;
+  secondaryCta?: Link;
+};
+
+export type CareersPage = {
+  _id: string;
+  _type: "careersPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hero?: Hero;
+  intro?: BlockContent;
+  ctaBanner?: CtaBanner;
+  seo?: Seo;
 };
 
 export type BlockContent = Array<
@@ -112,30 +139,6 @@ export type BlockContent = Array<
       _key: string;
     }
 >;
-
-export type Hero = {
-  _type: "hero";
-  eyebrow?: string;
-  heading: string;
-  emphasisPhrase?: string;
-  markerStyle?: "circle" | "underline" | "none";
-  subheading?: string;
-  image?: ImageWithAlt;
-  primaryCta?: Link;
-  secondaryCta?: Link;
-};
-
-export type CareersPage = {
-  _id: string;
-  _type: "careersPage";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  hero?: Hero;
-  intro?: BlockContent;
-  ctaBanner?: CtaBanner;
-  seo?: Seo;
-};
 
 export type ContactPage = {
   _id: string;
@@ -495,11 +498,41 @@ export type Event = {
   _updatedAt: string;
   _rev: string;
   title: string;
-  date: string;
-  location?: string;
-  description?: string;
-  registrationUrl?: string;
-  image?: ImageWithAlt;
+  slug: Slug;
+  categories: Array<string>;
+  startDateTime: string;
+  endDateTime: string;
+  venueType: "in-person" | "online";
+  venueName?: string;
+  address?: string;
+  shortLocation?: string;
+  geo?: Geopoint;
+  platform?: string;
+  heroImage?: ImageWithAlt;
+  cardImage?: ImageWithAlt;
+  shortDescription: string;
+  description?: BlockContent;
+  whatToExpect?: Array<{
+    heading: string;
+    body: string;
+    _type: "expectItem";
+    _key: string;
+  }>;
+  host: TeamMemberReference;
+  hostIntro?: string;
+  capacity: number;
+  spotsRemaining: number;
+  registrationClosesAt?: string;
+  price?: number;
+  recap?: BlogPostReference;
+  seo?: Seo;
+};
+
+export type Geopoint = {
+  _type: "geopoint";
+  lat?: number;
+  lng?: number;
+  alt?: number;
 };
 
 export type SanityFileAssetReference = {
@@ -897,22 +930,15 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type Geopoint = {
-  _type: "geopoint";
-  lat?: number;
-  lng?: number;
-  alt?: number;
-};
-
 export type AllSanitySchemaTypes =
   | SiteSettings
   | SanityImageAssetReference
   | Seo
   | EventsPage
   | CtaBanner
-  | BlockContent
   | Hero
   | CareersPage
+  | BlockContent
   | ContactPage
   | BlogPostReference
   | InsightHubPage
@@ -932,6 +958,7 @@ export type AllSanitySchemaTypes =
   | LegalPage
   | Slug
   | Event
+  | Geopoint
   | SanityFileAssetReference
   | Resource
   | PartnerIntegration
@@ -956,12 +983,11 @@ export type AllSanitySchemaTypes =
   | SanityImageMetadata
   | SanityFileAsset
   | SanityAssetSourceData
-  | SanityImageAsset
-  | Geopoint;
+  | SanityImageAsset;
 
 // Source: ../web/app/sitemap.ts
 // Variable: SITEMAP_QUERY
-// Query: {    "services": *[_type == "service" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt }  }
+// Query: {    "services": *[_type == "service" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt }  }
 export type SITEMAP_QUERY_RESULT = {
   services: Array<{
     slug: string;
@@ -976,6 +1002,10 @@ export type SITEMAP_QUERY_RESULT = {
     _updatedAt: string;
   }>;
   posts: Array<{
+    slug: string;
+    _updatedAt: string;
+  }>;
+  events: Array<{
     slug: string;
     _updatedAt: string;
   }>;
@@ -1648,6 +1678,127 @@ export type ALL_POSTS_QUERY_RESULT = Array<{
 export type POST_SLUGS_QUERY_RESULT = Array<string>;
 
 // Source: ../web/sanity/queries.ts
+// Variable: EVENTS_PAGE_QUERY
+// Query: {    "page": *[_type == "eventsPage"][0],    "upcoming": *[_type == "event" && startDateTime >= now()] | order(startDateTime asc){        _id, title, slug, categories, startDateTime, endDateTime, venueType,  shortLocation, shortDescription, cardImage, capacity, spotsRemaining    },    "past": *[_type == "event" && startDateTime < now()] | order(startDateTime desc)[0...5]{        _id, title, slug, categories, startDateTime, endDateTime, venueType,  shortLocation, shortDescription, cardImage, capacity, spotsRemaining,      recap->{title, slug}    }  }
+export type EVENTS_PAGE_QUERY_RESULT = {
+  page: {
+    _id: string;
+    _type: "eventsPage";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    hero: Hero;
+    pastHeading?: string;
+    pastIntro?: string;
+    emptyHeading?: string;
+    emptyText?: string;
+    ctaBanner?: CtaBanner;
+    seo?: Seo;
+  } | null;
+  upcoming: Array<{
+    _id: string;
+    title: string;
+    slug: Slug;
+    categories: Array<string>;
+    startDateTime: string;
+    endDateTime: string;
+    venueType: "in-person" | "online";
+    shortLocation: string | null;
+    shortDescription: string;
+    cardImage: ImageWithAlt | null;
+    capacity: number;
+    spotsRemaining: number;
+  }>;
+  past: Array<{
+    _id: string;
+    title: string;
+    slug: Slug;
+    categories: Array<string>;
+    startDateTime: string;
+    endDateTime: string;
+    venueType: "in-person" | "online";
+    shortLocation: string | null;
+    shortDescription: string;
+    cardImage: ImageWithAlt | null;
+    capacity: number;
+    spotsRemaining: number;
+    recap: {
+      title: string;
+      slug: Slug;
+    } | null;
+  }>;
+};
+
+// Source: ../web/sanity/queries.ts
+// Variable: EVENT_SLUGS_QUERY
+// Query: *[_type == "event" && defined(slug.current)].slug.current
+export type EVENT_SLUGS_QUERY_RESULT = Array<string>;
+
+// Source: ../web/sanity/queries.ts
+// Variable: EVENT_QUERY
+// Query: {    "event": *[_type == "event" && slug.current == $slug][0]{      ...,      host->{name, role, photo, linkedIn},      recap->{title, slug}    },    "others": *[_type == "event" && slug.current != $slug && startDateTime >= now()]      | order(startDateTime asc)[0...2]{   _id, title, slug, categories, startDateTime, endDateTime, venueType,  shortLocation, shortDescription, cardImage, capacity, spotsRemaining }  }
+export type EVENT_QUERY_RESULT = {
+  event: {
+    _id: string;
+    _type: "event";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    title: string;
+    slug: Slug;
+    categories: Array<string>;
+    startDateTime: string;
+    endDateTime: string;
+    venueType: "in-person" | "online";
+    venueName?: string;
+    address?: string;
+    shortLocation?: string;
+    geo?: Geopoint;
+    platform?: string;
+    heroImage?: ImageWithAlt;
+    cardImage?: ImageWithAlt;
+    shortDescription: string;
+    description?: BlockContent;
+    whatToExpect?: Array<{
+      heading: string;
+      body: string;
+      _type: "expectItem";
+      _key: string;
+    }>;
+    host: {
+      name: string;
+      role: string;
+      photo: ImageWithAlt | null;
+      linkedIn: string | null;
+    };
+    hostIntro?: string;
+    capacity: number;
+    spotsRemaining: number;
+    registrationClosesAt?: string;
+    price?: number;
+    recap: {
+      title: string;
+      slug: Slug;
+    } | null;
+    seo?: Seo;
+  } | null;
+  others: Array<{
+    _id: string;
+    title: string;
+    slug: Slug;
+    categories: Array<string>;
+    startDateTime: string;
+    endDateTime: string;
+    venueType: "in-person" | "online";
+    shortLocation: string | null;
+    shortDescription: string;
+    cardImage: ImageWithAlt | null;
+    capacity: number;
+    spotsRemaining: number;
+  }>;
+};
+
+// Source: ../web/sanity/queries.ts
 // Variable: RESOURCES_QUERY
 // Query: *[_type == "resource"] | order(order asc){    _id, title, slug, summaryBullets, updatedAt, readTimeMinutes,    landingPageHref, category,    "fileUrl": fileAsset.asset->url,    author->{name, photo},    relatedPost->{title, slug}  }
 export type RESOURCES_QUERY_RESULT = Array<{
@@ -1793,7 +1944,7 @@ export type POST_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '{\n    "services": *[_type == "service" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },\n    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt }\n  }': SITEMAP_QUERY_RESULT;
+    '{\n    "services": *[_type == "service" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },\n    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt }\n  }': SITEMAP_QUERY_RESULT;
     '*[_type == "siteSettings"][0]': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "homePage"][0]{\n    ...,\n    featuredServices[]->{_id, title, slug, icon, shortDescription, whoItsFor},\n    featuredCaseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}},\n    testimonials[]->{_id, quote, name, role, company, avatar},\n    featuredIndustries[]->{_id, title, slug, icon, shortDescription, pageBuilt}\n  }': HOME_PAGE_QUERY_RESULT;
     '*[_type == "servicesLandingPage"][0]{\n    ...,\n    serviceCards[]{\n      ...,\n      service->{_id, title, slug, category, icon, shortDescription, whoItsFor}\n    },\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}}\n  }': SERVICES_LANDING_QUERY_RESULT;
@@ -1813,6 +1964,9 @@ declare module "@sanity/client" {
     '*[_type == "insightHubPage"][0]{\n    ...,\n    featuredPost->{\n      _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n      hubs[]->{name}, author->{name, photo}\n    }\n  }': INSIGHT_HUB_QUERY_RESULT;
     '*[_type == "blogPost"] | order(publishedAt desc){\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': ALL_POSTS_QUERY_RESULT;
     '*[_type == "blogPost" && defined(slug.current)].slug.current': POST_SLUGS_QUERY_RESULT;
+    '{\n    "page": *[_type == "eventsPage"][0],\n    "upcoming": *[_type == "event" && startDateTime >= now()] | order(startDateTime asc){\n      \n  _id, title, slug, categories, startDateTime, endDateTime, venueType,\n  shortLocation, shortDescription, cardImage, capacity, spotsRemaining\n\n    },\n    "past": *[_type == "event" && startDateTime < now()] | order(startDateTime desc)[0...5]{\n      \n  _id, title, slug, categories, startDateTime, endDateTime, venueType,\n  shortLocation, shortDescription, cardImage, capacity, spotsRemaining\n,\n      recap->{title, slug}\n    }\n  }': EVENTS_PAGE_QUERY_RESULT;
+    '*[_type == "event" && defined(slug.current)].slug.current': EVENT_SLUGS_QUERY_RESULT;
+    '{\n    "event": *[_type == "event" && slug.current == $slug][0]{\n      ...,\n      host->{name, role, photo, linkedIn},\n      recap->{title, slug}\n    },\n    "others": *[_type == "event" && slug.current != $slug && startDateTime >= now()]\n      | order(startDateTime asc)[0...2]{ \n  _id, title, slug, categories, startDateTime, endDateTime, venueType,\n  shortLocation, shortDescription, cardImage, capacity, spotsRemaining\n }\n  }': EVENT_QUERY_RESULT;
     '*[_type == "resource"] | order(order asc){\n    _id, title, slug, summaryBullets, updatedAt, readTimeMinutes,\n    landingPageHref, category,\n    "fileUrl": fileAsset.asset->url,\n    author->{name, photo},\n    relatedPost->{title, slug}\n  }': RESOURCES_QUERY_RESULT;
     '*[_type == "legalPage" && slug.current == $slug][0]': LEGAL_PAGE_QUERY_RESULT;
     '*[_type == "partnerIntegration" && slug.current == $slug][0]{\n    ...,\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': PARTNER_INTEGRATION_QUERY_RESULT;

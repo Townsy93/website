@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { urlFor } from "@/sanity/image";
 
 type ImageValue = {
@@ -13,12 +14,14 @@ export function SanityImage({
   width,
   height,
   className = "",
+  style,
   placeholderLabel = "Photo to come",
 }: {
   image?: ImageValue;
   width: number;
   height: number;
   className?: string;
+  style?: CSSProperties;
   placeholderLabel?: string;
 }) {
   if (image?.asset?._ref) {
@@ -29,12 +32,14 @@ export function SanityImage({
         width={width}
         height={height}
         className={className}
+        style={style}
       />
     );
   }
   return (
     <div
-      className={`flex items-center justify-center bg-sky-blue/25 text-caption text-deep-blue-80 ${className}`}
+      className={`flex items-center justify-center bg-sky-blue/25 text-center text-caption text-deep-blue-80 ${className}`}
+      style={style}
       role="img"
       aria-label={placeholderLabel}
     >

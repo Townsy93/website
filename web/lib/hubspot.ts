@@ -13,6 +13,11 @@ export const HUBSPOT_FORMS = {
   resource:
     process.env.NEXT_PUBLIC_HUBSPOT_FORM_RESOURCE ??
     process.env.NEXT_PUBLIC_HUBSPOT_FORM_NEWSLETTER,
+  // Event registrations; falls back to the contact form until Sean makes
+  // a dedicated one (lets him segment session attendees).
+  event:
+    process.env.NEXT_PUBLIC_HUBSPOT_FORM_EVENT ??
+    process.env.NEXT_PUBLIC_HUBSPOT_FORM_CONTACT,
 } as const;
 
 export function isHubSpotConfigured(formGuid?: string): formGuid is string {
