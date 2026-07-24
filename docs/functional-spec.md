@@ -119,12 +119,11 @@ tracks satisfy this; avoid JS-mounted slides.
 | Integration | Where | Approach |
 |-------------|-------|----------|
 | HubSpot meetings | Home CTA banner (embed), all "Book a call" links | iframe embed `?embed=true`; replace T14's mock calendar with the live widget |
-| HubSpot forms/CRM | Contact form (F1), lead form (F2) | submit to HubSpot Forms API; field set + the 10 "How can we help?" options per inventory F1. Add validation states (prototype flags this as next step) |
-| Klaviyo | Newsletter (F3, footer + band) | Klaviyo list subscribe; consent checkbox on band variant |
+| HubSpot forms/CRM | Contact form (F1), lead form (F2), newsletter (F3, footer + band) | ALL forms are HubSpot forms (decision 24 Jul 2026 — no Klaviyo). Sean supplies HubSpot embed codes / form GUIDs; submit via HubSpot Forms API keeping the custom-styled markup, or embed where styling allows. Add validation states |
 | Chat (M34) | Landing (and site-wide?) | Decision needed: HubSpot chat widget vs cut |
 | Video | Our Work testimonials, possible About video (D6) | TBD — videos in production per tracker |
 
-Env/config: keep all third-party IDs (portal ID, form GUIDs, Klaviyo list ID)
+Env/config: keep all third-party IDs (HubSpot portal ID, form GUIDs)
 in env vars mirrored to Cloudflare, same pattern as the Sanity vars.
 
 ---

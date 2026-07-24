@@ -1,5 +1,5 @@
 // Module M27 — Deep Blue newsletter band (distinct from the footer signup).
-// Klaviyo wiring lands with the integrations pass.
+// HubSpot form wiring lands with the integrations pass.
 export function NewsletterBand({
   heading,
   text,

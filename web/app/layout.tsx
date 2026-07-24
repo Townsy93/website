@@ -53,7 +53,11 @@ export default async function RootLayout({
     },
     areaServed: ["NZ", "AU"],
     ...(settings?.contactEmail ? { email: settings.contactEmail } : {}),
-    sameAs: [settings?.linkedInUrl, settings?.youTubeUrl].filter(Boolean),
+    sameAs: [
+      settings?.linkedInUrl,
+      settings?.instagramUrl,
+      settings?.youTubeUrl,
+    ].filter(Boolean),
   };
 
   return (

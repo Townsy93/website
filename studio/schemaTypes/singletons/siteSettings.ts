@@ -38,6 +38,11 @@ export const siteSettings = defineType({
       type: 'url',
     }),
     defineField({
+      name: 'instagramUrl',
+      title: 'Instagram URL',
+      type: 'url',
+    }),
+    defineField({
       name: 'youTubeUrl',
       title: 'YouTube URL',
       type: 'url',

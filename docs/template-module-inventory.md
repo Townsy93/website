@@ -207,7 +207,8 @@ CTAs (About's two promise buttons; Solutions' anchor link to §optimise).
 - **F2 — Lead capture form** (Landing hero): First name*, Email*, Company*,
   optional "biggest HubSpot headache" + submit → success card state.
 - **F3 — Newsletter signup**: email + button (footer); band variant adds
-  consent checkbox. Integration: Klaviyo (per locked spec).
+  consent checkbox. Integration: HubSpot form (decision 24 Jul 2026 —
+  all forms are HubSpot; no Klaviyo).
 - **F4 — Meetings embed**: HubSpot meetings iframe (Home CTA). The Landing
   page's hand-built calendar mock should be replaced with this live embed
   (the prototype's own "try next" note says so).

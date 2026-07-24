@@ -25,6 +25,7 @@ const RESOURCES_LINKS = [
 export type FooterSettings = {
   newsletterHeading?: string | null;
   linkedInUrl?: string | null;
+  instagramUrl?: string | null;
   youTubeUrl?: string | null;
 } | null;
 
@@ -49,8 +50,8 @@ function LinkColumn({
   );
 }
 
-// Module M2 — full footer, 4-col. Newsletter integration (Klaviyo) lands
-// with the integrations pass; the form is presentational until then.
+// Module M2 — full footer, 4-col. Newsletter signup becomes a HubSpot
+// form in the integrations pass; the form is presentational until then.
 export function Footer({ settings }: { settings?: FooterSettings }) {
   return (
     <footer className="bg-deep-blue text-white">
@@ -97,6 +98,11 @@ export function Footer({ settings }: { settings?: FooterSettings }) {
           {settings?.linkedInUrl && (
             <a href={settings.linkedInUrl} className="text-caption text-sky-blue hover:underline">
               LinkedIn
+            </a>
+          )}
+          {settings?.instagramUrl && (
+            <a href={settings.instagramUrl} className="text-caption text-sky-blue hover:underline">
+              Instagram
             </a>
           )}
           {settings?.youTubeUrl && (

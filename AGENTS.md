@@ -57,7 +57,8 @@ from the prototype — do not improvise layouts.
   /contact) that stays visible on scroll — this replaces any "Contact" text
   link. No dropdown on Services (flat landing page). About Us has a small
   dropdown: About Us / Careers / Events.
-- Footer: newsletter signup (Klaviyo), social links, standard footer nav.
+- Footer: newsletter signup (HubSpot form), social links (LinkedIn,
+  Instagram, YouTube), standard footer nav.
 - One CTA banner per page maximum (bottom) — the sticky nav button covers the
   always-available ask.
 - Mobile: card grids collapse to 1 column, pricing tiers stack (never
