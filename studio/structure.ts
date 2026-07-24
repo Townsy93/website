@@ -38,6 +38,7 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('industry').title('Industries'),
       S.documentTypeListItem('caseStudy').title('Case studies'),
       S.documentTypeListItem('blogPost').title('Blog posts'),
+      S.documentTypeListItem('resource').title('Resources'),
       S.documentTypeListItem('hubOffering').title('Hub offerings'),
       S.documentTypeListItem('partnerIntegration').title('Partner integrations'),
       S.divider(),

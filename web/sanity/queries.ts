@@ -134,6 +134,15 @@ export const POST_SLUGS_QUERY = defineQuery(
   `*[_type == "blogPost" && defined(slug.current)].slug.current`,
 );
 
+export const RESOURCES_QUERY = defineQuery(
+  `*[_type == "resource"] | order(order asc){
+    _id, title, slug, summaryBullets, updatedAt, readTimeMinutes,
+    landingPageHref, category,
+    author->{name, photo},
+    relatedPost->{title, slug}
+  }`,
+);
+
 export const LEGAL_PAGE_QUERY = defineQuery(
   `*[_type == "legalPage" && slug.current == $slug][0]`,
 );

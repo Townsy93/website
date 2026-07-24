@@ -23,6 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/industries", priority: 0.7 },
     { path: "/our-work", priority: 0.8 },
     { path: "/insights", priority: 0.7 },
+    { path: "/resources", priority: 0.7 },
     { path: "/contact", priority: 0.9 },
   ].map(({ path, priority }) => ({
     url: `${SITE_URL}${path}`,

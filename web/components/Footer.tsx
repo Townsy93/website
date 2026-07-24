@@ -20,6 +20,7 @@ const COMPANY_LINKS = [
 
 const RESOURCES_LINKS = [
   { label: "Insight hub", href: "/insights" },
+  { label: "Free resources", href: "/resources" },
   { label: "Case studies", href: "/our-work" },
   { label: "Solutions", href: "/solutions" },
 ];

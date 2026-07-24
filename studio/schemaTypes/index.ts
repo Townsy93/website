@@ -18,6 +18,7 @@ import {hubOffering} from './documents/hubOffering'
 import {industry} from './documents/industry'
 import {legalPage} from './documents/legalPage'
 import {partnerIntegration} from './documents/partnerIntegration'
+import {resource} from './documents/resource'
 import {service} from './documents/service'
 import {teamMember} from './documents/teamMember'
 import {testimonial} from './documents/testimonial'
@@ -70,6 +71,7 @@ export const schemaTypes = [
   teamMember,
   hubOffering,
   partnerIntegration,
+  resource,
   testimonial,
   event,
   legalPage,

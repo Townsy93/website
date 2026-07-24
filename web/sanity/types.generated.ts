@@ -502,6 +502,42 @@ export type Event = {
   image?: ImageWithAlt;
 };
 
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type Resource = {
+  _id: string;
+  _type: "resource";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  summaryBullets?: Array<string>;
+  updatedAt: string;
+  readTimeMinutes: number;
+  fileAsset?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  landingPageHref?: string;
+  author: TeamMemberReference;
+  category?:
+    | "feature-spotlights"
+    | "best-practices"
+    | "news-and-events"
+    | "our-approach"
+    | "ai-developments";
+  relatedPost?: BlogPostReference;
+  order: number;
+  seo?: Seo;
+};
+
 export type PartnerIntegration = {
   _id: string;
   _type: "partnerIntegration";
@@ -896,6 +932,8 @@ export type AllSanitySchemaTypes =
   | LegalPage
   | Slug
   | Event
+  | SanityFileAssetReference
+  | Resource
   | PartnerIntegration
   | HubOffering
   | HubOfferingReference
@@ -1610,6 +1648,34 @@ export type ALL_POSTS_QUERY_RESULT = Array<{
 export type POST_SLUGS_QUERY_RESULT = Array<string>;
 
 // Source: ../web/sanity/queries.ts
+// Variable: RESOURCES_QUERY
+// Query: *[_type == "resource"] | order(order asc){    _id, title, slug, summaryBullets, updatedAt, readTimeMinutes,    landingPageHref, category,    author->{name, photo},    relatedPost->{title, slug}  }
+export type RESOURCES_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  slug: Slug;
+  summaryBullets: Array<string> | null;
+  updatedAt: string;
+  readTimeMinutes: number;
+  landingPageHref: string | null;
+  category:
+    | "ai-developments"
+    | "best-practices"
+    | "feature-spotlights"
+    | "news-and-events"
+    | "our-approach"
+    | null;
+  author: {
+    name: string;
+    photo: ImageWithAlt | null;
+  };
+  relatedPost: {
+    title: string;
+    slug: Slug;
+  } | null;
+}>;
+
+// Source: ../web/sanity/queries.ts
 // Variable: LEGAL_PAGE_QUERY
 // Query: *[_type == "legalPage" && slug.current == $slug][0]
 export type LEGAL_PAGE_QUERY_RESULT = {
@@ -1746,6 +1812,7 @@ declare module "@sanity/client" {
     '*[_type == "insightHubPage"][0]{\n    ...,\n    featuredPost->{\n      _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n      hubs[]->{name}, author->{name, photo}\n    }\n  }': INSIGHT_HUB_QUERY_RESULT;
     '*[_type == "blogPost"] | order(publishedAt desc){\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': ALL_POSTS_QUERY_RESULT;
     '*[_type == "blogPost" && defined(slug.current)].slug.current': POST_SLUGS_QUERY_RESULT;
+    '*[_type == "resource"] | order(order asc){\n    _id, title, slug, summaryBullets, updatedAt, readTimeMinutes,\n    landingPageHref, category,\n    author->{name, photo},\n    relatedPost->{title, slug}\n  }': RESOURCES_QUERY_RESULT;
     '*[_type == "legalPage" && slug.current == $slug][0]': LEGAL_PAGE_QUERY_RESULT;
     '*[_type == "partnerIntegration" && slug.current == $slug][0]{\n    ...,\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': PARTNER_INTEGRATION_QUERY_RESULT;
     '*[_type == "partnerIntegration" && defined(slug.current)].slug.current': PARTNER_INTEGRATION_SLUGS_QUERY_RESULT;
