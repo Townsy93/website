@@ -26,6 +26,7 @@ export type SiteSettings = {
   address?: string;
   meetingsUrl: string;
   linkedInUrl?: string;
+  instagramUrl?: string;
   youTubeUrl?: string;
   googleReviewCount?: number;
   hubspotReviewCount?: number;
@@ -949,6 +950,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   address?: string;
   meetingsUrl: string;
   linkedInUrl?: string;
+  instagramUrl?: string;
   youTubeUrl?: string;
   googleReviewCount?: number;
   hubspotReviewCount?: number;
