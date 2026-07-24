@@ -241,39 +241,40 @@ Divergences (production/locked spec wins):
 
 ---
 
-## 6. Discrepancies & decisions needed (flag to Sean)
+## 6. Discrepancies & decisions
 
-- **D1 — Nav IA**: prototype nav ≠ locked nav. Locked (AGENTS.md): Home,
-  Services (flat), Solutions, About Us▾ (About/Careers/Events), Industries,
-  Our Work, Insight Hub + persistent "Let's talk". Prototype shows Services▾ /
-  Industries▾ / Insights▾ / About / Contact, and its Industries dropdown lists
-  Healthcare, Construction & trades, Professional services — none of which are
-  tracker industries. **Build the locked IA in the prototype's pill-nav
-  visual style.** Home's industries teaser (6 tiles) also needs re-pointing at
-  the real 7 industries.
-- **D2 — Published prices on service cards**: the prototype's Services grid
-  shows price badges that contradict both the tracker's confirmed pricing and
-  the "never publish blocked pricing" rule — e.g. CRM implementation "From
-  $4,500" (confirmed tiers start $7,500), HubSpot training "From $950"
-  (confirmed $750/$1,200), RevOps "From $1,800/mo" (confirmed $2,500–$4,500),
-  HubSpot audit "From $1,500" and Landing page package "From $2,200" (both
-  pricing-blocked in the tracker). Also the tracker/brief decision was **no
-  pricing on the services landing cards** at all. Needs a ruling before
-  Services landing is built.
-- **D3 — "Ten services" copy** on the Services grid H2 vs 11 cards (Marketing
-  Automation split into two cards is correct per tracker v3 — the copy is
-  what's stale).
-- **D4 — Orange on light backgrounds**: brand rule says Deep Orange only on
-  Deep Blue, and the Our Work prototype even carries a note "orange stays off
-  the light sections" — but several prototypes use orange accents on
+D1–D5 ruled by Sean, 24 Jul 2026. D6–D11 still open.
+
+- **D1 — Nav IA — RESOLVED: locked IA, pill visual style.** Build the
+  AGENTS.md structure (Home, Services flat, Solutions, About Us▾
+  About/Careers/Events, Industries, Our Work, Insight Hub + persistent
+  "Let's talk") rendered in the prototype's floating translucent pill style.
+  The prototype's own nav (Services▾/Industries▾/Insights▾/About/Contact,
+  with non-tracker industries like Healthcare and Construction in the
+  dropdown) is outdated — ignore its structure. Home's industries teaser
+  (6 tiles) must also be re-pointed at the real 7 tracker industries.
+- **D2 — Published prices on service cards — RESOLVED: no prices on the
+  Services landing cards.** Matches the tracker/brief decision and the
+  never-publish-blocked-pricing rule. The prototype's badges (e.g. CRM
+  implementation "From $4,500" vs confirmed $7,500 tiers; badges on
+  pricing-blocked audit/landing-page-package) do not ship. Pricing appears
+  only on individual service pages, and only where confirmed (M18's
+  `pricingConfirmed` toggle).
+- **D3 — "Ten services" copy — RESOLVED: fix the copy.** 11 cards is correct
+  per tracker v3 (Marketing Automation split into two cards); the H2 is
+  stale.
+- **D4 — Orange on light backgrounds — RESOLVED: strict rule stands.** Deep
+  Orange only ever on Deep Blue. Prototype accents that use orange on
   white/tan (pain-point top borders and eyebrow, process-step borders,
-  numbered value props, checkmarks, quote marks, stat numerals on tan).
-  Decide: (a) amend the rule to allow small orange *graphic* accents on
-  light, or (b) recolour those accents Deep Blue/Sky Blue in the build.
-- **D5 — Missing templates**: no prototype for Case study detail (T9),
-  Aircall/partner-integration (T5), Careers, Events, or a designed
-  Downloadable Resources page. T9 is Priority-2-adjacent (2 case studies are
-  launch-ready) — needs a design pass or a derived template decision.
+  numbered value props 01/02/03, checkmarks, quote marks, stat numerals on
+  tan) are recoloured to Deep Blue or Sky Blue in the build. AGENTS.md rule
+  unchanged.
+- **D5 — Missing templates — RESOLVED for T9: derive the case study detail
+  template from the existing module library** (breadcrumb hero, stat trio,
+  editorial prose blocks, pull-quote, video card, related work, CTA banner)
+  and review it in the browser like any other page — no prototype round-trip.
+  Still undesigned and deferred: Aircall/partner-integration (T5), Careers,
+  Events, Downloadable Resources (all Priority 3–4 or card-sort-blocked).
 - **D6 — About brand video**: tracker/brief expects a brand video on About;
   prototype has an image-slot hero and no video module anywhere on the page.
 - **D7 — Blog TOC**: brief mentioned a table of contents; prototype uses a

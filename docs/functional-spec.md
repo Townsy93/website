@@ -188,11 +188,18 @@ About prototype note), video stills ×3. Reviewer avatars ×4 (Services hero).
 
 ## 7. Open items blocking later phases
 
-1. D2 pricing ruling (blocks T2 copy + several T3 pages)
-2. D4 orange-on-light ruling (blocks component styling defaults)
-3. D5 missing templates: case study detail (needed by Priority 2–3), Aircall,
-   Careers/Events card-sorts, Resources design
-4. D6 About video decision; D10 real contact details; M34 chat decision
-5. Video testimonial assets (3 in production)
-6. Client logo permissions; candid team photography; Bailey's profile content
-7. Real stat values (brands count "TBC+", verify 23/11/40+ figures at launch)
+Resolved 24 Jul 2026: D1 (locked nav IA in pill style), D2 (no prices on
+Services landing cards), D3 (fix "Ten services" copy), D4 (strict
+orange-on-Deep-Blue-only — recolour prototype's light-background orange
+accents to Deep Blue/Sky Blue), D5 (case study detail template derived from
+the module library, reviewed in-browser).
+
+Still open:
+1. D6 About video decision; D10 real contact details; M34 chat decision
+2. Careers/Events card-sorts; Aircall + Resources page designs (Priority 3–4)
+3. Video testimonial assets (3 in production)
+4. Client logo permissions; candid team photography; Bailey's profile content
+5. Real stat values (brands count "TBC+", verify 23/11/40+ figures at launch)
+6. Individual service pricing gaps per route table (audit, marketing
+   automation reconciliation, websites & integrations, landing page package,
+   post-sales scope)

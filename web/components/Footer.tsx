@@ -7,7 +7,7 @@ const FOOTER_NAV = [
   { label: "About Us", href: "/about-us" },
   { label: "Industries", href: "/industries" },
   { label: "Our Work", href: "/our-work" },
-  { label: "Insight Hub", href: "/insight-hub" },
+  { label: "Insight Hub", href: "/insights" },
   { label: "Contact", href: "/contact" },
 ];
 

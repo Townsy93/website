@@ -12,13 +12,13 @@ const NAV_ITEMS = [
     href: "/about-us",
     children: [
       { label: "About Us", href: "/about-us" },
-      { label: "Careers", href: "/careers" },
-      { label: "Events", href: "/events" },
+      { label: "Careers", href: "/about-us/careers" },
+      { label: "Events", href: "/about-us/events" },
     ],
   },
   { label: "Industries", href: "/industries" },
   { label: "Our Work", href: "/our-work" },
-  { label: "Insight Hub", href: "/insight-hub" },
+  { label: "Insight Hub", href: "/insights" },
 ];
 
 export function Header() {
