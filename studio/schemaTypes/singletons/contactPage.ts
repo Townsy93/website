@@ -1,0 +1,76 @@
+import {defineArrayMember, defineField, defineType} from 'sanity'
+
+export const contactPage = defineType({
+  name: 'contactPage',
+  title: 'Contact page',
+  type: 'document',
+  groups: [
+    {name: 'content', title: 'Content', default: true},
+    {name: 'seo', title: 'SEO'},
+  ],
+  fields: [
+    defineField({
+      name: 'hero',
+      title: 'Hero',
+      type: 'hero',
+      group: 'content',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'formHeading',
+      title: 'Form heading',
+      type: 'string',
+      group: 'content',
+      validation: (rule) => rule.max(80),
+    }),
+    defineField({
+      name: 'formOptions',
+      title: '"How can we help?" options',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'string'})],
+      description: 'Dropdown options on the contact form',
+      validation: (rule) => rule.max(12),
+    }),
+    defineField({
+      name: 'successHeading',
+      title: 'Success message heading',
+      type: 'string',
+      group: 'content',
+      validation: (rule) => rule.max(80),
+    }),
+    defineField({
+      name: 'successText',
+      title: 'Success message text',
+      type: 'text',
+      rows: 2,
+      group: 'content',
+      validation: (rule) => rule.max(300),
+    }),
+    defineField({
+      name: 'detailsHeading',
+      title: 'Details card heading',
+      type: 'string',
+      group: 'content',
+      validation: (rule) => rule.max(80),
+    }),
+    defineField({
+      name: 'faqs',
+      title: 'FAQs',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'faqItem'})],
+      validation: (rule) => rule.max(5),
+    }),
+    defineField({
+      name: 'trustLogos',
+      title: 'Trust bar logos',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'imageWithAlt'})],
+      validation: (rule) => rule.max(3),
+    }),
+    defineField({name: 'seo', title: 'SEO', type: 'seo', group: 'seo'}),
+  ],
+  preview: {prepare: () => ({title: 'Contact page'})},
+})

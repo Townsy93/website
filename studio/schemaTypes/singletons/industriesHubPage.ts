@@ -1,0 +1,78 @@
+import {defineArrayMember, defineField, defineType} from 'sanity'
+
+export const industriesHubPage = defineType({
+  name: 'industriesHubPage',
+  title: 'Industries hub page',
+  type: 'document',
+  groups: [
+    {name: 'content', title: 'Content', default: true},
+    {name: 'seo', title: 'SEO'},
+  ],
+  fields: [
+    defineField({
+      name: 'hero',
+      title: 'Hero',
+      type: 'hero',
+      group: 'content',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'gridHeading',
+      title: 'Grid heading',
+      type: 'string',
+      group: 'content',
+      validation: (rule) => rule.max(120),
+    }),
+    defineField({
+      name: 'gridIntro',
+      title: 'Grid intro',
+      type: 'text',
+      rows: 2,
+      group: 'content',
+      validation: (rule) => rule.max(240),
+    }),
+    defineField({
+      name: 'industries',
+      title: 'Industries (ordered)',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'industry'}]})],
+      description: 'The grid renders these + the "Not on the list?" CTA cell',
+      validation: (rule) => rule.max(7).unique(),
+    }),
+    defineField({
+      name: 'whyHeading',
+      title: '"Why it matters" heading',
+      type: 'string',
+      group: 'content',
+      validation: (rule) => rule.max(120),
+    }),
+    defineField({
+      name: 'whyItems',
+      title: '"Why it matters" numbered items',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'iconCard'})],
+      validation: (rule) => rule.max(3),
+    }),
+    defineField({
+      name: 'caseStudies',
+      title: 'Case studies teaser',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'caseStudy'}]})],
+      validation: (rule) => rule.max(3).unique(),
+    }),
+    defineField({
+      name: 'trustLogos',
+      title: 'Trust bar logos',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'imageWithAlt'})],
+      validation: (rule) => rule.max(5),
+    }),
+    defineField({name: 'ctaBanner', title: 'CTA banner', type: 'ctaBanner', group: 'content'}),
+    defineField({name: 'seo', title: 'SEO', type: 'seo', group: 'seo'}),
+  ],
+  preview: {prepare: () => ({title: 'Industries hub page'})},
+})

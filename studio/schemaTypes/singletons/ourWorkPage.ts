@@ -1,0 +1,65 @@
+import {defineArrayMember, defineField, defineType} from 'sanity'
+
+export const ourWorkPage = defineType({
+  name: 'ourWorkPage',
+  title: 'Our Work page',
+  type: 'document',
+  groups: [
+    {name: 'content', title: 'Content', default: true},
+    {name: 'seo', title: 'SEO'},
+  ],
+  fields: [
+    defineField({
+      name: 'hero',
+      title: 'Hero',
+      type: 'hero',
+      group: 'content',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'stats',
+      title: 'Stat bar',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'stat'})],
+      description: 'Google reviews / HubSpot directory reviews / projects delivered',
+      validation: (rule) => rule.max(3),
+    }),
+    defineField({
+      name: 'caseStudies',
+      title: 'Case study grid (ordered)',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'caseStudy'}]})],
+      description: '"Coming soon" entries render the non-clickable card state automatically',
+      validation: (rule) => rule.unique(),
+    }),
+    defineField({
+      name: 'videoTestimonials',
+      title: 'Video testimonials',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'testimonial'}]})],
+      description: 'Testimonials with a video URL',
+      validation: (rule) => rule.max(3).unique(),
+    }),
+    defineField({
+      name: 'googleReviews',
+      title: 'Google review cards',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'testimonial'}]})],
+      description: 'Testimonials with source = Google review',
+      validation: (rule) => rule.max(3).unique(),
+    }),
+    defineField({
+      name: 'googleReviewsUrl',
+      title: '"Read all reviews" URL',
+      type: 'url',
+      group: 'content',
+    }),
+    defineField({name: 'ctaBanner', title: 'CTA banner', type: 'ctaBanner', group: 'content'}),
+    defineField({name: 'seo', title: 'SEO', type: 'seo', group: 'seo'}),
+  ],
+  preview: {prepare: () => ({title: 'Our Work page'})},
+})
