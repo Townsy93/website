@@ -7,6 +7,12 @@
   --color-deep-orange: #f77b23;
   --color-sky-blue: #83b5d1;
 
+  /* Derived tints (from the prototype design system) */
+  --color-orange-hover: #e06910;
+  --color-deep-blue-80: #3a5870;
+  --color-deep-blue-20: #cdd8e0;
+  --color-deep-blue-10: #e6ecf0;
+
   /* Typography — Archivo only */
   --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
 

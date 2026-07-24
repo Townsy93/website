@@ -912,3 +912,290 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint;
+
+// Source: ../web/sanity/queries.ts
+// Variable: SITE_SETTINGS_QUERY
+// Query: *[_type == "siteSettings"][0]
+export type SITE_SETTINGS_QUERY_RESULT = {
+  _id: string;
+  _type: "siteSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  contactEmail: string;
+  contactPhone?: string;
+  address?: string;
+  meetingsUrl: string;
+  linkedInUrl?: string;
+  youTubeUrl?: string;
+  googleReviewCount?: number;
+  hubspotReviewCount?: number;
+  newsletterHeading?: string;
+  defaultSeo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: HOME_PAGE_QUERY
+// Query: *[_type == "homePage"][0]{    ...,    featuredServices[]->{_id, title, slug, icon, shortDescription, whoItsFor},    featuredCaseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}},    testimonials[]->{_id, quote, name, role, company, avatar},    featuredIndustries[]->{_id, title, slug, icon, shortDescription, pageBuilt}  }
+export type HOME_PAGE_QUERY_RESULT = {
+  _id: string;
+  _type: "homePage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hero: Hero;
+  trustLogos?: Array<
+    {
+      _key: string;
+    } & ImageWithAlt
+  >;
+  whyHeading?: string;
+  whyCards?: Array<
+    {
+      _key: string;
+    } & IconCard
+  >;
+  featuredServices: Array<{
+    _id: string;
+    title: string;
+    slug: Slug;
+    icon: string | null;
+    shortDescription: string;
+    whoItsFor: string | null;
+  }> | null;
+  featuredCaseStudy: {
+    _id: string;
+    client: string;
+    slug: Slug;
+    headline: string;
+    resultLine: string | null;
+    stats: Array<
+      {
+        _key: string;
+      } & Stat
+    > | null;
+    photo: ImageWithAlt | null;
+    videoUrl: string | null;
+    service: {
+      title: string;
+    };
+  } | null;
+  testimonials: Array<{
+    _id: string;
+    quote: string;
+    name: string;
+    role: string | null;
+    company: string;
+    avatar: ImageWithAlt | null;
+  }> | null;
+  featuredIndustries: Array<{
+    _id: string;
+    title: string;
+    slug: Slug;
+    icon: string | null;
+    shortDescription: string;
+    pageBuilt: boolean | null;
+  }> | null;
+  faqs?: Array<
+    {
+      _key: string;
+    } & FaqItem
+  >;
+  ctaBanner?: CtaBanner;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: SERVICES_LANDING_QUERY
+// Query: *[_type == "servicesLandingPage"][0]{    ...,    serviceCards[]{      ...,      service->{_id, title, slug, category, icon, shortDescription, whoItsFor}    },    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}}  }
+export type SERVICES_LANDING_QUERY_RESULT = {
+  _id: string;
+  _type: "servicesLandingPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hero: Hero;
+  gridHeading?: string;
+  gridIntro?: string;
+  serviceCards: Array<{
+    service: {
+      _id: string;
+      title: string;
+      slug: Slug;
+      category: "build" | "discover" | "scale";
+      icon: string | null;
+      shortDescription: string;
+      whoItsFor: string | null;
+    };
+    titleOverride?: string;
+    descriptionOverride?: string;
+    categoryOverride?: "build" | "discover" | "scale";
+    anchor?: string;
+    _type: "serviceCard";
+    _key: string;
+  }> | null;
+  whyHeading?: string;
+  whyCards?: Array<
+    {
+      _key: string;
+    } & IconCard
+  >;
+  caseStudies: Array<{
+    _id: string;
+    client: string;
+    slug: Slug;
+    headline: string;
+    resultLine: string | null;
+    photo: ImageWithAlt | null;
+    status: "comingSoon" | "live";
+    service: {
+      title: string;
+    };
+  }> | null;
+  stats?: Array<
+    {
+      _key: string;
+    } & Stat
+  >;
+  faqs?: Array<
+    {
+      _key: string;
+    } & FaqItem
+  >;
+  ctaBanner?: CtaBanner;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: ABOUT_PAGE_QUERY
+// Query: *[_type == "aboutPage"][0]{    ...,    team[]->{_id, name, role, photo, bio, outsideWork, skills, favouriteHubSpotFeature, whyTheyLoveHubSpot, linkedIn},    testimonials[]->{_id, quote, name, role, company, avatar}  }
+export type ABOUT_PAGE_QUERY_RESULT = {
+  _id: string;
+  _type: "aboutPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hero: Hero;
+  trustPillars?: Array<{
+    heading: string;
+    text: string;
+    image?: ImageWithAlt;
+    _type: "pillarRow";
+    _key: string;
+  }>;
+  teamHeading?: string;
+  team: Array<{
+    _id: string;
+    name: string;
+    role: string;
+    photo: ImageWithAlt | null;
+    bio: string | null;
+    outsideWork: string | null;
+    skills: Array<string> | null;
+    favouriteHubSpotFeature: string | null;
+    whyTheyLoveHubSpot: string | null;
+    linkedIn: string | null;
+  }> | null;
+  culturePhotos?: Array<
+    {
+      _key: string;
+    } & ImageWithAlt
+  >;
+  cultureText?: string;
+  stats?: Array<
+    {
+      _key: string;
+    } & Stat
+  >;
+  testimonials: Array<{
+    _id: string;
+    quote: string;
+    name: string;
+    role: string | null;
+    company: string;
+    avatar: ImageWithAlt | null;
+  }> | null;
+  clientLogos?: Array<
+    {
+      _key: string;
+    } & ImageWithAlt
+  >;
+  storyHeading?: string;
+  storyBody?: BlockContent;
+  storyImage?: ImageWithAlt;
+  lovePillars?: Array<
+    {
+      _key: string;
+    } & IconCard
+  >;
+  values?: Array<
+    {
+      _key: string;
+    } & IconCard
+  >;
+  ctaBanner?: CtaBanner;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: CONTACT_PAGE_QUERY
+// Query: *[_type == "contactPage"][0]
+export type CONTACT_PAGE_QUERY_RESULT = {
+  _id: string;
+  _type: "contactPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hero: Hero;
+  formHeading?: string;
+  formOptions?: Array<string>;
+  successHeading?: string;
+  successText?: string;
+  detailsHeading?: string;
+  faqs?: Array<
+    {
+      _key: string;
+    } & FaqItem
+  >;
+  trustLogos?: Array<
+    {
+      _key: string;
+    } & ImageWithAlt
+  >;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: LATEST_POSTS_QUERY
+// Query: *[_type == "blogPost"] | order(publishedAt desc)[0...3]{    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,    hubs[]->{name}  }
+export type LATEST_POSTS_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  slug: Slug;
+  topic:
+    | "ai-developments"
+    | "best-practices"
+    | "feature-spotlights"
+    | "news-and-events"
+    | "our-approach";
+  excerpt: string;
+  coverImage: ImageWithAlt;
+  publishedAt: string;
+  readTime: number;
+  hubs: Array<{
+    name: string;
+  }> | null;
+}>;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    '*[_type == "siteSettings"][0]': SITE_SETTINGS_QUERY_RESULT;
+    '*[_type == "homePage"][0]{\n    ...,\n    featuredServices[]->{_id, title, slug, icon, shortDescription, whoItsFor},\n    featuredCaseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}},\n    testimonials[]->{_id, quote, name, role, company, avatar},\n    featuredIndustries[]->{_id, title, slug, icon, shortDescription, pageBuilt}\n  }': HOME_PAGE_QUERY_RESULT;
+    '*[_type == "servicesLandingPage"][0]{\n    ...,\n    serviceCards[]{\n      ...,\n      service->{_id, title, slug, category, icon, shortDescription, whoItsFor}\n    },\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}}\n  }': SERVICES_LANDING_QUERY_RESULT;
+    '*[_type == "aboutPage"][0]{\n    ...,\n    team[]->{_id, name, role, photo, bio, outsideWork, skills, favouriteHubSpotFeature, whyTheyLoveHubSpot, linkedIn},\n    testimonials[]->{_id, quote, name, role, company, avatar}\n  }': ABOUT_PAGE_QUERY_RESULT;
+    '*[_type == "contactPage"][0]': CONTACT_PAGE_QUERY_RESULT;
+    '*[_type == "blogPost"] | order(publishedAt desc)[0...3]{\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': LATEST_POSTS_QUERY_RESULT;
+  }
+}
