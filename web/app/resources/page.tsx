@@ -5,6 +5,7 @@ import { RESOURCES_QUERY } from "@/sanity/queries";
 import { Marker } from "@/components/ui/Marker";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { NewsletterForm } from "@/components/modules/NewsletterForm";
+import { ResourceGate } from "@/components/modules/ResourceGate";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
 import { TOPIC_LABELS, formatDate } from "@/components/modules/postCard";
@@ -133,12 +134,11 @@ export default async function ResourcesPage() {
               )}
 
               <div className="mt-9 flex flex-col gap-4 lg:items-end">
-                <Link
-                  href={resource.landingPageHref ?? "/contact"}
-                  className="inline-block rounded-[5px] border border-off-white-tan/40 px-12 py-3.5 text-body font-semibold uppercase tracking-[0.06em] transition-colors hover:border-deep-orange hover:text-deep-orange"
-                >
-                  Get the guide →
-                </Link>
+                <ResourceGate
+                  title={resource.title ?? "the guide"}
+                  fileUrl={resource.fileUrl}
+                  fallbackHref={resource.landingPageHref ?? "/contact"}
+                />
                 {resource.relatedPost?.slug?.current && (
                   <p className="text-caption text-off-white-tan/60">
                     Related reading:{" "}

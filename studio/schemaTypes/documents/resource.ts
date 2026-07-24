@@ -47,15 +47,15 @@ export const resource = defineType({
       title: 'File (PDF)',
       type: 'file',
       description:
-        'The downloadable file. Replacing it keeps a stable URL. Delivered from the gated LP — never linked directly from the hub.',
+        'The downloadable PDF. To update a guide, just replace this file and publish — the site picks it up automatically. While it\'s uploaded, "Get the guide" opens the email gate and then downloads this file.',
       options: {accept: '.pdf'},
     }),
     defineField({
       name: 'landingPageHref',
-      title: 'Gated landing page path',
+      title: 'Fallback link (no file uploaded)',
       type: 'string',
       description:
-        'Path of this resource\'s gated LP (e.g. /lp/claude-prompts). The hub\'s CTA links here. Falls back to /contact until the LP exists.',
+        'Only used when no PDF is uploaded — the CTA links here instead (defaults to /contact).',
       validation: (rule) => rule.max(120),
     }),
     defineField({

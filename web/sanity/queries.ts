@@ -138,6 +138,7 @@ export const RESOURCES_QUERY = defineQuery(
   `*[_type == "resource"] | order(order asc){
     _id, title, slug, summaryBullets, updatedAt, readTimeMinutes,
     landingPageHref, category,
+    "fileUrl": fileAsset.asset->url,
     author->{name, photo},
     relatedPost->{title, slug}
   }`,

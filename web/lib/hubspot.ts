@@ -8,6 +8,11 @@ const REGION = process.env.NEXT_PUBLIC_HUBSPOT_REGION ?? "ap1";
 export const HUBSPOT_FORMS = {
   contact: process.env.NEXT_PUBLIC_HUBSPOT_FORM_CONTACT,
   newsletter: process.env.NEXT_PUBLIC_HUBSPOT_FORM_NEWSLETTER,
+  // Dedicated resource-download form; falls back to the newsletter form
+  // until Sean creates one in HubSpot (lets him segment guide leads).
+  resource:
+    process.env.NEXT_PUBLIC_HUBSPOT_FORM_RESOURCE ??
+    process.env.NEXT_PUBLIC_HUBSPOT_FORM_NEWSLETTER,
 } as const;
 
 export function isHubSpotConfigured(formGuid?: string): formGuid is string {

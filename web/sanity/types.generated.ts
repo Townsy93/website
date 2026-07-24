@@ -1649,7 +1649,7 @@ export type POST_SLUGS_QUERY_RESULT = Array<string>;
 
 // Source: ../web/sanity/queries.ts
 // Variable: RESOURCES_QUERY
-// Query: *[_type == "resource"] | order(order asc){    _id, title, slug, summaryBullets, updatedAt, readTimeMinutes,    landingPageHref, category,    author->{name, photo},    relatedPost->{title, slug}  }
+// Query: *[_type == "resource"] | order(order asc){    _id, title, slug, summaryBullets, updatedAt, readTimeMinutes,    landingPageHref, category,    "fileUrl": fileAsset.asset->url,    author->{name, photo},    relatedPost->{title, slug}  }
 export type RESOURCES_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -1665,6 +1665,7 @@ export type RESOURCES_QUERY_RESULT = Array<{
     | "news-and-events"
     | "our-approach"
     | null;
+  fileUrl: string | null;
   author: {
     name: string;
     photo: ImageWithAlt | null;
@@ -1812,7 +1813,7 @@ declare module "@sanity/client" {
     '*[_type == "insightHubPage"][0]{\n    ...,\n    featuredPost->{\n      _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n      hubs[]->{name}, author->{name, photo}\n    }\n  }': INSIGHT_HUB_QUERY_RESULT;
     '*[_type == "blogPost"] | order(publishedAt desc){\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': ALL_POSTS_QUERY_RESULT;
     '*[_type == "blogPost" && defined(slug.current)].slug.current': POST_SLUGS_QUERY_RESULT;
-    '*[_type == "resource"] | order(order asc){\n    _id, title, slug, summaryBullets, updatedAt, readTimeMinutes,\n    landingPageHref, category,\n    author->{name, photo},\n    relatedPost->{title, slug}\n  }': RESOURCES_QUERY_RESULT;
+    '*[_type == "resource"] | order(order asc){\n    _id, title, slug, summaryBullets, updatedAt, readTimeMinutes,\n    landingPageHref, category,\n    "fileUrl": fileAsset.asset->url,\n    author->{name, photo},\n    relatedPost->{title, slug}\n  }': RESOURCES_QUERY_RESULT;
     '*[_type == "legalPage" && slug.current == $slug][0]': LEGAL_PAGE_QUERY_RESULT;
     '*[_type == "partnerIntegration" && slug.current == $slug][0]{\n    ...,\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': PARTNER_INTEGRATION_QUERY_RESULT;
     '*[_type == "partnerIntegration" && defined(slug.current)].slug.current': PARTNER_INTEGRATION_SLUGS_QUERY_RESULT;
