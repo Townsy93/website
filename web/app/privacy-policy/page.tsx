@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { LEGAL_PAGE_QUERY } from "@/sanity/queries";
 import { PortableBody } from "@/components/modules/PortableBody";
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function PrivacyPolicyPage() {
-  const page = await client.fetch(LEGAL_PAGE_QUERY, {
+  const page = await sanityFetch(LEGAL_PAGE_QUERY, {
     slug: "privacy-policy",
   });
 

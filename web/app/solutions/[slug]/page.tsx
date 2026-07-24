@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import {
   PARTNER_INTEGRATION_QUERY,
   PARTNER_INTEGRATION_SLUGS_QUERY,
@@ -26,7 +27,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const page = await client.fetch(PARTNER_INTEGRATION_QUERY, { slug });
+  const page = await sanityFetch(PARTNER_INTEGRATION_QUERY, { slug });
   return {
     title: page?.seo?.metaTitle ?? page?.title ?? "Solutions",
     description:
@@ -43,7 +44,7 @@ export default async function PartnerIntegrationPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const page = await client.fetch(PARTNER_INTEGRATION_QUERY, { slug });
+  const page = await sanityFetch(PARTNER_INTEGRATION_QUERY, { slug });
   if (!page) notFound();
 
   return (

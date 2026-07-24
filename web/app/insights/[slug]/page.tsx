@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { POST_QUERY, POST_SLUGS_QUERY } from "@/sanity/queries";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -24,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = await client.fetch(POST_QUERY, { slug });
+  const post = await sanityFetch(POST_QUERY, { slug });
   return {
     title: post?.seo?.metaTitle ?? post?.title ?? "Insight",
     description: post?.seo?.metaDescription ?? post?.excerpt ?? undefined,
@@ -41,7 +42,7 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = await client.fetch(POST_QUERY, { slug });
+  const post = await sanityFetch(POST_QUERY, { slug });
   if (!post) notFound();
 
   const articleJsonLd = {

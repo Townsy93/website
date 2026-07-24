@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { HUB_OFFERINGS_QUERY, SOLUTIONS_PAGE_QUERY } from "@/sanity/queries";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
 
 export default async function SolutionsPage() {
   const [page, hubs] = await Promise.all([
-    client.fetch(SOLUTIONS_PAGE_QUERY),
-    client.fetch(HUB_OFFERINGS_QUERY),
+    sanityFetch(SOLUTIONS_PAGE_QUERY),
+    sanityFetch(HUB_OFFERINGS_QUERY),
   ]);
   if (!page) {
     return (

@@ -7,4 +7,5 @@ export const client = createClient({
   // Pages are static/ISR — fetches happen at build/revalidate time, so read
   // uncached from the API to avoid stale CDN content baking into builds.
   useCdn: false,
+  stega: { studioUrl: "https://zippily.sanity.studio" },
 });

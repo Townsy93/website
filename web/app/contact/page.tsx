@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { CONTACT_PAGE_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 
 export default async function ContactPage() {
   const [page, settings] = await Promise.all([
-    client.fetch(CONTACT_PAGE_QUERY),
-    client.fetch(SITE_SETTINGS_QUERY),
+    sanityFetch(CONTACT_PAGE_QUERY),
+    sanityFetch(SITE_SETTINGS_QUERY),
   ]);
   if (!page) {
     return (

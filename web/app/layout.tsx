@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import "./globals.css";
 
@@ -36,7 +36,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = await client.fetch(SITE_SETTINGS_QUERY);
+  const settings = await sanityFetch(SITE_SETTINGS_QUERY);
 
   const organizationJsonLd = {
     "@context": "https://schema.org",

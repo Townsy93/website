@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import {
   HOME_PAGE_QUERY,
   LATEST_POSTS_QUERY,
@@ -18,9 +18,9 @@ export const revalidate = 3600;
 
 export default async function Home() {
   const [page, posts, settings] = await Promise.all([
-    client.fetch(HOME_PAGE_QUERY),
-    client.fetch(LATEST_POSTS_QUERY),
-    client.fetch(SITE_SETTINGS_QUERY),
+    sanityFetch(HOME_PAGE_QUERY),
+    sanityFetch(LATEST_POSTS_QUERY),
+    sanityFetch(SITE_SETTINGS_QUERY),
   ]);
 
   if (!page) {

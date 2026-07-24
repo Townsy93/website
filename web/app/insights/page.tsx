@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { ALL_POSTS_QUERY, INSIGHT_HUB_QUERY } from "@/sanity/queries";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { SanityImage } from "@/components/ui/SanityImage";
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
 
 export default async function InsightsPage() {
   const [page, posts] = await Promise.all([
-    client.fetch(INSIGHT_HUB_QUERY),
-    client.fetch(ALL_POSTS_QUERY),
+    sanityFetch(INSIGHT_HUB_QUERY),
+    sanityFetch(ALL_POSTS_QUERY),
   ]);
   if (!page) {
     return (

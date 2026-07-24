@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { SERVICE_QUERY, SERVICE_SLUGS_QUERY } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
@@ -25,7 +26,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = await client.fetch(SERVICE_QUERY, { slug });
+  const service = await sanityFetch(SERVICE_QUERY, { slug });
   return {
     title: service?.seo?.metaTitle ?? service?.title ?? "Service",
     description: service?.seo?.metaDescription ?? service?.shortDescription ?? undefined,
@@ -40,7 +41,7 @@ export default async function ServicePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = await client.fetch(SERVICE_QUERY, { slug });
+  const service = await sanityFetch(SERVICE_QUERY, { slug });
   if (!service) notFound();
 
   const pricingConfirmed = Boolean(service.pricing?.confirmed);

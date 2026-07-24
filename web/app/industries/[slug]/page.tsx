@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { INDUSTRY_QUERY, INDUSTRY_SLUGS_QUERY } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
@@ -24,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const industry = await client.fetch(INDUSTRY_QUERY, { slug });
+  const industry = await sanityFetch(INDUSTRY_QUERY, { slug });
   return {
     title: industry?.seo?.metaTitle ?? industry?.title ?? "Industry",
     description:
@@ -44,7 +45,7 @@ export default async function IndustryPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const industry = await client.fetch(INDUSTRY_QUERY, { slug });
+  const industry = await sanityFetch(INDUSTRY_QUERY, { slug });
   if (!industry) notFound();
 
   return (

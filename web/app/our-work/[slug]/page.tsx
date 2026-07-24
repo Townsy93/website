@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { CASE_STUDY_QUERY, CASE_STUDY_SLUGS_QUERY } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { SanityImage } from "@/components/ui/SanityImage";
@@ -22,7 +23,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const caseStudy = await client.fetch(CASE_STUDY_QUERY, { slug });
+  const caseStudy = await sanityFetch(CASE_STUDY_QUERY, { slug });
   return {
     title: caseStudy?.seo?.metaTitle ?? caseStudy?.client ?? "Case study",
     description: caseStudy?.seo?.metaDescription ?? caseStudy?.resultLine ?? undefined,
@@ -39,7 +40,7 @@ export default async function CaseStudyPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const caseStudy = await client.fetch(CASE_STUDY_QUERY, { slug });
+  const caseStudy = await sanityFetch(CASE_STUDY_QUERY, { slug });
   if (!caseStudy || caseStudy.status === "comingSoon") notFound();
 
   return (

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { INDUSTRIES_HUB_QUERY } from "@/sanity/queries";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function IndustriesPage() {
-  const page = await client.fetch(INDUSTRIES_HUB_QUERY);
+  const page = await sanityFetch(INDUSTRIES_HUB_QUERY);
   if (!page) {
     return (
       <section className="bg-deep-blue pb-24 pt-40 text-center text-white">

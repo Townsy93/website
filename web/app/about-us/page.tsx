@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PortableText } from "next-sanity";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { ABOUT_PAGE_QUERY } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  const page = await client.fetch(ABOUT_PAGE_QUERY);
+  const page = await sanityFetch(ABOUT_PAGE_QUERY);
   if (!page) {
     return (
       <section className="bg-deep-blue pb-24 pt-40 text-center text-white">
