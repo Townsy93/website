@@ -1,65 +1,63 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <>
+      {/* Light section — Off-White Tan. No Deep Orange allowed here. */}
+      <section className="bg-off-white-tan">
+        <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+          <p className="text-caption uppercase">Token check — light section</p>
+          <h1 className="mt-4 text-h1-mobile md:text-h1">
+            HubSpot, set up the way your team actually works
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <h2 className="mt-6 text-h2">
+            Heading two sits at 36 over 44
+          </h2>
+          <h3 className="mt-4 text-h3">Heading three sits at 24 over 32</h3>
+          <h4 className="mt-4 text-h4">Heading four sits at 18 over 26</h4>
+          <p className="mt-6 max-w-2xl text-body-lg">
+            This is body-large at 18 over 28. We build CRMs that people enjoy
+            using — clean pipelines, honest reporting, and automation that
+            saves real hours instead of creating new admin.
+          </p>
+          <p className="mt-4 max-w-2xl text-body">
+            This is body at 16 over 26. Every heading tracks at minus six
+            percent and body copy tracks at minus three percent, so watch for
+            letter collisions in the tight settings. Secondary accent{" "}
+            <span className="text-sky-blue">sky blue</span> is fine on light
+            backgrounds.
+          </p>
+          <p className="mt-4 text-caption">
+            Caption at 13 over 18 — image credits, fine print, small labels.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+      </section>
+
+      {/* Dark section — Deep Blue. Deep Orange accents live here. */}
+      <section className="bg-deep-blue text-white">
+        <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+          <p className="text-caption uppercase text-sky-blue">
+            Token check — dark section
+          </p>
+          <h1 className="mt-4 text-h1-mobile md:text-h1">
+            The same scale on <span className="text-deep-orange">deep blue</span>
+          </h1>
+          <h2 className="mt-6 text-h2">Heading two sits at 36 over 44</h2>
+          <h3 className="mt-4 text-h3">Heading three sits at 24 over 32</h3>
+          <h4 className="mt-4 text-h4">Heading four sits at 18 over 26</h4>
+          <p className="mt-6 max-w-2xl text-body-lg">
+            This is body-large at 18 over 28 in white on Deep Blue. Deep Orange
+            is only ever used on this background — never on white or tan.
+          </p>
+          <p className="mt-4 max-w-2xl text-body text-sky-blue">
+            This is body at 16 over 26 in Sky Blue, the secondary accent.
+          </p>
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/contact"
+            className="mt-8 inline-block rounded-full bg-deep-orange px-6 py-3 text-body font-semibold text-deep-blue transition hover:bg-deep-orange/90"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+            Deep Orange button on Deep Blue
           </a>
         </div>
-      </main>
-    </div>
+      </section>
+    </>
   );
 }
