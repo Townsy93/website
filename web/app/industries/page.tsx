@@ -10,8 +10,9 @@ import { CaseStudyCards } from "@/components/modules/CaseStudyCards";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Industries — zippily",
+  title: "Industries",
   description: "HubSpot, tailored to how your industry actually works.",
+  alternates: { canonical: "/industries" },
 };
 
 export default async function IndustriesPage() {

@@ -6,6 +6,8 @@ import { CASE_STUDY_QUERY, CASE_STUDY_SLUGS_QUERY } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { PortableBody } from "@/components/modules/PortableBody";
+import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { SITE_URL } from "@/lib/site";
 
 export const revalidate = 3600;
 
@@ -22,8 +24,10 @@ export async function generateMetadata({
   const { slug } = await params;
   const caseStudy = await client.fetch(CASE_STUDY_QUERY, { slug });
   return {
-    title: caseStudy?.seo?.metaTitle ?? `${caseStudy?.client ?? "Case study"} — zippily`,
+    title: caseStudy?.seo?.metaTitle ?? caseStudy?.client ?? "Case study",
     description: caseStudy?.seo?.metaDescription ?? caseStudy?.resultLine ?? undefined,
+    alternates: { canonical: `/our-work/${slug}` },
+    ...(caseStudy?.seo?.noIndex ? { robots: { index: false, follow: false } } : {}),
   };
 }
 
@@ -40,6 +44,15 @@ export default async function CaseStudyPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Our work", url: `${SITE_URL}/our-work` },
+          {
+            name: caseStudy.client ?? slug,
+            url: `${SITE_URL}/our-work/${slug}`,
+          },
+        ])}
+      />
       {/* Hero — dark breadcrumb (H1c) */}
       <section className="bg-deep-blue text-white">
         <div className="mx-auto max-w-6xl px-4 pb-20 pt-32 sm:px-6">

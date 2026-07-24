@@ -11,9 +11,10 @@ import { NewsletterBand } from "@/components/modules/NewsletterBand";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Insight Hub — zippily",
+  title: "Insight Hub",
   description:
     "Practical HubSpot advice from the team that actually uses it every day.",
+  alternates: { canonical: "/insights" },
 };
 
 export default async function InsightsPage() {

@@ -10,8 +10,9 @@ import { FaqAccordion } from "@/components/modules/FaqAccordion";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Contact — zippily",
+  title: "Contact",
   description: "Let's talk about your HubSpot.",
+  alternates: { canonical: "/contact" },
 };
 
 export default async function ContactPage() {

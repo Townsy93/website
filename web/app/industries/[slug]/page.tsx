@@ -26,9 +26,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const industry = await client.fetch(INDUSTRY_QUERY, { slug });
   return {
-    title: industry?.seo?.metaTitle ?? `${industry?.title ?? "Industry"} — zippily`,
+    title: industry?.seo?.metaTitle ?? industry?.title ?? "Industry",
     description:
       industry?.seo?.metaDescription ?? industry?.shortDescription ?? undefined,
+    alternates: { canonical: `/industries/${slug}` },
+    ...(industry?.seo?.noIndex || !industry?.pageBuilt
+      ? { robots: { index: false, follow: true } }
+      : {}),
   };
 }
 

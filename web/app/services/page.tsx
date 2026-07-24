@@ -16,9 +16,10 @@ import { StatTrio } from "@/components/modules/StatTrio";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Services — zippily",
+  title: "Services",
   description:
     "Ten ways we help you get more out of HubSpot — pick where you're starting from.",
+  alternates: { canonical: "/services" },
 };
 
 export default async function ServicesPage() {

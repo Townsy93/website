@@ -11,9 +11,10 @@ import { HubCarousel } from "@/components/modules/HubCarousel";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Solutions — zippily",
+  title: "Solutions",
   description:
     "Not sure which HubSpot Hub fits your team? Here's what each one actually does.",
+  alternates: { canonical: "/solutions" },
 };
 
 export default async function SolutionsPage() {

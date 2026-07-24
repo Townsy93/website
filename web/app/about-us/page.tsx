@@ -13,9 +13,10 @@ import { TestimonialCards } from "@/components/modules/TestimonialCards";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "About Us — zippily",
+  title: "About Us",
   description:
     "A small, senior Auckland team that's spent years inside HubSpot — and likes it that way.",
+  alternates: { canonical: "/about-us" },
 };
 
 export default async function AboutPage() {

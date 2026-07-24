@@ -9,6 +9,8 @@ import { Icon } from "@/components/ui/Icon";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { CtaBanner } from "@/components/modules/CtaBanner";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
+import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { SITE_URL } from "@/lib/site";
 
 export const revalidate = 3600;
 
@@ -25,8 +27,10 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = await client.fetch(SERVICE_QUERY, { slug });
   return {
-    title: service?.seo?.metaTitle ?? `${service?.title ?? "Service"} — zippily`,
+    title: service?.seo?.metaTitle ?? service?.title ?? "Service",
     description: service?.seo?.metaDescription ?? service?.shortDescription ?? undefined,
+    alternates: { canonical: `/services/${slug}` },
+    ...(service?.seo?.noIndex ? { robots: { index: false, follow: false } } : {}),
   };
 }
 
@@ -42,8 +46,35 @@ export default async function ServicePage({
   const pricingConfirmed = Boolean(service.pricing?.confirmed);
   const tiers = pricingConfirmed ? (service.pricing?.tiers ?? []) : [];
 
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: service.shortDescription,
+    url: `${SITE_URL}/services/${slug}`,
+    provider: { "@id": `${SITE_URL}/#organization` },
+    areaServed: ["NZ", "AU"],
+    ...(pricingConfirmed && tiers.length > 0
+      ? {
+          offers: tiers.map((tier) => ({
+            "@type": "Offer",
+            name: tier.name,
+            price: tier.price,
+            priceCurrency: "NZD",
+          })),
+        }
+      : {}),
+  };
+
   return (
     <>
+      <JsonLd data={serviceJsonLd} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Services", url: `${SITE_URL}/services` },
+          { name: service.title ?? slug, url: `${SITE_URL}/services/${slug}` },
+        ])}
+      />
       {/* Hero — dark breadcrumb (H1c) */}
       <section className="bg-deep-blue text-white">
         <div className="mx-auto max-w-3xl px-4 pb-20 pt-32 text-center sm:px-6">

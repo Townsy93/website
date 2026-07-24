@@ -8,6 +8,8 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { PortableBody } from "@/components/modules/PortableBody";
 import { NewsletterBand } from "@/components/modules/NewsletterBand";
 import { PostPills, formatDate } from "@/components/modules/postCard";
+import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { SITE_URL } from "@/lib/site";
 
 export const revalidate = 3600;
 
@@ -24,8 +26,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await client.fetch(POST_QUERY, { slug });
   return {
-    title: post?.seo?.metaTitle ?? `${post?.title ?? "Insight"} — zippily`,
+    title: post?.seo?.metaTitle ?? post?.title ?? "Insight",
     description: post?.seo?.metaDescription ?? post?.excerpt ?? undefined,
+    alternates: { canonical: `/insights/${slug}` },
+    openGraph: { type: "article", publishedTime: post?.publishedAt ?? undefined },
+    ...(post?.seo?.noIndex ? { robots: { index: false, follow: false } } : {}),
   };
 }
 
@@ -39,8 +44,31 @@ export default async function PostPage({
   const post = await client.fetch(POST_QUERY, { slug });
   if (!post) notFound();
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    url: `${SITE_URL}/insights/${slug}`,
+    datePublished: post.publishedAt,
+    dateModified: post._updatedAt,
+    author: {
+      "@type": "Person",
+      name: post.author?.name,
+      jobTitle: post.author?.role,
+    },
+    publisher: { "@id": `${SITE_URL}/#organization` },
+  };
+
   return (
     <>
+      <JsonLd data={articleJsonLd} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Insight hub", url: `${SITE_URL}/insights` },
+          { name: post.title ?? slug, url: `${SITE_URL}/insights/${slug}` },
+        ])}
+      />
       {/* Article header (H1f) */}
       <section className="bg-off-white-tan">
         <div className="mx-auto max-w-3xl px-4 pb-10 pt-32 sm:px-6">

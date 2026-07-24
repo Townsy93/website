@@ -11,9 +11,10 @@ import { StatTrio } from "@/components/modules/StatTrio";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Our Work — zippily",
+  title: "Our Work",
   description:
     "Real businesses, real before-and-afters — case studies and reviews from NZ & AU clients.",
+  alternates: { canonical: "/our-work" },
 };
 
 export default async function OurWorkPage() {
