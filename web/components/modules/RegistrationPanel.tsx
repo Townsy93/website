@@ -78,15 +78,12 @@ export function RegistrationPanel(props: Props) {
         firstname: value("firstName"),
         lastname: value("lastName"),
         email: value("email"),
-        company: value("company"),
+        // The HubSpot form takes company as a company-object property.
+        "0-2/name": value("company"),
         phone: value("phone"),
-        message: [
-          `Event: ${eventTitle}`,
-          isWaitlist ? "Waitlist request" : "Registration",
-          value("goals") && `Wants to get out of it: ${value("goals")}`,
-        ]
-          .filter(Boolean)
-          .join("\n"),
+        session_goals: value("goals"),
+        event_registered_for: eventTitle,
+        registration_type: isWaitlist ? "Waitlist" : "Registration",
       });
       setSending(false);
     }
@@ -112,8 +109,9 @@ export function RegistrationPanel(props: Props) {
         <input required type="email" name="email" className={FIELD} />
       </label>
       <label className="flex flex-col gap-1.5">
+        {/* Required to match the HubSpot form, which needs a company. */}
         <span className={LABEL}>Company</span>
-        <input name="company" className={FIELD} />
+        <input required name="company" className={FIELD} />
       </label>
       <label className="flex flex-col gap-1.5">
         <span className={LABEL}>
