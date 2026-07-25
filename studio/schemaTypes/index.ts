@@ -9,10 +9,18 @@ import {link} from './objects/link'
 import {pricing, pricingTier} from './objects/pricing'
 import {seo} from './objects/seo'
 import {stat} from './objects/stat'
+import {
+  featureSuggestion,
+  hubspotLicensing,
+  meetingRecord,
+  recommendation,
+  stakeholder,
+} from './objects/clientPortalObjects'
 
 // Documents
 import {blogPost} from './documents/blogPost'
 import {caseStudy} from './documents/caseStudy'
+import {client} from './documents/client'
 import {event} from './documents/event'
 import {hubOffering} from './documents/hubOffering'
 import {industry} from './documents/industry'
@@ -63,6 +71,12 @@ export const schemaTypes = [
   iconCard,
   seo,
   blockContent,
+  // client portal objects
+  stakeholder,
+  recommendation,
+  featureSuggestion,
+  meetingRecord,
+  hubspotLicensing,
   // documents
   service,
   industry,
@@ -75,6 +89,7 @@ export const schemaTypes = [
   testimonial,
   event,
   legalPage,
+  client,
   // singletons
   homePage,
   servicesLandingPage,

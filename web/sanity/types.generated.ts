@@ -473,6 +473,175 @@ export type HomePage = {
   seo?: Seo;
 };
 
+export type Client = {
+  _id: string;
+  _type: "client";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  clientName: string;
+  slug: Slug;
+  clientLogo?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  engagementType: "project" | "retainer";
+  retainerHoursPerMonth?: number;
+  startDate: string;
+  endDate?: string;
+  portalStatus: "active" | "suspended" | "archived";
+  emailDomains: Array<string>;
+  stakeholders?: Array<
+    {
+      _key: string;
+    } & Stakeholder
+  >;
+  zippilySpecialists?: Array<
+    {
+      _key: string;
+    } & TeamMemberReference
+  >;
+  pointOfContact?: TeamMemberReference;
+  meetingLink?: string;
+  asanaPortfolioId: string;
+  asanaLegacyProjectIds?: Array<string>;
+  hubspotCompanyId?: string;
+  xeroContactId?: string;
+  hubspotLicensing?: HubspotLicensing;
+  billingDayOfMonth: number;
+  billingNotes?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  portalWelcomeNote?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  goals?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  challenges?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  recommendations?: Array<
+    {
+      _key: string;
+    } & Recommendation
+  >;
+  featureSuggestions?: Array<
+    {
+      _key: string;
+    } & FeatureSuggestion
+  >;
+  meetingRecords?: Array<
+    {
+      _key: string;
+    } & MeetingRecord
+  >;
+};
+
+export type HubOfferingReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "hubOffering";
+};
+
+export type HubspotLicensing = {
+  _type: "hubspotLicensing";
+  hubs?: Array<
+    {
+      _key: string;
+    } & HubOfferingReference
+  >;
+  tier?: "free" | "starter" | "professional" | "enterprise";
+  seats?: number;
+  renewalDate?: string;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
+};
+
 export type LegalPage = {
   _id: string;
   _type: "legalPage";
@@ -483,12 +652,6 @@ export type LegalPage = {
   slug: Slug;
   body: BlockContent;
   seo?: Seo;
-};
-
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
 };
 
 export type Event = {
@@ -597,28 +760,6 @@ export type PartnerIntegration = {
   seo?: Seo;
 };
 
-export type HubOffering = {
-  _id: string;
-  _type: "hubOffering";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name: string;
-  eyebrow: string;
-  description: string;
-  icon?: string;
-  linkedService: ServiceReference;
-  isFeatured?: boolean;
-  order: number;
-};
-
-export type HubOfferingReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "hubOffering";
-};
-
 export type BlogPost = {
   _id: string;
   _type: "blogPost";
@@ -665,6 +806,56 @@ export type TeamMember = {
   whyTheyLoveHubSpot?: string;
   linkedIn?: string;
   order?: number;
+};
+
+export type MeetingRecord = {
+  _type: "meetingRecord";
+  meetingDate: string;
+  title: string;
+  summary?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  recordingUrl?: string;
+  attendees?: Array<string>;
+};
+
+export type FeatureSuggestion = {
+  _type: "featureSuggestion";
+  featureName: string;
+  relatedHub?: HubOfferingReference;
+  howItWorks?: string;
+  whyWeSuggestIt?: string;
+  priority?: "high" | "medium" | "low";
+};
+
+export type HubOffering = {
+  _id: string;
+  _type: "hubOffering";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  eyebrow: string;
+  description: string;
+  icon?: string;
+  linkedService: ServiceReference;
+  isFeatured?: boolean;
+  order: number;
 };
 
 export type Service = {
@@ -800,20 +991,38 @@ export type Pricing = {
   fallbackText?: string;
 };
 
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
+export type Recommendation = {
+  _type: "recommendation";
+  title: string;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  horizon: "shortTerm" | "longTerm";
+  status: "proposed" | "accepted" | "declined" | "done";
+  dateAdded: string;
 };
 
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
+export type Stakeholder = {
+  _type: "stakeholder";
+  fullName: string;
+  email: string;
+  role?: string;
+  isPortalAdmin?: boolean;
 };
 
 export type IconCard = {
@@ -955,25 +1164,31 @@ export type AllSanitySchemaTypes =
   | ServiceReference
   | ServicesLandingPage
   | HomePage
-  | LegalPage
+  | Client
+  | HubOfferingReference
+  | HubspotLicensing
+  | SanityImageCrop
+  | SanityImageHotspot
   | Slug
+  | LegalPage
   | Event
   | Geopoint
   | SanityFileAssetReference
   | Resource
   | PartnerIntegration
-  | HubOffering
-  | HubOfferingReference
   | BlogPost
   | TeamMember
+  | MeetingRecord
+  | FeatureSuggestion
+  | HubOffering
   | Service
   | Stat
   | CaseStudy
   | Industry
   | Testimonial
   | Pricing
-  | SanityImageCrop
-  | SanityImageHotspot
+  | Recommendation
+  | Stakeholder
   | IconCard
   | PricingTier
   | FaqItem

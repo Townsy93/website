@@ -43,6 +43,8 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('hubOffering').title('Hub offerings'),
       S.documentTypeListItem('partnerIntegration').title('Partner integrations'),
       S.divider(),
+      S.documentTypeListItem('client').title('Clients (portal)'),
+      S.divider(),
       S.documentTypeListItem('teamMember').title('Team members'),
       S.documentTypeListItem('testimonial').title('Testimonials'),
       S.documentTypeListItem('legalPage').title('Legal pages'),
