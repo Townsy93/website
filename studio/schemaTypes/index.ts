@@ -40,6 +40,7 @@ import {homePage} from './singletons/homePage'
 import {industriesHubPage} from './singletons/industriesHubPage'
 import {insightHubPage} from './singletons/insightHubPage'
 import {ourWorkPage} from './singletons/ourWorkPage'
+import {portalSettings} from './singletons/portalSettings'
 import {servicesLandingPage} from './singletons/servicesLandingPage'
 import {siteSettings} from './singletons/siteSettings'
 import {solutionsPage} from './singletons/solutionsPage'
@@ -56,6 +57,7 @@ export const SINGLETON_TYPES = [
   'careersPage',
   'eventsPage',
   'siteSettings',
+  'portalSettings',
 ] as const
 
 export const schemaTypes = [
@@ -102,4 +104,5 @@ export const schemaTypes = [
   careersPage,
   eventsPage,
   siteSettings,
+  portalSettings,
 ]

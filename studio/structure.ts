@@ -50,6 +50,7 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('legalPage').title('Legal pages'),
       S.divider(),
       singleton(S, 'Site settings', 'siteSettings'),
+      singleton(S, 'Portal settings', 'portalSettings'),
     ])
 
 // Keep singletons out of the generic "create new document" flows.
