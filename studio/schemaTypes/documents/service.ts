@@ -61,6 +61,15 @@ export const service = defineType({
       validation: (rule) => rule.max(160),
     }),
     defineField({
+      name: 'pageBuilt',
+      title: 'Page is built',
+      type: 'boolean',
+      group: 'content',
+      initialValue: false,
+      description:
+        'Off = the page still holds placeholder copy: it is kept out of the sitemap and marked noindex, so unfinished wording can never be picked up by Google. Turn on once the real copy has landed.',
+    }),
+    defineField({
       name: 'hero',
       title: 'Hero',
       type: 'hero',

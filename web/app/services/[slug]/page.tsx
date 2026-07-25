@@ -31,7 +31,12 @@ export async function generateMetadata({
     title: service?.seo?.metaTitle ?? service?.title ?? "Service",
     description: service?.seo?.metaDescription ?? service?.shortDescription ?? undefined,
     alternates: { canonical: `/services/${slug}` },
-    ...(service?.seo?.noIndex ? { robots: { index: false, follow: false } } : {}),
+    // An unbuilt page still holds placeholder copy, so it is noindexed the
+    // same way an unbuilt industry is. follow stays true: the links out of
+    // it are real, only the wording is not.
+    ...(service?.seo?.noIndex || !service?.pageBuilt
+      ? { robots: { index: false, follow: true } }
+      : {}),
   };
 }
 

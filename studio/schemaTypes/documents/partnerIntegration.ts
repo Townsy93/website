@@ -21,6 +21,14 @@ export const partnerIntegration = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'pageBuilt',
+      title: 'Page is built',
+      type: 'boolean',
+      initialValue: false,
+      description:
+        'Off = the page still holds placeholder copy: kept out of the sitemap and marked noindex, so unfinished wording can never be picked up by Google.',
+    }),
+    defineField({
       name: 'hero',
       title: 'Hero',
       type: 'hero',

@@ -5,7 +5,8 @@ import { SITE_URL } from "@/lib/site";
 
 const SITEMAP_QUERY = defineQuery(
   `{
-    "services": *[_type == "service" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
+    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },
+    "solutions": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },
     "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },
     "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },
     "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
@@ -50,6 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...staticRoutes,
     ...entries("/services", data.services, 0.8),
+    ...entries("/solutions", data.solutions, 0.7),
     ...entries("/industries", data.industries, 0.6),
     ...entries("/our-work", data.caseStudies, 0.6),
     ...entries("/insights", data.posts, 0.5),

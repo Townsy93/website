@@ -15,6 +15,21 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type PortalSettings = {
+  _id: string;
+  _type: "portalSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  notificationRecipients: Array<string>;
+  fromName: string;
+  fromEmail: string;
+  replyToEmail?: string;
+  portalUrl: string;
+  supportEmail?: string;
+  scopeBoundaryNote?: string;
+};
+
 export type SiteSettings = {
   _id: string;
   _type: "siteSettings";
@@ -742,6 +757,7 @@ export type PartnerIntegration = {
   _rev: string;
   title: string;
   slug: Slug;
+  pageBuilt?: boolean;
   hero: Hero;
   whatItDoes?: BlockContent;
   whatWeSetUp?: Array<
@@ -870,6 +886,7 @@ export type Service = {
   icon?: string;
   shortDescription: string;
   whoItsFor?: string;
+  pageBuilt?: boolean;
   hero: Hero;
   heroMeta?: string;
   painPoints?: Array<
@@ -1140,6 +1157,7 @@ export type SanityImageAsset = {
 };
 
 export type AllSanitySchemaTypes =
+  | PortalSettings
   | SiteSettings
   | SanityImageAssetReference
   | Seo
@@ -1202,9 +1220,13 @@ export type AllSanitySchemaTypes =
 
 // Source: ../web/app/sitemap.ts
 // Variable: SITEMAP_QUERY
-// Query: {    "services": *[_type == "service" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt }  }
+// Query: {    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "solutions": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt }  }
 export type SITEMAP_QUERY_RESULT = {
   services: Array<{
+    slug: string;
+    _updatedAt: string;
+  }>;
+  solutions: Array<{
     slug: string;
     _updatedAt: string;
   }>;
@@ -1528,6 +1550,7 @@ export type SERVICE_QUERY_RESULT = {
   icon?: string;
   shortDescription: string;
   whoItsFor?: string;
+  pageBuilt?: boolean;
   hero: Hero;
   heroMeta?: string;
   painPoints?: Array<
@@ -2068,6 +2091,7 @@ export type PARTNER_INTEGRATION_QUERY_RESULT = {
   _rev: string;
   title: string;
   slug: Slug;
+  pageBuilt?: boolean;
   hero: Hero;
   whatItDoes?: BlockContent;
   whatWeSetUp?: Array<
@@ -2159,7 +2183,7 @@ export type POST_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '{\n    "services": *[_type == "service" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },\n    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt }\n  }': SITEMAP_QUERY_RESULT;
+    '{\n    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "solutions": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },\n    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt }\n  }': SITEMAP_QUERY_RESULT;
     '*[_type == "siteSettings"][0]': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "homePage"][0]{\n    ...,\n    featuredServices[]->{_id, title, slug, icon, shortDescription, whoItsFor},\n    featuredCaseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}},\n    testimonials[]->{_id, quote, name, role, company, avatar},\n    featuredIndustries[]->{_id, title, slug, icon, shortDescription, pageBuilt}\n  }': HOME_PAGE_QUERY_RESULT;
     '*[_type == "servicesLandingPage"][0]{\n    ...,\n    serviceCards[]{\n      ...,\n      service->{_id, title, slug, category, icon, shortDescription, whoItsFor}\n    },\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}}\n  }': SERVICES_LANDING_QUERY_RESULT;

@@ -33,7 +33,11 @@ export async function generateMetadata({
     description:
       page?.seo?.metaDescription ?? page?.hero?.subheading ?? undefined,
     alternates: { canonical: `/solutions/${slug}` },
-    ...(page?.seo?.noIndex ? { robots: { index: false, follow: false } } : {}),
+    // Unbuilt pages still hold placeholder copy — noindexed until real
+    // wording lands, but their outbound links are real so follow stays true.
+    ...(page?.seo?.noIndex || !page?.pageBuilt
+      ? { robots: { index: false, follow: true } }
+      : {}),
   };
 }
 
