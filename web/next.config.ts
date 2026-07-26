@@ -23,6 +23,13 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
   { source: "/testimonials", destination: "/our-work" },
   { source: "/case-studies/:slug", destination: "/our-work/:slug" },
   { source: "/blog", destination: "/insights" },
+  // The Squarespace post whose slug was an auto-generated id. Renamed for
+  // readability, so its old URL needs its own hop — the generic rule below
+  // would send it to a slug that no longer exists.
+  {
+    source: "/blog/5yh0a2hi82nkj6y0w8sonvdqgqtl0e",
+    destination: "/insights/mapping-your-tech-ecosystem",
+  },
   { source: "/blog/:slug", destination: "/insights/:slug" },
   // Events live at /events but sit under About us in the nav.
   { source: "/about-us/events", destination: "/events" },
