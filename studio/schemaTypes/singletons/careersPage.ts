@@ -19,6 +19,15 @@ export const careersPage = defineType({
   ],
   fields: [
     defineField({
+      name: 'pageBuilt',
+      title: 'Page is built',
+      type: 'boolean',
+      group: 'content',
+      initialValue: false,
+      description:
+        'Off = the page still holds placeholder copy: kept out of the sitemap and served noindex, so unfinished wording cannot be picked up by Google. The page stays reachable for anyone reviewing it. Turn on once the real copy has landed.',
+    }),
+    defineField({
       name: 'hero',
       title: 'Hero',
       type: 'hero',

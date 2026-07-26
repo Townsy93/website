@@ -11,6 +11,7 @@ const SITEMAP_QUERY = defineQuery(
     "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },
     "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
     "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
+    "careersBuilt": *[_type == "careersPage"][0].pageBuilt,
     "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }
   }`,
 );
@@ -29,7 +30,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/resources", priority: 0.7 },
     { path: "/events", priority: 0.7 },
     { path: "/contact", priority: 0.9 },
-    { path: "/careers", priority: 0.6 },
+    // Only once the placeholder copy has been replaced.
+    ...(data.careersBuilt ? [{ path: "/careers", priority: 0.6 }] : []),
   ].map(({ path, priority }) => ({
     url: `${SITE_URL}${path}`,
     changeFrequency: "weekly",

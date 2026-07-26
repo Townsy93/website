@@ -20,7 +20,11 @@ export async function generateMetadata(): Promise<Metadata> {
       page?.hero?.subheading ??
       "HubSpot roles at a small Auckland consultancy where you work directly with senior people.",
     alternates: { canonical: "/careers" },
-    ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
+    // Placeholder copy must not reach Google. follow stays true — the links
+    // out of the page are real, only the wording is not.
+    ...(page?.seo?.noIndex || !page?.pageBuilt
+      ? { robots: { index: false, follow: true } }
+      : {}),
   };
 }
 
