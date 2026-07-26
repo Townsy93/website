@@ -1,8 +1,28 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "zippily-website",
+  // Must match the deployed worker. This previously said "zippily-website",
+  // which does not exist — a local `wrangler deploy` would have created a
+  // second worker while website.sean-fe5.workers.dev carried on serving the
+  // old build, with nothing to indicate anything was wrong.
+  //
+  // Note the site normally deploys through Cloudflare's Git integration.
+  // Now that the name is correct, a local deploy overwrites production.
+  "name": "website",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat"],
-  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" }
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+
+  // CV uploads for job applications. Left unbound until the Cloudflare token
+  // has R2 scope — /api/careers/upload reports the feature unavailable and
+  // the application still submits, rather than failing.
+  //
+  // "r2_buckets": [
+  //   { "binding": "CAREERS_UPLOADS", "bucket_name": "zippily-careers-uploads" }
+  // ],
+
+  // SANITY_API_READ_TOKEN is set with `wrangler secret put --name website`.
+  // It is what draft mode and Sanity Presentation need at runtime; without
+  // it /api/draft-mode/enable returns a 500.
+  "vars": {}
 }
