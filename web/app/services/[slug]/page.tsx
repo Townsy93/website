@@ -49,8 +49,11 @@ export default async function ServicePage({
   const service = await sanityFetch(SERVICE_QUERY, { slug });
   if (!service) notFound();
 
-  const pricingConfirmed = Boolean(service.pricing?.confirmed);
-  const tiers = pricingConfirmed ? (service.pricing?.tiers ?? []) : [];
+  // The shared table wins; the inline block is only a fallback for services
+  // not yet moved across.
+  const pricingSource = service.pricingTable ?? service.pricing;
+  const pricingConfirmed = Boolean(pricingSource?.confirmed);
+  const tiers = pricingConfirmed ? (pricingSource?.tiers ?? []) : [];
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
@@ -62,12 +65,16 @@ export default async function ServicePage({
     areaServed: ["NZ", "AU"],
     ...(pricingConfirmed && tiers.length > 0
       ? {
-          offers: tiers.map((tier) => ({
-            "@type": "Offer",
-            name: tier.name,
-            price: tier.price,
-            priceCurrency: "NZD",
-          })),
+          // Only tiers with a real number. An Offer without a price is
+          // invalid structured data and Google flags the whole block.
+          offers: tiers
+            .filter((tier) => !tier.custom && typeof tier.price === "number")
+            .map((tier) => ({
+              "@type": "Offer",
+              name: tier.name,
+              price: tier.price,
+              priceCurrency: "NZD",
+            })),
         }
       : {}),
   };
@@ -208,11 +215,15 @@ export default async function ServicePage({
                       </p>
                     )}
                     <p className="mt-5 text-h2">
-                      ${tier.price?.toLocaleString()}
+                      {/* An Enterprise tier is scoped per deal. Showing a
+                          floor price here would be read as a list price. */}
+                      {tier.custom || typeof tier.price !== "number"
+                        ? "Custom"
+                        : `$${tier.price.toLocaleString()}`}
                       <span
                         className={`ml-2 text-caption ${featured ? "text-white/60" : "text-deep-blue-80"}`}
                       >
-                        {tier.priceSuffix}
+                        {tier.custom ? "scoped per project" : tier.priceSuffix}
                       </span>
                     </p>
                     <ul
@@ -248,7 +259,7 @@ export default async function ServicePage({
           ) : (
             <div className="mx-auto mt-12 max-w-xl rounded-2xl border-2 border-dashed border-deep-blue-20 bg-white p-10 text-center">
               <h3 className="text-h3">
-                {service.pricing?.fallbackText ?? "This one's scoped individually"}
+                {pricingSource?.fallbackText ?? "This one's scoped individually"}
               </h3>
               <p className="mt-3 text-body text-deep-blue-80">
                 Every project gets a fixed, transparent quote up front — scoped

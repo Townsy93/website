@@ -108,10 +108,21 @@ export const service = defineType({
       validation: (rule) => rule.max(4),
     }),
     defineField({
+      name: 'pricingTable',
+      title: 'Pricing table',
+      type: 'reference',
+      to: [{type: 'pricingTable'}],
+      group: 'pricing',
+      description:
+        'The shared table this page renders. Managed under Pricing tables so a repricing round is one edit, not one per service.',
+    }),
+    defineField({
       name: 'pricing',
-      title: 'Pricing',
+      title: 'Pricing (legacy inline)',
       type: 'pricing',
       group: 'pricing',
+      description:
+        'Only used when no pricing table is linked above. Kept so nothing broke during the move to shared tables.',
     }),
     defineField({
       name: 'caseStudy',

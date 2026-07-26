@@ -949,6 +949,13 @@ export type HubOffering = {
   order: number;
 };
 
+export type PricingTableReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "pricingTable";
+};
+
 export type Service = {
   _id: string;
   _type: "service";
@@ -975,6 +982,7 @@ export type Service = {
       _key: string;
     } & IconCard
   >;
+  pricingTable?: PricingTableReference;
   pricing?: Pricing;
   caseStudy?: CaseStudyReference;
   proofStat?: Stat;
@@ -1084,6 +1092,24 @@ export type Pricing = {
   fallbackText?: string;
 };
 
+export type PricingTable = {
+  _id: string;
+  _type: "pricingTable";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  service?: ServiceReference;
+  confirmed?: boolean;
+  tiers?: Array<
+    {
+      _key: string;
+    } & PricingTier
+  >;
+  fallbackText?: string;
+  internalNote?: string;
+};
+
 export type Recommendation = {
   _type: "recommendation";
   title: string;
@@ -1136,9 +1162,10 @@ export type PricingTier = {
   _type: "pricingTier";
   name: string;
   description?: string;
-  price: number;
+  custom?: boolean;
+  price?: number;
   priceSuffix?: string;
-  features: Array<string>;
+  features?: Array<string>;
   ctaLabel?: string;
   featured?: boolean;
 };
@@ -1284,12 +1311,14 @@ export type AllSanitySchemaTypes =
   | MeetingRecord
   | FeatureSuggestion
   | HubOffering
+  | PricingTableReference
   | Service
   | Stat
   | CaseStudy
   | Industry
   | Testimonial
   | Pricing
+  | PricingTable
   | Recommendation
   | Stakeholder
   | Benefit
@@ -1628,7 +1657,7 @@ export type SERVICE_SLUGS_QUERY_RESULT = Array<string>;
 
 // Source: ../web/sanity/queries.ts
 // Variable: SERVICE_QUERY
-// Query: *[_type == "service" && slug.current == $slug][0]{    ...,    caseStudy->{_id, client, slug, headline, resultLine, photo, status},    testimonial->{_id, quote, name, role, company, avatar},    relatedServices[]->{_id, title, slug, icon, shortDescription}  }
+// Query: *[_type == "service" && slug.current == $slug][0]{    ...,    pricingTable->{confirmed, tiers, fallbackText},    caseStudy->{_id, client, slug, headline, resultLine, photo, status},    testimonial->{_id, quote, name, role, company, avatar},    relatedServices[]->{_id, title, slug, icon, shortDescription}  }
 export type SERVICE_QUERY_RESULT = {
   _id: string;
   _type: "service";
@@ -1655,6 +1684,15 @@ export type SERVICE_QUERY_RESULT = {
       _key: string;
     } & IconCard
   >;
+  pricingTable: {
+    confirmed: boolean | null;
+    tiers: Array<
+      {
+        _key: string;
+      } & PricingTier
+    > | null;
+    fallbackText: string | null;
+  } | null;
   pricing?: Pricing;
   caseStudy: {
     _id: string;
@@ -2403,7 +2441,7 @@ declare module "@sanity/client" {
     '*[_type == "contactPage"][0]': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "blogPost"] | order(publishedAt desc)[0...3]{\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': LATEST_POSTS_QUERY_RESULT;
     '*[_type == "service" && defined(slug.current)].slug.current': SERVICE_SLUGS_QUERY_RESULT;
-    '*[_type == "service" && slug.current == $slug][0]{\n    ...,\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar},\n    relatedServices[]->{_id, title, slug, icon, shortDescription}\n  }': SERVICE_QUERY_RESULT;
+    '*[_type == "service" && slug.current == $slug][0]{\n    ...,\n    pricingTable->{confirmed, tiers, fallbackText},\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar},\n    relatedServices[]->{_id, title, slug, icon, shortDescription}\n  }': SERVICE_QUERY_RESULT;
     '*[_type == "solutionsPage"][0]{\n    ...,\n    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, service->{title}}\n  }': SOLUTIONS_PAGE_QUERY_RESULT;
     '*[_type == "hubOffering"] | order(order asc){\n    _id, name, eyebrow, description, icon, isFeatured,\n    linkedService->{title, slug}\n  }': HUB_OFFERINGS_QUERY_RESULT;
     '*[_type == "industriesHubPage"][0]{\n    ...,\n    industries[]->{_id, title, slug, icon, shortDescription, pageBuilt},\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, industry->{title}}\n  }': INDUSTRIES_HUB_QUERY_RESULT;

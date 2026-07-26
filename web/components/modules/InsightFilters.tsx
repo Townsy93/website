@@ -144,8 +144,8 @@ export function InsightFilters({ posts }: { posts: PostCardData[] }) {
               <SanityImage
                 image={post.coverImage}
                 width={400}
-                height={200}
-                className="h-44 w-full object-cover"
+                height={176}
+                className="h-36 w-full object-cover"
                 placeholderLabel="Post image"
               />
               <div className="p-6">

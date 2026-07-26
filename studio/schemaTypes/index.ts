@@ -33,6 +33,7 @@ import {service} from './documents/service'
 import {teamMember} from './documents/teamMember'
 import {testimonial} from './documents/testimonial'
 import {vacancy} from './documents/vacancy'
+import {pricingTable} from './documents/pricingTable'
 
 // Singletons
 import {aboutPage} from './singletons/aboutPage'
@@ -98,6 +99,7 @@ export const schemaTypes = [
   legalPage,
   client,
   vacancy,
+  pricingTable,
   // singletons
   homePage,
   servicesLandingPage,

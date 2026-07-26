@@ -18,10 +18,25 @@ export const pricingTier = defineType({
       validation: (rule) => rule.max(120),
     }),
     defineField({
+      name: 'custom',
+      title: 'Custom / quoted tier',
+      type: 'boolean',
+      initialValue: false,
+      description:
+        'Enterprise tiers are scoped per deal. On = the card shows "Custom" instead of a number, so a floor price never gets read as a list price.',
+    }),
+    defineField({
       name: 'price',
       title: 'Price (NZD, ex GST)',
       type: 'number',
-      validation: (rule) => rule.required().positive(),
+      hidden: ({parent}) => Boolean(parent?.custom),
+      validation: (rule) =>
+        rule.custom((price, context) => {
+          const custom = (context.parent as {custom?: boolean} | undefined)?.custom
+          if (custom) return true
+          if (typeof price !== 'number' || price <= 0) return 'A non-custom tier needs a price'
+          return true
+        }),
     }),
     defineField({
       name: 'priceSuffix',
@@ -35,7 +50,7 @@ export const pricingTier = defineType({
       title: 'Included features',
       type: 'array',
       of: [defineArrayMember({type: 'string'})],
-      validation: (rule) => rule.required().min(3).max(8),
+      validation: (rule) => rule.min(1).max(10),
     }),
     defineField({
       name: 'ctaLabel',

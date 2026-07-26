@@ -51,6 +51,7 @@ export const SERVICE_SLUGS_QUERY = defineQuery(
 export const SERVICE_QUERY = defineQuery(
   `*[_type == "service" && slug.current == $slug][0]{
     ...,
+    pricingTable->{confirmed, tiers, fallbackText},
     caseStudy->{_id, client, slug, headline, resultLine, photo, status},
     testimonial->{_id, quote, name, role, company, avatar},
     relatedServices[]->{_id, title, slug, icon, shortDescription}
