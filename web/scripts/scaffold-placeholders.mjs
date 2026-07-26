@@ -74,9 +74,47 @@ const serviceStructure = (title) => ({
     value: P("Stat"),
     label: P("What the number means, in plain words"),
   },
+  // Renders the fallback line until a real price is confirmed, so the
+  // section exists on the page rather than vanishing.
+  pricing: {
+    confirmed: false,
+    fallbackText: P("Pricing line — or leave for a fixed quote. Tick Confirmed once the tiers are signed off"),
+  },
   seo: {
     metaTitle: P(`Meta title — ${title} | keep under 60 characters`),
     metaDescription: P("Meta description — the promise plus a reason to click. Under 155 characters"),
+  },
+});
+
+/** Case study detail (T9). */
+const caseStudyStructure = (client) => ({
+  stats: [1, 2, 3].map((n) => ({
+    _type: "stat",
+    _key: `stat${n}`,
+    value: P(`Stat ${n}`),
+    label: P(`What it means — plain words, no jargon. 5–10 words`),
+  })),
+  body: [
+    ["The problem", "What was actually broken before we arrived, in their words. 2–3 paragraphs"],
+    ["What we did", "The work, in sequence. Name the tools and the decisions. 2–3 paragraphs"],
+    ["The result", "What changed, with numbers where they exist. 1–2 paragraphs"],
+  ].flatMap(([heading, brief], index) => [
+    {
+      _type: "block",
+      _key: `h${index}`,
+      style: "h2",
+      children: [{ _type: "span", _key: `hs${index}`, text: P(`Section — ${heading}`) }],
+    },
+    {
+      _type: "block",
+      _key: `p${index}`,
+      style: "normal",
+      children: [{ _type: "span", _key: `ps${index}`, text: P(brief) }],
+    },
+  ]),
+  seo: {
+    metaTitle: P(`Meta title — ${client} case study | under 60 characters`),
+    metaDescription: P("Meta description — the outcome plus the hook. Under 155 characters"),
   },
 });
 
@@ -135,34 +173,47 @@ const query = async (groq) => {
   return (await res.json()).result;
 };
 
-// Services and industries only. partnerIntegration (/solutions) has a
+// partnerIntegration (/solutions) is deliberately excluded: it has a
 // different field set — whatItDoes, whatWeSetUp, no painPoints — so the
 // service shape would write fields that page never renders. Aircall is also
 // already part-written. Solutions get their own pass once Sean confirms
 // which ones exist beyond Aircall.
 const docs = await query(
-  `*[_type in ["service","industry"]]|order(_type asc, slug.current asc){
-     _id, _type, title, "slug": slug.current, pageBuilt,
-     "built": defined(hero.heading) && count(painPoints) > 0
+  `*[_type in ["service","industry","caseStudy"]]|order(_type asc, slug.current asc){
+     _id, _type, "title": coalesce(title, client), "slug": slug.current, pageBuilt,
+     "built": select(
+       _type == "caseStudy" => count(body) > 0,
+       defined(hero.heading) && count(painPoints) > 0
+     )
    }`,
 );
 
 const patches = [];
 for (const doc of docs) {
-  // Never overwrite a page someone has actually written.
-  if (doc.built) {
-    console.log(`  skip     ${doc._type}/${doc.slug} — already has real copy`);
+  // Skip only pages that are genuinely finished. pageBuilt is that flag for
+  // services and industries; case studies use their own body content.
+  // Everything else is topped up — setIfMissing never overwrites, so a page
+  // scaffolded in an earlier pass just gains whatever blocks were added to
+  // the structure since.
+  const finished = doc._type === "caseStudy" ? doc.built : doc.pageBuilt === true;
+  if (finished) {
+    console.log(`  skip     ${doc._type}/${doc.slug} — finished, left alone`);
     continue;
   }
   const structure =
     doc._type === "industry"
       ? industryStructure(doc.title)
-      : serviceStructure(doc.title);
+      : doc._type === "caseStudy"
+        ? caseStudyStructure(doc.title)
+        : serviceStructure(doc.title);
   patches.push({
     patch: {
       id: doc._id,
       // Only fill empty slots; never clobber anything already there.
-      setIfMissing: { ...structure, pageBuilt: false },
+      // caseStudy has no pageBuilt flag — its own status field already
+      // governs whether it is public.
+      setIfMissing:
+        doc._type === "caseStudy" ? structure : { ...structure, pageBuilt: false },
     },
   });
   console.log(`  scaffold ${doc._type}/${doc.slug}`);

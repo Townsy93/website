@@ -1018,6 +1018,7 @@ export type CaseStudy = {
   >;
   photo?: ImageWithAlt;
   videoUrl?: string;
+  videoTestimonial?: VimeoEmbed;
   testimonial?: TestimonialReference;
   body?: BlockContent;
   seo?: Seo;
@@ -1920,6 +1921,7 @@ export type CASE_STUDY_QUERY_RESULT = {
   >;
   photo?: ImageWithAlt;
   videoUrl?: string;
+  videoTestimonial?: VimeoEmbed;
   testimonial: {
     _id: string;
     quote: string;
