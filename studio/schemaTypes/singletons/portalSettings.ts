@@ -66,7 +66,7 @@ export const portalSettings = defineType({
       title: 'Support address shown to clients',
       type: 'string',
       group: 'copy',
-      initialValue: 'sean@zippily.co.nz',
+      initialValue: 'hello@zippily.co.nz',
       validation: (rule) => rule.email(),
     }),
     defineField({
