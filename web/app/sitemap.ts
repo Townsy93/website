@@ -11,7 +11,7 @@ const SITEMAP_QUERY = defineQuery(
     "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },
     "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
     "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
-    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current)]{ "slug": slug.current, _updatedAt }
+    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }
   }`,
 );
 
