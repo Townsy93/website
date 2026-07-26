@@ -292,3 +292,21 @@ D1–D5 ruled by Sean, 24 Jul 2026. D6–D11 still open.
 - **D11 — Case study taxonomy**: case cards are tagged by *service* on Our
   Work/Services landing but by *industry* on Industries pages — schema needs
   both references on `caseStudy` (matches tracker's schema hints).
+
+### Careers (Templates M and R) — added by the Careers brief
+
+- **M35 — Vacancy card** (Careers hub, Related roles): role title, a wrapping
+  metadata row of icon+label items (work arrangement / employment type /
+  location), truncated summary, right-aligned filled "View role". The metadata
+  row wraps rather than truncating — losing "Remote" off the end of a line is
+  what makes a qualified person skip a role.
+- **M36 — Video embed** (`vimeoEmbed`): facade-rendered Vimeo player — poster
+  plus play button, iframe injected on click, fixed aspect ratio from the
+  start. Landscape / portrait / square. Shared by careersPage.lifeVideo,
+  aboutPage.brandVideo, caseStudy.videoTestimonial and blog post bodies, so it
+  is one module, not four.
+- **M37 — File upload field** (Application form): PDF/DOC/DOCX, 10MB cap,
+  uploaded ahead of submission with only the key passed to HubSpot. Degrades
+  to an inline "email it to us" message when storage is unavailable rather
+  than blocking the application.
+

@@ -27,7 +27,8 @@ From the page tracker (15 Jul 2026). Priority 1 = build first.
 | `/solutions` | T4 Solutions | Blocked (copy) | 2 |
 | `/solutions/aircall` | T5 | Partial — no prototype (D5) | 3 |
 | `/about-us` | T12 About | Partial — team fields + video decision (D6) | 1 |
-| `/about-us/careers` | (none — not card-sorted) | Blocked | 4 |
+| `/careers` | T-M Careers hub | Built — placeholder copy, awaiting copywriter | 4 |
+| `/careers/[slug]` | T-R Vacancy detail | Built — one example role, delete before launch | 4 |
 | `/about-us/events` | (none — not card-sorted; manual events, Humanatix dropped) | Blocked | 4 |
 | `/industries` | T6 Industries hub | Ready | 3 |
 | `/industries/financial-services` | T7 | Partial | 3 |
@@ -195,7 +196,7 @@ the module library, reviewed in-browser).
 
 Still open:
 1. D6 About video decision; D10 real contact details; M34 chat decision
-2. Careers/Events card-sorts; Aircall + Resources page designs (Priority 3–4)
+2. Events card-sort (Careers card-sort superseded by the Careers brief); Aircall + Resources page designs (Priority 3–4)
 3. Video testimonial assets (3 in production)
 4. Client logo permissions; candid team photography; Bailey's profile content
 5. Real stat values (brands count "TBC+", verify 23/11/40+ figures at launch)
