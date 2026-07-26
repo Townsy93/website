@@ -119,41 +119,61 @@ export type CareersPage = {
   _updatedAt: string;
   _rev: string;
   hero?: Hero;
-  intro?: BlockContent;
-  ctaBanner?: CtaBanner;
+  storyRows?: Array<{
+    eyebrow: string;
+    body: string;
+    image: ImageWithAlt;
+    imagePosition?: "left" | "right";
+    _type: "storyRow";
+    _key: string;
+  }>;
+  values?: Array<{
+    label: string;
+    body: string;
+    _type: "valueBlock";
+    _key: string;
+  }>;
+  valuesImage?: ImageWithAlt;
+  whyIntro?: string;
+  teamPhoto?: ImageWithAlt;
+  benefits?: Array<
+    {
+      _key: string;
+    } & Benefit
+  >;
+  lifeVideo?: VimeoEmbed;
+  openRolesHeading?: string;
+  emptyStateMessage: string;
+  registerInterest?: {
+    heading?: string;
+    body?: string;
+  };
   seo?: Seo;
 };
 
-export type BlockContent = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h2" | "h3" | "blockquote";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }
-  | {
-      asset?: SanityImageAssetReference;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt: string;
-      caption?: string;
-      _type: "figure";
-      _key: string;
-    }
->;
+export type VimeoEmbed = {
+  _type: "vimeoEmbed";
+  url: string;
+  title: string;
+  orientation: "landscape" | "portrait" | "square";
+  posterImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  caption?: string;
+};
+
+export type ImageWithAlt = {
+  _type: "imageWithAlt";
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt: string;
+};
 
 export type ContactPage = {
   _id: string;
@@ -365,14 +385,36 @@ export type AboutPage = {
   seo?: Seo;
 };
 
-export type ImageWithAlt = {
-  _type: "imageWithAlt";
-  asset?: SanityImageAssetReference;
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  alt: string;
-};
+export type BlockContent = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h2" | "h3" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      caption?: string;
+      _type: "figure";
+      _key: string;
+    }
+>;
 
 export type SolutionsPage = {
   _id: string;
@@ -486,6 +528,44 @@ export type HomePage = {
   >;
   ctaBanner?: CtaBanner;
   seo?: Seo;
+};
+
+export type Vacancy = {
+  _id: string;
+  _type: "vacancy";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  status: "open" | "closed";
+  workArrangement: "onSite" | "hybrid" | "remote";
+  employmentType: "fullTime" | "partTime" | "contract" | "internship";
+  location: string;
+  department?: "delivery" | "marketing" | "operations" | "engineering";
+  summary: string;
+  description: BlockContent;
+  responsibilities: Array<string>;
+  requirements: Array<string>;
+  niceToHave?: Array<string>;
+  benefitsOverride?: Array<
+    {
+      _key: string;
+    } & Benefit
+  >;
+  salaryMin?: number;
+  salaryMax?: number;
+  salaryCurrency?: string;
+  salaryPeriod?: "YEAR" | "MONTH" | "HOUR";
+  publishedAt: string;
+  validThrough?: string;
+  seo?: Seo;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
 };
 
 export type Client = {
@@ -649,12 +729,6 @@ export type SanityImageHotspot = {
   y: number;
   height: number;
   width: number;
-};
-
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
 };
 
 export type LegalPage = {
@@ -1042,6 +1116,13 @@ export type Stakeholder = {
   isPortalAdmin?: boolean;
 };
 
+export type Benefit = {
+  _type: "benefit";
+  icon: string;
+  heading: string;
+  body: string;
+};
+
 export type IconCard = {
   _type: "iconCard";
   title: string;
@@ -1165,7 +1246,8 @@ export type AllSanitySchemaTypes =
   | CtaBanner
   | Hero
   | CareersPage
-  | BlockContent
+  | VimeoEmbed
+  | ImageWithAlt
   | ContactPage
   | BlogPostReference
   | InsightHubPage
@@ -1177,17 +1259,18 @@ export type AllSanitySchemaTypes =
   | IndustriesHubPage
   | TeamMemberReference
   | AboutPage
-  | ImageWithAlt
+  | BlockContent
   | SolutionsPage
   | ServiceReference
   | ServicesLandingPage
   | HomePage
+  | Vacancy
+  | Slug
   | Client
   | HubOfferingReference
   | HubspotLicensing
   | SanityImageCrop
   | SanityImageHotspot
-  | Slug
   | LegalPage
   | Event
   | Geopoint
@@ -1207,6 +1290,7 @@ export type AllSanitySchemaTypes =
   | Pricing
   | Recommendation
   | Stakeholder
+  | Benefit
   | IconCard
   | PricingTier
   | FaqItem
@@ -2179,6 +2263,125 @@ export type POST_QUERY_RESULT = {
   }>;
 } | null;
 
+// Source: ../web/sanity/queries.ts
+// Variable: CAREERS_PAGE_QUERY
+// Query: *[_type == "careersPage"][0]{    ...,    "openRoles": *[_type == "vacancy" && status == "open" && defined(slug.current)]      | order(publishedAt desc){        _id, title, slug, summary, workArrangement, employmentType, location, department      }  }
+export type CAREERS_PAGE_QUERY_RESULT = {
+  _id: string;
+  _type: "careersPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hero?: Hero;
+  storyRows?: Array<{
+    eyebrow: string;
+    body: string;
+    image: ImageWithAlt;
+    imagePosition?: "left" | "right";
+    _type: "storyRow";
+    _key: string;
+  }>;
+  values?: Array<{
+    label: string;
+    body: string;
+    _type: "valueBlock";
+    _key: string;
+  }>;
+  valuesImage?: ImageWithAlt;
+  whyIntro?: string;
+  teamPhoto?: ImageWithAlt;
+  benefits?: Array<
+    {
+      _key: string;
+    } & Benefit
+  >;
+  lifeVideo?: VimeoEmbed;
+  openRolesHeading?: string;
+  emptyStateMessage: string;
+  registerInterest?: {
+    heading?: string;
+    body?: string;
+  };
+  seo?: Seo;
+  openRoles: Array<{
+    _id: string;
+    title: string;
+    slug: Slug;
+    summary: string;
+    workArrangement: "hybrid" | "onSite" | "remote";
+    employmentType: "contract" | "fullTime" | "internship" | "partTime";
+    location: string;
+    department: "delivery" | "engineering" | "marketing" | "operations" | null;
+  }>;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: VACANCY_QUERY
+// Query: *[_type == "vacancy" && slug.current == $slug][0]{    ...,    "sharedBenefits": *[_type == "careersPage"][0].benefits,    "teamPhoto": *[_type == "careersPage"][0].teamPhoto,    "registerInterest": *[_type == "careersPage"][0].registerInterest,    "related": *[_type == "vacancy" && status == "open" && slug.current != $slug]      | order(publishedAt desc)[0...3]{        _id, title, slug, summary, workArrangement, employmentType, location      }  }
+export type VACANCY_QUERY_RESULT = {
+  _id: string;
+  _type: "vacancy";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  status: "closed" | "open";
+  workArrangement: "hybrid" | "onSite" | "remote";
+  employmentType: "contract" | "fullTime" | "internship" | "partTime";
+  location: string;
+  department?: "delivery" | "engineering" | "marketing" | "operations";
+  summary: string;
+  description: BlockContent;
+  responsibilities: Array<string>;
+  requirements: Array<string>;
+  niceToHave?: Array<string>;
+  benefitsOverride?: Array<
+    {
+      _key: string;
+    } & Benefit
+  >;
+  salaryMin?: number;
+  salaryMax?: number;
+  salaryCurrency?: string;
+  salaryPeriod?: "HOUR" | "MONTH" | "YEAR";
+  publishedAt: string;
+  validThrough?: string;
+  seo?: Seo;
+  sharedBenefits: Array<
+    {
+      _key: string;
+    } & Benefit
+  > | null;
+  teamPhoto: ImageWithAlt | null;
+  registerInterest: {
+    heading?: string;
+    body?: string;
+  } | null;
+  related: Array<{
+    _id: string;
+    title: string;
+    slug: Slug;
+    summary: string;
+    workArrangement: "hybrid" | "onSite" | "remote";
+    employmentType: "contract" | "fullTime" | "internship" | "partTime";
+    location: string;
+  }>;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: VACANCY_SLUGS_QUERY
+// Query: *[_type == "vacancy" && defined(slug.current)].slug.current
+export type VACANCY_SLUGS_QUERY_RESULT = Array<string>;
+
+// Source: ../web/sanity/queries.ts
+// Variable: OPEN_VACANCY_SLUGS_QUERY
+// Query: *[_type == "vacancy" && status == "open" && defined(slug.current)]{    "slug": slug.current, _updatedAt  }
+export type OPEN_VACANCY_SLUGS_QUERY_RESULT = Array<{
+  slug: string;
+  _updatedAt: string;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -2211,5 +2414,9 @@ declare module "@sanity/client" {
     '*[_type == "partnerIntegration" && slug.current == $slug][0]{\n    ...,\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': PARTNER_INTEGRATION_QUERY_RESULT;
     '*[_type == "partnerIntegration" && defined(slug.current)].slug.current': PARTNER_INTEGRATION_SLUGS_QUERY_RESULT;
     '*[_type == "blogPost" && slug.current == $slug][0]{\n    ...,\n    hubs[]->{name},\n    author->{name, role, photo},\n    "related": *[_type == "blogPost" && slug.current != $slug] | order(publishedAt desc)[0...3]{\n      _id, title, slug, topic, coverImage, publishedAt, readTime\n    }\n  }': POST_QUERY_RESULT;
+    '*[_type == "careersPage"][0]{\n    ...,\n    "openRoles": *[_type == "vacancy" && status == "open" && defined(slug.current)]\n      | order(publishedAt desc){\n        _id, title, slug, summary, workArrangement, employmentType, location, department\n      }\n  }': CAREERS_PAGE_QUERY_RESULT;
+    '*[_type == "vacancy" && slug.current == $slug][0]{\n    ...,\n    "sharedBenefits": *[_type == "careersPage"][0].benefits,\n    "teamPhoto": *[_type == "careersPage"][0].teamPhoto,\n    "registerInterest": *[_type == "careersPage"][0].registerInterest,\n    "related": *[_type == "vacancy" && status == "open" && slug.current != $slug]\n      | order(publishedAt desc)[0...3]{\n        _id, title, slug, summary, workArrangement, employmentType, location\n      }\n  }': VACANCY_QUERY_RESULT;
+    '*[_type == "vacancy" && defined(slug.current)].slug.current': VACANCY_SLUGS_QUERY_RESULT;
+    '*[_type == "vacancy" && status == "open" && defined(slug.current)]{\n    "slug": slug.current, _updatedAt\n  }': OPEN_VACANCY_SLUGS_QUERY_RESULT;
   }
 }

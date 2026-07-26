@@ -205,3 +205,39 @@ export const POST_QUERY = defineQuery(
     }
   }`,
 );
+
+export const CAREERS_PAGE_QUERY = defineQuery(
+  `*[_type == "careersPage"][0]{
+    ...,
+    "openRoles": *[_type == "vacancy" && status == "open" && defined(slug.current)]
+      | order(publishedAt desc){
+        _id, title, slug, summary, workArrangement, employmentType, location, department
+      }
+  }`,
+);
+
+export const VACANCY_QUERY = defineQuery(
+  `*[_type == "vacancy" && slug.current == $slug][0]{
+    ...,
+    "sharedBenefits": *[_type == "careersPage"][0].benefits,
+    "teamPhoto": *[_type == "careersPage"][0].teamPhoto,
+    "registerInterest": *[_type == "careersPage"][0].registerInterest,
+    "related": *[_type == "vacancy" && status == "open" && slug.current != $slug]
+      | order(publishedAt desc)[0...3]{
+        _id, title, slug, summary, workArrangement, employmentType, location
+      }
+  }`,
+);
+
+// Every vacancy, including closed ones: a closed role keeps its URL so the
+// page can say the role is filled rather than 404ing a link someone shared.
+export const VACANCY_SLUGS_QUERY = defineQuery(
+  `*[_type == "vacancy" && defined(slug.current)].slug.current`,
+);
+
+// Sitemap and Google Jobs only ever see open roles.
+export const OPEN_VACANCY_SLUGS_QUERY = defineQuery(
+  `*[_type == "vacancy" && status == "open" && defined(slug.current)]{
+    "slug": slug.current, _updatedAt
+  }`,
+);

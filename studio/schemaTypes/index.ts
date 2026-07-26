@@ -9,6 +9,8 @@ import {link} from './objects/link'
 import {pricing, pricingTier} from './objects/pricing'
 import {seo} from './objects/seo'
 import {stat} from './objects/stat'
+import {vimeoEmbed} from './objects/vimeoEmbed'
+import {benefit} from './objects/benefit'
 import {
   featureSuggestion,
   hubspotLicensing,
@@ -30,6 +32,7 @@ import {resource} from './documents/resource'
 import {service} from './documents/service'
 import {teamMember} from './documents/teamMember'
 import {testimonial} from './documents/testimonial'
+import {vacancy} from './documents/vacancy'
 
 // Singletons
 import {aboutPage} from './singletons/aboutPage'
@@ -73,6 +76,8 @@ export const schemaTypes = [
   iconCard,
   seo,
   blockContent,
+  vimeoEmbed,
+  benefit,
   // client portal objects
   stakeholder,
   recommendation,
@@ -92,6 +97,7 @@ export const schemaTypes = [
   event,
   legalPage,
   client,
+  vacancy,
   // singletons
   homePage,
   servicesLandingPage,
