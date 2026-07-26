@@ -7,6 +7,9 @@ import {
   submitHubSpotForm,
 } from "@/lib/hubspot";
 
+const PORTAL_URL =
+  process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://zippily-portal.sean-fe5.workers.dev";
+
 const FIELD =
   "w-full rounded-xl border border-white/25 bg-white/10 px-4 py-3 text-[15px] text-white placeholder:text-white/50 focus:border-sky-blue focus:outline-none";
 
@@ -94,7 +97,10 @@ export function ApplicationForm({ roleTitle }: { roleTitle: string }) {
       message: String(form.get("note") ?? "").trim(),
       zippily_application_role: roleTitle,
       zippily_application_date: new Date().toISOString().slice(0, 10),
-      zippily_cv_key: cvKey,
+      // A bare key on a HubSpot record is not openable by anyone. Send the
+      // portal URL instead: one click for Zippily staff, 404 for everyone
+      // else, and the CV never sits on a public URL.
+      zippily_cv_url: cvKey ? `${PORTAL_URL}/api/careers-cv/${cvKey}` : "",
       zippily_referral_source: String(form.get("source") ?? ""),
     };
 
