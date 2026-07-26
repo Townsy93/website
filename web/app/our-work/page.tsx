@@ -155,8 +155,11 @@ export default async function OurWorkPage() {
                   key={review._id}
                   className="rounded-xl bg-white p-7 shadow-sm"
                 >
-                  <p aria-hidden className="text-body text-deep-orange">
-                    ★★★★★
+                  <p className="text-body text-deep-orange">
+                    <span aria-hidden>★★★★★</span>
+                    {/* The stars carry the rating visually; without this a
+                        screen reader gets the quote and no rating at all. */}
+                    <span className="sr-only">Rated 5 out of 5</span>
                   </p>
                   <blockquote className="mt-3 text-body text-deep-blue-80">
                     “{review.quote}”
