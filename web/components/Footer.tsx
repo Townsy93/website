@@ -15,7 +15,7 @@ const COMPANY_LINKS = [
   { label: "Events", href: "/events" },
   { label: "Our work", href: "/our-work" },
   { label: "Industries", href: "/industries" },
-  { label: "Careers", href: "/about-us/careers" },
+  { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -28,6 +28,7 @@ const RESOURCES_LINKS = [
 
 export type FooterSettings = {
   newsletterHeading?: string | null;
+  portalUrl?: string | null;
   linkedInUrl?: string | null;
   instagramUrl?: string | null;
   youTubeUrl?: string | null;
@@ -90,7 +91,20 @@ export function Footer({ settings }: { settings?: FooterSettings }) {
         <p className="text-caption text-white/60">
           © {new Date().getFullYear()} zippily ltd · Auckland, New Zealand
         </p>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap items-center gap-4">
+          {/* Existing clients only. Rendered from settings so it stays absent
+              until the portal is on its real domain — a workers.dev link in
+              the footer reads as unfinished. Labelled "Client login" rather
+              than "Login" so anyone who is not a client can tell at a glance
+              that it is not for them. */}
+          {settings?.portalUrl && (
+            <a
+              href={settings.portalUrl}
+              className="rounded-full border border-white/30 px-3.5 py-1.5 text-caption text-white transition hover:border-white hover:bg-white/10"
+            >
+              Client login
+            </a>
+          )}
           {settings?.linkedInUrl && (
             <a href={settings.linkedInUrl} className="text-caption text-sky-blue hover:underline">
               LinkedIn

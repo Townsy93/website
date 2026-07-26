@@ -46,6 +46,7 @@ export type SiteSettings = {
     postcode?: string;
     country?: string;
   };
+  portalUrl?: string;
   meetingsUrl: string;
   linkedInUrl?: string;
   instagramUrl?: string;
@@ -1387,6 +1388,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
     postcode?: string;
     country?: string;
   };
+  portalUrl?: string;
   meetingsUrl: string;
   linkedInUrl?: string;
   instagramUrl?: string;

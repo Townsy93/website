@@ -69,6 +69,13 @@ export const siteSettings = defineType({
       ],
     }),
     defineField({
+      name: 'portalUrl',
+      title: 'Client portal URL',
+      type: 'url',
+      description:
+        'Adds a "Client login" link to the footer. Leave empty and the link does not appear at all — so this can stay blank until the portal is on its real domain and clients actually have access.',
+    }),
+    defineField({
       name: 'meetingsUrl',
       title: 'HubSpot meetings URL',
       type: 'url',
