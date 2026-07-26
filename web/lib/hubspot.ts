@@ -18,6 +18,13 @@ export const HUBSPOT_FORMS = {
   event:
     process.env.NEXT_PUBLIC_HUBSPOT_FORM_EVENT ??
     process.env.NEXT_PUBLIC_HUBSPOT_FORM_CONTACT,
+  // Careers: job applications and evergreen register-interest. Both fall
+  // back to the contact form until Sean creates dedicated ones — without
+  // its own form the Careers list cannot be segmented, so these are worth
+  // creating before the first role goes live.
+  careers:
+    process.env.NEXT_PUBLIC_HUBSPOT_FORM_CAREERS ??
+    process.env.NEXT_PUBLIC_HUBSPOT_FORM_CONTACT,
 } as const;
 
 export function isHubSpotConfigured(formGuid?: string): formGuid is string {

@@ -13,7 +13,7 @@ const NAV_ITEMS = [
     href: "/about-us",
     children: [
       { label: "About Us", href: "/about-us" },
-      { label: "Careers", href: "/about-us/careers" },
+      { label: "Careers", href: "/careers" },
       { label: "Events", href: "/events" },
     ],
   },

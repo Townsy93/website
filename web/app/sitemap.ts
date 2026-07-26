@@ -10,7 +10,8 @@ const SITEMAP_QUERY = defineQuery(
     "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },
     "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },
     "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
-    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt }
+    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
+    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current)]{ "slug": slug.current, _updatedAt }
   }`,
 );
 
@@ -28,6 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/resources", priority: 0.7 },
     { path: "/events", priority: 0.7 },
     { path: "/contact", priority: 0.9 },
+    { path: "/careers", priority: 0.6 },
   ].map(({ path, priority }) => ({
     url: `${SITE_URL}${path}`,
     changeFrequency: "weekly",
@@ -56,5 +58,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...entries("/our-work", data.caseStudies, 0.6),
     ...entries("/insights", data.posts, 0.5),
     ...entries("/events", data.events, 0.6),
+    // Closed roles drop out on the next build — the page stays live, but a
+    // filled role should not keep being offered in search.
+    ...entries("/careers", data.vacancies, 0.5),
   ];
 }
