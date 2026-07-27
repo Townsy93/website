@@ -33,6 +33,11 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# .env holds only NEXT_PUBLIC_* values, which ship in the browser bundle
+# and are therefore public already. Committed so a clean checkout and the
+# Cloudflare build both produce a working site.
+!.env
+
 # vercel
 .vercel
 
