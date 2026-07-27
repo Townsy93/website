@@ -174,6 +174,8 @@ export type ImageWithAlt = {
   media?: unknown;
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
+  displayWidth?: number;
+  displayHeight?: number;
   alt: string;
 };
 

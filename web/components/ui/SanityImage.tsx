@@ -5,6 +5,10 @@ import { urlFor } from "@/sanity/image";
 type ImageValue = {
   asset?: { _ref?: string } | null;
   alt?: string | null;
+  // Optional per-image overrides set in Studio. Unset is the normal case and
+  // means the layout decides.
+  displayWidth?: number | null;
+  displayHeight?: number | null;
 } | null;
 
 // Renders a Sanity image, or a brand-styled placeholder block while
@@ -27,10 +31,16 @@ export function SanityImage({
   if (image?.asset?._ref) {
     return (
       <Image
-        src={urlFor(image).width(width * 2).height(height * 2).url()}
+        // An editor-set size wins over the layout default. Both are doubled
+        // for retina. Hotspot and crop from Studio are applied automatically
+        // by urlFor once both dimensions are given.
+        src={urlFor(image)
+          .width((image?.displayWidth ?? width) * 2)
+          .height((image?.displayHeight ?? height) * 2)
+          .url()}
         alt={image.alt ?? ""}
-        width={width}
-        height={height}
+        width={image?.displayWidth ?? width}
+        height={image?.displayHeight ?? height}
         className={className}
         style={style}
       />
