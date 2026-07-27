@@ -890,6 +890,7 @@ export type TeamMember = {
   _rev: string;
   name: string;
   role: string;
+  pronouns?: string;
   photo?: ImageWithAlt;
   bio?: string;
   outsideWork?: string;

@@ -19,6 +19,14 @@ export const teamMember = defineType({
       validation: (rule) => rule.required().max(60),
     }),
     defineField({
+      name: 'pronouns',
+      title: 'Pronouns',
+      type: 'string',
+      description:
+        'e.g. she/her, he/him, they/them. The About Us bios are written in third person, so without this a copywriter is guessing.',
+      validation: (rule) => rule.max(20),
+    }),
+    defineField({
       name: 'photo',
       title: 'Photo',
       type: 'imageWithAlt',
