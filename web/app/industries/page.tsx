@@ -68,11 +68,12 @@ export default async function IndustriesPage() {
             {page.industries?.map((industry) => (
               <Link
                 key={industry._id}
-                href={
-                  industry.pageBuilt
-                    ? `/industries/${industry.slug?.current}`
-                    : "/services/crm-implementation"
-                }
+                // Always the industry page. The fallback to CRM Implementation
+                // existed when these pages were empty; they now carry their
+                // full structure, and pageBuilt still keeps unfinished copy
+                // out of the sitemap and marks it noindex. Sending someone to
+                // a different service instead is more confusing than useful.
+                href={`/industries/${industry.slug?.current}`}
                 className="flex flex-col rounded-xl border border-deep-blue-20 bg-white p-7 transition hover:-translate-y-0.5 hover:border-deep-blue hover:shadow-lg"
               >
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-off-white-tan">
