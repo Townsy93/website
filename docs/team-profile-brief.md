@@ -44,15 +44,36 @@ they're getting.
 
 ## 4. Photo
 
-A shoot is being organised so these are consistent — mismatched selfies look
-worse across a team page than no photos at all. If you'd rather supply your
-own, it needs to be:
+Take this one with a bit of care — it sits next to your name on the website,
+on any blog post you write, and on event listings. A team page where everyone's
+photo looks different is more noticeable than you'd think.
 
-- Head and shoulders, portrait orientation
-- Plain, uncluttered background
-- Looking at the camera
-- Good natural light, no heavy filters
-- High resolution — it gets cropped for different sizes
+**A phone camera is completely fine.** What matters is the setup, not the gear.
+
+**Do:**
+
+- **Portrait orientation**, head and shoulders, from roughly chest up
+- **Plain background** — a blank wall is ideal. Light or mid-tone works best
+- **Face a window**, with the light on your face rather than behind you
+- **Look at the camera**
+- **Get someone else to take it**, from about 1.5m away at eye height. Arm's
+  length distorts your face; a couple of steps back does not
+- **Send the original file**, not a screenshot or something out of WhatsApp —
+  both strip the resolution we need for larger crops
+
+**Don't:**
+
+- Stand with a window or bright sky behind you — you'll come out as a silhouette
+- Use a filter, a beauty mode, or a heavy portrait-mode blur
+- Crop it yourself. Send it wide and we'll crop consistently
+- Use a group photo with everyone else cut out
+- Wear a lanyard, sunglasses, or a hat
+
+**A trick that works:** stand near a window during the day, face it, and have
+someone photograph you against the opposite wall. That's most of it.
+
+If you're not happy with what you get, say so — it's better to flag it than to
+have a photo you dislike sitting on the site for a year.
 
 ## 5. Bio — 40 to 70 words
 
