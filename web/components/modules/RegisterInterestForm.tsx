@@ -59,7 +59,10 @@ export function RegisterInterestForm() {
       firstname: String(form.get("firstname") ?? "").trim(),
       lastname: String(form.get("lastname") ?? "").trim(),
       email: String(form.get("email") ?? "").trim(),
-      website: String(form.get("linkedin") ?? "").trim(),
+      // A dedicated property, not HubSpot's standard `website`. That field
+      // is the contact's company website — writing a LinkedIn URL into it
+      // would overwrite the real one on anyone already in the CRM.
+      zippily_linkedin: String(form.get("linkedin") ?? "").trim(),
       message: String(form.get("note") ?? "").trim(),
       zippily_application_role: "register_interest",
       zippily_application_date: new Date().toISOString().slice(0, 10),
