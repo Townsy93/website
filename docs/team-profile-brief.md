@@ -72,8 +72,14 @@ photo looks different is more noticeable than you'd think.
 **A trick that works:** stand near a window during the day, face it, and have
 someone photograph you against the opposite wall. That's most of it.
 
-If you're not happy with what you get, say so — it's better to flag it than to
-have a photo you dislike sitting on the site for a year.
+**Send two or three** if you can — it's easier to pick a good one from a few
+than to ask you to go again.
+
+Sean will have a look at everyone's before they go on the site, purely to keep
+the set consistent — same rough framing, similar light. **If yours needs
+another go he'll say so, and that's a normal part of this, not a comment on
+the photo.** Equally, if you're not happy with what you got, flag it rather
+than sending one you dislike — it would otherwise sit on the site for a year.
 
 ## 5. Bio — 40 to 70 words
 
@@ -131,6 +137,7 @@ Your direct phone or email. Client contact runs through
 
 ## What happens next
 
-Sean loads these into Sanity. Everything updates in one place and flows to the
+Sean checks the photos as a set and comes back to anyone whose shot needs a
+retake, then loads everything into Sanity. Everything updates in one place and flows to the
 website and the portal automatically — so if your role changes later, it's one
 edit, not a hunt through pages.
