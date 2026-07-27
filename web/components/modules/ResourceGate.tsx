@@ -92,7 +92,15 @@ export function ResourceGate({
                 const formGuid = HUBSPOT_FORMS.resource;
                 if (isHubSpotConfigured(formGuid)) {
                   setState("sending");
-                  await submitHubSpotForm(formGuid, { email });
+                  // Which guide this was. Without it every download looks
+                  // identical in HubSpot, so you cannot tell a CRM-comparison
+                  // lead from someone after the Claude prompts — which is
+                  // most of the value in gating them separately.
+                  await submitHubSpotForm(formGuid, {
+                    email,
+                    zippily_resource: title,
+                    zippily_resource_date: new Date().toISOString().slice(0, 10),
+                  });
                 }
                 setState("done");
                 startDownload();
