@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {slugShape} from '../../lib/slugRules'
 
 // Partner/integration pages under /solutions (Aircall for now).
 export const partnerIntegration = defineType({
@@ -18,7 +19,7 @@ export const partnerIntegration = defineType({
       type: 'slug',
       options: {source: 'title'},
       description: 'URL: /solutions/[slug]',
-      validation: (rule) => rule.required(),
+      validation: slugShape,
     }),
     defineField({
       name: 'pageBuilt',

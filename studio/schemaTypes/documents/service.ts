@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {slugShape} from '../../lib/slugRules'
 import {SERVICE_CATEGORIES} from '../constants'
 
 export const service = defineType({
@@ -26,7 +27,7 @@ export const service = defineType({
       group: 'content',
       options: {source: 'title'},
       description: 'URL: /services/[slug]',
-      validation: (rule) => rule.required(),
+      validation: slugShape,
     }),
     defineField({
       name: 'category',

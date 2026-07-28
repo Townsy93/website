@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {slugShape} from '../../lib/slugRules'
 
 export const caseStudy = defineType({
   name: 'caseStudy',
@@ -23,7 +24,7 @@ export const caseStudy = defineType({
       group: 'content',
       options: {source: 'client'},
       description: 'URL: /our-work/[slug]',
-      validation: (rule) => rule.required(),
+      validation: slugShape,
     }),
     defineField({
       name: 'status',

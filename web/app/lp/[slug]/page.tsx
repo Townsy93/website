@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
 import {
@@ -53,7 +54,13 @@ export default async function LandingPage({
 }) {
   const { slug } = await params;
   const page = await sanityFetch(LANDING_PAGE_QUERY, { slug });
-  if (!page) notFound();
+  if (!page) {
+    // A retired slug redirects rather than 404ing — the old URL keeps its
+    // inbound links, and losing them is the usual cost of a rename.
+    const moved = await findRedirect(`/lp/${slug}`);
+    if (moved) redirect(moved.to);
+    notFound();
+  }
 
   const valueProps = page.valueProps ?? [];
 

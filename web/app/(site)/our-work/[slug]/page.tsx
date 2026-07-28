@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
 import { CASE_STUDY_QUERY, CASE_STUDY_SLUGS_QUERY } from "@/sanity/queries";
@@ -41,7 +42,13 @@ export default async function CaseStudyPage({
 }) {
   const { slug } = await params;
   const caseStudy = await sanityFetch(CASE_STUDY_QUERY, { slug });
-  if (!caseStudy || caseStudy.status === "comingSoon") notFound();
+  if (!caseStudy || caseStudy.status === "comingSoon") {
+    // A retired slug redirects rather than 404ing — the old URL keeps its
+    // inbound links, and losing them is the usual cost of a rename.
+    const moved = await findRedirect(`/our-work/${slug}`);
+    if (moved) redirect(moved.to);
+    notFound();
+  }
 
   return (
     <>

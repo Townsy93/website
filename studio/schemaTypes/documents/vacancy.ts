@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {slugShape} from '../../lib/slugRules'
 
 export const WORK_ARRANGEMENTS = [
   {title: 'On site', value: 'onSite'},
@@ -45,7 +46,7 @@ export const vacancy = defineType({
       group: 'content',
       options: {source: 'title'},
       description: 'URL: /careers/[slug]',
-      validation: (rule) => rule.required(),
+      validation: slugShape,
     }),
     defineField({
       name: 'status',

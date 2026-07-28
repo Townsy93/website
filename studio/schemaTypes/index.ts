@@ -35,6 +35,7 @@ import {testimonial} from './documents/testimonial'
 import {vacancy} from './documents/vacancy'
 import {pricingTable} from './documents/pricingTable'
 import {landingPage} from './documents/landingPage'
+import {redirect} from './documents/redirect'
 
 // Singletons
 import {aboutPage} from './singletons/aboutPage'
@@ -102,6 +103,7 @@ export const schemaTypes = [
   vacancy,
   pricingTable,
   landingPage,
+  redirect,
   // singletons
   homePage,
   servicesLandingPage,

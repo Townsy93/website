@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {slugShape} from '../../lib/slugRules'
 
 /**
  * Campaign landing page. URL: /lp/[slug]
@@ -32,7 +33,7 @@ export const landingPage = defineType({
       group: 'content',
       options: {source: 'title'},
       description: 'URL: /lp/[slug]',
-      validation: (rule) => rule.required(),
+      validation: slugShape,
     }),
     defineField({
       name: 'pageBuilt',

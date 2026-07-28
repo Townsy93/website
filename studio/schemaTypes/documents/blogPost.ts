@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {slugShape} from '../../lib/slugRules'
 import {BLOG_TOPICS} from '../constants'
 
 export const blogPost = defineType({
@@ -25,7 +26,7 @@ export const blogPost = defineType({
       group: 'content',
       options: {source: 'title'},
       description: 'URL: /insights/[slug]',
-      validation: (rule) => rule.required(),
+      validation: slugShape,
     }),
     defineField({
       name: 'topic',

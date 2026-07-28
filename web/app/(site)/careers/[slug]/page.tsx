@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
 import { VACANCY_QUERY, VACANCY_SLUGS_QUERY } from "@/sanity/queries";
@@ -52,7 +53,13 @@ export default async function VacancyPage({
 }) {
   const { slug } = await params;
   const vacancy = await sanityFetch(VACANCY_QUERY, { slug });
-  if (!vacancy) notFound();
+  if (!vacancy) {
+    // A retired slug redirects rather than 404ing — the old URL keeps its
+    // inbound links, and losing them is the usual cost of a rename.
+    const moved = await findRedirect(`/careers/${slug}`);
+    if (moved) redirect(moved.to);
+    notFound();
+  }
 
   const closed = vacancy.status === "closed";
   const meta = vacancyMeta(vacancy);

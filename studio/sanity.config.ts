@@ -4,6 +4,8 @@ import {presentationTool} from 'sanity/presentation'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 import {structure, singletonTypes} from './structure'
+import {withSlugRedirect} from './actions/publishWithRedirect'
+import {TYPE_PATHS} from './lib/slugRules'
 
 // The site the Presentation tool previews. Defaults to the deployed site;
 // set SANITY_STUDIO_PREVIEW_ORIGIN (e.g. http://localhost:8787) before
@@ -37,9 +39,19 @@ export default defineConfig({
   },
 
   document: {
-    actions: (actions, context) =>
-      singletonTypes.has(context.schemaType)
-        ? actions.filter(({action}) => action !== 'duplicate' && action !== 'delete')
-        : actions,
+    actions: (actions, context) => {
+      if (singletonTypes.has(context.schemaType)) {
+        return actions.filter(
+          ({action}) => action !== 'duplicate' && action !== 'delete',
+        )
+      }
+      // Routable types get a publish that records a redirect when a live
+      // slug changes. Wrapping publish rather than adding a separate action
+      // means it cannot be forgotten.
+      if (!(context.schemaType in TYPE_PATHS)) return actions
+      return actions.map((action) =>
+        action.action === 'publish' ? withSlugRedirect(action) : action,
+      )
+    },
   },
 })

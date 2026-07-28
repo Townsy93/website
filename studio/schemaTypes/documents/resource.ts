@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {slugShape} from '../../lib/slugRules'
 import {BLOG_TOPICS} from '../constants'
 
 // Downloadable resource — listed on the /resources library hub.
@@ -20,7 +21,7 @@ export const resource = defineType({
       title: 'Slug',
       type: 'slug',
       options: {source: 'title'},
-      validation: (rule) => rule.required(),
+      validation: slugShape,
     }),
     defineField({
       name: 'summaryBullets',

@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {slugShape} from '../../lib/slugRules'
 
 export const industry = defineType({
   name: 'industry',
@@ -24,7 +25,7 @@ export const industry = defineType({
       group: 'content',
       options: {source: 'title'},
       description: 'URL: /industries/[slug]',
-      validation: (rule) => rule.required(),
+      validation: slugShape,
     }),
     defineField({
       name: 'icon',

@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {slugShape} from '../../lib/slugRules'
 
 // Zippily Sessions — small, free, in-person HubSpot workshops.
 // Powers /events (hub) and /events/[slug] (detail).
@@ -28,7 +29,7 @@ export const event = defineType({
       group: 'content',
       options: {source: 'title'},
       description: 'URL: /events/[slug]',
-      validation: (rule) => rule.required(),
+      validation: slugShape,
     }),
     defineField({
       name: 'categories',

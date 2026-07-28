@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
 import { POST_QUERY, POST_SLUGS_QUERY } from "@/sanity/queries";
@@ -43,7 +44,13 @@ export default async function PostPage({
 }) {
   const { slug } = await params;
   const post = await sanityFetch(POST_QUERY, { slug });
-  if (!post) notFound();
+  if (!post) {
+    // A retired slug redirects rather than 404ing — the old URL keeps its
+    // inbound links, and losing them is the usual cost of a rename.
+    const moved = await findRedirect(`/insights/${slug}`);
+    if (moved) redirect(moved.to);
+    notFound();
+  }
 
   const articleJsonLd = {
     "@context": "https://schema.org",
