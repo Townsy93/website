@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
@@ -54,7 +54,13 @@ export default async function PartnerIntegrationPage({
     // A retired slug redirects rather than 404ing — the old URL keeps its
     // inbound links, and losing them is the usual cost of a rename.
     const moved = await findRedirect(`/solutions/${slug}`);
-    if (moved) redirect(moved.to);
+    // 308 for a permanent move, so ranking passes to the new URL. A 307
+    // tells search engines the move is temporary and passes nothing, which
+    // would defeat the point of recording the redirect at all.
+    if (moved) {
+      if (moved.permanent) permanentRedirect(moved.to);
+      redirect(moved.to);
+    }
     notFound();
   }
 
