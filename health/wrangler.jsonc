@@ -1,0 +1,32 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "zippily-site-health",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-01",
+
+  // Mondays at 08:00 NZST (20:00 UTC Sunday). Drifts to 07:00 during daylight
+  // saving, which does not matter for a weekly check.
+  //
+  // Written as SUN, not 0: Cloudflare rejects "0 20 * * 0" outright, and the
+  // deploy reports only "a request to the API failed" with no reason given.
+  // 7 and SUN both work. Do not "tidy" this back to 0.
+  "triggers": {
+    "crons": ["0 20 * * SUN"]
+  },
+
+  // Public values only. Secrets are set with `wrangler secret put`:
+  //   RESEND_API_KEY     - required, or findings are logged instead of emailed
+  //   HEALTH_RUN_TOKEN   - optional; without it the on-demand /run is disabled
+  //
+  // BASE_URL is the one to change at cutover: point it at https://www.zippily.co.nz
+  // and the same checks start running against the real domain.
+  "vars": {
+    "BASE_URL": "https://website.sean-fe5.workers.dev",
+    "ALERT_FROM": "Zippily site health <portal@mail.zippily.co.nz>",
+    "ALERT_TO": "hello@zippily.co.nz"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}
