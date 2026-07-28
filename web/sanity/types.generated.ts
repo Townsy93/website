@@ -534,6 +534,48 @@ export type HomePage = {
   seo?: Seo;
 };
 
+export type LandingPage = {
+  _id: string;
+  _type: "landingPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  pageBuilt?: boolean;
+  hero: Hero;
+  valueProps?: Array<
+    {
+      _key: string;
+    } & IconCard
+  >;
+  proofStat?: Stat;
+  testimonial?: TestimonialReference;
+  faqs?: Array<
+    {
+      _key: string;
+    } & FaqItem
+  >;
+  formHeading?: string;
+  formBody?: string;
+  campaignName?: string;
+  successHeading?: string;
+  successBody?: string;
+  seo?: Seo;
+};
+
+export type Stat = {
+  _type: "stat";
+  value: string;
+  label: string;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
+};
+
 export type Vacancy = {
   _id: string;
   _type: "vacancy";
@@ -564,12 +606,6 @@ export type Vacancy = {
   publishedAt: string;
   validThrough?: string;
   seo?: Seo;
-};
-
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
 };
 
 export type Client = {
@@ -1005,12 +1041,6 @@ export type Service = {
   seo?: Seo;
 };
 
-export type Stat = {
-  _type: "stat";
-  value: string;
-  label: string;
-};
-
 export type CaseStudy = {
   _id: string;
   _type: "caseStudy";
@@ -1297,8 +1327,10 @@ export type AllSanitySchemaTypes =
   | ServiceReference
   | ServicesLandingPage
   | HomePage
-  | Vacancy
+  | LandingPage
+  | Stat
   | Slug
+  | Vacancy
   | Client
   | HubOfferingReference
   | HubspotLicensing
@@ -1317,7 +1349,6 @@ export type AllSanitySchemaTypes =
   | HubOffering
   | PricingTableReference
   | Service
-  | Stat
   | CaseStudy
   | Industry
   | Testimonial
@@ -1339,7 +1370,7 @@ export type AllSanitySchemaTypes =
 
 // Source: ../web/app/sitemap.ts
 // Variable: SITEMAP_QUERY
-// Query: {    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "solutions": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "careersBuilt": *[_type == "careersPage"][0].pageBuilt,    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }  }
+// Query: {    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "solutions": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "careersBuilt": *[_type == "careersPage"][0].pageBuilt,    "landingPages": *[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }  }
 export type SITEMAP_QUERY_RESULT = {
   services: Array<{
     slug: string;
@@ -1366,6 +1397,10 @@ export type SITEMAP_QUERY_RESULT = {
     _updatedAt: string;
   }>;
   careersBuilt: boolean | null;
+  landingPages: Array<{
+    slug: string;
+    _updatedAt: string;
+  }>;
   vacancies: Array<{
     slug: string;
     _updatedAt: string;
@@ -2434,11 +2469,64 @@ export type OPEN_VACANCY_SLUGS_QUERY_RESULT = Array<{
   _updatedAt: string;
 }>;
 
+// Source: ../web/sanity/queries.ts
+// Variable: LANDING_PAGE_QUERY
+// Query: *[_type == "landingPage" && slug.current == $slug][0]{    ...,    testimonial->{_id, quote, name, role, company, avatar}  }
+export type LANDING_PAGE_QUERY_RESULT = {
+  _id: string;
+  _type: "landingPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  pageBuilt?: boolean;
+  hero: Hero;
+  valueProps?: Array<
+    {
+      _key: string;
+    } & IconCard
+  >;
+  proofStat?: Stat;
+  testimonial: {
+    _id: string;
+    quote: string;
+    name: string;
+    role: string | null;
+    company: string;
+    avatar: ImageWithAlt | null;
+  } | null;
+  faqs?: Array<
+    {
+      _key: string;
+    } & FaqItem
+  >;
+  formHeading?: string;
+  formBody?: string;
+  campaignName?: string;
+  successHeading?: string;
+  successBody?: string;
+  seo?: Seo;
+} | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: LANDING_PAGE_SLUGS_QUERY
+// Query: *[_type == "landingPage" && defined(slug.current)].slug.current
+export type LANDING_PAGE_SLUGS_QUERY_RESULT = Array<string>;
+
+// Source: ../web/sanity/queries.ts
+// Variable: BUILT_LANDING_PAGES_QUERY
+// Query: *[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{    "slug": slug.current, _updatedAt  }
+export type BUILT_LANDING_PAGES_QUERY_RESULT = Array<{
+  slug: string;
+  _updatedAt: string;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '{\n    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "solutions": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },\n    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "careersBuilt": *[_type == "careersPage"][0].pageBuilt,\n    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }\n  }': SITEMAP_QUERY_RESULT;
+    '{\n    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "solutions": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },\n    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "careersBuilt": *[_type == "careersPage"][0].pageBuilt,\n    "landingPages": *[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }\n  }': SITEMAP_QUERY_RESULT;
     '*[_type == "siteSettings"][0]': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "homePage"][0]{\n    ...,\n    featuredServices[]->{_id, title, slug, icon, shortDescription, whoItsFor},\n    featuredCaseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}},\n    testimonials[]->{_id, quote, name, role, company, avatar},\n    featuredIndustries[]->{_id, title, slug, icon, shortDescription, pageBuilt}\n  }': HOME_PAGE_QUERY_RESULT;
     '*[_type == "servicesLandingPage"][0]{\n    ...,\n    serviceCards[]{\n      ...,\n      service->{_id, title, slug, category, icon, shortDescription, whoItsFor}\n    },\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}}\n  }': SERVICES_LANDING_QUERY_RESULT;
@@ -2470,5 +2558,8 @@ declare module "@sanity/client" {
     '*[_type == "vacancy" && slug.current == $slug][0]{\n    ...,\n    "sharedBenefits": *[_type == "careersPage"][0].benefits,\n    "teamPhoto": *[_type == "careersPage"][0].teamPhoto,\n    "registerInterest": *[_type == "careersPage"][0].registerInterest,\n    "related": *[_type == "vacancy" && status == "open" && slug.current != $slug]\n      | order(publishedAt desc)[0...3]{\n        _id, title, slug, summary, workArrangement, employmentType, location\n      }\n  }': VACANCY_QUERY_RESULT;
     '*[_type == "vacancy" && defined(slug.current)].slug.current': VACANCY_SLUGS_QUERY_RESULT;
     '*[_type == "vacancy" && status == "open" && defined(slug.current)]{\n    "slug": slug.current, _updatedAt\n  }': OPEN_VACANCY_SLUGS_QUERY_RESULT;
+    '*[_type == "landingPage" && slug.current == $slug][0]{\n    ...,\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': LANDING_PAGE_QUERY_RESULT;
+    '*[_type == "landingPage" && defined(slug.current)].slug.current': LANDING_PAGE_SLUGS_QUERY_RESULT;
+    '*[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{\n    "slug": slug.current, _updatedAt\n  }': BUILT_LANDING_PAGES_QUERY_RESULT;
   }
 }

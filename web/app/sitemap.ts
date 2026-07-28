@@ -12,6 +12,7 @@ const SITEMAP_QUERY = defineQuery(
     "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
     "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
     "careersBuilt": *[_type == "careersPage"][0].pageBuilt,
+    "landingPages": *[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },
     "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }
   }`,
 );
@@ -63,5 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Closed roles drop out on the next build — the page stays live, but a
     // filled role should not keep being offered in search.
     ...entries("/careers", data.vacancies, 0.5),
+    // Campaign pages, only once finished.
+    ...entries("/lp", data.landingPages, 0.4),
   ];
 }

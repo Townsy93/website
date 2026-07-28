@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { Archivo } from "next/font/google";
 import { VisualEditing } from "next-sanity/visual-editing";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { sanityFetch } from "@/sanity/fetch";
@@ -78,9 +76,7 @@ export default async function RootLayout({
     <html lang="en" className={`${archivo.variable} h-full`}>
       <body className="flex min-h-full flex-col bg-off-white-tan">
         <JsonLd data={organizationJsonLd} />
-        <Header />
-        <main className="-mt-17 flex-1">{children}</main>
-        <Footer settings={settings} />
+        {children}
         {/* Bridge the Studio's Presentation tool talks to. Only mounted in
             draft mode, so published pages ship no extra JS. */}
         {isDraftMode && <VisualEditing />}

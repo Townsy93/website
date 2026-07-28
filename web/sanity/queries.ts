@@ -242,3 +242,21 @@ export const OPEN_VACANCY_SLUGS_QUERY = defineQuery(
     "slug": slug.current, _updatedAt
   }`,
 );
+
+export const LANDING_PAGE_QUERY = defineQuery(
+  `*[_type == "landingPage" && slug.current == $slug][0]{
+    ...,
+    testimonial->{_id, quote, name, role, company, avatar}
+  }`,
+);
+
+export const LANDING_PAGE_SLUGS_QUERY = defineQuery(
+  `*[_type == "landingPage" && defined(slug.current)].slug.current`,
+);
+
+// Only finished pages. A campaign page still in draft must not be crawled.
+export const BUILT_LANDING_PAGES_QUERY = defineQuery(
+  `*[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{
+    "slug": slug.current, _updatedAt
+  }`,
+);
