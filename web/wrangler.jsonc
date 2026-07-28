@@ -17,7 +17,12 @@
   // a candidate's CV must never sit on a guessable public URL, so reads go
   // through an authenticated route rather than the bucket being exposed.
   "r2_buckets": [
-    { "binding": "CAREERS_UPLOADS", "bucket_name": "zippily-careers-uploads" }
+    { "binding": "CAREERS_UPLOADS", "bucket_name": "zippily-careers-uploads" },
+    {
+      // Incremental cache for ISR. The binding name is fixed by the adapter.
+      "binding": "NEXT_INC_CACHE_R2_BUCKET",
+      "bucket_name": "zippily-website-cache"
+    }
   ],
 
   // SANITY_API_READ_TOKEN is set with `wrangler secret put --name website`.
