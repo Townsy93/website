@@ -72,7 +72,7 @@ export default async function IndustryPage({
             </Link>{" "}
             › <span className="text-white/80">{industry.title}</span>
           </nav>
-          <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-sky-blue/30 bg-sky-blue/15 px-4 py-1.5 text-caption font-semibold text-sky-blue">
+          <p className="mt-5 inline-flex items-center gap-2 text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
             <Icon name={industry.icon} className="h-4 w-4" />
             {industry.title}
           </p>
@@ -158,7 +158,7 @@ export default async function IndustryPage({
           <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
             <div className="grid gap-10 overflow-hidden rounded-3xl bg-deep-blue text-white lg:grid-cols-[1.1fr_1fr]">
               <div className="p-10 lg:p-14">
-                <p className="inline-flex rounded-full border border-sky-blue/30 bg-sky-blue/15 px-4 py-1.5 text-caption font-semibold text-sky-blue">
+                <p className="text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
                   {industry.title}
                 </p>
                 {industry.proofStat?.value && (

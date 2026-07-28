@@ -1,0 +1,55 @@
+from,to,permanent,confidence,reason
+/home,/,TRUE,certain,Squarespace duplicate homepage
+/about-us,/about-us,TRUE,unchanged,No redirect needed
+/contact,/contact,TRUE,unchanged,No redirect needed
+/industries,/industries,TRUE,unchanged,No redirect needed
+/privacy-policy,/privacy-policy,TRUE,unchanged,No redirect needed
+/blog,/insights,TRUE,certain,Blog section renamed
+/blog/best-crm-for-small-business-in-nz-2026,/insights/best-crm-for-small-business-in-nz-2026,TRUE,certain,Same post
+/blog/best-crms-for-small-business-2026,/insights/best-crms-for-small-business-2026,TRUE,certain,Same post
+/blog/designing-a-high-performing-email-automation-strategy-a-step-by-step-guide-for-growing-businesses,/insights/designing-a-high-performing-email-automation-strategy-a-step-by-step-guide-for-growing-businesses,TRUE,certain,Same post
+/blog/do-i-need-a-crm-nz-checklist,/insights/do-i-need-a-crm-nz-checklist,TRUE,certain,Same post
+/blog/how-much-does-hubspot-implementation-cost-in-nz,/insights/how-much-does-hubspot-implementation-cost-in-nz,TRUE,certain,Same post
+/blog/how-to-choose-the-right-crm-for-your-business,/insights/how-to-choose-the-right-crm-for-your-business,TRUE,certain,Same post
+/blog/hubspot-updates-whats-new,/insights/hubspot-updates-whats-new,TRUE,certain,Same post
+/blog/hubspot-xero-integration,/insights/hubspot-xero-integration,TRUE,certain,Same post
+/blog/lead-quality-starts-with-process,/insights/lead-quality-starts-with-process,TRUE,certain,Same post
+/blog/lead-scoring-with-hubspot,/insights/lead-scoring-with-hubspot,TRUE,certain,Same post
+/blog/ownership-gaps-create-operational-chaos,/insights/ownership-gaps-create-operational-chaos,TRUE,certain,Same post
+/blog/purpose-vs-proof-proving-not-for-profits-impact,/insights/purpose-vs-proof-proving-not-for-profits-impact,TRUE,certain,Same post
+/blog/the-simple-crm-myth,/insights/the-simple-crm-myth,TRUE,certain,Same post
+/blog/the-system-you-never-had-time-to-build,/insights/the-system-you-never-had-time-to-build,TRUE,certain,Same post
+/blog/top-hubspot-features-from-inbound-2025,/insights/top-hubspot-features-from-inbound-2025,TRUE,certain,Same post
+/blog/visibility-over-oversight-scaling-without-the-bottleneck,/insights/visibility-over-oversight-scaling-without-the-bottleneck,TRUE,certain,Same post
+/blog/when-sales-and-marketing-align,/insights/when-sales-and-marketing-align,TRUE,certain,Same post
+/blog/why-performance-agency-owners-should-be-encouraging-their-clients-to-get-a-crm,/insights/why-performance-agency-owners-should-be-encouraging-their-clients-to-get-a-crm,TRUE,certain,Same post
+/blog/why-spreadsheets-dont-work-for-complex-financial-advice,/insights/why-spreadsheets-dont-work-for-complex-financial-advice,TRUE,certain,Same post
+/blog/common-mistakes-when-onboarding-hubspot-and-how-to-prevent-them,/insights,TRUE,DECIDE,Post not migrated - migrate it or accept the hub
+/blog/top-hubspot-ai-features-to-accelerate-your-business-in-2025,/insights,TRUE,DECIDE,Post not migrated - migrate it or accept the hub
+/blog/why-your-business-needs-marketing-automation-in-2025-before-you-fall-behind,/insights,TRUE,DECIDE,Post not migrated - migrate it or accept the hub
+/blog/5yh0a2hi82nkj6y0w8sonvdqgqtl0e,/insights,TRUE,DECIDE,Unnamed Squarespace draft that got indexed - consider leaving it to 404
+/blog/tag/Last+updated+April+2026,/insights,TRUE,certain,Squarespace tag page - no equivalent
+/case-studies,/our-work,TRUE,certain,Section renamed
+/case-studies/accounting-for-nature,/our-work/accounting-for-nature,TRUE,certain,Same case study
+/case-studies/house-surveys,/our-work/house-surveys,TRUE,certain,Same case study
+/crm-for-finance,/industries/financial-services,TRUE,certain,Same industry
+/crm-for-non-profits,/industries/non-profits,TRUE,certain,Same industry
+/crm-for-property,/industries/property-development,TRUE,certain,Same industry
+/crm-for-startups-and-saas,/industries/saas,TRUE,certain,Same industry
+/hubspot-crm-implementation,/services/crm-implementation,TRUE,certain,Same service - only built service page
+/hubspot-ai-automation-advisory,/services/ai-solutions,TRUE,likely,Closest service - page is still a placeholder
+/hubspot-training,/services/hubspot-training,TRUE,likely,Same service - page is still a placeholder
+/marketing-automation,/services/marketing-automation,TRUE,likely,Same service - page is still a placeholder
+/revops-retainer,/services/revops-retainers,TRUE,likely,Same service - page is still a placeholder
+/crm-audit,/services/hubspot-audit,TRUE,likely,Renamed service - page is still a placeholder
+/customer-journey-workshop,/services/customer-journey-mapping,TRUE,likely,Renamed service - page is still a placeholder
+/hubspot-integrations,/services/websites-and-integrations,TRUE,likely,Closest service - page is still a placeholder
+/our-solutions,/services,TRUE,certain,Old services hub
+/hubspot-integrations/xero,/insights/hubspot-xero-integration,TRUE,DECIDE,No Xero solution page - the blog post covers the exact topic and is live
+/platforms,/solutions,TRUE,certain,Section renamed
+/platforms/aircall,/solutions/aircall,TRUE,certain,Same partner
+/platforms/attio,/solutions,TRUE,DECIDE,No Attio page - hub or rebuild the page
+/platforms/folk,/solutions,TRUE,DECIDE,No Folk page - hub or rebuild the page
+/platforms/pandadoc,/solutions,TRUE,DECIDE,No PandaDoc page - hub or rebuild the page
+/faqs,/contact,TRUE,DECIDE,No FAQ page - FAQs are now per-page components
+/testimonials,/our-work,TRUE,likely,Testimonials are now components on other pages

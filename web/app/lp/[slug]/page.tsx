@@ -83,7 +83,7 @@ export default async function LandingPage({
             height={30}
             priority
           />
-          <span className="rounded-full border border-sky-blue/30 bg-sky-blue/15 px-4 py-1.5 text-caption font-semibold text-sky-blue">
+          <span className="text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
             HubSpot Gold Partner · Auckland, NZ
           </span>
         </div>

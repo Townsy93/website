@@ -40,7 +40,7 @@ export default async function AboutPage() {
         <div className="mx-auto grid max-w-6xl items-center gap-14 px-4 pb-20 pt-32 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             {page.hero?.eyebrow && (
-              <p className="inline-flex rounded-full border border-white/20 px-4 py-1.5 text-caption font-semibold text-sky-blue">
+              <p className="text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
                 {page.hero.eyebrow}
               </p>
             )}
