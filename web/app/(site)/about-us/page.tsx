@@ -13,12 +13,15 @@ import { TestimonialCards } from "@/components/modules/TestimonialCards";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "About Us",
-  description:
-    "A small, senior Auckland team that's spent years inside HubSpot — and likes it that way.",
-  alternates: { canonical: "/about-us" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await sanityFetch(ABOUT_PAGE_QUERY);
+  return {
+    title: page?.seo?.metaTitle ?? "About Us",
+    description: page?.seo?.metaDescription ?? "A small, senior Auckland team that's spent years inside HubSpot — and likes it that way.",
+    alternates: { canonical: "/about-us" },
+    ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
+  };
+}
 
 export default async function AboutPage() {
   const page = await sanityFetch(ABOUT_PAGE_QUERY);

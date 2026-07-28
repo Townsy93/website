@@ -16,10 +16,10 @@ const archivo = Archivo({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: {
-    default: "zippily — HubSpot implementation & RevOps",
-    template: "%s — zippily",
-  },
+  // No template. The SEO sheet's titles are complete as written and length
+  // checked against 60 characters — appending a suffix pushed several over,
+  // and pages already ending in "| Zippily" gained a second one.
+  title: "zippily — HubSpot implementation & RevOps",
   description:
     "Auckland-based HubSpot implementation and RevOps agency. HubSpot Gold Partner.",
   alternates: { canonical: "/" },

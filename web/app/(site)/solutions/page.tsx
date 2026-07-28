@@ -10,12 +10,15 @@ import { HubCarousel } from "@/components/modules/HubCarousel";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Solutions",
-  description:
-    "Not sure which HubSpot Hub fits your team? Here's what each one actually does.",
-  alternates: { canonical: "/solutions" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await sanityFetch(SOLUTIONS_PAGE_QUERY);
+  return {
+    title: page?.seo?.metaTitle ?? "Solutions",
+    description: page?.seo?.metaDescription ?? "Not sure which HubSpot Hub fits your team? Here's what each one actually does.",
+    alternates: { canonical: "/solutions" },
+    ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
+  };
+}
 
 export default async function SolutionsPage() {
   const [page, hubs] = await Promise.all([

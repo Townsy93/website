@@ -9,11 +9,15 @@ import { CaseStudyCards } from "@/components/modules/CaseStudyCards";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Industries",
-  description: "HubSpot, tailored to how your industry actually works.",
-  alternates: { canonical: "/industries" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await sanityFetch(INDUSTRIES_HUB_QUERY);
+  return {
+    title: page?.seo?.metaTitle ?? "Industries",
+    description: page?.seo?.metaDescription ?? "HubSpot, tailored to how your industry actually works.",
+    alternates: { canonical: "/industries" },
+    ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
+  };
+}
 
 export default async function IndustriesPage() {
   const page = await sanityFetch(INDUSTRIES_HUB_QUERY);

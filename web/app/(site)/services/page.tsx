@@ -15,12 +15,15 @@ import { StatTrio } from "@/components/modules/StatTrio";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Services",
-  description:
-    "Ten ways we help you get more out of HubSpot — pick where you're starting from.",
-  alternates: { canonical: "/services" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await sanityFetch(SERVICES_LANDING_QUERY);
+  return {
+    title: page?.seo?.metaTitle ?? "Services",
+    description: page?.seo?.metaDescription ?? "Ten ways we help you get more out of HubSpot — pick where you're starting from.",
+    alternates: { canonical: "/services" },
+    ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
+  };
+}
 
 export default async function ServicesPage() {
   const page = await sanityFetch(SERVICES_LANDING_QUERY);

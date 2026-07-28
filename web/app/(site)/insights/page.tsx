@@ -10,12 +10,15 @@ import { NewsletterBand } from "@/components/modules/NewsletterBand";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Insight Hub",
-  description:
-    "Practical HubSpot advice from the team that actually uses it every day.",
-  alternates: { canonical: "/insights" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await sanityFetch(INSIGHT_HUB_QUERY);
+  return {
+    title: page?.seo?.metaTitle ?? "Insight Hub",
+    description: page?.seo?.metaDescription ?? "Practical HubSpot advice from the team that actually uses it every day.",
+    alternates: { canonical: "/insights" },
+    ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
+  };
+}
 
 export default async function InsightsPage() {
   const [page, posts] = await Promise.all([

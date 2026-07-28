@@ -9,11 +9,15 @@ import { FaqAccordion } from "@/components/modules/FaqAccordion";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Let's talk about your HubSpot.",
-  alternates: { canonical: "/contact" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await sanityFetch(CONTACT_PAGE_QUERY);
+  return {
+    title: page?.seo?.metaTitle ?? "Contact",
+    description: page?.seo?.metaDescription ?? "Let's talk about your HubSpot.",
+    alternates: { canonical: "/contact" },
+    ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
+  };
+}
 
 export default async function ContactPage() {
   const [page, settings] = await Promise.all([

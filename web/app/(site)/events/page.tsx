@@ -15,13 +15,18 @@ import { isThisMonth, longDateTime, pastDate } from "@/lib/events";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Events",
-  description:
-    "Zippily Sessions — small, free HubSpot workshops in Auckland. Real questions, no pitch.",
-  // Filter state lives in query params; canonical is always /events.
-  alternates: { canonical: "/events" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  // This query returns { page, upcoming, past }, so the singleton's own
+  // fields sit under .page rather than at the top level.
+  const data = await sanityFetch(EVENTS_PAGE_QUERY);
+  const page = data?.page;
+  return {
+    title: page?.seo?.metaTitle ?? "Events",
+    description: page?.seo?.metaDescription ?? "Zippily Sessions — small, free HubSpot workshops in Auckland. Real questions, no pitch.",
+    alternates: { canonical: "/events" },
+    ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
+  };
+}
 
 export default async function EventsPage() {
   const { page, upcoming, past } = await sanityFetch(EVENTS_PAGE_QUERY);

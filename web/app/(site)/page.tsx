@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/fetch";
 import {
@@ -15,6 +16,18 @@ import { IconCards } from "@/components/modules/IconCards";
 import { TestimonialCards } from "@/components/modules/TestimonialCards";
 
 export const revalidate = 3600;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await sanityFetch(HOME_PAGE_QUERY);
+  return {
+    title:
+      page?.seo?.metaTitle ?? "zippily — HubSpot implementation & RevOps",
+    description:
+      page?.seo?.metaDescription ??
+      "Auckland-based HubSpot implementation and RevOps agency. HubSpot Gold Partner.",
+    alternates: { canonical: "/" },
+  };
+}
 
 export default async function Home() {
   const [page, posts, settings] = await Promise.all([

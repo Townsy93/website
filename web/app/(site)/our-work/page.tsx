@@ -10,12 +10,15 @@ import { StatTrio } from "@/components/modules/StatTrio";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Our Work",
-  description:
-    "Real businesses, real before-and-afters — case studies and reviews from NZ & AU clients.",
-  alternates: { canonical: "/our-work" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await sanityFetch(OUR_WORK_QUERY);
+  return {
+    title: page?.seo?.metaTitle ?? "Our Work",
+    description: page?.seo?.metaDescription ?? "Real businesses, real before-and-afters — case studies and reviews from NZ & AU clients.",
+    alternates: { canonical: "/our-work" },
+    ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
+  };
+}
 
 export default async function OurWorkPage() {
   const page = await sanityFetch(OUR_WORK_QUERY);
