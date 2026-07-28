@@ -42,6 +42,15 @@ export const caseStudy = defineType({
       description: '"Coming soon" renders the non-clickable card state on Our Work',
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'pageBuilt',
+      title: 'Page is built',
+      type: 'boolean',
+      group: 'content',
+      initialValue: false,
+      description:
+        'Off = the body still holds the copywriter brief: the page is kept out of the sitemap and marked noindex, so unfinished wording can never be picked up by Google. Turn on once the real copy has landed. Separate from Status, which only controls how the card looks on Our Work — a story can be worth listing before its write-up is finished.',
+    }),
     // Case cards are tagged by service in Our Work/Services contexts and by
     // industry on Industries pages — both references required (spec D11).
     defineField({

@@ -8,7 +8,7 @@ const SITEMAP_QUERY = defineQuery(
     "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },
     "solutions": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },
     "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },
-    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },
+    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live" && pageBuilt == true]{ "slug": slug.current, _updatedAt },
     "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
     "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },
     "careersBuilt": *[_type == "careersPage"][0].pageBuilt,

@@ -29,7 +29,12 @@ export async function generateMetadata({
     title: caseStudy?.seo?.metaTitle ?? caseStudy?.client ?? "Case study",
     description: caseStudy?.seo?.metaDescription ?? caseStudy?.resultLine ?? undefined,
     alternates: { canonical: `/our-work/${slug}` },
-    ...(caseStudy?.seo?.noIndex ? { robots: { index: false, follow: false } } : {}),
+    // follow stays true: these pages are redirect targets for the old
+    // Squarespace case study URLs, and a nofollow would strand the equity
+    // arriving from them rather than passing it on.
+    ...(caseStudy?.seo?.noIndex || !caseStudy?.pageBuilt
+      ? { robots: { index: false, follow: true } }
+      : {}),
   };
 }
 

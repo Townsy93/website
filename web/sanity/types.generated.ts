@@ -534,6 +534,19 @@ export type HomePage = {
   seo?: Seo;
 };
 
+export type Redirect = {
+  _id: string;
+  _type: "redirect";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  from: string;
+  to: string;
+  permanent?: boolean;
+  reason?: string;
+  createdAt?: string;
+};
+
 export type LandingPage = {
   _id: string;
   _type: "landingPage";
@@ -1050,6 +1063,7 @@ export type CaseStudy = {
   client: string;
   slug: Slug;
   status: "live" | "comingSoon";
+  pageBuilt?: boolean;
   service: ServiceReference;
   industry?: IndustryReference;
   headline: string;
@@ -1327,6 +1341,7 @@ export type AllSanitySchemaTypes =
   | ServiceReference
   | ServicesLandingPage
   | HomePage
+  | Redirect
   | LandingPage
   | Stat
   | Slug
@@ -1370,7 +1385,7 @@ export type AllSanitySchemaTypes =
 
 // Source: ../web/app/sitemap.ts
 // Variable: SITEMAP_QUERY
-// Query: {    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "solutions": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "careersBuilt": *[_type == "careersPage"][0].pageBuilt,    "landingPages": *[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }  }
+// Query: {    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "solutions": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live" && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "careersBuilt": *[_type == "careersPage"][0].pageBuilt,    "landingPages": *[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }  }
 export type SITEMAP_QUERY_RESULT = {
   services: Array<{
     slug: string;
@@ -1984,6 +1999,7 @@ export type CASE_STUDY_QUERY_RESULT = {
   client: string;
   slug: Slug;
   status: "comingSoon" | "live";
+  pageBuilt?: boolean;
   service: {
     title: string;
     slug: Slug;
@@ -2526,7 +2542,7 @@ export type BUILT_LANDING_PAGES_QUERY_RESULT = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '{\n    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "solutions": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live"]{ "slug": slug.current, _updatedAt },\n    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "careersBuilt": *[_type == "careersPage"][0].pageBuilt,\n    "landingPages": *[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }\n  }': SITEMAP_QUERY_RESULT;
+    '{\n    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "solutions": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live" && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "careersBuilt": *[_type == "careersPage"][0].pageBuilt,\n    "landingPages": *[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }\n  }': SITEMAP_QUERY_RESULT;
     '*[_type == "siteSettings"][0]': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "homePage"][0]{\n    ...,\n    featuredServices[]->{_id, title, slug, icon, shortDescription, whoItsFor},\n    featuredCaseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}},\n    testimonials[]->{_id, quote, name, role, company, avatar},\n    featuredIndustries[]->{_id, title, slug, icon, shortDescription, pageBuilt}\n  }': HOME_PAGE_QUERY_RESULT;
     '*[_type == "servicesLandingPage"][0]{\n    ...,\n    serviceCards[]{\n      ...,\n      service->{_id, title, slug, category, icon, shortDescription, whoItsFor}\n    },\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}}\n  }': SERVICES_LANDING_QUERY_RESULT;
