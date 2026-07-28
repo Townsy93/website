@@ -77,7 +77,7 @@ export function LandingForm({
       zippily_campaign: campaign,
     };
 
-    const guid = HUBSPOT_FORMS.contact;
+    const guid = HUBSPOT_FORMS.landing;
     if (!isHubSpotConfigured(guid)) {
       console.warn("[lp] HubSpot form not configured; nothing was sent.");
       setSending(false);

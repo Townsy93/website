@@ -25,6 +25,12 @@ export const HUBSPOT_FORMS = {
   careers:
     process.env.NEXT_PUBLIC_HUBSPOT_FORM_CAREERS ??
     process.env.NEXT_PUBLIC_HUBSPOT_FORM_CONTACT,
+  // Campaign landing pages. Its own form so campaign leads can be routed and
+  // reported separately from general enquiries — otherwise the campaign
+  // cannot be measured, which is most of the reason to run one.
+  landing:
+    process.env.NEXT_PUBLIC_HUBSPOT_FORM_LANDING ??
+    process.env.NEXT_PUBLIC_HUBSPOT_FORM_CONTACT,
 } as const;
 
 export function isHubSpotConfigured(formGuid?: string): formGuid is string {
