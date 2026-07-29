@@ -53,3 +53,7 @@ from,to,permanent,confidence,reason
 /platforms/pandadoc,/insights/pandadoc-hubspot-integration,TRUE,approved,New post commissioned to hold the equity from the retired platform page
 /faqs,/contact,TRUE,DECIDE,No FAQ page - FAQs are now per-page components
 /testimonials,/our-work,TRUE,likely,Testimonials are now components on other pages
+/buyer-journey-workshop,/services/customer-journey-mapping,TRUE,likely,Indexed but absent from the Squarespace sitemap - found via Search Console
+/hubspot-health-check,/services/hubspot-audit,TRUE,likely,Indexed but absent from the Squarespace sitemap - found via Search Console
+/blog/best-crms-for-small-business-2025,/insights/best-crms-for-small-business-2026,TRUE,certain,"Superseded 2025 edition - points at the current post, not the hub"
+/solutions,/solutions,TRUE,unchanged,No redirect needed - already resolves on the new site

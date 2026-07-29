@@ -57,6 +57,9 @@ export const EXPECTED_REDIRECTS: readonly (readonly [string, string])[] = [
   ["/platforms/pandadoc", "/insights/pandadoc-hubspot-integration"],
   ["/faqs", "/contact"],
   ["/testimonials", "/our-work"],
+  ["/buyer-journey-workshop", "/services/customer-journey-mapping"],
+  ["/hubspot-health-check", "/services/hubspot-audit"],
+  ["/blog/best-crms-for-small-business-2025", "/insights/best-crms-for-small-business-2026"],
 ];
 
 /** Old URLs that keep their path. They must serve 200, not redirect. */
@@ -65,4 +68,5 @@ export const EXPECTED_UNCHANGED: readonly string[] = [
   "/contact",
   "/industries",
   "/privacy-policy",
+  "/solutions",
 ];

@@ -147,8 +147,11 @@ describe("inBatches", () => {
 
 describe("the expectation list", () => {
   it("carries the full approved mapping", () => {
-    expect(EXPECTED_REDIRECTS).toHaveLength(50);
-    expect(EXPECTED_UNCHANGED).toHaveLength(4);
+    // 50 from the Squarespace sitemap, plus 3 found later by comparing Search
+    // Console's page list against that sitemap. Google held URLs the sitemap
+    // never listed, and two of them were 404ing.
+    expect(EXPECTED_REDIRECTS).toHaveLength(53);
+    expect(EXPECTED_UNCHANGED).toHaveLength(5);
   });
 
   it("never expects a redirect to itself, which would be an infinite loop", () => {

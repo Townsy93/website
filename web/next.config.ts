@@ -12,6 +12,12 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
   { source: "/hubspot-ai-automation-advisory", destination: "/services/ai-solutions" },
   { source: "/revops-retainer", destination: "/services/revops-retainers" },
   { source: "/customer-journey-workshop", destination: "/services/customer-journey-mapping" },
+  // The next three are indexed but were never in the Squarespace sitemap, so
+  // the original mapping could not see them. Found by comparing Search Console's
+  // page list against the sitemap - a reminder that the sitemap is what a site
+  // claims, not what Google actually holds.
+  { source: "/buyer-journey-workshop", destination: "/services/customer-journey-mapping" },
+  { source: "/hubspot-health-check", destination: "/services/hubspot-audit" },
   { source: "/hubspot-integrations", destination: "/services/websites-and-integrations" },
   // Goes to the post rather than the service page: the post covers Xero
   // specifically and is live, where the service page is still a placeholder.
@@ -54,6 +60,13 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
   {
     source: "/blog/why-your-business-needs-marketing-automation-in-2025-before-you-fall-behind",
     destination: "/insights",
+  },
+  // The 2025 edition, superseded by the 2026 post. Indexed but absent from the
+  // sitemap, so the generic rule below was sending it to a slug that does not
+  // exist. Points at the current edition rather than the hub.
+  {
+    source: "/blog/best-crms-for-small-business-2025",
+    destination: "/insights/best-crms-for-small-business-2026",
   },
   // Squarespace tag archives are two segments, so the post rule cannot match.
   { source: "/blog/tag/:tag*", destination: "/insights" },
