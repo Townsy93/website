@@ -25,6 +25,15 @@
     }
   ],
 
+  // Tag cache. The R2 bucket above stores rendered pages; this stores which
+  // cache tags each page carries, which is what revalidateTag needs to know
+  // in order to purge anything. Without it the publish webhook runs, reports
+  // success, and nothing changes on the site — verified, not assumed.
+  // Binding name is fixed by the adapter.
+  "kv_namespaces": [
+    { "binding": "NEXT_TAG_CACHE_KV", "id": "1808e8f88e1a439e91bd1390ccc8b4c1" }
+  ],
+
   // SANITY_API_READ_TOKEN is set with `wrangler secret put --name website`.
   // It is what draft mode and Sanity Presentation need at runtime; without
   // it /api/draft-mode/enable returns a 500.
