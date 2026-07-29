@@ -42,6 +42,29 @@ export async function POST(req: NextRequest) {
     const global = new Set(["siteSettings", "redirect"]);
     if (global.has(body._type)) tags.push("type:siteSettings");
 
+    /**
+     * Types that are only ever reached through a dereference.
+     *
+     * Cache tags are derived from the `_type ==` filters in a query, and a
+     * dereference does not add one — a service page query says
+     * `_type == "service"` and then `pricingTable->{...}`, so it carries
+     * `type:service` and nothing else. Publishing a pricing table on its own
+     * therefore purged nothing, and the site would keep serving the old
+     * price until the hourly window expired.
+     *
+     * That is not hypothetical: superseded CRM Implementation pricing was
+     * live on an indexable page because of exactly this gap. Repricing is
+     * the case that most needs to propagate immediately.
+     */
+    const FANOUT: Record<string, string[]> = {
+      pricingTable: ["service"],
+      testimonial: ["service", "industry", "caseStudy", "partnerIntegration", "landingPage"],
+      teamMember: ["blogPost", "aboutPage"],
+      client: ["caseStudy"],
+      hubOffering: ["blogPost"],
+    };
+    for (const also of FANOUT[body._type] ?? []) tags.push(`type:${also}`);
+
     // Next 16 requires a cache profile. expire: 0 marks the entry stale
     // immediately, which is what an on-demand purge means — a named profile
     // would impose its own lifetime instead.
