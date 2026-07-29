@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -26,7 +26,8 @@ export const metadata: Metadata = {
  * useless.
  */
 export default async function NotFound() {
-  const settings = await client.fetch(SITE_SETTINGS_QUERY);
+  // Tagged so a settings change reaches the 404 page's footer too.
+  const settings = await sanityFetch(SITE_SETTINGS_QUERY);
 
   const destinations = [
     {

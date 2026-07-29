@@ -68,6 +68,12 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
     source: "/blog/best-crms-for-small-business-2025",
     destination: "/insights/best-crms-for-small-business-2026",
   },
+  // Retired as dated or superseded. Both earned nothing in the last quarter -
+  // 3 and 0 impressions - so the hub is a fair landing rather than a loss.
+  // Explicit rules, because the generic one below would send each to a slug
+  // that no longer exists.
+  { source: "/blog/top-hubspot-features-from-inbound-2025", destination: "/insights" },
+  { source: "/blog/hubspot-updates-whats-new", destination: "/insights" },
   // Squarespace tag archives are two segments, so the post rule cannot match.
   { source: "/blog/tag/:tag*", destination: "/insights" },
   { source: "/blog/:slug", destination: "/insights/:slug" },

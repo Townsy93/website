@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { defineQuery } from "next-sanity";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { SITE_URL } from "@/lib/site";
 
 const SITEMAP_QUERY = defineQuery(
@@ -18,7 +18,11 @@ const SITEMAP_QUERY = defineQuery(
 );
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const data = await client.fetch(SITEMAP_QUERY);
+  // Tagged, so a deleted or newly published document changes the sitemap at
+  // once. With the bare client it never purged, and the sitemap went on
+  // advertising two posts that had been deleted - telling Google to crawl
+  // 404s, which is worse than omitting them.
+  const data = await sanityFetch(SITEMAP_QUERY);
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { path: "", priority: 1 },
