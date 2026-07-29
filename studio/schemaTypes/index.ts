@@ -35,6 +35,7 @@ import {testimonial} from './documents/testimonial'
 import {vacancy} from './documents/vacancy'
 import {pricingTable} from './documents/pricingTable'
 import {landingPage} from './documents/landingPage'
+import {popup} from './documents/popup'
 import {redirect} from './documents/redirect'
 
 // Singletons
@@ -95,6 +96,7 @@ export const schemaTypes = [
   teamMember,
   hubOffering,
   partnerIntegration,
+  popup,
   resource,
   testimonial,
   event,

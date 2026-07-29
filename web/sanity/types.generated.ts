@@ -876,6 +876,36 @@ export type Resource = {
   seo?: Seo;
 };
 
+export type Popup = {
+  _id: string;
+  _type: "popup";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  enabled?: boolean;
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  heading: string;
+  body?: string;
+  mode: "form" | "cta";
+  buttonLabel: string;
+  ctaHref?: string;
+  successMessage?: string;
+  triggerType: "exitIntent" | "timeOnPage" | "scrollDepth";
+  triggerSeconds?: number;
+  triggerPercent?: number;
+  showAgainAfterDays?: number;
+  includePaths?: Array<string>;
+  excludePaths?: Array<string>;
+};
+
 export type PartnerIntegration = {
   _id: string;
   _type: "partnerIntegration";
@@ -1356,6 +1386,7 @@ export type AllSanitySchemaTypes =
   | Geopoint
   | SanityFileAssetReference
   | Resource
+  | Popup
   | PartnerIntegration
   | BlogPost
   | TeamMember
@@ -2538,6 +2569,27 @@ export type BUILT_LANDING_PAGES_QUERY_RESULT = Array<{
   _updatedAt: string;
 }>;
 
+// Source: ../web/sanity/queries.ts
+// Variable: POPUP_QUERY
+// Query: *[_type == "popup" && enabled == true]|order(_updatedAt desc)[0]{    _id, heading, body, mode, buttonLabel, ctaHref, successMessage,    triggerType, triggerSeconds, triggerPercent, showAgainAfterDays,    includePaths, excludePaths,    "imageUrl": image.asset->url,    "imageAlt": image.alt  }
+export type POPUP_QUERY_RESULT = {
+  _id: string;
+  heading: string;
+  body: string | null;
+  mode: "cta" | "form";
+  buttonLabel: string;
+  ctaHref: string | null;
+  successMessage: string | null;
+  triggerType: "exitIntent" | "scrollDepth" | "timeOnPage";
+  triggerSeconds: number | null;
+  triggerPercent: number | null;
+  showAgainAfterDays: number | null;
+  includePaths: Array<string> | null;
+  excludePaths: Array<string> | null;
+  imageUrl: string | null;
+  imageAlt: string | null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -2577,5 +2629,6 @@ declare module "@sanity/client" {
     '*[_type == "landingPage" && slug.current == $slug][0]{\n    ...,\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': LANDING_PAGE_QUERY_RESULT;
     '*[_type == "landingPage" && defined(slug.current)].slug.current': LANDING_PAGE_SLUGS_QUERY_RESULT;
     '*[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{\n    "slug": slug.current, _updatedAt\n  }': BUILT_LANDING_PAGES_QUERY_RESULT;
+    '*[_type == "popup" && enabled == true]|order(_updatedAt desc)[0]{\n    _id, heading, body, mode, buttonLabel, ctaHref, successMessage,\n    triggerType, triggerSeconds, triggerPercent, showAgainAfterDays,\n    includePaths, excludePaths,\n    "imageUrl": image.asset->url,\n    "imageAlt": image.alt\n  }': POPUP_QUERY_RESULT;
   }
 }

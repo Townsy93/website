@@ -260,3 +260,16 @@ export const BUILT_LANDING_PAGES_QUERY = defineQuery(
     "slug": slug.current, _updatedAt
   }`,
 );
+
+// The live popup. Most recently updated wins if more than one is enabled, so
+// "which one is showing?" has a definite answer rather than depending on
+// document order.
+export const POPUP_QUERY = defineQuery(
+  `*[_type == "popup" && enabled == true]|order(_updatedAt desc)[0]{
+    _id, heading, body, mode, buttonLabel, ctaHref, successMessage,
+    triggerType, triggerSeconds, triggerPercent, showAgainAfterDays,
+    includePaths, excludePaths,
+    "imageUrl": image.asset->url,
+    "imageAlt": image.alt
+  }`,
+);
