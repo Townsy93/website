@@ -25,12 +25,20 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
   { source: "/faqs", destination: "/contact" },
   { source: "/platforms", destination: "/solutions" },
   { source: "/platforms/aircall", destination: "/solutions/aircall" },
-  // Retired platform pages. Each points at a post commissioned to hold its
-  // ranking; until those are published these three land on a 404, so they
-  // are the gate on cutover rather than something to discover afterwards.
-  { source: "/platforms/attio", destination: "/insights/attio-vs-hubspot" },
-  { source: "/platforms/folk", destination: "/insights/folk-vs-hubspot" },
-  { source: "/platforms/pandadoc", destination: "/insights/pandadoc-hubspot-integration" },
+  // Retired platform pages, pointed at the solutions hub.
+  //
+  // They were briefly aimed at comparison posts commissioned to inherit their
+  // ranking. Search Console settled it: 765 impressions and one click across
+  // all three in a quarter, and the queries behind them (attio crm, folk app,
+  // what is attio) are people looking for those tools, not for a HubSpot
+  // partner. Almost nothing is lost here, and it removes the last thing
+  // blocking the cutover.
+  //
+  // The posts remain worth writing — Google already ranks the old pages 7-17
+  // for those terms — but as a growth project, not a launch gate.
+  { source: "/platforms/attio", destination: "/solutions" },
+  { source: "/platforms/folk", destination: "/solutions" },
+  { source: "/platforms/pandadoc", destination: "/solutions" },
   { source: "/crm-for-finance", destination: "/industries/financial-services" },
   { source: "/crm-for-non-profits", destination: "/industries/non-profits" },
   { source: "/crm-for-startups-and-saas", destination: "/industries/saas" },

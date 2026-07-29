@@ -48,9 +48,9 @@ from,to,permanent,confidence,reason
 /hubspot-integrations/xero,/insights/hubspot-xero-integration,TRUE,DECIDE,No Xero solution page - the blog post covers the exact topic and is live
 /platforms,/solutions,TRUE,certain,Section renamed
 /platforms/aircall,/solutions/aircall,TRUE,certain,Same partner
-/platforms/attio,/insights/attio-vs-hubspot,TRUE,approved,New post commissioned to hold the equity from the retired platform page
-/platforms/folk,/insights/folk-vs-hubspot,TRUE,approved,New post commissioned to hold the equity from the retired platform page
-/platforms/pandadoc,/insights/pandadoc-hubspot-integration,TRUE,approved,New post commissioned to hold the equity from the retired platform page
+/platforms/attio,/solutions,TRUE,certain,765 impressions and 1 click across all three in a quarter - hub is a fair landing
+/platforms/folk,/solutions,TRUE,certain,765 impressions and 1 click across all three in a quarter - hub is a fair landing
+/platforms/pandadoc,/solutions,TRUE,certain,765 impressions and 1 click across all three in a quarter - hub is a fair landing
 /faqs,/contact,TRUE,DECIDE,No FAQ page - FAQs are now per-page components
 /testimonials,/our-work,TRUE,likely,Testimonials are now components on other pages
 /buyer-journey-workshop,/services/customer-journey-mapping,TRUE,likely,Indexed but absent from the Squarespace sitemap - found via Search Console
