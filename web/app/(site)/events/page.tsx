@@ -97,7 +97,7 @@ export default async function EventsPage() {
         <>
           {/* Featured next session — Deep Blue */}
           <section className="bg-deep-blue text-white">
-            <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 py-18 sm:px-12 lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-6 py-18 sm:px-12 lg:grid-cols-[1.05fr_0.95fr]">
               <SanityImage
                 image={featured.cardImage}
                 width={620}
@@ -199,7 +199,7 @@ export default async function EventsPage() {
       {/* Past sessions — Deep Blue, deliberately quieter */}
       {past.length > 0 && (
         <section className="bg-deep-blue text-white">
-          <div className="mx-auto max-w-6xl px-6 py-20 sm:px-12">
+          <div className="mx-auto max-w-[90rem] px-6 py-20 sm:px-12">
             <h2 className="text-h3">{page?.pastHeading}</h2>
             <p className="mt-2 text-body text-white/55">{page?.pastIntro}</p>
             <div className="mt-8 border-t border-white/14">

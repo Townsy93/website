@@ -184,7 +184,7 @@ export default async function PostPage({
       {/* Keep reading */}
       {(post.related?.length ?? 0) > 0 && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <h2 className="text-h2">Keep reading</h2>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {post.related?.map((related) => (

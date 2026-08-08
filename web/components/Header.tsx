@@ -4,15 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
+// "Home" is deliberately absent — the logo is the homepage link.
 const NAV_ITEMS = [
-  { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
   { label: "Solutions", href: "/solutions" },
   {
-    label: "About Us",
+    // "Who we are", not "About Us" — the footer already says "About us",
+    // and the same label twice in one viewport reads as a mistake.
+    label: "Who we are",
     href: "/about-us",
     children: [
-      { label: "About Us", href: "/about-us" },
+      { label: "Who we are", href: "/about-us" },
       { label: "Careers", href: "/careers" },
       { label: "Events", href: "/events" },
     ],
@@ -31,7 +33,7 @@ export function Header() {
 
   return (
     <header className="sticky top-3 z-50 px-3">
-      <div className="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-deep-blue/95 shadow-lg backdrop-blur-md">
+      <div className="mx-auto max-w-[90rem] rounded-3xl border border-white/10 bg-deep-blue/95 shadow-lg backdrop-blur-md">
         <div className="flex h-14 items-center justify-between gap-4 pl-6 pr-3">
           <Link href="/" onClick={() => setMobileOpen(false)}>
             <Image

@@ -80,7 +80,7 @@ export default async function ServicesPage() {
 
       {/* Service grid with filter pills (T2 / M7) */}
       <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
           <div className="flex flex-wrap items-end justify-between gap-6">
             {page.gridHeading && (
               <h2 className="max-w-md text-h2">{page.gridHeading}</h2>
@@ -108,7 +108,7 @@ export default async function ServicesPage() {
       {/* Case studies teaser (M10) */}
       {(page.caseStudies?.length ?? 0) > 0 && (
         <section className="bg-white">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">

@@ -110,7 +110,7 @@ export function EventFilters({
 
   return (
     <>
-      <div className="mx-auto max-w-6xl pb-8 pt-16">
+      <div className="mx-auto max-w-[90rem] pb-8 pt-16">
         {[
           {
             label: "Date",
@@ -146,7 +146,7 @@ export function EventFilters({
         ))}
       </div>
 
-      <div className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
+      <div className="mx-auto max-w-[90rem] px-4 pb-24 sm:px-6">
         {isEmptyResult && (
           <p className="mb-6 rounded border-l-[3px] border-sky-blue bg-white px-5.5 py-4 text-body-lg text-deep-blue-80">
             No sessions match that — here&apos;s what&apos;s coming up

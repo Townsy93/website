@@ -36,7 +36,7 @@ export default async function ContactPage() {
     <>
       {/* Hero — light split (H1d). Marker is Sky Blue on light per brand rule. */}
       <section className="bg-off-white-tan">
-        <div className="mx-auto grid max-w-6xl items-center gap-14 px-4 pb-16 pt-32 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-4 pb-16 pt-32 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             {page.hero?.eyebrow && (
               <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
@@ -69,7 +69,7 @@ export default async function ContactPage() {
 
       {/* Form + direct details, side by side on desktop (T13 / F1) */}
       <section className="bg-off-white-tan">
-        <div className="mx-auto grid max-w-6xl items-start gap-12 px-4 pb-24 sm:px-6 lg:grid-cols-[1.25fr_0.75fr]">
+        <div className="mx-auto grid max-w-[90rem] items-start gap-12 px-4 pb-24 sm:px-6 lg:grid-cols-[1.25fr_0.75fr]">
           <ContactForm
             heading={page.formHeading}
             options={page.formOptions}

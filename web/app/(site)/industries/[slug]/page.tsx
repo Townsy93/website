@@ -65,7 +65,7 @@ export default async function IndustryPage({
     <>
       {/* Hero — dark breadcrumb with industry badge (H1c) */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-6xl px-4 pb-20 pt-32 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-4 pb-20 pt-32 sm:px-6">
           <nav aria-label="Breadcrumb" className="text-caption text-white/50">
             <Link href="/industries" className="text-sky-blue hover:underline">
               Industries
@@ -100,7 +100,7 @@ export default async function IndustryPage({
       {/* Pain points (M20 — Sky Blue top borders on white per D4) */}
       {(industry.painPoints?.length ?? 0) > 0 && (
         <section className="bg-white">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
               Sound familiar?
             </p>
@@ -155,7 +155,7 @@ export default async function IndustryPage({
       {/* Proof (droppable) */}
       {industry.caseStudy && (
         <section className="bg-white">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <div className="grid gap-10 overflow-hidden rounded-3xl bg-deep-blue text-white lg:grid-cols-[1.1fr_1fr]">
               <div className="p-10 lg:p-14">
                 <p className="text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">

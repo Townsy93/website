@@ -112,7 +112,7 @@ export default async function PartnerIntegrationPage({
       {/* What Zippily sets up */}
       {(page.whatWeSetUp?.length ?? 0) > 0 && (
         <section className="bg-white">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <h2 className="text-h2">What Zippily sets up</h2>
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {page.whatWeSetUp?.map((card) => (

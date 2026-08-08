@@ -7,15 +7,37 @@ import {
   SITE_SETTINGS_QUERY,
 } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { EmphasisedHeading } from "@/components/ui/Marker";
+import { EmphasisedHeading, Marker } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { CtaBanner } from "@/components/modules/CtaBanner";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
-import { IconCards } from "@/components/modules/IconCards";
+import { NewsletterBand } from "@/components/modules/NewsletterBand";
 import { TestimonialCards } from "@/components/modules/TestimonialCards";
 
 export const revalidate = 3600;
+
+// The three service stages, from the v2 design. Copy is designer-final and
+// mirrors the locked service catalogue (11 services), so it changes when the
+// catalogue changes — which is a code change anyway. Move to Sanity only if
+// the stages themselves become editable content.
+const SERVICE_STAGES = [
+  {
+    title: "Discover",
+    icon: "search",
+    text: "HubSpot Audit, Customer Journey Mapping, Marketing Automation (Strategy)",
+  },
+  {
+    title: "Build",
+    icon: "build",
+    text: "CRM Implementation, Websites, Landing Pages, Post-Sales, Automation",
+  },
+  {
+    title: "Scale",
+    icon: "growth",
+    text: "RevOps Retainers, AI Solutions, HubSpot Training",
+  },
+];
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await sanityFetch(HOME_PAGE_QUERY);
@@ -46,9 +68,10 @@ export default async function Home() {
 
   return (
     <>
-      {/* Hero — dark split (H1b) */}
+      {/* Hero — dark split (H1b). Unchanged in the v2 pass: the orange marker
+          circle on the emphasis phrase is correct. */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto grid max-w-6xl items-center gap-14 px-4 pb-20 pt-32 sm:px-6 lg:grid-cols-[1.1fr_1fr]">
+        <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-4 pb-16 pt-32 sm:px-6 lg:grid-cols-[1.1fr_1fr]">
           <div>
             {page.hero?.eyebrow && (
               <p className="inline-flex items-center gap-2 text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
@@ -94,76 +117,135 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Why Zippily — values (M6) */}
-      <IconCards
-        eyebrow="Why zippily"
-        heading={page.whyHeading}
-        cards={page.whyCards}
-        columns={4}
-      />
-
-      {/* Services teaser (M8, scroll row) */}
-      {(page.featuredServices?.length ?? 0) > 0 && (
-        <section className="bg-white">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
-                  Services
-                </p>
-                <h2 className="mt-3 text-h2">
-                  Everything your CRM needs. Nothing it doesn&apos;t.
-                </h2>
-              </div>
-              <Link
-                href="/services"
-                className="text-body font-semibold underline decoration-sky-blue decoration-2 underline-offset-4"
-              >
-                Explore all services →
-              </Link>
-            </div>
-            <div className="mt-10 flex snap-x gap-6 overflow-x-auto pb-2 lg:grid lg:grid-cols-4">
-              {page.featuredServices?.map((service) => (
-                <Link
-                  key={service._id}
-                  href={`/services/${service.slug?.current}`}
-                  className="group min-w-72 snap-start rounded-xl border border-deep-blue-20 p-7 transition hover:-translate-y-0.5 hover:bg-deep-blue hover:text-white lg:min-w-0"
-                >
-                  <Icon
-                    name={service.icon}
-                    className="h-6 w-6 text-deep-blue group-hover:text-white"
+      {/* Trust strip — "HubSpot Gold Partner" as real, indexable text beside
+          the logo row. An image-only badge is invisible to search. Client
+          logos are placeholders until we have permission to show real ones. */}
+      <section className="bg-deep-blue">
+        <div className="mx-auto flex max-w-[90rem] flex-wrap items-center gap-x-7 gap-y-4 px-4 pb-14 pt-2 sm:px-6">
+          <p className="text-body font-semibold text-white">
+            HubSpot Gold Partner
+          </p>
+          <div className="flex flex-1 flex-wrap items-center gap-5">
+            {(page.trustLogos?.length ?? 0) > 0
+              ? page.trustLogos?.map((logo) => (
+                  <SanityImage
+                    key={logo._key}
+                    image={logo}
+                    width={112}
+                    height={28}
+                    className="h-7 w-auto opacity-80"
                   />
-                  <h3 className="mt-4 text-h4">{service.title}</h3>
-                  <p className="mt-2 text-body text-deep-blue-80 group-hover:text-white/75">
-                    {service.shortDescription}
-                  </p>
-                </Link>
-              ))}
+                ))
+              : [0, 1, 2, 3, 4, 5].map((i) => (
+                  <span
+                    key={i}
+                    aria-hidden
+                    className="h-7 w-28 rounded bg-white/15"
+                  />
+                ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Intro — v2 pass: headline Deep Blue (was orange-on-white, banned),
+          Sky Blue hand-drawn underline on "HubSpot implementation", copy
+          rewritten. The three slots are for real people imagery — team or
+          client photography, not stock, not product screenshots. */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-[90rem] px-4 py-24 text-center sm:px-6">
+          <h2 className="mx-auto max-w-3xl text-h2">
+            <Marker style="underline" color="sky-blue">
+              HubSpot implementation
+            </Marker>{" "}
+            for NZ and Australian businesses
+          </h2>
+          <p className="mx-auto mt-6 max-w-2xl text-body-lg text-deep-blue-80">
+            At Zippily, we get B2B teams more out of HubSpot and the GTM tools
+            around it. Our HubSpot implementation service is built around how
+            your business actually works, not a generic setup.
+          </p>
+          <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-3">
+            {[0, 1, 2].map((i) => (
+              <SanityImage
+                key={i}
+                image={page.introImages?.[i]}
+                width={400}
+                height={300}
+                className="aspect-4/3 w-full rounded-2xl object-cover"
+                placeholderLabel="Team / client photo — real people, not stock"
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services overview — v2 pass: three Sky Blue stage cards plus a
+          fourth in solid Deep Blue (was orange). Orange appears only on the
+          button inside the Deep Blue card, which is the permitted pairing. */}
+      <section className="bg-off-white-tan">
+        <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+          <p className="text-center text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
+            Our services
+          </p>
+          <h2 className="mx-auto mt-3 max-w-2xl text-center text-h2">
+            Everything your CRM needs. Nothing it doesn&apos;t.
+          </h2>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {SERVICE_STAGES.map((stage) => (
+              <div
+                key={stage.title}
+                className="rounded-2xl bg-sky-blue p-8 text-center"
+              >
+                <span className="mx-auto flex h-13 w-13 items-center justify-center rounded-full bg-white">
+                  <Icon name={stage.icon} className="h-6 w-6 text-deep-blue" />
+                </span>
+                <h3 className="mt-5 text-h4">{stage.title}</h3>
+                <p className="mt-3 text-body text-deep-blue/80">{stage.text}</p>
+              </div>
+            ))}
+            <div className="flex flex-col items-center justify-center gap-6 rounded-2xl bg-deep-blue p-8 text-center text-white">
+              <p className="text-body-lg font-semibold">
+                Eleven services across three stages. Find the one that matches
+                where you&apos;re actually at.
+              </p>
+              <ButtonLink href="/services" variant="orange">
+                View all services
+              </ButtonLink>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* Featured case study (M28 dark card) */}
+      {/* Featured case study — v2 pass: eyebrow removed, the stat pair is the
+          dominant element (roughly double) with a full-height Sky Blue
+          divider, and the button reads "View case study". */}
       {page.featuredCaseStudy && (
-        <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
-            <div className="grid gap-10 rounded-3xl bg-deep-blue p-10 text-white lg:grid-cols-[1.05fr_1fr] lg:p-14">
-              <div>
-                <p className="text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
-                  Case study · {page.featuredCaseStudy.client}
-                </p>
-                <h2 className="mt-4 text-h2">
+        <section className="bg-white">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+            <div className="grid gap-0 overflow-hidden rounded-3xl bg-deep-blue text-white lg:grid-cols-[1.05fr_1fr]">
+              <div className="p-10 lg:p-14">
+                <h2 className="max-w-md text-h2">
                   {page.featuredCaseStudy.headline}
                 </h2>
                 {(page.featuredCaseStudy.stats?.length ?? 0) > 0 && (
-                  <div className="mt-8 flex flex-wrap gap-8">
-                    {page.featuredCaseStudy.stats?.map((stat) => (
-                      <div key={stat._key}>
-                        <p className="text-h2 text-deep-orange">{stat.value}</p>
-                        <p className="mt-1 max-w-40 text-caption text-white/70">
-                          {stat.label}
-                        </p>
+                  <div className="mt-10 flex flex-col gap-7 sm:flex-row sm:items-stretch sm:gap-9">
+                    {page.featuredCaseStudy.stats?.map((stat, index) => (
+                      <div key={stat._key} className="contents">
+                        {index > 0 && (
+                          <span
+                            aria-hidden
+                            className="h-px w-full bg-sky-blue/40 sm:h-auto sm:w-px sm:self-stretch"
+                          />
+                        )}
+                        <div>
+                          {/* Orange on Deep Blue — the permitted pairing */}
+                          <p className="text-[clamp(3rem,4.8vw,4.25rem)] font-semibold leading-none tracking-[-0.06em] text-deep-orange">
+                            {stat.value}
+                          </p>
+                          <p className="mt-3 max-w-40 text-caption text-white/65">
+                            {stat.label}
+                          </p>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -171,16 +253,16 @@ export default async function Home() {
                 <ButtonLink
                   href={`/our-work/${page.featuredCaseStudy.slug?.current}`}
                   variant="orange"
-                  className="mt-8"
+                  className="mt-10"
                 >
-                  Read the full story
+                  View case study
                 </ButtonLink>
               </div>
               <SanityImage
                 image={page.featuredCaseStudy.photo}
-                width={520}
-                height={400}
-                className="h-64 w-full rounded-2xl object-cover lg:h-full"
+                width={640}
+                height={520}
+                className="order-first h-64 w-full object-cover lg:order-none lg:h-full"
                 placeholderLabel="Case study photo / video still"
               />
             </div>
@@ -188,34 +270,69 @@ export default async function Home() {
         </section>
       )}
 
-      {/* Testimonials (M24) */}
+      {/* Why Zippily — v2 pass: split head with the designer's framing copy;
+          the aside is Deep Blue italic (orange is banned on white, Sky Blue
+          fails contrast on it). Values come from Sanity, numbered 01–04. */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-[90rem] px-4 pb-24 pt-4 sm:px-6">
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
+            <div>
+              <h2 className="text-h2">The name isn&apos;t just for fun.</h2>
+              <p className="mt-2 text-body-lg font-medium italic text-deep-blue">
+                Okay, it&apos;s a little bit for fun
+              </p>
+            </div>
+            <div>
+              <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
+                Why zippily
+              </p>
+              <p className="mt-3 max-w-xl text-body-lg text-deep-blue-80">
+                These four decide what we build, what we don&apos;t, and how we
+                talk to you while we do it. They&apos;re the difference between
+                a portal that gets used and one that gets abandoned.
+              </p>
+            </div>
+          </div>
+          <div className="mt-14 grid gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+            {page.whyCards?.map((card, index) => (
+              <div
+                key={card._key}
+                className="border-t border-deep-blue/15 pt-6 lg:border-l lg:border-t-0 lg:px-7 lg:pt-0 lg:first:border-l-0 lg:first:pl-0"
+              >
+                <p className="text-body-lg font-semibold text-sky-blue">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3 className="mt-3 text-h4">{card.title}</h3>
+                <p className="mt-2 text-body text-deep-blue-80">{card.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials — v2 pass: white cards, "See our work" beside the
+          heading, and the CLIENT FEEDBACK watermark finished rather than
+          accidentally clipped. */}
       <TestimonialCards
         heading="Kind words from people we've un-stressed"
-        subheading="Real clients, across New Zealand and Australia."
         testimonials={page.testimonials}
+        action={{ label: "See our work", href: "/our-work" }}
+        watermark="Client feedback"
       />
 
-      {/* Industries teaser (M9b) */}
+      {/* Industries — v2 pass: outline cards with Deep Blue icon chips that
+          flip to Sky Blue on hover; card hover fill is Sky Blue at 12% (a
+          token, not an arbitrary grey); pill button instead of a text link. */}
       {(page.featuredIndustries?.length ?? 0) > 0 && (
         <section className="bg-white">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
-                  Industries
-                </p>
-                <h2 className="mt-3 text-h2">
-                  We speak your industry&apos;s language
-                </h2>
-              </div>
-              <Link
-                href="/industries"
-                className="text-body font-semibold underline decoration-sky-blue decoration-2 underline-offset-4"
-              >
-                All industries →
-              </Link>
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <h2 className="text-h2">We speak your industry&apos;s language</h2>
+              <ButtonLink href="/industries" variant="navy">
+                Find out more
+              </ButtonLink>
             </div>
-            <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-3">
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {page.featuredIndustries?.map((industry) => (
                 <Link
                   key={industry._id}
@@ -224,14 +341,16 @@ export default async function Home() {
                       ? `/industries/${industry.slug?.current}`
                       : "/services/crm-implementation"
                   }
-                  className="group rounded-xl bg-off-white-tan p-6 transition hover:-translate-y-0.5 hover:bg-deep-blue hover:text-white"
+                  className="group rounded-2xl border border-deep-blue/20 p-8 text-center transition hover:bg-sky-blue/12"
                 >
-                  <Icon
-                    name={industry.icon}
-                    className="h-6 w-6 text-deep-blue group-hover:text-white"
-                  />
-                  <h3 className="mt-3 text-h4">{industry.title}</h3>
-                  <p className="mt-2 hidden text-body text-deep-blue-80 group-hover:text-white/75 lg:block">
+                  <span className="mx-auto flex h-13 w-13 items-center justify-center rounded-full bg-deep-blue transition group-hover:bg-sky-blue">
+                    <Icon
+                      name={industry.icon}
+                      className="h-6 w-6 text-white transition group-hover:text-deep-blue"
+                    />
+                  </span>
+                  <h3 className="mt-4 text-h4">{industry.title}</h3>
+                  <p className="mt-2 text-body text-deep-blue-80">
                     {industry.shortDescription}
                   </p>
                 </Link>
@@ -241,26 +360,14 @@ export default async function Home() {
         </section>
       )}
 
-      {/* Insights teaser — latest 3 posts */}
+      {/* Insights teaser — two large cards per the v2 design. Read-time sits
+          in Deep Blue at 80%, never orange on a light section. */}
       {(posts?.length ?? 0) > 0 && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
-                  Insight hub
-                </p>
-                <h2 className="mt-3 text-h2">Fresh from the blog</h2>
-              </div>
-              <Link
-                href="/insights"
-                className="text-body font-semibold underline decoration-sky-blue decoration-2 underline-offset-4"
-              >
-                Visit the insight hub →
-              </Link>
-            </div>
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {posts.map((post) => (
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+            <h2 className="text-center text-h2">Fresh from the blog</h2>
+            <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
+              {posts.slice(0, 2).map((post) => (
                 <Link
                   key={post._id}
                   href={`/insights/${post.slug?.current}`}
@@ -268,16 +375,21 @@ export default async function Home() {
                 >
                   <SanityImage
                     image={post.coverImage}
-                    width={400}
-                    height={190}
-                    className="h-44 w-full object-cover"
+                    width={560}
+                    height={245}
+                    className="h-52 w-full object-cover"
                     placeholderLabel="Post image"
                   />
-                  <div className="p-6">
-                    <h3 className="text-h4">{post.title}</h3>
-                    <p className="mt-3 text-caption text-deep-blue-80">
+                  <div className="p-7">
+                    <p className="text-caption text-deep-blue-80">
                       {post.publishedAt} · {post.readTime} min read
                     </p>
+                    <h3 className="mt-2 text-h4">{post.title}</h3>
+                    {post.excerpt && (
+                      <p className="mt-3 text-body text-deep-blue-80">
+                        {post.excerpt}
+                      </p>
+                    )}
                   </div>
                 </Link>
               ))}
@@ -286,15 +398,23 @@ export default async function Home() {
         </section>
       )}
 
-      {/* FAQ preview (M26) */}
+      {/* FAQ preview (M26) — unchanged: heading left, accordion right */}
       <FaqAccordion
         heading="Things people usually ask us"
         faqs={page.faqs}
         name="home-faq"
       />
 
-      {/* CTA banner with meetings embed (M3 + F4) */}
+      {/* CTA banner (M3) — restored between the FAQ and the newsletter, per
+          the v2 pass. One reusable component, one per page template. */}
       <CtaBanner data={page.ctaBanner} meetingsUrl={settings?.meetingsUrl} />
+
+      {/* Newsletter — the single capture. The footer's duplicate signup was
+          removed; this band is where "Stay in the loop" lives. */}
+      <NewsletterBand
+        heading="Stay in the loop."
+        text="Our newsletter aims to keep you informed on all things CRM, AI and Automation."
+      />
     </>
   );
 }

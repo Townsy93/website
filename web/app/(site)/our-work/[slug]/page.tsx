@@ -74,7 +74,7 @@ export default async function CaseStudyPage({
       />
       {/* Hero — dark breadcrumb (H1c) */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-6xl px-4 pb-20 pt-32 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-4 pb-20 pt-32 sm:px-6">
           <nav aria-label="Breadcrumb" className="text-caption text-white/50">
             <Link href="/our-work" className="text-sky-blue hover:underline">
               Our work

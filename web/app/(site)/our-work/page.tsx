@@ -39,7 +39,7 @@ export default async function OurWorkPage() {
     <>
       {/* Hero — light split (H1d). Marker Sky Blue on light. */}
       <section className="bg-off-white-tan">
-        <div className="mx-auto grid max-w-6xl items-center gap-14 px-4 pb-20 pt-32 sm:px-6 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-4 pb-20 pt-32 sm:px-6 lg:grid-cols-[1.15fr_0.85fr]">
           <div>
             {page.hero?.eyebrow && (
               <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
@@ -85,7 +85,7 @@ export default async function OurWorkPage() {
       {/* Case study grid (M10, tagged by service) */}
       {(page.caseStudies?.length ?? 0) > 0 && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
               Case studies
             </p>
@@ -107,7 +107,7 @@ export default async function OurWorkPage() {
       {/* Video testimonials (M15) — renders once videos exist */}
       {videoTestimonials.length > 0 && (
         <section className="bg-deep-blue text-white">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
               In their words
             </p>
@@ -150,7 +150,7 @@ export default async function OurWorkPage() {
       {/* Google reviews (M14) — renders once review testimonials exist */}
       {googleReviews.length > 0 && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <h2 className="text-h2">Google reviews</h2>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {googleReviews.map((review) => (

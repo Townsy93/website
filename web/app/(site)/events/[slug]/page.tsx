@@ -145,7 +145,7 @@ export default async function EventDetailPage({
 
       {/* Body — two columns on desktop */}
       <section className="bg-off-white-tan">
-        <div className="mx-auto grid max-w-6xl gap-16 px-6 pb-24 sm:px-12 lg:grid-cols-[1fr_400px] lg:items-start">
+        <div className="mx-auto grid max-w-[90rem] gap-16 px-6 pb-24 sm:px-12 lg:grid-cols-[1fr_400px] lg:items-start">
           <div className="pt-14">
             <Link
               href="/events"
@@ -347,7 +347,7 @@ export default async function EventDetailPage({
       {/* Other sessions — hidden when there are none */}
       {others.length > 0 && (
         <section className="border-t border-[#DCDACB] bg-off-white-tan">
-          <div className="mx-auto max-w-6xl px-6 pb-24 pt-20 sm:px-12">
+          <div className="mx-auto max-w-[90rem] px-6 pb-24 pt-20 sm:px-12">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <h2 className="text-h2">Other sessions</h2>
               <Link

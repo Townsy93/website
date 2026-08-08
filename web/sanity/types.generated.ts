@@ -503,6 +503,11 @@ export type HomePage = {
       _key: string;
     } & ImageWithAlt
   >;
+  introImages?: Array<
+    {
+      _key: string;
+    } & ImageWithAlt
+  >;
   whyHeading?: string;
   whyCards?: Array<
     {
@@ -1494,6 +1499,11 @@ export type HOME_PAGE_QUERY_RESULT = {
   _rev: string;
   hero: Hero;
   trustLogos?: Array<
+    {
+      _key: string;
+    } & ImageWithAlt
+  >;
+  introImages?: Array<
     {
       _key: string;
     } & ImageWithAlt

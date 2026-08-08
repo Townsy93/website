@@ -57,7 +57,7 @@ export default async function IndustriesPage() {
 
       {/* Industry grid (M9) — 7 cards + "Not on the list?" cell */}
       <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
           <div className="flex flex-wrap items-end justify-between gap-6">
             {page.gridHeading && (
               <h2 className="max-w-md text-h2">{page.gridHeading}</h2>
@@ -112,7 +112,7 @@ export default async function IndustriesPage() {
       {/* Why it matters (M22 — Deep Blue numerals on tan per D4) */}
       {(page.whyItems?.length ?? 0) > 0 && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
               Why it matters
             </p>
@@ -137,7 +137,7 @@ export default async function IndustriesPage() {
       {/* Case studies (M10, tagged by industry per D11) */}
       {(page.caseStudies?.length ?? 0) > 0 && (
         <section className="bg-white">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">

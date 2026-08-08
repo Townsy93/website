@@ -48,7 +48,7 @@ export default async function ResourcesPage() {
       <JsonLd data={itemListJsonLd} />
 
       {/* Intro / mission statement */}
-      <section className="mx-auto grid max-w-6xl gap-10 px-4 pb-16 pt-36 sm:px-6 lg:grid-cols-[0.35fr_0.65fr]">
+      <section className="mx-auto grid max-w-[90rem] gap-10 px-4 pb-16 pt-36 sm:px-6 lg:grid-cols-[0.35fr_0.65fr]">
         <p className="flex items-start gap-3 text-body-lg">
           <span aria-hidden className="mt-1.5 h-3 w-3 shrink-0 bg-deep-orange" />
           Free resources
@@ -62,13 +62,13 @@ export default async function ResourcesPage() {
           keep.
         </p>
       </section>
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mx-auto max-w-[90rem] px-4 sm:px-6">
         <hr className="border-off-white-tan/15" />
       </div>
 
       {/* Category pills — hidden until the count justifies filtering */}
       {showPills && (
-        <div className="mx-auto flex max-w-6xl flex-wrap gap-3 px-4 pt-10 sm:px-6">
+        <div className="mx-auto flex max-w-[90rem] flex-wrap gap-3 px-4 pt-10 sm:px-6">
           {categories.map((category) => (
             <span
               key={category}
@@ -81,7 +81,7 @@ export default async function ResourcesPage() {
       )}
 
       {/* Resource list — one row per viewport */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="mx-auto max-w-[90rem] px-4 sm:px-6">
         {resources.map((resource, index) => (
           <article
             key={resource._id}
@@ -157,7 +157,7 @@ export default async function ResourcesPage() {
       </section>
 
       {/* Newsletter cross-sell strip */}
-      <section className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-20 sm:px-6 lg:grid-cols-2">
+      <section className="mx-auto grid max-w-[90rem] items-center gap-8 px-4 py-20 sm:px-6 lg:grid-cols-2">
         <p className="text-h3">
           New resources land here first. Get them in your inbox.
         </p>

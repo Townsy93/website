@@ -24,7 +24,7 @@ export function IconCards({
   if (items.length === 0) return null;
   return (
     <section className="bg-off-white-tan">
-      <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+      <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
         {eyebrow && (
           <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
             {eyebrow}

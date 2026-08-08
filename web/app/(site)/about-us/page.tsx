@@ -37,7 +37,7 @@ export default async function AboutPage() {
     <>
       {/* Hero — dark split with anchor CTAs (H1b) */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto grid max-w-6xl items-center gap-14 px-4 pb-20 pt-32 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-4 pb-20 pt-32 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             {page.hero?.eyebrow && (
               <p className="text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
@@ -89,7 +89,7 @@ export default async function AboutPage() {
       {/* Pillar A — trust rows (M28) */}
       {(page.trustPillars?.length ?? 0) > 0 && (
         <section id="trust" className="scroll-mt-24 bg-off-white-tan">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <p className="text-center text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
               Promise one
             </p>
@@ -125,7 +125,7 @@ export default async function AboutPage() {
       {/* Meet the team (M13) */}
       {(page.team?.length ?? 0) > 0 && (
         <section className="bg-deep-blue text-white">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <h2 className="text-center text-h2">
               {page.teamHeading ?? "The people you'll actually work with"}
             </h2>
@@ -191,7 +191,7 @@ export default async function AboutPage() {
       {/* Culture (M32) */}
       {page.cultureText && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[0.8fr_1.2fr]">
+          <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[0.8fr_1.2fr]">
             <div>
               <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
                 The people behind Zippily
@@ -232,7 +232,7 @@ export default async function AboutPage() {
       {/* Founding story (M33) */}
       {page.storyBody && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-24 sm:px-6 lg:grid-cols-2">
+          <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-4 py-24 sm:px-6 lg:grid-cols-2">
             <SanityImage
               image={page.storyImage}
               width={560}
@@ -258,7 +258,7 @@ export default async function AboutPage() {
       {/* Pillar B — love (M22 treatment per D4: Deep Blue borders on dark) */}
       {(page.lovePillars?.length ?? 0) > 0 && (
         <section id="love" className="scroll-mt-24 bg-deep-blue text-white">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <p className="text-center text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
               Promise two
             </p>

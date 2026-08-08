@@ -70,7 +70,7 @@ export default async function SolutionsPage() {
 
       {/* Hub carousel (M12) */}
       <section className="bg-off-white-tan">
-        <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
           <div className="max-w-xl">
             {page.carouselHeading && (
               <h2 className="text-h2">{page.carouselHeading}</h2>
@@ -98,7 +98,7 @@ export default async function SolutionsPage() {
 
       {/* How we optimise */}
       <section id="optimise" className="scroll-mt-24 bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
           <div className="max-w-xl">
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
               Already have HubSpot?
@@ -137,7 +137,7 @@ export default async function SolutionsPage() {
       {/* Related case study */}
       {page.relatedCaseStudy && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
               Hubs, working together
             </p>

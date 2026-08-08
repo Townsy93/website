@@ -26,6 +26,17 @@ export const homePage = defineType({
       validation: (rule) => rule.max(6),
     }),
     defineField({
+      // v2 intro block — the three photos under the rewritten intro copy.
+      // Real people imagery: team or client photography, not stock, not
+      // product screenshots (designer's rule).
+      name: 'introImages',
+      title: 'Intro block photos (real people, exactly 3)',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'imageWithAlt'})],
+      validation: (rule) => rule.max(3),
+    }),
+    defineField({
       name: 'whyHeading',
       title: '"Why Zippily" heading',
       type: 'string',

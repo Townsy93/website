@@ -147,7 +147,7 @@ export default async function ServicePage({
       {/* "Is this you?" pain points (M20) */}
       {(service.painPoints?.length ?? 0) > 0 && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <h2 className="text-center text-h2">Sound familiar?</h2>
             <div className="mt-12 grid gap-6 md:grid-cols-3">
               {service.painPoints?.map((point) => (
@@ -175,7 +175,7 @@ export default async function ServicePage({
       {/* Process (M19 — Sky Blue top borders on white per D4) */}
       {(service.processSteps?.length ?? 0) > 0 && (
         <section className="bg-white">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <h2 className="max-w-lg text-h2">What&apos;s included, step by step</h2>
             <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {service.processSteps?.map((step, index) => (
@@ -197,7 +197,7 @@ export default async function ServicePage({
 
       {/* Pricing (M18) — never renders tiers unless confirmed */}
       <section id="pricing" className="scroll-mt-24 bg-off-white-tan">
-        <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
           <h2 className="text-center text-h2">
             {pricingConfirmed ? "Honest, fixed pricing" : "Pricing"}
           </h2>
@@ -289,7 +289,7 @@ export default async function ServicePage({
       {/* Proof / case study (M28 dark) */}
       {service.caseStudy && (
         <section className="bg-deep-blue text-white">
-          <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-24 sm:px-6 lg:grid-cols-2">
+          <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-4 py-24 sm:px-6 lg:grid-cols-2">
             <div>
               <p className="text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
                 Proof it works
@@ -352,7 +352,7 @@ export default async function ServicePage({
       {/* Related services (M17) */}
       {(service.relatedServices?.length ?? 0) > 0 && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <h2 className="text-h2">Often paired with</h2>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {service.relatedServices?.map((related) => (
