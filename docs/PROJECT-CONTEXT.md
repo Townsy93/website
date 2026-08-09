@@ -180,3 +180,5 @@ every redirect combined, and it is what real service page copy is for.
   against that.
 - `hello@zippily.co.nz` is the shared inbox and should receive all form
   notifications and alerts, not a personal address.
+
+**The prototype is retired (10 Aug 2026).** `Website-prototype` on GitHub is frozen with the v2 homepage as its final commit. The designer reviews the live build; design revisions land in this repo only.
