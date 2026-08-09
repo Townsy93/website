@@ -108,6 +108,7 @@ export type Hero = {
   emphasisPhrase?: string;
   markerStyle?: "circle" | "underline" | "none";
   subheading?: string;
+  videoUrl?: string;
   image?: ImageWithAlt;
   primaryCta?: Link;
   secondaryCta?: Link;

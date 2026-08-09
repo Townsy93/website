@@ -11,6 +11,7 @@ import { EmphasisedHeading, Marker } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { CtaBanner } from "@/components/modules/CtaBanner";
+import { HeroVideo } from "@/components/modules/HeroVideo";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
 import { NewsletterBand } from "@/components/modules/NewsletterBand";
 import { TestimonialCards } from "@/components/modules/TestimonialCards";
@@ -107,13 +108,17 @@ export default async function Home() {
               )}
             </div>
           </div>
-          <SanityImage
-            image={page.hero?.image}
-            width={560}
-            height={420}
-            className="h-72 w-full rounded-2xl object-cover lg:h-105"
-            placeholderLabel="Hero photo — the team, real people at work"
-          />
+          {page.hero?.videoUrl ? (
+            <HeroVideo url={page.hero.videoUrl} />
+          ) : (
+            <SanityImage
+              image={page.hero?.image}
+              width={560}
+              height={420}
+              className="h-72 w-full rounded-2xl object-cover lg:h-105"
+              placeholderLabel="Hero photo — the team, real people at work"
+            />
+          )}
         </div>
       </section>
 

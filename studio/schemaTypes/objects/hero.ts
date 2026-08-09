@@ -50,6 +50,14 @@ export const hero = defineType({
       validation: (rule) => rule.max(300),
     }),
     defineField({
+      // When set, the page renders this instead of the image — as a muted,
+      // looping background-style player. Paste any Vimeo URL shape; parsing
+      // happens in the app, including unlisted-video privacy hashes.
+      name: 'videoUrl',
+      title: 'Hero video (Vimeo URL — replaces the image when set)',
+      type: 'url',
+    }),
+    defineField({
       name: 'image',
       title: 'Image',
       type: 'imageWithAlt',

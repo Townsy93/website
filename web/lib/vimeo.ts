@@ -88,7 +88,7 @@ function readHash(value: string | null): string | null {
  */
 export function buildVimeoEmbedUrl(
   ref: VimeoRef,
-  options: { autoplay?: boolean } = {},
+  options: { autoplay?: boolean; background?: boolean } = {},
 ): string {
   const url = new URL(`https://player.vimeo.com/video/${ref.videoId}`);
   if (ref.hash) url.searchParams.set("h", ref.hash);
@@ -98,6 +98,15 @@ export function buildVimeoEmbedUrl(
   url.searchParams.set("portrait", "0");
   // Set only when the user has clicked the facade — never on page load.
   if (options.autoplay) url.searchParams.set("autoplay", "1");
+  // Background mode: the hero brand video. Muted, looping, chrome-less —
+  // it behaves as a moving image, which is why autoplay is acceptable here
+  // and only here: no sound plays without the user asking for it.
+  if (options.background) {
+    url.searchParams.set("background", "1");
+    url.searchParams.set("muted", "1");
+    url.searchParams.set("loop", "1");
+    url.searchParams.set("autopause", "0");
+  }
   return url.toString();
 }
 

@@ -74,7 +74,12 @@ export function TestimonialCards({
       {watermark && (
         <div
           aria-hidden
-          className="pointer-events-none absolute -bottom-[0.22em] left-1/2 z-0 -translate-x-1/2 select-none whitespace-nowrap text-[clamp(2.4rem,12.5vw,11.5rem)] font-bold uppercase tracking-[-0.04em] text-[#1B4062]"
+          // 9.2vw, because "CLIENT FEEDBACK" is ~9.9em wide at this weight
+          // and tracking: 9.9em × 9.2vw ≈ 91vw, so the whole word is always
+          // on screen. The old 12.5vw put it at ~124vw — cropped at both
+          // ends, which read as a mistake rather than a motif. Only the
+          // descender crop at the bottom edge is deliberate.
+          className="pointer-events-none absolute -bottom-[0.22em] left-1/2 z-0 -translate-x-1/2 select-none whitespace-nowrap text-[clamp(2rem,9.2vw,8.5rem)] font-bold uppercase tracking-[-0.04em] text-[#1B4062]"
         >
           {watermark}
         </div>
