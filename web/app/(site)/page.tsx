@@ -122,48 +122,50 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Trust strip — "HubSpot Gold Partner" and the review counts as real,
-          indexable text beside the logo row. An image-only badge is invisible
-          to search. Counts come from Site settings so they can be bumped
-          without a deploy; when unset, only the Gold Partner line shows —
-          a claim with no number is better than "0 reviews". Client logos are
-          placeholders until we have permission to show real ones. */}
+      {/* Trust strip — "HubSpot Gold Partner" as real, indexable text, then a
+          ticker-tape carousel of client logos (designer's call; the review
+          counts moved out of this strip and live under the testimonials
+          heading instead). The track holds the logo set twice so the loop is
+          seamless; it pauses entirely for reduced-motion users. Placeholder
+          blocks scroll until we have logos with display permission. */}
       <section className="bg-deep-blue">
-        <div className="mx-auto flex max-w-[90rem] flex-wrap items-center gap-x-7 gap-y-4 px-4 pb-14 pt-2 sm:px-6">
-          <p className="text-body font-semibold text-white">
+        <div className="mx-auto flex max-w-[90rem] flex-wrap items-center gap-x-8 gap-y-4 px-4 pb-14 pt-2 sm:px-6">
+          <p className="shrink-0 text-body font-semibold text-white">
             HubSpot Gold Partner
           </p>
-          {(settings?.googleReviewCount ?? 0) > 0 && (
-            <p className="text-body text-white/85">
-              <span aria-hidden className="mr-1.5 text-deep-orange">★★★★★</span>
-              {settings?.googleReviewCount} five-star Google reviews
-            </p>
-          )}
-          {(settings?.hubspotReviewCount ?? 0) > 0 && (
-            <p className="text-body text-white/85">
-              <span aria-hidden className="mr-1.5 text-deep-orange">★★★★★</span>
-              {settings?.hubspotReviewCount} five-star reviews on the HubSpot
-              directory
-            </p>
-          )}
-          <div className="flex flex-1 flex-wrap items-center gap-5">
-            {(page.trustLogos?.length ?? 0) > 0
-              ? page.trustLogos?.map((logo) => (
-                  <SanityImage
-                    key={logo._key}
-                    image={logo}
-                    width={112}
-                    height={28}
-                    className="h-7 w-auto opacity-80"
-                  />
-                ))
-              : [0, 1, 2, 3, 4, 5].map((i) => (
-                  <span
-                    key={i}
-                    aria-hidden
-                    className="h-7 w-28 rounded bg-white/15"
-                  />
-                ))}
+          <div
+            className="min-w-0 flex-1 overflow-hidden"
+            style={{
+              maskImage:
+                "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+            }}
+          >
+            <div className="ticker-track flex w-max items-center gap-10">
+              {[0, 1].map((half) => (
+                <div
+                  key={half}
+                  aria-hidden={half === 1}
+                  className="flex shrink-0 items-center gap-10"
+                >
+                  {(page.trustLogos?.length ?? 0) > 0
+                    ? page.trustLogos?.map((logo) => (
+                        <SanityImage
+                          key={`${half}-${logo._key}`}
+                          image={logo}
+                          width={112}
+                          height={28}
+                          className="h-7 w-auto opacity-80"
+                        />
+                      ))
+                    : [0, 1, 2, 3, 4, 5].map((i) => (
+                        <span
+                          key={`${half}-${i}`}
+                          className="h-7 w-28 shrink-0 rounded bg-white/15"
+                        />
+                      ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -203,7 +205,9 @@ export default async function Home() {
       {/* Services overview — v2 pass: three Sky Blue stage cards plus a
           fourth in solid Deep Blue (was orange). Orange appears only on the
           button inside the Deep Blue card, which is the permitted pairing. */}
-      <section className="bg-off-white-tan">
+      {/* Tan at 50% — designer: softer so it doesn't compete with the
+          blues and orange. */}
+      <section className="bg-off-white-tan/50">
         <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
           <p className="text-center text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
             Our services
@@ -304,7 +308,10 @@ export default async function Home() {
               </p>
             </div>
             <div>
-              <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
+              {/* Bigger and full-strength Deep Blue rather than the
+                  orange the note asked for: rule 1 of the designer's own
+                  brief bans orange on white. Flagged back for a decision. */}
+              <p className="text-body-lg font-semibold uppercase tracking-[0.1em] text-deep-blue">
                 Why zippily
               </p>
               <p className="mt-3 max-w-xl text-body-lg text-deep-blue-80">
@@ -320,11 +327,13 @@ export default async function Home() {
                 key={card._key}
                 className="border-t border-deep-blue/15 pt-6 lg:border-l lg:border-t-0 lg:px-7 lg:pt-0 lg:first:border-l-0 lg:first:pl-0"
               >
-                <p className="text-body-lg font-semibold text-sky-blue">
+                {/* Up from body-lg/h4 — the designer's call: this
+                    section matters and it read as small print. */}
+                <p className="text-h3 font-semibold text-sky-blue">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <h3 className="mt-3 text-h4">{card.title}</h3>
-                <p className="mt-2 text-body text-deep-blue-80">{card.text}</p>
+                <h3 className="mt-3 text-h3">{card.title}</h3>
+                <p className="mt-3 text-body-lg text-deep-blue-80">{card.text}</p>
               </div>
             ))}
           </div>
@@ -390,7 +399,7 @@ export default async function Home() {
       {/* Insights teaser — two large cards per the v2 design. Read-time sits
           in Deep Blue at 80%, never orange on a light section. */}
       {(posts?.length ?? 0) > 0 && (
-        <section className="bg-off-white-tan">
+        <section className="bg-off-white-tan/50">
           <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <h2 className="text-center text-h2">Fresh from the blog</h2>
             <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">

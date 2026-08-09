@@ -37,7 +37,7 @@ export function TestimonialCards({
     <section className="relative overflow-hidden bg-deep-blue text-white">
       <div
         className={`mx-auto max-w-[90rem] px-4 pt-24 sm:px-6 ${
-          watermark ? "pb-[calc(7vw+5rem)]" : "pb-24"
+          watermark ? "pb-[calc(8.6vw+5rem)]" : "pb-24"
         }`}
       >
         <div className="flex flex-wrap items-center justify-between gap-4">
@@ -78,12 +78,12 @@ export function TestimonialCards({
       {watermark && (
         <div
           aria-hidden
-          // 9.2vw, because "CLIENT FEEDBACK" is ~9.9em wide at this weight
-          // and tracking: 9.9em × 9.2vw ≈ 91vw, so the whole word is always
-          // on screen. The old 12.5vw put it at ~124vw — cropped at both
-          // ends, which read as a mistake rather than a motif. Only the
-          // descender crop at the bottom edge is deliberate.
-          className="pointer-events-none absolute bottom-0 left-1/2 z-0 -translate-x-1/2 translate-y-[0.16em] select-none whitespace-nowrap text-[clamp(2rem,9.2vw,8.5rem)] font-bold uppercase leading-none tracking-[-0.04em] text-[#1B4062]"
+          // Full width, per the designer: 11.35vw sets the measured 8.68em word at
+          // ~100vw, so the C and K sit at the viewport edges. No rem cap —
+          // a cap would stop it short of full width on wide screens. Sized
+          // against the viewport, not the 90rem container, because the
+          // section background is full-bleed and so is the word.
+          className="pointer-events-none absolute bottom-0 left-1/2 z-0 -translate-x-1/2 translate-y-[0.16em] select-none whitespace-nowrap text-[11.35vw] font-bold uppercase leading-none tracking-[-0.04em] text-[#1B4062]"
         >
           {watermark}
         </div>

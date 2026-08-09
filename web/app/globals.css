@@ -63,3 +63,18 @@
     @apply bg-off-white-tan font-sans text-body text-deep-blue antialiased;
   }
 }
+
+/* Trust-strip logo ticker. The track holds the logo set twice; sliding the
+   whole track by exactly half its width and snapping back is seamless
+   because the second half is identical to the first. Motion is decorative,
+   so it stops entirely for reduced-motion users rather than slowing down. */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.ticker-track {
+  animation: ticker 28s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+}
