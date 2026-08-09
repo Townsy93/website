@@ -80,8 +80,11 @@ publishing a pricing table purged nothing. Handled now by a fanout map in
 **Newly tagged pages do not purge on the first publish after the change.**
 Entries already cached carry no tags. One forced re-render fixes it.
 
-**A rebuild can bake stale data.** Next caches fetches at build time; clear
-`.next/cache` if a build produces content you know has changed.
+**A rebuild can bake stale data.** Next caches fetches at build time — and
+`.next/cache` alone is not enough: the stale prerender also survives in
+`.next/server` and `.open-next` (seen live: the intro photos deployed twice
+as placeholders after a `.next/cache` clear). Before a deploy that must pick
+up changed Sanity content, `rm -rf .next .open-next`.
 
 **Cloudflare rejects `0` for Sunday in cron.** Use `SUN` or `7`. The deploy
 reports only "a request to the API failed", with no reason.
