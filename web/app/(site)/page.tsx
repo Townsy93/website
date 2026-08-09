@@ -122,14 +122,30 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Trust strip — "HubSpot Gold Partner" as real, indexable text beside
-          the logo row. An image-only badge is invisible to search. Client
-          logos are placeholders until we have permission to show real ones. */}
+      {/* Trust strip — "HubSpot Gold Partner" and the review counts as real,
+          indexable text beside the logo row. An image-only badge is invisible
+          to search. Counts come from Site settings so they can be bumped
+          without a deploy; when unset, only the Gold Partner line shows —
+          a claim with no number is better than "0 reviews". Client logos are
+          placeholders until we have permission to show real ones. */}
       <section className="bg-deep-blue">
         <div className="mx-auto flex max-w-[90rem] flex-wrap items-center gap-x-7 gap-y-4 px-4 pb-14 pt-2 sm:px-6">
           <p className="text-body font-semibold text-white">
             HubSpot Gold Partner
           </p>
+          {(settings?.googleReviewCount ?? 0) > 0 && (
+            <p className="text-body text-white/85">
+              <span aria-hidden className="mr-1.5 text-deep-orange">★★★★★</span>
+              {settings?.googleReviewCount} five-star Google reviews
+            </p>
+          )}
+          {(settings?.hubspotReviewCount ?? 0) > 0 && (
+            <p className="text-body text-white/85">
+              <span aria-hidden className="mr-1.5 text-deep-orange">★★★★★</span>
+              {settings?.hubspotReviewCount} five-star reviews on the HubSpot
+              directory
+            </p>
+          )}
           <div className="flex flex-1 flex-wrap items-center gap-5">
             {(page.trustLogos?.length ?? 0) > 0
               ? page.trustLogos?.map((logo) => (
@@ -320,6 +336,12 @@ export default async function Home() {
           accidentally clipped. */}
       <TestimonialCards
         heading="Kind words from people we've un-stressed"
+        subheading={
+          (settings?.googleReviewCount ?? 0) > 0 &&
+          (settings?.hubspotReviewCount ?? 0) > 0
+            ? `${settings?.googleReviewCount} five-star reviews on Google, ${settings?.hubspotReviewCount} more on the HubSpot directory.`
+            : undefined
+        }
         testimonials={page.testimonials}
         action={{ label: "See our work", href: "/our-work" }}
         watermark="Client feedback"
