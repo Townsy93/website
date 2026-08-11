@@ -72,8 +72,13 @@ export default async function IndustryPage({
             </Link>{" "}
             › <span className="text-white/80">{industry.title}</span>
           </nav>
-          <p className="mt-5 inline-flex items-center gap-2 text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
-            <Icon name={industry.icon} className="h-4 w-4" />
+          {/* The industry badge the H1c layout was named for. The custom
+              brand icons are detailed line drawings — at the old 16px they
+              read as smudges, so the badge carries them at chip size. */}
+          <p className="mt-6 inline-flex items-center gap-3 text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10">
+              <Icon name={industry.icon} className="h-6 w-6" />
+            </span>
             {industry.title}
           </p>
           <h1 className="mt-5 max-w-3xl text-h1-mobile md:text-h1">
