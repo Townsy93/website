@@ -25,17 +25,17 @@ export const revalidate = 3600;
 const SERVICE_STAGES = [
   {
     title: "Discover",
-    icon: "search",
+    icon: "zl-stage-discover",
     text: "HubSpot Audit, Customer Journey Mapping, Marketing Automation (Strategy)",
   },
   {
     title: "Build",
-    icon: "build",
+    icon: "zl-stage-build",
     text: "CRM Implementation, Websites, Landing Pages, Post-Sales, Automation",
   },
   {
     title: "Scale",
-    icon: "growth",
+    icon: "zl-stage-scale",
     text: "RevOps Retainers, AI Solutions, HubSpot Training",
   },
 ];
@@ -174,7 +174,10 @@ export default async function Home() {
           Sky Blue hand-drawn underline on "HubSpot implementation", copy
           rewritten. The three slots are for real people imagery — team or
           client photography, not stock, not product screenshots. */}
-      <section className="bg-white">
+      <section
+        className="bg-white bg-cover bg-center"
+        style={{ backgroundImage: "url(/intro-background.png)" }}
+      >
         <div className="mx-auto max-w-[90rem] px-4 py-24 text-center sm:px-6">
           <h2 className="mx-auto max-w-3xl text-h2">
             <Marker style="underline" color="sky-blue">
@@ -399,7 +402,10 @@ export default async function Home() {
       {/* Insights teaser — two large cards per the v2 design. Read-time sits
           in Deep Blue at 80%, never orange on a light section. */}
       {(posts?.length ?? 0) > 0 && (
-        <section className="bg-off-white-tan/50">
+        <section
+          className="bg-off-white-tan/50 bg-cover bg-center"
+          style={{ backgroundImage: "url(/blog-background.png)" }}
+        >
           <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <h2 className="text-center text-h2">Fresh from the blog</h2>
             <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
