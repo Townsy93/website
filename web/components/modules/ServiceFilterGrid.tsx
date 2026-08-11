@@ -4,11 +4,13 @@ import Link from "next/link";
 import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 
+// The three stage pills carry the designer's custom stage icons; "All
+// services" is deliberately bare — it is not a stage.
 const FILTERS = [
-  { label: "All services", value: "all" },
-  { label: "Discover", value: "discover" },
-  { label: "Build", value: "build" },
-  { label: "Scale", value: "scale" },
+  { label: "All services", value: "all", icon: null },
+  { label: "Discover", value: "discover", icon: "zl-stage-discover" },
+  { label: "Build", value: "build", icon: "zl-stage-build" },
+  { label: "Scale", value: "scale", icon: "zl-stage-scale" },
 ] as const;
 
 export type ServiceCardData = {
@@ -37,12 +39,14 @@ export function ServiceFilterGrid({ cards }: { cards: ServiceCardData[] }) {
             type="button"
             onClick={() => setFilter(f.value)}
             aria-pressed={filter === f.value}
-            className={`shrink-0 snap-start rounded-full border px-5 py-2 text-body transition-colors ${
+            className={`flex shrink-0 snap-start items-center gap-2 rounded-full border px-5 py-2 text-body transition-colors ${
               filter === f.value
                 ? "border-deep-blue bg-deep-blue font-semibold text-white"
                 : "border-deep-blue-20 bg-white text-deep-blue hover:border-deep-blue"
             }`}
           >
+            {/* currentColor: Deep Blue at rest, white when the pill is active */}
+            {f.icon && <Icon name={f.icon} className="h-5 w-5" />}
             {f.label}
           </button>
         ))}
