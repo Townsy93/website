@@ -81,7 +81,7 @@ export default async function IndustriesPage() {
                 className="flex flex-col rounded-xl border border-deep-blue-20 bg-white p-7 transition hover:-translate-y-0.5 hover:border-deep-blue hover:shadow-lg"
               >
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-off-white-tan">
-                  <Icon name={industry.icon} className="h-6 w-6 text-deep-blue" />
+                  <Icon name={industry.icon} className="h-8 w-8 text-deep-blue" />
                 </span>
                 <h3 className="mt-4 text-h4">{industry.title}</h3>
                 <p className="mt-2 flex-1 text-body text-deep-blue-80">

@@ -77,7 +77,7 @@ export default async function IndustryPage({
               read as smudges, so the badge carries them at chip size. */}
           <p className="mt-6 inline-flex items-center gap-3 text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10">
-              <Icon name={industry.icon} className="h-6 w-6" />
+              <Icon name={industry.icon} className="h-8 w-8" />
             </span>
             {industry.title}
           </p>

@@ -225,7 +225,7 @@ export default async function Home() {
                 className="rounded-2xl bg-sky-blue p-8 text-center"
               >
                 <span className="mx-auto flex h-13 w-13 items-center justify-center rounded-full bg-white">
-                  <Icon name={stage.icon} className="h-6 w-6 text-deep-blue" />
+                  <Icon name={stage.icon} className="h-8 w-8 text-deep-blue" />
                 </span>
                 <h3 className="mt-5 text-h4">{stage.title}</h3>
                 <p className="mt-3 text-body text-deep-blue/80">{stage.text}</p>
@@ -385,7 +385,7 @@ export default async function Home() {
                   <span className="mx-auto flex h-13 w-13 items-center justify-center rounded-full bg-deep-blue transition group-hover:bg-sky-blue">
                     <Icon
                       name={industry.icon}
-                      className="h-6 w-6 text-white transition group-hover:text-deep-blue"
+                      className="h-8 w-8 text-white transition group-hover:text-deep-blue"
                     />
                   </span>
                   <h3 className="mt-4 text-h4">{industry.title}</h3>

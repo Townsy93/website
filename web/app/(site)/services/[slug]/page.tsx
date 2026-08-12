@@ -16,6 +16,16 @@ import { SITE_URL } from "@/lib/site";
 
 export const revalidate = 3600;
 
+// Stage badge for the hero — the same three custom icons the services
+// landing pills and the homepage stage cards use, keyed off the service's
+// category. Unknown or missing categories render no badge rather than a
+// wrong one.
+const STAGE_BADGE: Record<string, { icon: string; label: string }> = {
+  discover: { icon: "zl-stage-discover", label: "Discover" },
+  build: { icon: "zl-stage-build", label: "Build" },
+  scale: { icon: "zl-stage-scale", label: "Scale" },
+};
+
 export async function generateStaticParams() {
   const slugs = await client.fetch(SERVICE_SLUGS_QUERY);
   return slugs.map((slug) => ({ slug }));
@@ -110,6 +120,17 @@ export default async function ServicePage({
             </Link>{" "}
             › <span className="text-white/80">{service.title}</span>
           </nav>
+          {service.category && STAGE_BADGE[service.category] && (
+            <p className="mt-6 inline-flex items-center gap-3 text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10">
+                <Icon
+                  name={STAGE_BADGE[service.category].icon}
+                  className="h-8 w-8"
+                />
+              </span>
+              {STAGE_BADGE[service.category].label} stage
+            </p>
+          )}
           <h1 className="mt-5 text-h1-mobile md:text-h1">
             <EmphasisedHeading
               heading={service.hero?.heading ?? service.title ?? ""}
