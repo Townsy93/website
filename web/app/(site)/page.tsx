@@ -252,7 +252,10 @@ export default async function Home() {
           <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <div className="grid gap-0 overflow-hidden rounded-3xl bg-deep-blue text-white lg:grid-cols-[1.05fr_1fr]">
               <div className="p-10 lg:p-14">
-                <h2 className="max-w-md text-h2">
+                <p className="text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
+                  {page.featuredCaseStudy.client}
+                </p>
+                <h2 className="mt-4 max-w-md text-h2">
                   {page.featuredCaseStudy.headline}
                 </h2>
                 {(page.featuredCaseStudy.stats?.length ?? 0) > 0 && (
@@ -367,7 +370,11 @@ export default async function Home() {
           <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <h2 className="text-h2">We speak your industry&apos;s language</h2>
-              <ButtonLink href="/industries" variant="navy">
+              {/* Orange on a white section: an explicit owner+designer
+                  exception to brief rule 1, for button consistency across
+                  the homepage. Label contrast (Deep Blue on orange) is
+                  what carries AA and is unaffected by the background. */}
+              <ButtonLink href="/industries" variant="orange">
                 Find out more
               </ButtonLink>
             </div>
