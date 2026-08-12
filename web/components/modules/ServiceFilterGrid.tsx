@@ -39,14 +39,14 @@ export function ServiceFilterGrid({ cards }: { cards: ServiceCardData[] }) {
             type="button"
             onClick={() => setFilter(f.value)}
             aria-pressed={filter === f.value}
-            className={`flex shrink-0 snap-start items-center gap-2 rounded-full border px-5 py-2 text-body transition-colors ${
+            className={`flex shrink-0 snap-start items-center gap-2 rounded-full border py-2 text-body transition-colors ${f.icon ? "pl-4 pr-5" : "px-5"} ${
               filter === f.value
                 ? "border-deep-blue bg-deep-blue font-semibold text-white"
                 : "border-deep-blue-20 bg-white text-deep-blue hover:border-deep-blue"
             }`}
           >
             {/* currentColor: Deep Blue at rest, white when the pill is active */}
-            {f.icon && <Icon name={f.icon} className="h-5 w-5" />}
+            {f.icon && <Icon name={f.icon} className="h-8 w-8" />}
             {f.label}
           </button>
         ))}
