@@ -104,6 +104,14 @@ export const aboutPage = defineType({
       validation: (rule) => rule.max(8),
     }),
     defineField({
+      // The "Why We Started Zippily" film. Click-to-play with sound, so the
+      // page renders the video block only when this is set; otherwise the
+      // photo-and-text story layout stays.
+      name: 'storyVideoUrl',
+      title: 'Our story video (Vimeo URL)',
+      type: 'url',
+    }),
+    defineField({
       name: 'storyHeading',
       title: 'Founding story heading',
       type: 'string',

@@ -52,6 +52,7 @@ export type SiteSettings = {
   instagramUrl?: string;
   youTubeUrl?: string;
   googleReviewCount?: number;
+  happyClients?: number;
   hubspotReviewCount?: number;
   newsletterHeading?: string;
   defaultSeo?: Seo;
@@ -373,6 +374,7 @@ export type AboutPage = {
       _key: string;
     } & ImageWithAlt
   >;
+  storyVideoUrl?: string;
   storyHeading?: string;
   storyBody?: BlockContent;
   storyImage?: ImageWithAlt;
@@ -1484,6 +1486,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   instagramUrl?: string;
   youTubeUrl?: string;
   googleReviewCount?: number;
+  happyClients?: number;
   hubspotReviewCount?: number;
   newsletterHeading?: string;
   defaultSeo?: Seo;
@@ -1628,7 +1631,7 @@ export type SERVICES_LANDING_QUERY_RESULT = {
 
 // Source: ../web/sanity/queries.ts
 // Variable: ABOUT_PAGE_QUERY
-// Query: *[_type == "aboutPage"][0]{    ...,    team[]->{_id, name, role, photo, bio, outsideWork, skills, favouriteHubSpotFeature, whyTheyLoveHubSpot, linkedIn},    testimonials[]->{_id, quote, name, role, company, avatar}  }
+// Query: *[_type == "aboutPage"][0]{    ...,    team[]->{_id, name, role, pronouns, photo, bio, outsideWork, skills, favouriteHubSpotFeature, whyTheyLoveHubSpot, linkedIn},    testimonials[]->{_id, quote, name, role, company, avatar}  }
 export type ABOUT_PAGE_QUERY_RESULT = {
   _id: string;
   _type: "aboutPage";
@@ -1648,6 +1651,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
     _id: string;
     name: string;
     role: string;
+    pronouns: string | null;
     photo: ImageWithAlt | null;
     bio: string | null;
     outsideWork: string | null;
@@ -1680,6 +1684,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
       _key: string;
     } & ImageWithAlt
   >;
+  storyVideoUrl?: string;
   storyHeading?: string;
   storyBody?: BlockContent;
   storyImage?: ImageWithAlt;
@@ -2609,7 +2614,7 @@ declare module "@sanity/client" {
     '*[_type == "siteSettings"][0]': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "homePage"][0]{\n    ...,\n    featuredServices[]->{_id, title, slug, icon, shortDescription, whoItsFor},\n    featuredCaseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}},\n    testimonials[]->{_id, quote, name, role, company, avatar},\n    featuredIndustries[]->{_id, title, slug, icon, shortDescription, pageBuilt}\n  }': HOME_PAGE_QUERY_RESULT;
     '*[_type == "servicesLandingPage"][0]{\n    ...,\n    serviceCards[]{\n      ...,\n      service->{_id, title, slug, category, icon, shortDescription, whoItsFor}\n    },\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}}\n  }': SERVICES_LANDING_QUERY_RESULT;
-    '*[_type == "aboutPage"][0]{\n    ...,\n    team[]->{_id, name, role, photo, bio, outsideWork, skills, favouriteHubSpotFeature, whyTheyLoveHubSpot, linkedIn},\n    testimonials[]->{_id, quote, name, role, company, avatar}\n  }': ABOUT_PAGE_QUERY_RESULT;
+    '*[_type == "aboutPage"][0]{\n    ...,\n    team[]->{_id, name, role, pronouns, photo, bio, outsideWork, skills, favouriteHubSpotFeature, whyTheyLoveHubSpot, linkedIn},\n    testimonials[]->{_id, quote, name, role, company, avatar}\n  }': ABOUT_PAGE_QUERY_RESULT;
     '*[_type == "contactPage"][0]': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "blogPost"] | order(publishedAt desc)[0...3]{\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': LATEST_POSTS_QUERY_RESULT;
     '*[_type == "service" && defined(slug.current)].slug.current': SERVICE_SLUGS_QUERY_RESULT;

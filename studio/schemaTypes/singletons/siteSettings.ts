@@ -104,6 +104,13 @@ export const siteSettings = defineType({
       validation: (rule) => rule.integer().min(0),
     }),
     defineField({
+      name: 'happyClients',
+      title: 'Happy clients (count)',
+      type: 'number',
+      description: 'Shown in the About page stats band',
+      validation: (rule) => rule.integer().min(0),
+    }),
+    defineField({
       name: 'hubspotReviewCount',
       title: 'HubSpot directory review count',
       type: 'number',
