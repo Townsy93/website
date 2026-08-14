@@ -24,12 +24,20 @@ export function TestimonialCards({
   testimonials,
   action,
   watermark,
+  appearance = "solid",
 }: {
   heading?: string | null;
   subheading?: string | null;
   testimonials?: Testimonial[] | null;
   action?: { label: string; href: string } | null;
   watermark?: string | null;
+  /**
+   * "solid" is the homepage v2 white card; "outline" is the About design's
+   * transparent card with a hairline border. On outline cards the role sits
+   * in Deep Orange — permitted, because the card is transparent and the
+   * orange rests on the section's Deep Blue.
+   */
+  appearance?: "solid" | "outline";
 }) {
   const items = (testimonials ?? []).filter((t) => t.quote);
   if (items.length === 0) return null;
@@ -57,14 +65,25 @@ export function TestimonialCards({
           {items.map((t) => (
             <figure
               key={t._id ?? t.name}
-              className="min-w-72 snap-start rounded-xl bg-white p-7 text-deep-blue md:min-w-0"
+              className={`min-w-72 snap-start rounded-xl p-7 md:min-w-0 ${
+                appearance === "outline"
+                  ? "border border-white/25 text-white"
+                  : "bg-white text-deep-blue"
+              }`}
             >
               <blockquote className="text-body-lg">“{t.quote}”</blockquote>
               <figcaption className="mt-5">
                 <p className="text-body font-semibold">{t.name}</p>
-                {/* Deep Blue at 70% — orange never sits on white, and Sky
-                    Blue fails contrast on it. */}
-                <p className="text-caption text-deep-blue/70">
+                {/* Solid cards: Deep Blue at 70% — orange never sits on
+                    white. Outline cards: Deep Orange, resting on the
+                    section's Deep Blue through the transparent card. */}
+                <p
+                  className={`text-caption ${
+                    appearance === "outline"
+                      ? "text-deep-orange"
+                      : "text-deep-blue/70"
+                  }`}
+                >
                   {[t.role, t.company].filter(Boolean).join(", ")}
                 </p>
               </figcaption>

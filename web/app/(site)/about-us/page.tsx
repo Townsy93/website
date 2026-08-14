@@ -60,12 +60,9 @@ export default async function AboutPage() {
       <section className="bg-deep-blue text-white">
         <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-4 pb-20 pt-32 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            {page.hero?.eyebrow && (
-              <p className="text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
-                {page.hero.eyebrow}
-              </p>
-            )}
-            <h1 className="mt-6 text-h1-mobile md:text-h1">
+            {/* No eyebrow and no anchor pills — Sean's call (Aug 2026): the
+                hero carries just the heading and the standard CTA pair. */}
+            <h1 className="text-h1-mobile md:text-h1">
               <EmphasisedHeading
                 heading={page.hero?.heading ?? ""}
                 phrase={page.hero?.emphasisPhrase}
@@ -79,24 +76,6 @@ export default async function AboutPage() {
               </p>
             )}
             <div className="mt-8 flex flex-wrap gap-3">
-              {page.hero?.primaryCta?.href && (
-                <ButtonLink
-                  href={page.hero.primaryCta.href}
-                  variant="orange-outline"
-                >
-                  {page.hero.primaryCta.label}
-                </ButtonLink>
-              )}
-              {page.hero?.secondaryCta?.href && (
-                <ButtonLink
-                  href={page.hero.secondaryCta.href}
-                  variant="ghost-light"
-                >
-                  {page.hero.secondaryCta.label}
-                </ButtonLink>
-              )}
-            </div>
-            <div className="mt-3 flex flex-wrap gap-3">
               <ButtonLink href="/contact" variant="orange">
                 Book a free chat
               </ButtonLink>
@@ -273,6 +252,7 @@ export default async function AboutPage() {
         testimonials={page.testimonials}
         action={{ label: "See our work", href: "/our-work" }}
         watermark="Client feedback"
+        appearance="outline"
       />
 
       {/* Our story — the film when we have it (click-to-play, sound belongs
@@ -280,8 +260,8 @@ export default async function AboutPage() {
           layout until then. */}
       {page.storyVideoUrl ? (
         <section
-          className="bg-white bg-cover bg-center"
-          style={{ backgroundImage: "url(/intro-background.png)" }}
+          className="bg-off-white-tan/50 bg-cover bg-center"
+          style={{ backgroundImage: "url(/blog-background.png)" }}
         >
           <div className="mx-auto max-w-4xl px-4 py-24 text-center sm:px-6">
             <p className="text-caption font-semibold uppercase tracking-[0.14em] text-deep-blue-80">
@@ -300,7 +280,10 @@ export default async function AboutPage() {
         </section>
       ) : (
         page.storyBody && (
-          <section className="bg-off-white-tan/50">
+          <section
+            className="bg-off-white-tan/50 bg-cover bg-center"
+            style={{ backgroundImage: "url(/blog-background.png)" }}
+          >
             <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-4 py-24 sm:px-6 lg:grid-cols-2">
               <SanityImage
                 image={page.storyImage}
