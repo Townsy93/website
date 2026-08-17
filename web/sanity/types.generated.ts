@@ -1115,6 +1115,29 @@ export type CaseStudy = {
   videoUrl?: string;
   videoTestimonial?: VimeoEmbed;
   testimonial?: TestimonialReference;
+  clientLogo?: ImageWithAlt;
+  aboutImage?: ImageWithAlt;
+  aboutBody?: string;
+  challengeItems?: Array<{
+    heading?: string;
+    text?: string;
+    _type: "storyItem";
+    _key: string;
+  }>;
+  solutionItems?: Array<{
+    heading?: string;
+    text?: string;
+    _type: "storyItem";
+    _key: string;
+  }>;
+  gallery?: Array<
+    {
+      _key: string;
+    } & ImageWithAlt
+  >;
+  resultsText?: string;
+  resultsBullets?: Array<string>;
+  fullBleedPhoto?: ImageWithAlt;
   body?: BlockContent;
   seo?: Seo;
 };
@@ -2073,6 +2096,29 @@ export type CASE_STUDY_QUERY_RESULT = {
     company: string;
     avatar: ImageWithAlt | null;
   } | null;
+  clientLogo?: ImageWithAlt;
+  aboutImage?: ImageWithAlt;
+  aboutBody?: string;
+  challengeItems?: Array<{
+    heading?: string;
+    text?: string;
+    _type: "storyItem";
+    _key: string;
+  }>;
+  solutionItems?: Array<{
+    heading?: string;
+    text?: string;
+    _type: "storyItem";
+    _key: string;
+  }>;
+  gallery?: Array<
+    {
+      _key: string;
+    } & ImageWithAlt
+  >;
+  resultsText?: string;
+  resultsBullets?: Array<string>;
+  fullBleedPhoto?: ImageWithAlt;
   body?: BlockContent;
   seo?: Seo;
 } | null;

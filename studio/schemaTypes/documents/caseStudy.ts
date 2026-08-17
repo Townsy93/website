@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 import {slugShape} from '../../lib/slugRules'
 
 export const caseStudy = defineType({
@@ -119,6 +119,80 @@ export const caseStudy = defineType({
       type: 'reference',
       group: 'content',
       to: [{type: 'testimonial'}],
+    }),
+    defineField({
+      // --- Case study v2 layout (designer, Aug 2026) ---
+      name: 'clientLogo',
+      title: 'Client logo (hero)',
+      type: 'imageWithAlt',
+    }),
+    defineField({
+      name: 'aboutImage',
+      title: 'About-the-client image',
+      type: 'imageWithAlt',
+      description: "From the client's website, with permission",
+    }),
+    defineField({
+      name: 'aboutBody',
+      title: 'About the client',
+      type: 'text',
+      rows: 8,
+      description: 'Plain paragraphs — blank line starts a new paragraph',
+    }),
+    defineField({
+      name: 'challengeItems',
+      title: 'The challenge',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          name: 'storyItem',
+          type: 'object',
+          fields: [
+            defineField({name: 'heading', title: 'Sub heading', type: 'string'}),
+            defineField({name: 'text', title: 'Text', type: 'text', rows: 4}),
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'solutionItems',
+      title: 'The solution',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          name: 'storyItem',
+          type: 'object',
+          fields: [
+            defineField({name: 'heading', title: 'Sub heading', type: 'string'}),
+            defineField({name: 'text', title: 'Text', type: 'text', rows: 6}),
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'gallery',
+      title: 'Gallery (three stills)',
+      type: 'array',
+      of: [defineArrayMember({type: 'imageWithAlt'})],
+      validation: (rule) => rule.max(3),
+      description: 'Zippily team working with the client — stills from the video if possible',
+    }),
+    defineField({
+      name: 'resultsText',
+      title: 'The results — intro',
+      type: 'text',
+      rows: 5,
+    }),
+    defineField({
+      name: 'resultsBullets',
+      title: 'The results — what working together brought',
+      type: 'array',
+      of: [defineArrayMember({type: 'string'})],
+    }),
+    defineField({
+      name: 'fullBleedPhoto',
+      title: 'Full-bleed photo (above the quote)',
+      type: 'imageWithAlt',
     }),
     defineField({
       name: 'body',

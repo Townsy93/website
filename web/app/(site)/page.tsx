@@ -360,6 +360,7 @@ export default async function Home() {
         testimonials={page.testimonials}
         action={{ label: "See our work", href: "/our-work" }}
         watermark="Client feedback"
+        appearance="outline"
       />
 
       {/* Industries — v2 pass: outline cards with Deep Blue icon chips that
