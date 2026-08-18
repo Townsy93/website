@@ -48,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
       page?.seo?.metaTitle ?? "zippily — HubSpot implementation & RevOps",
     description:
       page?.seo?.metaDescription ??
-      "Auckland-based HubSpot implementation and RevOps agency. HubSpot Gold Partner.",
+      "Auckland-based HubSpot implementation and RevOps agency. HubSpot Platinum Partner.",
     alternates: { canonical: "/" },
   };
 }
@@ -132,7 +132,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Trust strip — "HubSpot Gold Partner" as real, indexable text, then a
+      {/* Trust strip — "HubSpot Platinum Partner" as real, indexable text, then a
           ticker-tape carousel of client logos (designer's call; the review
           counts moved out of this strip and live under the testimonials
           heading instead). The track holds the logo set twice so the loop is
@@ -141,7 +141,7 @@ export default async function Home() {
       <section className="bg-deep-blue">
         <div className="mx-auto flex max-w-[90rem] flex-wrap items-center gap-x-8 gap-y-4 px-6 pb-14 pt-2">
           <p className="shrink-0 text-body font-semibold text-white">
-            HubSpot Gold Partner
+            HubSpot Platinum Partner
           </p>
           <div
             className="min-w-0 flex-1 overflow-hidden"

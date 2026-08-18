@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   // and pages already ending in "| Zippily" gained a second one.
   title: "zippily — HubSpot implementation & RevOps",
   description:
-    "Auckland-based HubSpot implementation and RevOps agency. HubSpot Gold Partner.",
+    "Auckland-based HubSpot implementation and RevOps agency. HubSpot Platinum Partner.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -49,7 +49,7 @@ export default async function RootLayout({
     name: SITE_NAME,
     url: SITE_URL,
     description:
-      "Auckland-based HubSpot implementation and RevOps agency. HubSpot Gold Partner serving New Zealand and Australia.",
+      "Auckland-based HubSpot implementation and RevOps agency. HubSpot Platinum Partner serving New Zealand and Australia.",
     address: {
       "@type": "PostalAddress",
       ...(settings?.businessAddress?.streetAddress

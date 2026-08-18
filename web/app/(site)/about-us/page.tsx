@@ -57,7 +57,7 @@ export default async function AboutPage() {
     <>
       {/* Hero — dark split. Anchor pills styled like homepage buttons (no
           down arrows), plus the standard CTA pair beneath. The eyebrow no
-          longer says Gold Partner — the badge band right below carries it. */}
+          longer says a partner tier — the badge band right below carries it. */}
       <section className="bg-deep-blue text-white">
         <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
@@ -126,20 +126,20 @@ export default async function AboutPage() {
         </section>
       )}
 
-      {/* Gold Partner credential band — pale blue so it reads as its own
+      {/* Platinum Partner credential band — pale blue so it reads as its own
           strip between the white sections. */}
       <section className="bg-white">
         <div className="mx-auto max-w-5xl px-6 pb-8">
           <div className="flex flex-col items-center gap-6 rounded-2xl bg-sky-blue/15 p-8 text-center sm:flex-row sm:text-left">
             <Image
-              src="/hubspot-gold-badge.png"
-              alt="HubSpot Gold Solutions Partner badge"
+              src="/hubspot-platinum-badge.png"
+              alt="HubSpot Platinum Solutions Partner badge"
               width={96}
               height={96}
               className="h-24 w-auto shrink-0"
             />
             <div>
-              <h2 className="text-h3 text-deep-blue">HubSpot Gold Partner</h2>
+              <h2 className="text-h3 text-deep-blue">HubSpot Platinum Partner</h2>
               <p className="mt-2 text-body text-deep-blue-80">
                 Certified and delivering across New Zealand &amp; Australia,
                 from Auckland.

@@ -72,7 +72,7 @@ export default async function LandingPage({
 
   return (
     <div className="flex min-h-full flex-col">
-      {/* Slim header — logo and the Gold Partner pill, nothing clickable
+      {/* Slim header — logo and the Platinum Partner pill, nothing clickable
           except the form below. */}
       <header className="bg-deep-blue">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-6 sm:px-6">
@@ -84,7 +84,7 @@ export default async function LandingPage({
             priority
           />
           <span className="text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
-            HubSpot Gold Partner · Auckland, NZ
+            HubSpot Platinum Partner
           </span>
         </div>
       </header>
