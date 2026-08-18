@@ -158,15 +158,25 @@ export default async function CaseStudyPage({
       {/* Trust stats band — live counts from Site settings. */}
       {trustStats.length > 0 && (
         <section className="bg-off-white-tan/50">
-          <div className="mx-auto grid max-w-[90rem] grid-cols-1 divide-y divide-deep-blue/15 px-4 text-center sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:px-6">
-            {trustStats.map((stat) => (
-              <div key={stat.label} className="px-6 py-7 sm:py-14">
+          <div className="mx-auto flex max-w-[90rem] flex-col items-center px-4 py-14 text-center sm:flex-row sm:items-stretch sm:justify-center sm:px-6">
+            {trustStats.map((stat, index) => (
+              <div key={stat.label} className="contents">
+                {/* Divider: short and centred per the design, never
+                    full-height. */}
+                {index > 0 && (
+                  <span
+                    aria-hidden
+                    className="h-px w-16 bg-deep-blue/20 sm:h-24 sm:w-px sm:self-center"
+                  />
+                )}
+                <div className="px-6 py-7 sm:flex sm:w-64 sm:flex-col sm:justify-center sm:py-14">
                 <p className="text-[clamp(2.5rem,3.5vw,3.25rem)] font-semibold leading-none tracking-[-0.06em] text-deep-blue">
                   {stat.value}
                 </p>
-                <p className="mx-auto mt-3 max-w-45 text-body text-deep-blue-80">
-                  {stat.label}
-                </p>
+                  <p className="mx-auto mt-3 max-w-45 text-body text-deep-blue-80">
+                    {stat.label}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -218,8 +228,10 @@ export default async function CaseStudyPage({
                           <div className="mt-7 flex flex-col gap-7">
                             {column.items?.map((item) => (
                               <div key={item._key}>
+                                {/* Orange caps per Sean's explicit direction,
+                                    matching the design. */}
                                 {item.heading && (
-                                  <h3 className="text-caption font-semibold uppercase tracking-[0.1em] text-deep-blue">
+                                  <h3 className="text-caption font-semibold uppercase tracking-[0.1em] text-deep-orange">
                                     {item.heading}
                                   </h3>
                                 )}
