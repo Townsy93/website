@@ -7,6 +7,7 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { CtaBanner } from "@/components/modules/CtaBanner";
+import { StatsBand } from "@/components/modules/StatsBand";
 import { TeamGrid } from "@/components/modules/TeamGrid";
 import { TestimonialCards } from "@/components/modules/TestimonialCards";
 import { VimeoEmbed } from "@/components/modules/VimeoEmbed";
@@ -34,7 +35,7 @@ export default async function AboutPage() {
   ]);
   if (!page) {
     return (
-      <section className="bg-deep-blue pb-24 pt-40 text-center text-white">
+      <section className="bg-deep-blue pb-14 sm:pb-24 pt-40 text-center text-white">
         <p className="text-body-lg">About page content not found in Sanity.</p>
       </section>
     );
@@ -50,7 +51,7 @@ export default async function AboutPage() {
       label: "5-star HubSpot Directory reviews",
     },
     { value: settings?.happyClients, label: "Happy clients" },
-  ].filter((stat) => (stat.value ?? 0) > 0);
+  ];
 
   return (
     <>
@@ -58,7 +59,7 @@ export default async function AboutPage() {
           down arrows), plus the standard CTA pair beneath. The eyebrow no
           longer says Gold Partner — the badge band right below carries it. */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-4 pb-20 pt-32 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             {/* No eyebrow and no anchor pills — Sean's call (Aug 2026): the
                 hero carries just the heading and the standard CTA pair. */}
@@ -98,7 +99,7 @@ export default async function AboutPage() {
           Blue (design had orange-on-white; fails AA). */}
       {(page.trustPillars?.length ?? 0) > 0 && (
         <section id="trust" className="scroll-mt-24 bg-white">
-          <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-4 py-24 sm:px-6 lg:grid-cols-2">
+          <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-6 py-14 sm:py-24 lg:grid-cols-2">
             <SanityImage
               image={page.trustPillars?.[0]?.image}
               width={560}
@@ -128,7 +129,7 @@ export default async function AboutPage() {
       {/* Gold Partner credential band — pale blue so it reads as its own
           strip between the white sections. */}
       <section className="bg-white">
-        <div className="mx-auto max-w-5xl px-4 pb-8 sm:px-6">
+        <div className="mx-auto max-w-5xl px-6 pb-8">
           <div className="flex flex-col items-center gap-6 rounded-2xl bg-sky-blue/15 p-8 text-center sm:flex-row sm:text-left">
             <Image
               src="/hubspot-gold-badge.png"
@@ -152,7 +153,7 @@ export default async function AboutPage() {
           unreachable on touch; the pop-up is for those who WANT the bios. */}
       {(page.team?.length ?? 0) > 0 && (
         <section className="bg-deep-blue text-white">
-          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
             <h2 className="text-center text-h2">
               {page.teamHeading ?? "Meet the team"}
             </h2>
@@ -169,7 +170,7 @@ export default async function AboutPage() {
       {/* Why you'll love us — team shot beside the three promises. */}
       {(page.lovePillars?.length ?? 0) > 0 && (
         <section id="love" className="scroll-mt-24 bg-white">
-          <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-4 py-24 sm:px-6 lg:grid-cols-2">
+          <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-6 py-14 sm:py-24 lg:grid-cols-2">
             <SanityImage
               image={page.culturePhotos?.[0]}
               width={560}
@@ -201,7 +202,7 @@ export default async function AboutPage() {
       {/* Values we work by — numbered outline cards. Numerals Deep Blue. */}
       {(page.values?.length ?? 0) > 0 && (
         <section className="bg-white">
-          <div className="mx-auto max-w-[90rem] px-4 pb-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-6 pb-14 sm:pb-24">
             <div className="flex items-center gap-6">
               <h2 className="shrink-0 text-h2 text-deep-blue">
                 Values we work by
@@ -228,33 +229,8 @@ export default async function AboutPage() {
         </section>
       )}
 
-      {/* Stats band — live counts from Site settings, never hardcoded. */}
-      {stats.length > 0 && (
-        <section className="bg-sky-blue/15">
-          <div className="mx-auto flex max-w-[90rem] flex-col items-center px-4 py-16 text-center sm:flex-row sm:items-stretch sm:justify-center sm:px-6">
-            {stats.map((stat, index) => (
-              <div key={stat.label} className="contents">
-                {/* Divider: short and centred per the design, never
-                    full-height. */}
-                {index > 0 && (
-                  <span
-                    aria-hidden
-                    className="h-px w-16 bg-deep-blue/20 sm:h-24 sm:w-px sm:self-center"
-                  />
-                )}
-                <div className="px-6 py-7 sm:flex sm:w-64 sm:flex-col sm:justify-center sm:py-16">
-                <p className="text-[clamp(2.75rem,4vw,3.5rem)] font-semibold leading-none tracking-[-0.06em] text-deep-blue">
-                  {stat.value}
-                </p>
-                  <p className="mx-auto mt-3 max-w-45 text-body text-deep-blue-80">
-                    {stat.label}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Stats band — the shared component. */}
+      <StatsBand stats={stats} />
 
       {/* Testimonials with the finished watermark, matching home. */}
       <TestimonialCards
@@ -273,7 +249,7 @@ export default async function AboutPage() {
           className="bg-off-white-tan/50 bg-cover bg-center"
           style={{ backgroundImage: "url(/blog-background.png)" }}
         >
-          <div className="mx-auto max-w-4xl px-4 py-24 text-center sm:px-6">
+          <div className="mx-auto max-w-4xl px-6 py-14 sm:py-24 text-center">
             <p className="text-caption font-semibold uppercase tracking-[0.14em] text-deep-blue-80">
               Our story
             </p>
@@ -294,7 +270,7 @@ export default async function AboutPage() {
             className="bg-off-white-tan/50 bg-cover bg-center"
             style={{ backgroundImage: "url(/blog-background.png)" }}
           >
-            <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-4 py-24 sm:px-6 lg:grid-cols-2">
+            <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-6 py-14 sm:py-24 lg:grid-cols-2">
               <SanityImage
                 image={page.storyImage}
                 width={560}
@@ -322,7 +298,7 @@ export default async function AboutPage() {
           logos with display permission land in Sanity; the same permission
           gate as the homepage ticker. */}
       <section className="bg-white">
-        <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
           <h2 className="text-center text-h2 text-deep-blue">
             Clients we&apos;ve worked with
           </h2>

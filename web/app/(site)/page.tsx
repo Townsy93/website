@@ -14,6 +14,7 @@ import { CtaBanner } from "@/components/modules/CtaBanner";
 import { HeroVideo } from "@/components/modules/HeroVideo";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
 import { NewsletterBand } from "@/components/modules/NewsletterBand";
+import { StatsBand } from "@/components/modules/StatsBand";
 import { TestimonialCards } from "@/components/modules/TestimonialCards";
 
 export const revalidate = 3600;
@@ -61,18 +62,27 @@ export default async function Home() {
 
   if (!page) {
     return (
-      <section className="bg-deep-blue pb-24 pt-40 text-center text-white">
+      <section className="bg-deep-blue pb-14 sm:pb-24 pt-40 text-center text-white">
         <p className="text-body-lg">Home page content not found in Sanity.</p>
       </section>
     );
   }
+
+  const trustStats = [
+    { value: settings?.googleReviewCount, label: "5-star Google reviews" },
+    {
+      value: settings?.hubspotReviewCount,
+      label: "5-star HubSpot Directory reviews",
+    },
+    { value: settings?.happyClients, label: "Happy clients" },
+  ];
 
   return (
     <>
       {/* Hero — dark split (H1b). Unchanged in the v2 pass: the orange marker
           circle on the emphasis phrase is correct. */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-4 pb-16 pt-32 sm:px-6 lg:grid-cols-[1.1fr_1fr]">
+        <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-6 pb-10 pt-24 sm:pb-16 sm:pt-32 lg:grid-cols-[1.1fr_1fr]">
           <div>
             {page.hero?.eyebrow && (
               <p className="inline-flex items-center gap-2 text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
@@ -129,7 +139,7 @@ export default async function Home() {
           seamless; it pauses entirely for reduced-motion users. Placeholder
           blocks scroll until we have logos with display permission. */}
       <section className="bg-deep-blue">
-        <div className="mx-auto flex max-w-[90rem] flex-wrap items-center gap-x-8 gap-y-4 px-4 pb-14 pt-2 sm:px-6">
+        <div className="mx-auto flex max-w-[90rem] flex-wrap items-center gap-x-8 gap-y-4 px-6 pb-14 pt-2">
           <p className="shrink-0 text-body font-semibold text-white">
             HubSpot Gold Partner
           </p>
@@ -182,7 +192,7 @@ export default async function Home() {
         className="bg-white bg-cover bg-center"
         style={{ backgroundImage: "url(/intro-background.png)" }}
       >
-        <div className="mx-auto max-w-[90rem] px-4 py-24 text-center sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24 text-center">
           <h2 className="mx-auto max-w-3xl text-h2">
             <Marker style="underline" color="sky-blue">
               HubSpot implementation
@@ -215,7 +225,7 @@ export default async function Home() {
       {/* Tan at 50% — designer: softer so it doesn't compete with the
           blues and orange. */}
       <section className="bg-off-white-tan/50">
-        <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
           <p className="text-center text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
             Our services
           </p>
@@ -253,7 +263,7 @@ export default async function Home() {
           divider, and the button reads "View case study". */}
       {page.featuredCaseStudy && (
         <section className="bg-white">
-          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
             <div className="grid gap-0 overflow-hidden rounded-3xl bg-deep-blue text-white lg:grid-cols-[1.05fr_1fr]">
               <div className="p-10 lg:p-14">
                 <p className="text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
@@ -309,7 +319,7 @@ export default async function Home() {
           the aside is Deep Blue italic (orange is banned on white, Sky Blue
           fails contrast on it). Values come from Sanity, numbered 01–04. */}
       <section className="bg-white">
-        <div className="mx-auto max-w-[90rem] px-4 pb-24 pt-4 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-6 pb-14 sm:pb-24 pt-4">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
             <div>
               <h2 className="text-h2">The name isn&apos;t just for fun.</h2>
@@ -350,17 +360,16 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Testimonials — v2 pass: white cards, "See our work" beside the
+      {/* Trust stats — the shared band, leading into the quotes. The
+          subheading that used to repeat these counts in prose is gone: the
+          same numbers twice in one viewport reads as padding. */}
+      <StatsBand stats={trustStats} />
+
+      {/* Testimonials — v2 pass: outline cards, "See our work" beside the
           heading, and the CLIENT FEEDBACK watermark finished rather than
           accidentally clipped. */}
       <TestimonialCards
         heading="Kind words from people we've un-stressed"
-        subheading={
-          (settings?.googleReviewCount ?? 0) > 0 &&
-          (settings?.hubspotReviewCount ?? 0) > 0
-            ? `${settings?.googleReviewCount} five-star reviews on Google, ${settings?.hubspotReviewCount} more on the HubSpot directory.`
-            : undefined
-        }
         testimonials={page.testimonials}
         action={{ label: "See our work", href: "/our-work" }}
         watermark="Client feedback"
@@ -372,7 +381,7 @@ export default async function Home() {
           token, not an arbitrary grey); pill button instead of a text link. */}
       {(page.featuredIndustries?.length ?? 0) > 0 && (
         <section className="bg-white">
-          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <h2 className="text-h2">We speak your industry&apos;s language</h2>
               {/* Orange on a white section: an explicit owner+designer
@@ -418,7 +427,7 @@ export default async function Home() {
           className="bg-off-white-tan/50 bg-cover bg-center"
           style={{ backgroundImage: "url(/blog-background.png)" }}
         >
-          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
             <h2 className="text-center text-h2">Fresh from the blog</h2>
             <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
               {posts.slice(0, 2).map((post) => (

@@ -12,6 +12,7 @@ import {
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { PortableBody } from "@/components/modules/PortableBody";
+import { StatsBand } from "@/components/modules/StatsBand";
 import { VimeoEmbed } from "@/components/modules/VimeoEmbed";
 import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
@@ -87,7 +88,7 @@ export default async function CaseStudyPage({
       label: "5-star HubSpot Directory reviews",
     },
     { value: settings?.happyClients, label: "Happy clients" },
-  ].filter((stat) => (stat.value ?? 0) > 0);
+  ];
 
   const aboutParagraphs = paragraphs(caseStudy.aboutBody);
   const hasStorySections =
@@ -108,7 +109,7 @@ export default async function CaseStudyPage({
       />
       {/* Hero — centred, client logo above the pills. */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-[90rem] px-4 pb-20 pt-28 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-6 pb-12 pt-20 sm:pb-20 sm:pt-28">
           <nav aria-label="Breadcrumb" className="text-caption text-white/50">
             <Link href="/our-work" className="text-sky-blue hover:underline">
               Our work
@@ -155,39 +156,14 @@ export default async function CaseStudyPage({
         </div>
       </section>
 
-      {/* Trust stats band — live counts from Site settings. */}
-      {trustStats.length > 0 && (
-        <section className="bg-off-white-tan/50">
-          <div className="mx-auto flex max-w-[90rem] flex-col items-center px-4 py-14 text-center sm:flex-row sm:items-stretch sm:justify-center sm:px-6">
-            {trustStats.map((stat, index) => (
-              <div key={stat.label} className="contents">
-                {/* Divider: short and centred per the design, never
-                    full-height. */}
-                {index > 0 && (
-                  <span
-                    aria-hidden
-                    className="h-px w-16 bg-deep-blue/20 sm:h-24 sm:w-px sm:self-center"
-                  />
-                )}
-                <div className="px-6 py-7 sm:flex sm:w-64 sm:flex-col sm:justify-center sm:py-14">
-                <p className="text-[clamp(2.5rem,3.5vw,3.25rem)] font-semibold leading-none tracking-[-0.06em] text-deep-blue">
-                  {stat.value}
-                </p>
-                  <p className="mx-auto mt-3 max-w-45 text-body text-deep-blue-80">
-                    {stat.label}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Trust stats — the shared band. */}
+      <StatsBand stats={trustStats} background="bg-off-white-tan/50" />
 
       {hasStorySections ? (
         <>
           {/* About the client — image beside plain paragraphs. */}
           <section className="bg-white">
-            <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-6 py-14 sm:py-24 lg:grid-cols-[0.9fr_1.1fr]">
               <SanityImage
                 image={caseStudy.aboutImage ?? caseStudy.photo}
                 width={520}
@@ -212,7 +188,7 @@ export default async function CaseStudyPage({
           {((caseStudy.challengeItems?.length ?? 0) > 0 ||
             (caseStudy.solutionItems?.length ?? 0) > 0) && (
             <section className="bg-white">
-              <div className="mx-auto max-w-[90rem] px-4 pb-24 sm:px-6">
+              <div className="mx-auto max-w-[90rem] px-6 pb-14 sm:pb-24">
                 <div aria-hidden className="h-px w-full bg-deep-blue/15" />
                 <div className="mt-14 grid gap-14 lg:grid-cols-2">
                   {[
@@ -254,7 +230,7 @@ export default async function CaseStudyPage({
       ) : (
         /* Legacy layout for case studies written before the v2 fields. */
         <section className="bg-white">
-          <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+          <div className="mx-auto max-w-3xl px-6 py-10 sm:py-16">
             {caseStudy.body ? (
               <PortableBody value={caseStudy.body} />
             ) : (
@@ -270,7 +246,7 @@ export default async function CaseStudyPage({
       {/* Gallery straddling into the results section — the three stills sit
           half on white, half on the Deep Blue below. */}
       <section className="bg-white">
-        <div className="relative z-10 mx-auto -mb-28 grid max-w-[90rem] grid-cols-1 gap-6 px-4 sm:grid-cols-3 sm:px-6">
+        <div className="relative z-10 mx-auto -mb-28 grid max-w-[90rem] grid-cols-1 gap-6 px-6 sm:grid-cols-3">
           {(caseStudy.gallery?.length
             ? caseStudy.gallery
             : [null, null, null]
@@ -290,7 +266,7 @@ export default async function CaseStudyPage({
       {/* The results — Deep Blue; the case's own stats repeat as callout
           rows, per the designer's "repeat stats again for impact". */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-4 pb-24 pt-44 sm:px-6 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-6 pb-14 sm:pb-24 pt-44 lg:grid-cols-2">
           <div>
             <h2 className="text-h2">The results</h2>
             {caseStudy.resultsText && (
@@ -337,7 +313,7 @@ export default async function CaseStudyPage({
         className="bg-white bg-cover bg-center"
         style={{ backgroundImage: "url(/intro-background.png)" }}
       >
-        <div className="mx-auto max-w-4xl px-4 py-24 text-center sm:px-6">
+        <div className="mx-auto max-w-4xl px-6 py-14 sm:py-24 text-center">
           <h2 className="text-h2 text-deep-blue">
             Watch the full case study
           </h2>
@@ -374,7 +350,7 @@ export default async function CaseStudyPage({
           not text); the attribution is Deep Blue per the AA ruling. */}
       {caseStudy.testimonial?.quote && (
         <section className="bg-white">
-          <div className="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6">
+          <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
             <span
               aria-hidden
               className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-deep-orange text-h3 font-bold text-white"
@@ -396,7 +372,7 @@ export default async function CaseStudyPage({
       {/* CTA — solid orange button and a wider sub-line, per the design
           annotations ("no orphan"). */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6">
+        <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
           <h2 className="text-h2">Want a story like this one?</h2>
           <div className="mx-auto mt-6 h-0.5 w-14 bg-sky-blue" aria-hidden />
           <p className="mx-auto mt-6 max-w-2xl text-body-lg text-white/65">
