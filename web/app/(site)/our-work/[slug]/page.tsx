@@ -117,12 +117,14 @@ export default async function CaseStudyPage({
           </nav>
           <div className="mx-auto max-w-3xl pt-6 text-center">
             {caseStudy.clientLogo ? (
-              <SanityImage
-                image={caseStudy.clientLogo}
-                width={200}
-                height={56}
-                className="mx-auto h-12 w-auto object-contain"
-              />
+              <span className="inline-flex h-16 items-center rounded-xl bg-white px-7">
+                <SanityImage
+                  image={caseStudy.clientLogo}
+                  width={200}
+                  height={56}
+                  className="h-9 w-auto object-contain"
+                />
+              </span>
             ) : (
               <p className="text-h4">{caseStudy.client}</p>
             )}

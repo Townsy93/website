@@ -149,13 +149,17 @@ export default async function Home() {
                 >
                   {(page.trustLogos?.length ?? 0) > 0
                     ? page.trustLogos?.map((logo) => (
-                        <SanityImage
+                        <span
                           key={`${half}-${logo._key}`}
-                          image={logo}
-                          width={112}
-                          height={28}
-                          className="h-7 w-auto opacity-80"
-                        />
+                          className="flex h-12 shrink-0 items-center rounded-lg bg-white px-5"
+                        >
+                          <SanityImage
+                            image={logo}
+                            width={112}
+                            height={28}
+                            className="h-6 w-auto object-contain"
+                          />
+                        </span>
                       ))
                     : [0, 1, 2, 3, 4, 5].map((i) => (
                         <span
