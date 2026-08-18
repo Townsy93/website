@@ -27,7 +27,7 @@ export default async function InsightsPage() {
   ]);
   if (!page) {
     return (
-      <section className="bg-deep-blue pb-24 pt-40 text-center text-white">
+      <section className="bg-deep-blue pb-14 sm:pb-24 pt-40 text-center text-white">
         <p className="text-body-lg">Insight Hub content not found in Sanity.</p>
       </section>
     );
@@ -42,7 +42,7 @@ export default async function InsightsPage() {
     <>
       {/* Hero — light split (H1d) */}
       <section className="bg-off-white-tan">
-        <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-4 pb-16 pt-32 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-6 pb-10 pt-24 sm:pb-16 sm:pt-32 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             {page.hero?.eyebrow && (
               <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
@@ -76,7 +76,7 @@ export default async function InsightsPage() {
       {/* Featured post */}
       {featured && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-[90rem] px-4 pb-8 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-6 pb-8">
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
               Latest
             </p>
@@ -109,7 +109,7 @@ export default async function InsightsPage() {
 
       {/* Filterable post grid (T10) */}
       <section className="bg-off-white-tan">
-        <div className="mx-auto max-w-[90rem] px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-6 py-10 sm:py-16">
           <h2 className="text-h2">More from the blog</h2>
           <div className="mt-8">
             <InsightFilters posts={gridPosts} />
@@ -120,7 +120,7 @@ export default async function InsightsPage() {
       {/* Resources teaser (M16) */}
       {(page.resources?.length ?? 0) > 0 && (
         <section className="bg-deep-blue text-white">
-          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
               Downloadable resources
             </p>

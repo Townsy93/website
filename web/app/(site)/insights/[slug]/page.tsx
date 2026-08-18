@@ -85,7 +85,7 @@ export default async function PostPage({
       />
       {/* Article header (H1f) */}
       <section className="bg-off-white-tan">
-        <div className="mx-auto max-w-3xl px-4 pb-10 pt-32 sm:px-6">
+        <div className="mx-auto max-w-3xl px-6 pb-10 pt-32">
           <nav aria-label="Breadcrumb" className="text-caption text-deep-blue-80">
             <Link href="/insights" className="hover:underline">
               Insight hub
@@ -120,7 +120,7 @@ export default async function PostPage({
 
       {/* Lead image */}
       <section className="bg-off-white-tan">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <div className="mx-auto max-w-5xl px-6">
           <SanityImage
             image={post.coverImage}
             width={1040}
@@ -133,7 +133,7 @@ export default async function PostPage({
 
       {/* Body with "short version" callout (M31) */}
       <article className="bg-off-white-tan">
-        <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-3xl px-6 py-10 sm:py-16">
           {(post.shortVersion?.length ?? 0) > 0 && (
             <aside className="mb-10 rounded-r-2xl border-l-4 border-sky-blue bg-white p-7">
               <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
@@ -170,7 +170,7 @@ export default async function PostPage({
 
       {/* Article CTA */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-2xl px-4 py-20 text-center sm:px-6">
+        <div className="mx-auto max-w-2xl px-6 py-12 sm:py-20 text-center">
           <h2 className="text-h2">Want a hand with this in your portal?</h2>
           <p className="mx-auto mt-4 max-w-lg text-body-lg text-white/65">
             A free 30-minute chat — no pitch deck, no pressure.
@@ -184,7 +184,7 @@ export default async function PostPage({
       {/* Keep reading */}
       {(post.related?.length ?? 0) > 0 && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
             <h2 className="text-h2">Keep reading</h2>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {post.related?.map((related) => (

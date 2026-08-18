@@ -184,7 +184,7 @@ export default async function EventsPage() {
       ) : (
         /* No upcoming sessions — Off-White Tan */
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-3xl px-6 py-24 text-center sm:px-12">
+          <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center sm:px-12">
             <h2 className="text-h2">{page?.emptyHeading}</h2>
             <p className="mx-auto mt-5 max-w-xl text-body-lg text-deep-blue-80">
               {page?.emptyText}
@@ -199,7 +199,7 @@ export default async function EventsPage() {
       {/* Past sessions — Deep Blue, deliberately quieter */}
       {past.length > 0 && (
         <section className="bg-deep-blue text-white">
-          <div className="mx-auto max-w-[90rem] px-6 py-20 sm:px-12">
+          <div className="mx-auto max-w-[90rem] px-6 py-12 sm:py-20 sm:px-12">
             <h2 className="text-h3">{page?.pastHeading}</h2>
             <p className="mt-2 text-body text-white/55">{page?.pastIntro}</p>
             <div className="mt-8 border-t border-white/14">

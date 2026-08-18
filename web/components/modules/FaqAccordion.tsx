@@ -17,7 +17,7 @@ export function FaqAccordion({
   if (items.length === 0) return null;
   return (
     <section className={dark ? "bg-deep-blue text-white" : "bg-white"}>
-      <div className="mx-auto max-w-3xl px-4 py-24 sm:px-6">
+      <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24">
         {heading && <h2 className="text-center text-h2">{heading}</h2>}
         <div className="mt-10 flex flex-col gap-3">
           {items.map((faq, index) => (

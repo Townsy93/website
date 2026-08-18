@@ -29,7 +29,7 @@ export default async function ServicesPage() {
   const page = await sanityFetch(SERVICES_LANDING_QUERY);
   if (!page) {
     return (
-      <section className="bg-deep-blue pb-24 pt-40 text-center text-white">
+      <section className="bg-deep-blue pb-14 sm:pb-24 pt-40 text-center text-white">
         <p className="text-body-lg">
           Services landing content not found in Sanity.
         </p>
@@ -56,7 +56,7 @@ export default async function ServicesPage() {
     <>
       {/* Hero — dark centred (H1a) */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-3xl px-4 pb-20 pt-32 text-center sm:px-6">
+        <div className="mx-auto max-w-3xl px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 text-center">
           {page.hero?.eyebrow && (
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
               {page.hero.eyebrow}
@@ -80,7 +80,7 @@ export default async function ServicesPage() {
 
       {/* Service grid with filter pills (T2 / M7) */}
       <section className="bg-white">
-        <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
           <div className="flex flex-wrap items-end justify-between gap-6">
             {page.gridHeading && (
               <h2 className="max-w-md text-h2">{page.gridHeading}</h2>
@@ -108,7 +108,7 @@ export default async function ServicesPage() {
       {/* Case studies teaser (M10) */}
       {(page.caseStudies?.length ?? 0) > 0 && (
         <section className="bg-white">
-          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">

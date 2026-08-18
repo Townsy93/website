@@ -27,7 +27,7 @@ export default async function SolutionsPage() {
   ]);
   if (!page) {
     return (
-      <section className="bg-deep-blue pb-24 pt-40 text-center text-white">
+      <section className="bg-deep-blue pb-14 sm:pb-24 pt-40 text-center text-white">
         <p className="text-body-lg">Solutions content not found in Sanity.</p>
       </section>
     );
@@ -37,7 +37,7 @@ export default async function SolutionsPage() {
     <>
       {/* Hero — dark centred (H1a) */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-3xl px-4 pb-20 pt-32 text-center sm:px-6">
+        <div className="mx-auto max-w-3xl px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 text-center">
           {page.hero?.eyebrow && (
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
               {page.hero.eyebrow}
@@ -70,7 +70,7 @@ export default async function SolutionsPage() {
 
       {/* Hub carousel (M12) */}
       <section className="bg-off-white-tan">
-        <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
           <div className="max-w-xl">
             {page.carouselHeading && (
               <h2 className="text-h2">{page.carouselHeading}</h2>
@@ -98,7 +98,7 @@ export default async function SolutionsPage() {
 
       {/* How we optimise */}
       <section id="optimise" className="scroll-mt-24 bg-white">
-        <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
           <div className="max-w-xl">
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
               Already have HubSpot?
@@ -137,7 +137,7 @@ export default async function SolutionsPage() {
       {/* Related case study */}
       {page.relatedCaseStudy && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
               Hubs, working together
             </p>

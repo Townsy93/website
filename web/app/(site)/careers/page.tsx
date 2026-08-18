@@ -40,7 +40,7 @@ export default async function CareersPage() {
     <>
       {/* 2 — Hero */}
       <section className="bg-off-white-tan">
-        <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20">
+        <div className="mx-auto max-w-5xl px-6 py-10 sm:py-16 sm:py-20">
           {page?.teamPhoto && (
             <SanityImage
               image={page.teamPhoto}
@@ -73,7 +73,7 @@ export default async function CareersPage() {
       {/* 3 — Who we are, alternating image/text rows */}
       {storyRows.length > 0 && (
         <section className="bg-deep-blue text-white">
-          <div className="mx-auto max-w-5xl space-y-16 px-4 py-20 sm:px-6 sm:space-y-20">
+          <div className="mx-auto max-w-5xl space-y-16 px-6 py-12 sm:py-20 sm:space-y-20">
             {storyRows.map((row, index) => (
               <div
                 key={row._key ?? index}
@@ -104,7 +104,7 @@ export default async function CareersPage() {
       {/* 4 — Values */}
       {values.length > 0 && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto grid max-w-5xl items-start gap-10 px-4 py-20 sm:px-6 md:grid-cols-2 md:gap-14">
+          <div className="mx-auto grid max-w-5xl items-start gap-10 px-6 py-12 sm:py-20 md:grid-cols-2 md:gap-14">
             {page?.valuesImage && (
               <SanityImage
                 image={page.valuesImage}
@@ -135,7 +135,7 @@ export default async function CareersPage() {
       {/* 5 — Why work here + benefits */}
       {(page?.whyIntro || benefits.length > 0) && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-5xl px-4 pb-20 sm:px-6">
+          <div className="mx-auto max-w-5xl px-6 pb-20">
             {page?.whyIntro && (
               <p className="mx-auto max-w-2xl text-center text-body-lg text-body">
                 {page.whyIntro}
@@ -179,7 +179,7 @@ export default async function CareersPage() {
           than an empty frame. */}
       {page?.lifeVideo?.url && (
         <section className="bg-deep-blue text-white">
-          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
+          <div className="mx-auto max-w-5xl px-6 py-12 sm:py-20">
             <h2 className="text-center text-h2">Life at Zippily</h2>
             <div className="mt-10">
               <VimeoEmbed
@@ -195,7 +195,7 @@ export default async function CareersPage() {
 
       {/* 7 — Open positions, or 7b the empty state. Never an empty section. */}
       <section id="open-roles" className="scroll-mt-24 bg-off-white-tan">
-        <div className="mx-auto max-w-4xl px-4 py-20 sm:px-6">
+        <div className="mx-auto max-w-4xl px-6 py-12 sm:py-20">
           <h2 className="text-h2 text-deep-blue">
             {page?.openRolesHeading ?? "Open positions"}
           </h2>
@@ -217,7 +217,7 @@ export default async function CareersPage() {
 
       {/* 8 — Register interest, always present */}
       <section id="register-interest" className="scroll-mt-24 bg-deep-blue text-white">
-        <div className="mx-auto max-w-2xl px-4 py-20 sm:px-6">
+        <div className="mx-auto max-w-2xl px-6 py-12 sm:py-20">
           <h2 className="text-h2">
             {page?.registerInterest?.heading ?? "No role that fits? Tell us anyway."}
           </h2>

@@ -96,7 +96,7 @@ export default async function VacancyPage({
 
       {/* 2 — Hero */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-20">
+        <div className="mx-auto max-w-4xl px-6 py-10 sm:py-16 sm:py-20">
           <nav aria-label="Breadcrumb" className="text-[14px] text-white/70">
             <Link href="/careers" className="hover:text-white">
               Careers
@@ -148,7 +148,7 @@ export default async function VacancyPage({
 
       {/* 3–5 — About the role, responsibilities, requirements */}
       <section className="bg-off-white-tan">
-        <div className="mx-auto max-w-3xl space-y-12 px-4 py-20 sm:px-6">
+        <div className="mx-auto max-w-3xl space-y-12 px-6 py-12 sm:py-20">
           {vacancy.description && (
             <div>
               <h2 className="text-h2 text-deep-blue">About the role</h2>
@@ -172,7 +172,7 @@ export default async function VacancyPage({
       {/* 6 — What we offer */}
       {benefits.length > 0 && (
         <section className="bg-deep-blue text-white">
-          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
+          <div className="mx-auto max-w-5xl px-6 py-12 sm:py-20">
             <h2 className="text-h2">What we offer</h2>
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {benefits.map((benefit, index) => (
@@ -194,7 +194,7 @@ export default async function VacancyPage({
 
       {/* 7 — About Zippily */}
       <section className="bg-off-white-tan">
-        <div className="mx-auto grid max-w-5xl items-center gap-10 px-4 py-20 sm:px-6 md:grid-cols-2">
+        <div className="mx-auto grid max-w-5xl items-center gap-10 px-6 py-12 sm:py-20 md:grid-cols-2">
           {vacancy.teamPhoto && (
             <SanityImage
               image={vacancy.teamPhoto}
@@ -225,7 +225,7 @@ export default async function VacancyPage({
       {/* 8 — Application form, or the closed-role pointer */}
       {!closed && (
         <section id="apply" className="scroll-mt-24 bg-deep-blue text-white">
-          <div className="mx-auto max-w-2xl px-4 py-20 sm:px-6">
+          <div className="mx-auto max-w-2xl px-6 py-12 sm:py-20">
             <h2 className="text-h2">Apply for this role</h2>
             <div className="mt-8">
               <ApplicationForm roleTitle={vacancy.title ?? ""} />
@@ -237,7 +237,7 @@ export default async function VacancyPage({
       {/* 9 — Related roles. Omitted entirely when there are none. */}
       {related.length > 0 && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-4xl px-4 py-20 sm:px-6">
+          <div className="mx-auto max-w-4xl px-6 py-12 sm:py-20">
             <h2 className="text-h2 text-deep-blue">Other open roles</h2>
             <div className="mt-8 space-y-4">
               {related.map((role) => (

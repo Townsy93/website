@@ -44,8 +44,8 @@ export function TestimonialCards({
   return (
     <section className="relative overflow-hidden bg-deep-blue text-white">
       <div
-        className={`mx-auto max-w-[90rem] px-4 pt-24 sm:px-6 ${
-          watermark ? "pb-[calc(8.6vw+5rem)]" : "pb-24"
+        className={`mx-auto max-w-[90rem] px-6 pt-24 ${
+          watermark ? "pb-[calc(8.6vw+5rem)]" : "pb-14 sm:pb-24"
         }`}
       >
         <div className="flex flex-wrap items-center justify-between gap-4">

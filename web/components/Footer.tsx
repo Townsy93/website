@@ -59,7 +59,7 @@ function LinkColumn({
 export function Footer({ settings }: { settings?: FooterSettings }) {
   return (
     <footer className="bg-deep-blue text-white">
-      <div className="mx-auto grid max-w-[90rem] gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-[90rem] gap-12 px-6 py-10 sm:py-16 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
         <div>
           <Image
             src="/logo-white.png"
@@ -121,7 +121,7 @@ export function Footer({ settings }: { settings?: FooterSettings }) {
         <LinkColumn heading="Resources" links={RESOURCES_LINKS} />
       </div>
 
-      <div className="mx-auto flex max-w-[90rem] flex-wrap items-center justify-between gap-4 border-t border-white/10 px-4 py-6 sm:px-6">
+      <div className="mx-auto flex max-w-[90rem] flex-wrap items-center justify-between gap-4 border-t border-white/10 px-6 py-6">
         <p className="text-caption text-white/60">
           © {new Date().getFullYear()} zippily ltd · Auckland, New Zealand
         </p>

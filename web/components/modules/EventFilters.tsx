@@ -129,10 +129,10 @@ export function EventFilters({
             key={row.label}
             className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4"
           >
-            <p className="w-[58px] shrink-0 px-4 text-caption font-semibold uppercase tracking-[0.06em] text-[#767666] sm:px-6">
+            <p className="w-[58px] shrink-0 px-6 text-caption font-semibold uppercase tracking-[0.06em] text-[#767666]">
               {row.label}
             </p>
-            <div className="flex gap-2.5 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:px-6 [&::-webkit-scrollbar]:hidden">
+            <div className="flex gap-2.5 overflow-x-auto px-6 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {row.options.map((option) => (
                 <Pill
                   key={option.value}
@@ -146,7 +146,7 @@ export function EventFilters({
         ))}
       </div>
 
-      <div className="mx-auto max-w-[90rem] px-4 pb-24 sm:px-6">
+      <div className="mx-auto max-w-[90rem] px-6 pb-14 sm:pb-24">
         {isEmptyResult && (
           <p className="mb-6 rounded border-l-[3px] border-sky-blue bg-white px-5.5 py-4 text-body-lg text-deep-blue-80">
             No sessions match that — here&apos;s what&apos;s coming up

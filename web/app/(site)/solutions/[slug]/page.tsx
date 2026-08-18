@@ -68,7 +68,7 @@ export default async function PartnerIntegrationPage({
     <>
       {/* Hero — dark breadcrumb (H1c) */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-3xl px-4 pb-20 pt-32 text-center sm:px-6">
+        <div className="mx-auto max-w-3xl px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 text-center">
           <nav aria-label="Breadcrumb" className="text-caption text-white/50">
             <Link href="/solutions" className="text-sky-blue hover:underline">
               Solutions
@@ -103,7 +103,7 @@ export default async function PartnerIntegrationPage({
       {/* What the tool does */}
       {page.whatItDoes && (
         <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-3xl px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24">
             <PortableBody value={page.whatItDoes} />
           </div>
         </section>
@@ -112,7 +112,7 @@ export default async function PartnerIntegrationPage({
       {/* What Zippily sets up */}
       {(page.whatWeSetUp?.length ?? 0) > 0 && (
         <section className="bg-white">
-          <div className="mx-auto max-w-[90rem] px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
             <h2 className="text-h2">What Zippily sets up</h2>
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {page.whatWeSetUp?.map((card) => (

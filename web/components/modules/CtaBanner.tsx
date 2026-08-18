@@ -30,7 +30,7 @@ export function CtaBanner({
   if (data.showMeetingsEmbed && meetingsUrl) {
     return (
       <section className="bg-sky-blue text-deep-blue">
-        <div className="mx-auto grid max-w-[90rem] items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1fr_2fr] lg:gap-14">
+        <div className="mx-auto grid max-w-[90rem] items-center gap-10 px-6 py-12 sm:py-20 lg:grid-cols-[1fr_2fr] lg:gap-14">
           <div>
             <h2 className="text-h2">{data.heading}</h2>
             <div className="mt-6 h-0.5 w-14 bg-deep-blue" aria-hidden />
@@ -54,7 +54,7 @@ export function CtaBanner({
 
   return (
     <section className="bg-deep-blue text-white">
-      <div className="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6">
+      <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
         <h2 className="text-h2">{data.heading}</h2>
         <div className="mx-auto mt-6 h-0.5 w-14 bg-sky-blue" aria-hidden />
         {data.text && (
