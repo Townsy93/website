@@ -231,9 +231,9 @@ export default async function AboutPage() {
       {/* Stats band — live counts from Site settings, never hardcoded. */}
       {stats.length > 0 && (
         <section className="bg-sky-blue/15">
-          <div className="mx-auto grid max-w-[90rem] gap-10 px-4 py-16 text-center sm:grid-cols-3 sm:gap-6 sm:px-6">
+          <div className="mx-auto grid max-w-[90rem] grid-cols-1 divide-y divide-deep-blue/15 px-4 text-center sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:px-6">
             {stats.map((stat) => (
-              <div key={stat.label}>
+              <div key={stat.label} className="px-6 py-7 sm:py-16">
                 <p className="text-[clamp(2.75rem,4vw,3.5rem)] font-semibold leading-none tracking-[-0.06em] text-deep-blue">
                   {stat.value}
                 </p>
