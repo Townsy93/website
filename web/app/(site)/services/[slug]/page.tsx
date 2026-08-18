@@ -224,7 +224,18 @@ export default async function ServicePage({
             {pricingConfirmed ? "Honest, fixed pricing" : "Pricing"}
           </h2>
           {pricingConfirmed && tiers.length > 0 ? (
-            <div className="mt-12 grid items-stretch gap-6 md:grid-cols-3">
+            // Two tiers in a three-column grid leave an empty third column
+            // and the pair sits left of the centred heading — so the column
+            // count follows the tier count, capped at three.
+            <div
+              className={`mx-auto mt-12 grid items-stretch gap-6 ${
+                tiers.length >= 3
+                  ? "md:grid-cols-3"
+                  : tiers.length === 2
+                    ? "max-w-4xl md:grid-cols-2"
+                    : "max-w-md"
+              }`}
+            >
               {tiers.map((tier) => {
                 const featured = Boolean(tier.featured);
                 return (
