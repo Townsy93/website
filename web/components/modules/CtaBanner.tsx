@@ -53,7 +53,10 @@ export function CtaBanner({
   }
 
   return (
-    <section className="bg-deep-blue text-white">
+    // The bottom hairline is the designer's full-width line above the footer,
+    // matching the homepage's newsletter band — this banner and the footer
+    // are both Deep Blue and otherwise read as one block.
+    <section className="border-b border-white/15 bg-deep-blue text-white">
       <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
         <h2 className="text-h2">{data.heading}</h2>
         <div className="mx-auto mt-6 h-0.5 w-14 bg-sky-blue" aria-hidden />

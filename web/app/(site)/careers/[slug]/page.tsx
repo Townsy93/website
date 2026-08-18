@@ -107,7 +107,7 @@ export default async function VacancyPage({
             <span>{vacancy.title}</span>
           </nav>
 
-          <h1 className="mt-4 text-h1">{vacancy.title}</h1>
+          <h1 className="text-pretty mt-4 text-h1">{vacancy.title}</h1>
 
           <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
             {meta.map((item, index) => (

@@ -8,6 +8,7 @@ import { SERVICE_QUERY, SERVICE_SLUGS_QUERY } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
+import { QuoteMark } from "@/components/ui/QuoteMark";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { CtaBanner } from "@/components/modules/CtaBanner";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
@@ -113,7 +114,7 @@ export default async function ServicePage({
       />
       {/* Hero — dark breadcrumb (H1c) */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-3xl px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 text-center">
+        <div className="mx-auto max-w-4xl px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 text-center">
           <nav aria-label="Breadcrumb" className="text-caption text-white/50">
             <Link href="/services" className="text-sky-blue hover:underline">
               Services
@@ -131,7 +132,7 @@ export default async function ServicePage({
               {STAGE_BADGE[service.category].label} stage
             </p>
           )}
-          <h1 className="mt-5 text-h1-mobile md:text-h1">
+          <h1 className="text-pretty mt-5 text-h1-mobile md:text-h1">
             <EmphasisedHeading
               heading={service.hero?.heading ?? service.title ?? ""}
               phrase={service.hero?.emphasisPhrase}
@@ -352,10 +353,8 @@ export default async function ServicePage({
       {service.testimonial?.quote && (
         <section className="bg-white">
           <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
-            <p aria-hidden className="text-6xl text-sky-blue">
-              “
-            </p>
-            <blockquote className="text-h3 font-medium">
+            <QuoteMark className="mx-auto h-12 w-12" />
+            <blockquote className="mt-8 text-h3 font-medium">
               {service.testimonial.quote}
             </blockquote>
             <p className="mt-6 text-body font-semibold">

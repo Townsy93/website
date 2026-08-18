@@ -8,6 +8,7 @@ import { INDUSTRY_QUERY, INDUSTRY_SLUGS_QUERY } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
+import { QuoteMark } from "@/components/ui/QuoteMark";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { CtaBanner } from "@/components/modules/CtaBanner";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
@@ -81,7 +82,7 @@ export default async function IndustryPage({
             </span>
             {industry.title}
           </p>
-          <h1 className="mt-5 max-w-3xl text-h1-mobile md:text-h1">
+          <h1 className="text-pretty mt-5 max-w-4xl text-h1-mobile md:text-h1">
             <EmphasisedHeading
               heading={industry.hero?.heading ?? `HubSpot for ${industry.title}`}
               phrase={industry.hero?.emphasisPhrase}
@@ -204,10 +205,8 @@ export default async function IndustryPage({
       {industry.testimonial?.quote && (
         <section className="bg-off-white-tan">
           <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
-            <p aria-hidden className="text-6xl text-sky-blue">
-              “
-            </p>
-            <blockquote className="text-h3 font-medium">
+            <QuoteMark className="mx-auto h-12 w-12" />
+            <blockquote className="mt-8 text-h3 font-medium">
               {industry.testimonial.quote}
             </blockquote>
             <p className="mt-6 text-body font-semibold">

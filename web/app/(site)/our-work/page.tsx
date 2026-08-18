@@ -46,7 +46,7 @@ export default async function OurWorkPage() {
                 {page.hero.eyebrow}
               </p>
             )}
-            <h1 className="mt-4 text-h1-mobile md:text-h1">
+            <h1 className="text-pretty mt-4 text-h1-mobile md:text-h1">
               <EmphasisedHeading
                 heading={page.hero?.heading ?? ""}
                 phrase={page.hero?.emphasisPhrase}

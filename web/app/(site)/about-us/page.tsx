@@ -63,7 +63,7 @@ export default async function AboutPage() {
           <div>
             {/* No eyebrow and no anchor pills — Sean's call (Aug 2026): the
                 hero carries just the heading and the standard CTA pair. */}
-            <h1 className="text-h1-mobile md:text-h1">
+            <h1 className="text-pretty text-h1-mobile md:text-h1">
               <EmphasisedHeading
                 heading={page.hero?.heading ?? ""}
                 phrase={page.hero?.emphasisPhrase}

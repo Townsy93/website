@@ -1,4 +1,5 @@
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { QuoteMark } from "@/components/ui/QuoteMark";
 
 type Testimonial = {
   _id?: string;
@@ -71,7 +72,10 @@ export function TestimonialCards({
                   : "bg-white text-deep-blue"
               }`}
             >
-              <blockquote className="text-body-lg">“{t.quote}”</blockquote>
+              <QuoteMark className="h-9 w-9" />
+              <blockquote className="mt-5 text-body-lg">
+                “{t.quote}”
+              </blockquote>
               <figcaption className="mt-5">
                 <p className="text-body font-semibold">{t.name}</p>
                 {/* Solid cards: Deep Blue at 70% — orange never sits on

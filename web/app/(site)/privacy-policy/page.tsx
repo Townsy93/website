@@ -19,7 +19,7 @@ export default async function PrivacyPolicyPage() {
     <>
       <section className="bg-deep-blue text-white">
         <div className="mx-auto max-w-3xl px-6 pb-10 pt-24 sm:pb-16 sm:pt-32">
-          <h1 className="text-h1-mobile md:text-h1">
+          <h1 className="text-pretty text-h1-mobile md:text-h1">
             {page?.title ?? "Privacy Policy"}
           </h1>
         </div>

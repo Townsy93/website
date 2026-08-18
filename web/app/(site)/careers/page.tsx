@@ -50,7 +50,7 @@ export default async function CareersPage() {
               placeholderLabel="Team photo to come"
             />
           )}
-          <h1 className="mt-10 max-w-3xl text-h1 text-deep-blue">
+          <h1 className="text-pretty mt-10 max-w-4xl text-h1 text-deep-blue">
             <EmphasisedHeading
               heading={page?.hero?.heading ?? "Careers at Zippily"}
               phrase={page?.hero?.emphasisPhrase}

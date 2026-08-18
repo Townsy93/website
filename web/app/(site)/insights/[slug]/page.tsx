@@ -95,7 +95,7 @@ export default async function PostPage({
           <div className="mt-5">
             <PostPills post={post} />
           </div>
-          <h1 className="mt-5 text-h1-mobile md:text-h1">{post.title}</h1>
+          <h1 className="text-pretty mt-5 text-h1-mobile md:text-h1">{post.title}</h1>
           {post.dek && (
             <p className="mt-5 text-body-lg text-deep-blue-80">{post.dek}</p>
           )}

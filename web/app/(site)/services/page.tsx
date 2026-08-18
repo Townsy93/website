@@ -56,13 +56,13 @@ export default async function ServicesPage() {
     <>
       {/* Hero — dark centred (H1a) */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-3xl px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 text-center">
+        <div className="mx-auto max-w-4xl px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 text-center">
           {page.hero?.eyebrow && (
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
               {page.hero.eyebrow}
             </p>
           )}
-          <h1 className="mt-4 text-h1-mobile md:text-h1">
+          <h1 className="text-pretty mt-4 text-h1-mobile md:text-h1">
             <EmphasisedHeading
               heading={page.hero?.heading ?? ""}
               phrase={page.hero?.emphasisPhrase}

@@ -68,14 +68,14 @@ export default async function PartnerIntegrationPage({
     <>
       {/* Hero — dark breadcrumb (H1c) */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-3xl px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 text-center">
+        <div className="mx-auto max-w-4xl px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 text-center">
           <nav aria-label="Breadcrumb" className="text-caption text-white/50">
             <Link href="/solutions" className="text-sky-blue hover:underline">
               Solutions
             </Link>{" "}
             › <span className="text-white/80">{page.title}</span>
           </nav>
-          <h1 className="mt-5 text-h1-mobile md:text-h1">
+          <h1 className="text-pretty mt-5 text-h1-mobile md:text-h1">
             <EmphasisedHeading
               heading={page.hero?.heading ?? page.title ?? ""}
               phrase={page.hero?.emphasisPhrase}

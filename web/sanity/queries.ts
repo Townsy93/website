@@ -114,6 +114,16 @@ export const CASE_STUDY_QUERY = defineQuery(
   }`,
 );
 
+// The three cards that close a case study page — never the page itself.
+// "live" sorts after "comingSoon" so status desc leads with live stories;
+// coming-soon cards only ever fill out an incomplete row.
+export const RELATED_CASE_STUDIES_QUERY = defineQuery(
+  `*[_type == "caseStudy" && defined(slug.current) && slug.current != $slug]
+    | order(status desc, client asc)[0...3]{
+      _id, client, slug, resultLine, photo, status, service->{title}
+    }`,
+);
+
 export const INSIGHT_HUB_QUERY = defineQuery(
   `*[_type == "insightHubPage"][0]{
     ...,

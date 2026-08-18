@@ -7,10 +7,13 @@ import { sanityFetch } from "@/sanity/fetch";
 import {
   CASE_STUDY_QUERY,
   CASE_STUDY_SLUGS_QUERY,
+  RELATED_CASE_STUDIES_QUERY,
   SITE_SETTINGS_QUERY,
 } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { QuoteMark } from "@/components/ui/QuoteMark";
 import { SanityImage } from "@/components/ui/SanityImage";
+import { CaseStudyCards } from "@/components/modules/CaseStudyCards";
 import { PortableBody } from "@/components/modules/PortableBody";
 import { StatsBand } from "@/components/modules/StatsBand";
 import { VimeoEmbed } from "@/components/modules/VimeoEmbed";
@@ -63,9 +66,10 @@ export default async function CaseStudyPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [caseStudy, settings] = await Promise.all([
+  const [caseStudy, settings, related] = await Promise.all([
     sanityFetch(CASE_STUDY_QUERY, { slug }),
     sanityFetch(SITE_SETTINGS_QUERY),
+    sanityFetch(RELATED_CASE_STUDIES_QUERY, { slug }),
   ]);
   if (!caseStudy || caseStudy.status === "comingSoon") {
     // A retired slug redirects rather than 404ing — the old URL keeps its
@@ -116,7 +120,9 @@ export default async function CaseStudyPage({
             </Link>{" "}
             › <span className="text-white/80">{caseStudy.client}</span>
           </nav>
-          <div className="mx-auto max-w-3xl pt-6 text-center">
+          {/* max-w-4xl (not 3xl) — the designer's H1 standard: a wider box
+              so headlines break later and text-pretty can kill orphans. */}
+          <div className="mx-auto max-w-4xl pt-6 text-center">
             {caseStudy.clientLogo ? (
               <span className="inline-flex h-16 items-center rounded-xl bg-white px-7">
                 <SanityImage
@@ -144,7 +150,7 @@ export default async function CaseStudyPage({
                 </span>
               )}
             </div>
-            <h1 className="mt-7 text-h1-mobile md:text-h1">
+            <h1 className="mt-7 text-pretty text-h1-mobile md:text-h1">
               {caseStudy.headline ?? caseStudy.client}
             </h1>
             {caseStudy.resultLine && (
@@ -346,17 +352,12 @@ export default async function CaseStudyPage({
         placeholderLabel={`${caseStudy.client} — full-width photo to come`}
       />
 
-      {/* The quote — orange glyph on white is fine (it is a decorative mark,
-          not text); the attribution is Deep Blue per the AA ruling. */}
+      {/* The quote — the brand speech-bubble mark (decorative, not text, so
+          the AA ruling doesn't apply); the attribution is Deep Blue. */}
       {caseStudy.testimonial?.quote && (
         <section className="bg-white">
           <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
-            <span
-              aria-hidden
-              className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-deep-orange text-h3 font-bold text-white"
-            >
-              &rdquo;
-            </span>
+            <QuoteMark className="mx-auto h-14 w-14" />
             <blockquote className="mt-8 text-body-lg leading-relaxed text-deep-blue md:text-h4 md:font-normal">
               &ldquo;{caseStudy.testimonial.quote}&rdquo;
             </blockquote>
@@ -369,9 +370,31 @@ export default async function CaseStudyPage({
         </section>
       )}
 
+      {/* More of our work — the designer's closing strip: three other
+          stories so the page ends with somewhere to go next. */}
+      {related.length > 0 && (
+        <section className="bg-off-white-tan">
+          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
+            <h2 className="text-center text-h2 text-deep-blue">
+              More of our work
+            </h2>
+            <div className="mt-10">
+              <CaseStudyCards
+                items={related.map((item) => ({
+                  ...item,
+                  tag: item.service?.title ?? null,
+                }))}
+              />
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* CTA — solid orange button and a wider sub-line, per the design
-          annotations ("no orphan"). */}
-      <section className="bg-deep-blue text-white">
+          annotations ("no orphan"). The bottom hairline is the designer's
+          full-width line above the footer, matching the homepage — CTA and
+          footer are both Deep Blue and otherwise read as one block. */}
+      <section className="border-b border-white/15 bg-deep-blue text-white">
         <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
           <h2 className="text-h2">Want a story like this one?</h2>
           <div className="mx-auto mt-6 h-0.5 w-14 bg-sky-blue" aria-hidden />

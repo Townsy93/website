@@ -2124,6 +2124,21 @@ export type CASE_STUDY_QUERY_RESULT = {
 } | null;
 
 // Source: ../web/sanity/queries.ts
+// Variable: RELATED_CASE_STUDIES_QUERY
+// Query: *[_type == "caseStudy" && defined(slug.current) && slug.current != $slug]    | order(status desc, client asc)[0...3]{      _id, client, slug, resultLine, photo, status, service->{title}    }
+export type RELATED_CASE_STUDIES_QUERY_RESULT = Array<{
+  _id: string;
+  client: string;
+  slug: Slug;
+  resultLine: string | null;
+  photo: ImageWithAlt | null;
+  status: "comingSoon" | "live";
+  service: {
+    title: string;
+  };
+}>;
+
+// Source: ../web/sanity/queries.ts
 // Variable: INSIGHT_HUB_QUERY
 // Query: *[_type == "insightHubPage"][0]{    ...,    featuredPost->{      _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,      hubs[]->{name}, author->{name, photo}    }  }
 export type INSIGHT_HUB_QUERY_RESULT = {
@@ -2673,6 +2688,7 @@ declare module "@sanity/client" {
     '*[_type == "ourWorkPage"][0]{\n    ...,\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}},\n    videoTestimonials[]->{_id, quote, name, company, videoUrl, videoStill},\n    googleReviews[]->{_id, quote, name, company}\n  }': OUR_WORK_QUERY_RESULT;
     '*[_type == "caseStudy" && defined(slug.current)].slug.current': CASE_STUDY_SLUGS_QUERY_RESULT;
     '*[_type == "caseStudy" && slug.current == $slug][0]{\n    ...,\n    service->{title, slug},\n    industry->{title, slug},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': CASE_STUDY_QUERY_RESULT;
+    '*[_type == "caseStudy" && defined(slug.current) && slug.current != $slug]\n    | order(status desc, client asc)[0...3]{\n      _id, client, slug, resultLine, photo, status, service->{title}\n    }': RELATED_CASE_STUDIES_QUERY_RESULT;
     '*[_type == "insightHubPage"][0]{\n    ...,\n    featuredPost->{\n      _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n      hubs[]->{name}, author->{name, photo}\n    }\n  }': INSIGHT_HUB_QUERY_RESULT;
     '*[_type == "blogPost"] | order(publishedAt desc){\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': ALL_POSTS_QUERY_RESULT;
     '*[_type == "blogPost" && defined(slug.current)].slug.current': POST_SLUGS_QUERY_RESULT;
