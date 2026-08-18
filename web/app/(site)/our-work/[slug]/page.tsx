@@ -318,36 +318,45 @@ export default async function CaseStudyPage({
         </div>
       </section>
 
-      {/* The film — click-to-play with sound. */}
-      {caseStudy.videoUrl && (
-        <section
-          className="bg-white bg-cover bg-center"
-          style={{ backgroundImage: "url(/intro-background.png)" }}
-        >
-          <div className="mx-auto max-w-4xl px-4 py-24 text-center sm:px-6">
-            <h2 className="text-h2 text-deep-blue">
-              Watch the full case study
-            </h2>
-            <div className="mt-10 text-left">
+      {/* The film — click-to-play with sound. The section always renders,
+          with a placeholder until the video URL lands in Sanity, so every
+          case study carries the full v2 shape. */}
+      <section
+        className="bg-white bg-cover bg-center"
+        style={{ backgroundImage: "url(/intro-background.png)" }}
+      >
+        <div className="mx-auto max-w-4xl px-4 py-24 text-center sm:px-6">
+          <h2 className="text-h2 text-deep-blue">
+            Watch the full case study
+          </h2>
+          <div className="mt-10 text-left">
+            {caseStudy.videoUrl ? (
               <VimeoEmbed
                 url={caseStudy.videoUrl}
                 title={`${caseStudy.client} case study`}
               />
-            </div>
+            ) : (
+              <div
+                role="img"
+                aria-label="Case study video — coming soon"
+                className="flex aspect-video w-full items-center justify-center rounded-3xl bg-[#E0ECF3] text-caption text-deep-blue-80"
+              >
+                Case study video — coming soon
+              </div>
+            )}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* Full-bleed photo. */}
-      {(caseStudy.fullBleedPhoto || caseStudy.photo) && (
-        <SanityImage
-          image={caseStudy.fullBleedPhoto ?? caseStudy.photo}
-          width={1920}
-          height={640}
-          className="h-72 w-full object-cover md:h-120"
-          placeholderLabel={`${caseStudy.client} — photo`}
-        />
-      )}
+      {/* Full-bleed photo — always present; labelled placeholder until the
+          photo is uploaded. */}
+      <SanityImage
+        image={caseStudy.fullBleedPhoto ?? caseStudy.photo}
+        width={1920}
+        height={640}
+        className="h-72 w-full object-cover md:h-120"
+        placeholderLabel={`${caseStudy.client} — full-width photo to come`}
+      />
 
       {/* The quote — orange glyph on white is fine (it is a decorative mark,
           not text); the attribution is Deep Blue per the AA ruling. */}
