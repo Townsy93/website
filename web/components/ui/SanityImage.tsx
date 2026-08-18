@@ -48,7 +48,12 @@ export function SanityImage({
   }
   return (
     <div
-      className={`flex items-center justify-center bg-sky-blue/25 text-center text-caption text-deep-blue-80 ${className}`}
+      className={// Opaque, not sky-blue/25: an alpha background lets whatever is behind
+      // the card bleed through, which turned the case study gallery — whose
+      // cards straddle the white/Deep Blue boundary — into half-toned slices.
+      // #E0ECF3 is exactly what sky-blue at 25% renders to over white, so the
+      // look is unchanged everywhere else.
+      `flex items-center justify-center bg-[#E0ECF3] text-center text-caption text-deep-blue-80 ${className}`}
       style={style}
       role="img"
       aria-label={placeholderLabel}
