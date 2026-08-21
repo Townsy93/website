@@ -2,7 +2,7 @@ import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export const solutionsPage = defineType({
   name: 'solutionsPage',
-  title: 'Solutions page',
+  title: 'Platforms page',
   type: 'document',
   groups: [
     {name: 'content', title: 'Content', default: true},

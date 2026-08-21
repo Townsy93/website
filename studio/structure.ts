@@ -23,7 +23,7 @@ export const structure: StructureResolver = (S) =>
             .items([
               singleton(S, 'Home', 'homePage'),
               singleton(S, 'Services landing', 'servicesLandingPage'),
-              singleton(S, 'Solutions', 'solutionsPage'),
+              singleton(S, 'Platforms', 'solutionsPage'),
               singleton(S, 'About Us', 'aboutPage'),
               singleton(S, 'Industries hub', 'industriesHubPage'),
               singleton(S, 'Our Work', 'ourWorkPage'),

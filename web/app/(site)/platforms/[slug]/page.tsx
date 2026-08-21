@@ -30,10 +30,10 @@ export async function generateMetadata({
   const { slug } = await params;
   const page = await sanityFetch(PARTNER_INTEGRATION_QUERY, { slug });
   return {
-    title: page?.seo?.metaTitle ?? page?.title ?? "Solutions",
+    title: page?.seo?.metaTitle ?? page?.title ?? "Platforms",
     description:
       page?.seo?.metaDescription ?? page?.hero?.subheading ?? undefined,
-    alternates: { canonical: `/solutions/${slug}` },
+    alternates: { canonical: `/platforms/${slug}` },
     // Unbuilt pages still hold placeholder copy — noindexed until real
     // wording lands, but their outbound links are real so follow stays true.
     ...(page?.seo?.noIndex || !page?.pageBuilt
@@ -53,7 +53,7 @@ export default async function PartnerIntegrationPage({
   if (!page) {
     // A retired slug redirects rather than 404ing — the old URL keeps its
     // inbound links, and losing them is the usual cost of a rename.
-    const moved = await findRedirect(`/solutions/${slug}`);
+    const moved = await findRedirect(`/platforms/${slug}`);
     // 308 for a permanent move, so ranking passes to the new URL. A 307
     // tells search engines the move is temporary and passes nothing, which
     // would defeat the point of recording the redirect at all.
@@ -70,8 +70,8 @@ export default async function PartnerIntegrationPage({
       <section className="bg-deep-blue text-white">
         <div className="mx-auto max-w-4xl px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 text-center">
           <nav aria-label="Breadcrumb" className="text-caption text-white/50">
-            <Link href="/solutions" className="text-sky-blue hover:underline">
-              Solutions
+            <Link href="/platforms" className="text-sky-blue hover:underline">
+              Platforms
             </Link>{" "}
             › <span className="text-white/80">{page.title}</span>
           </nav>

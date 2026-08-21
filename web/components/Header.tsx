@@ -7,7 +7,7 @@ import { useState } from "react";
 // "Home" is deliberately absent — the logo is the homepage link.
 const NAV_ITEMS = [
   { label: "Services", href: "/services" },
-  { label: "Solutions", href: "/solutions" },
+  { label: "Platforms", href: "/platforms" },
   {
     // "Who we are", not "About Us" — the footer already says "About us",
     // and the same label twice in one viewport reads as a mistake.

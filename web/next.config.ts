@@ -23,9 +23,11 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
   // specifically and is live, where the service page is still a placeholder.
   { source: "/hubspot-integrations/xero", destination: "/insights/hubspot-xero-integration" },
   { source: "/faqs", destination: "/contact" },
-  { source: "/platforms", destination: "/solutions" },
-  { source: "/platforms/aircall", destination: "/solutions/aircall" },
-  // Retired platform pages, pointed at the solutions hub.
+  // The interim build ran the hub at /solutions before it was renamed
+  // back to /platforms (Sean, 19 Aug 2026) — the Squarespace original.
+  { source: "/solutions", destination: "/platforms" },
+  { source: "/solutions/:slug", destination: "/platforms/:slug" },
+  // Retired platform pages, pointed at the platforms hub.
   //
   // They were briefly aimed at comparison posts commissioned to inherit their
   // ranking. Search Console settled it: 765 impressions and one click across
@@ -36,9 +38,9 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
   //
   // The posts remain worth writing — Google already ranks the old pages 7-17
   // for those terms — but as a growth project, not a launch gate.
-  { source: "/platforms/attio", destination: "/solutions" },
-  { source: "/platforms/folk", destination: "/solutions" },
-  { source: "/platforms/pandadoc", destination: "/solutions" },
+  { source: "/platforms/attio", destination: "/platforms" },
+  { source: "/platforms/folk", destination: "/platforms" },
+  { source: "/platforms/pandadoc", destination: "/platforms" },
   { source: "/crm-for-finance", destination: "/industries/financial-services" },
   { source: "/crm-for-non-profits", destination: "/industries/non-profits" },
   { source: "/crm-for-startups-and-saas", destination: "/industries/saas" },

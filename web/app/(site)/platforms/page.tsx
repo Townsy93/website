@@ -13,14 +13,14 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const page = await sanityFetch(SOLUTIONS_PAGE_QUERY);
   return {
-    title: page?.seo?.metaTitle ?? "Solutions",
+    title: page?.seo?.metaTitle ?? "Platforms",
     description: page?.seo?.metaDescription ?? "Not sure which HubSpot Hub fits your team? Here's what each one actually does.",
-    alternates: { canonical: "/solutions" },
+    alternates: { canonical: "/platforms" },
     ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
   };
 }
 
-export default async function SolutionsPage() {
+export default async function PlatformsPage() {
   const [page, hubs] = await Promise.all([
     sanityFetch(SOLUTIONS_PAGE_QUERY),
     sanityFetch(HUB_OFFERINGS_QUERY),
@@ -28,7 +28,7 @@ export default async function SolutionsPage() {
   if (!page) {
     return (
       <section className="bg-deep-blue pb-14 sm:pb-24 pt-40 text-center text-white">
-        <p className="text-body-lg">Solutions content not found in Sanity.</p>
+        <p className="text-body-lg">Platforms content not found in Sanity.</p>
       </section>
     );
   }
@@ -87,7 +87,7 @@ export default async function SolutionsPage() {
           <p className="mt-8 text-center text-body text-deep-blue-80">
             Looking for phone?{" "}
             <Link
-              href="/solutions/aircall"
+              href="/platforms/aircall"
               className="font-semibold underline decoration-sky-blue decoration-2 underline-offset-4"
             >
               Aircall has its own page →

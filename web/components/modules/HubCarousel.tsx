@@ -17,7 +17,7 @@ export type HubCardData = {
   } | null;
 };
 
-// Module M12 — Solutions Hub carousel. Scroll-snap track with arrow
+// Module M12 — Platforms hub carousel. Scroll-snap track with arrow
 // buttons; all card content is in the page HTML (SEO requirement).
 export function HubCarousel({ hubs }: { hubs: HubCardData[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
