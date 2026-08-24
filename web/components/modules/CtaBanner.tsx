@@ -60,17 +60,16 @@ export function CtaBanner({
       <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
         <h2 className="text-h2">{data.heading}</h2>
         <div className="mx-auto mt-6 h-0.5 w-14 bg-sky-blue" aria-hidden />
+        {/* max-w-2xl and a solid orange button, per the designer's Services
+            pass (Aug 2026): the sub-line holds one line instead of orphaning,
+            matching the case study CTA's treatment. */}
         {data.text && (
-          <p className="mx-auto mt-6 max-w-xl text-body-lg text-white/65">
+          <p className="mx-auto mt-6 max-w-2xl text-body-lg text-white/65">
             {data.text}
           </p>
         )}
         {data.button?.href && (
-          <ButtonLink
-            href={data.button.href}
-            variant="orange-outline"
-            className="mt-10"
-          >
+          <ButtonLink href={data.button.href} variant="orange" className="mt-10">
             {data.button.label}
           </ButtonLink>
         )}

@@ -5,12 +5,38 @@ import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 
 // The three stage pills carry the designer's custom stage icons; "All
-// services" is deliberately bare — it is not a stage.
+// services" is deliberately bare — it is not a stage. Each stage carries a
+// who-it-suits one-liner under the pills, per the designer's Services pass
+// (Aug 2026): "so users know which category best suits their needs".
 const FILTERS = [
-  { label: "All services", value: "all", icon: null },
-  { label: "Discover", value: "discover", icon: "zl-stage-discover" },
-  { label: "Build", value: "build", icon: "zl-stage-build" },
-  { label: "Scale", value: "scale", icon: "zl-stage-scale" },
+  {
+    label: "All services",
+    value: "all",
+    icon: null,
+    blurb:
+      "Every service we offer, in one grid — filter by where you're starting from.",
+  },
+  {
+    label: "Discover",
+    value: "discover",
+    icon: "zl-stage-discover",
+    blurb:
+      "For teams who suspect HubSpot could be doing more, and want to know what's wrong before paying to fix it.",
+  },
+  {
+    label: "Build",
+    value: "build",
+    icon: "zl-stage-build",
+    blurb:
+      "For teams ready to set HubSpot up properly — implementations, automations and integrations built around how you work.",
+  },
+  {
+    label: "Scale",
+    value: "scale",
+    icon: "zl-stage-scale",
+    blurb:
+      "For teams already live on HubSpot who want more from it — optimisation, training and ongoing senior help.",
+  },
 ] as const;
 
 export type ServiceCardData = {
@@ -30,9 +56,10 @@ export function ServiceFilterGrid({ cards }: { cards: ServiceCardData[] }) {
   const visible = cards.filter(
     (card) => filter === "all" || card.category === filter,
   );
+  const active = FILTERS.find((f) => f.value === filter);
   return (
     <div>
-      <div className="flex snap-x gap-3 overflow-x-auto pb-1">
+      <div className="flex snap-x gap-3 overflow-x-auto pb-1 sm:justify-center">
         {FILTERS.map((f) => (
           <button
             key={f.value}
@@ -51,6 +78,13 @@ export function ServiceFilterGrid({ cards }: { cards: ServiceCardData[] }) {
           </button>
         ))}
       </div>
+      {/* aria-live so the description change is announced with the filter. */}
+      <p
+        aria-live="polite"
+        className="mx-auto mt-5 max-w-2xl text-center text-body italic text-deep-blue-80"
+      >
+        {active?.blurb}
+      </p>
       <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
         {visible.map((card) => (
           <Link

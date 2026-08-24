@@ -2,16 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/fetch";
 import { SERVICES_LANDING_QUERY } from "@/sanity/queries";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
+import { QuoteMark } from "@/components/ui/QuoteMark";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { CtaBanner } from "@/components/modules/CtaBanner";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
-import { IconCards } from "@/components/modules/IconCards";
+import { PartnerBand } from "@/components/modules/PartnerBand";
 import {
   ServiceFilterGrid,
   type ServiceCardData,
 } from "@/components/modules/ServiceFilterGrid";
 import { StatTrio } from "@/components/modules/StatTrio";
+import { ValuesBand } from "@/components/modules/ValuesBand";
 
 export const revalidate = 3600;
 
@@ -54,76 +57,76 @@ export default async function ServicesPage() {
 
   return (
     <>
-      {/* Hero — dark centred (H1a) */}
+      {/* Hero — dark split like the About page, per the designer's Aug 2026
+          pass ("the hero section is really narrow... add a visual of a
+          Zippily team member working"). Placeholder renders until the photo
+          lands in Sanity. */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-4xl px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 text-center">
-          {page.hero?.eyebrow && (
-            <p className="text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
-              {page.hero.eyebrow}
-            </p>
-          )}
-          <h1 className="text-pretty mt-4 text-h1-mobile md:text-h1">
-            <EmphasisedHeading
-              heading={page.hero?.heading ?? ""}
-              phrase={page.hero?.emphasisPhrase}
-              markerStyle={page.hero?.markerStyle}
-              color="deep-orange"
-            />
-          </h1>
-          {page.hero?.subheading && (
-            <p className="mx-auto mt-6 max-w-xl text-body-lg text-white/70">
-              {page.hero.subheading}
-            </p>
-          )}
-        </div>
-      </section>
-
-      {/* Service grid with filter pills (T2 / M7) */}
-      <section className="bg-white">
-        <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            {page.gridHeading && (
-              <h2 className="max-w-md text-h2">{page.gridHeading}</h2>
+        <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 lg:grid-cols-[1.05fr_0.95fr]">
+          <div>
+            {page.hero?.eyebrow && (
+              <p className="text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
+                {page.hero.eyebrow}
+              </p>
             )}
-            {page.gridIntro && (
-              <p className="max-w-sm text-body text-deep-blue-80">
-                {page.gridIntro}
+            <h1 className="text-pretty mt-4 text-h1-mobile md:text-h1">
+              <EmphasisedHeading
+                heading={page.hero?.heading ?? ""}
+                phrase={page.hero?.emphasisPhrase}
+                markerStyle={page.hero?.markerStyle}
+                color="deep-orange"
+              />
+            </h1>
+            {page.hero?.subheading && (
+              <p className="mt-6 max-w-xl text-body-lg text-white/70">
+                {page.hero.subheading}
               </p>
             )}
           </div>
+          <SanityImage
+            image={page.hero?.image}
+            width={540}
+            height={480}
+            className="h-72 w-full rounded-2xl object-cover lg:h-110"
+            placeholderLabel="Zippily team member at work"
+          />
+        </div>
+      </section>
+
+      {/* Service grid with filter pills (T2 / M7) — centred head, with the
+          per-stage one-liner living inside the filter component. gridIntro is
+          no longer rendered: the stage blurbs replaced its job. */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
+          {page.gridHeading && (
+            <h2 className="text-center text-h2">{page.gridHeading}</h2>
+          )}
           <div className="mt-10">
             <ServiceFilterGrid cards={cards} />
           </div>
         </div>
       </section>
 
-      {/* Why Zippily (M6) */}
-      <IconCards
-        eyebrow="Why zippily"
-        heading={page.whyHeading}
-        cards={page.whyCards}
-        columns={4}
-      />
+      {/* Partner credential band — the shared component, added here per the
+          designer's pass. */}
+      <PartnerBand />
+
+      {/* Why Zippily — the shared numbered values block, replacing the icon
+          cards per the designer's pass. */}
+      <ValuesBand heading={page.whyHeading} cards={page.whyCards} />
 
       {/* Case studies teaser (M10) */}
       {(page.caseStudies?.length ?? 0) > 0 && (
         <section className="bg-white">
           <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
-                  Our work
-                </p>
-                <h2 className="mt-3 text-h2">
-                  These services, out in the wild
-                </h2>
-              </div>
-              <Link
-                href="/our-work"
-                className="text-body font-semibold underline decoration-sky-blue decoration-2 underline-offset-4"
-              >
-                All case studies →
-              </Link>
+            {/* Centred head with the button under the grid, per the
+                designer's pass. Solid orange on white is Sean's standing
+                exception (the industries-button ruling, Aug 2026). */}
+            <div className="text-center">
+              <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
+                Our work
+              </p>
+              <h2 className="mt-3 text-h2">These services, out in the wild</h2>
             </div>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {page.caseStudies?.map((caseStudy) => {
@@ -180,12 +183,55 @@ export default async function ServicesPage() {
                 );
               })}
             </div>
+            <div className="mt-12 text-center">
+              <ButtonLink href="/our-work" variant="orange">
+                View all case studies
+              </ButtonLink>
+            </div>
           </div>
         </section>
       )}
 
       {/* Stats (M21) */}
       <StatTrio stats={page.stats} />
+
+      {/* The quote — brand speech-bubble mark and a decorative sprig, per
+          the designer's pass ("this page is sparse with imagery"). The
+          attribution is Deep Blue, not the mock's orange: orange text on
+          light fails AA (~2.7:1) and this one Sean has not overridden. */}
+      {page.testimonial?.quote && (
+        <section className="relative overflow-hidden bg-off-white-tan/50">
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -left-8 top-1/2 hidden -translate-y-1/2 text-deep-blue/10 lg:block"
+          >
+            <svg
+              viewBox="0 0 200 260"
+              className="h-64 w-48"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="5"
+              strokeLinecap="round"
+            >
+              <path d="M100 250c-8-70-4-130 30-190" />
+              <path d="M130 60c-30-8-44-32-40-56 28 2 44 22 40 56Z" />
+              <path d="M118 122c-32 6-52-8-58-32 26-8 50 4 58 32Z" />
+              <path d="M112 180c-30 12-52 4-64-18 24-14 50-6 64 18Z" />
+            </svg>
+          </span>
+          <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
+            <QuoteMark className="mx-auto h-14 w-14" />
+            <blockquote className="mt-8 text-body-lg leading-relaxed text-deep-blue md:text-h4 md:font-normal">
+              &ldquo;{page.testimonial.quote}&rdquo;
+            </blockquote>
+            <p className="mt-8 text-caption font-semibold uppercase tracking-[0.1em] text-deep-blue">
+              {[page.testimonial.name, page.testimonial.company]
+                .filter(Boolean)
+                .join(" — ")}
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* FAQ (M26) */}
       <FaqAccordion

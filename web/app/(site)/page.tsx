@@ -15,6 +15,7 @@ import { HeroVideo } from "@/components/modules/HeroVideo";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
 import { NewsletterBand } from "@/components/modules/NewsletterBand";
 import { StatsBand } from "@/components/modules/StatsBand";
+import { ValuesBand } from "@/components/modules/ValuesBand";
 import { TestimonialCards } from "@/components/modules/TestimonialCards";
 
 export const revalidate = 3600;
@@ -315,50 +316,14 @@ export default async function Home() {
         </section>
       )}
 
-      {/* Why Zippily — v2 pass: split head with the designer's framing copy;
-          the aside is Deep Blue italic (orange is banned on white, Sky Blue
-          fails contrast on it). Values come from Sanity, numbered 01–04. */}
-      <section className="bg-white">
-        <div className="mx-auto max-w-[90rem] px-6 pb-14 sm:pb-24 pt-4">
-          <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
-            <div>
-              <h2 className="text-h2">The name isn&apos;t just for fun.</h2>
-              <p className="mt-2 text-body-lg font-medium italic text-deep-blue">
-                Okay, it&apos;s a little bit for fun
-              </p>
-            </div>
-            <div>
-              {/* Bigger and full-strength Deep Blue rather than the
-                  orange the note asked for: rule 1 of the designer's own
-                  brief bans orange on white. Flagged back for a decision. */}
-              <p className="text-body-lg font-semibold uppercase tracking-[0.1em] text-deep-blue">
-                Why zippily
-              </p>
-              <p className="mt-3 max-w-xl text-body-lg text-deep-blue-80">
-                These four decide what we build, what we don&apos;t, and how we
-                talk to you while we do it. They&apos;re the difference between
-                a portal that gets used and one that gets abandoned.
-              </p>
-            </div>
-          </div>
-          <div className="mt-14 grid gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-            {page.whyCards?.map((card, index) => (
-              <div
-                key={card._key}
-                className="border-t border-deep-blue/15 pt-6 lg:border-l lg:border-t-0 lg:px-7 lg:pt-0 lg:first:border-l-0 lg:first:pl-0"
-              >
-                {/* Up from body-lg/h4 — the designer's call: this
-                    section matters and it read as small print. */}
-                <p className="text-h3 font-semibold text-sky-blue">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-3 text-h3">{card.title}</h3>
-                <p className="mt-3 text-body-lg text-deep-blue-80">{card.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Why Zippily — the shared numbered values block (also on the
+          Services landing, per the designer's Aug 2026 pass). */}
+      <ValuesBand
+        heading="The name isn't just for fun."
+        aside="Okay, it's a little bit for fun"
+        cards={page.whyCards}
+        padding="pb-14 sm:pb-24 pt-4"
+      />
 
       {/* Trust stats — the shared band, leading into the quotes. The
           subheading that used to repeat these counts in prose is gone: the

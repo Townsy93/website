@@ -21,7 +21,8 @@ export const SERVICES_LANDING_QUERY = defineQuery(
       ...,
       service->{_id, title, slug, category, icon, shortDescription, whoItsFor}
     },
-    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}}
+    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}},
+    testimonial->{_id, quote, name, role, company}
   }`,
 );
 
