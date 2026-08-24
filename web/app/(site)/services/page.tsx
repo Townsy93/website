@@ -200,7 +200,10 @@ export default async function ServicesPage() {
           attribution is Deep Blue, not the mock's orange: orange text on
           light fails AA (~2.7:1) and this one Sean has not overridden. */}
       {page.testimonial?.quote && (
-        <section className="relative overflow-hidden bg-off-white-tan/50">
+        <section
+          className="relative overflow-hidden bg-off-white-tan/50 bg-cover bg-center"
+          style={{ backgroundImage: "url(/blog-background.png)" }}
+        >
           <span
             aria-hidden
             className="pointer-events-none absolute -left-8 top-1/2 hidden -translate-y-1/2 text-deep-blue/10 lg:block"
