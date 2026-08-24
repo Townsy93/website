@@ -52,6 +52,7 @@ export type SiteSettings = {
   instagramUrl?: string;
   youTubeUrl?: string;
   googleReviewCount?: number;
+  serviceCtaImage?: ImageWithAlt;
   happyClients?: number;
   hubspotReviewCount?: number;
   newsletterHeading?: string;
@@ -77,6 +78,17 @@ export type Seo = {
     _type: "image";
   };
   noIndex?: boolean;
+};
+
+export type ImageWithAlt = {
+  _type: "imageWithAlt";
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  displayWidth?: number;
+  displayHeight?: number;
+  alt: string;
 };
 
 export type EventsPage = {
@@ -168,17 +180,6 @@ export type VimeoEmbed = {
     _type: "image";
   };
   caption?: string;
-};
-
-export type ImageWithAlt = {
-  _type: "imageWithAlt";
-  asset?: SanityImageAssetReference;
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  displayWidth?: number;
-  displayHeight?: number;
-  alt: string;
 };
 
 export type ContactPage = {
@@ -1063,6 +1064,10 @@ export type Service = {
   pageBuilt?: boolean;
   hero: Hero;
   heroMeta?: string;
+  introEyebrow?: string;
+  introHeading?: string;
+  introBody?: string;
+  introImage?: ImageWithAlt;
   painPoints?: Array<
     {
       _key: string;
@@ -1083,6 +1088,11 @@ export type Service = {
     {
       _key: string;
     } & ServiceReference
+  >;
+  relatedPosts?: Array<
+    {
+      _key: string;
+    } & BlogPostReference
   >;
   faqs?: Array<
     {
@@ -1381,12 +1391,12 @@ export type AllSanitySchemaTypes =
   | SiteSettings
   | SanityImageAssetReference
   | Seo
+  | ImageWithAlt
   | EventsPage
   | CtaBanner
   | Hero
   | CareersPage
   | VimeoEmbed
-  | ImageWithAlt
   | ContactPage
   | BlogPostReference
   | InsightHubPage
@@ -1510,6 +1520,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   instagramUrl?: string;
   youTubeUrl?: string;
   googleReviewCount?: number;
+  serviceCtaImage?: ImageWithAlt;
   happyClients?: number;
   hubspotReviewCount?: number;
   newsletterHeading?: string;
@@ -1790,7 +1801,7 @@ export type SERVICE_SLUGS_QUERY_RESULT = Array<string>;
 
 // Source: ../web/sanity/queries.ts
 // Variable: SERVICE_QUERY
-// Query: *[_type == "service" && slug.current == $slug][0]{    ...,    pricingTable->{confirmed, tiers, fallbackText},    caseStudy->{_id, client, slug, headline, resultLine, photo, status},    testimonial->{_id, quote, name, role, company, avatar},    relatedServices[]->{_id, title, slug, icon, shortDescription}  }
+// Query: *[_type == "service" && slug.current == $slug][0]{    ...,    pricingTable->{confirmed, tiers, fallbackText},    caseStudy->{_id, client, slug, headline, resultLine, photo, status},    testimonial->{_id, quote, name, role, company, avatar},    relatedServices[]->{_id, title, slug, icon, shortDescription},    relatedPosts[]->{_id, title, slug, excerpt, coverImage, publishedAt, readTime}  }
 export type SERVICE_QUERY_RESULT = {
   _id: string;
   _type: "service";
@@ -1806,6 +1817,10 @@ export type SERVICE_QUERY_RESULT = {
   pageBuilt?: boolean;
   hero: Hero;
   heroMeta?: string;
+  introEyebrow?: string;
+  introHeading?: string;
+  introBody?: string;
+  introImage?: ImageWithAlt;
   painPoints?: Array<
     {
       _key: string;
@@ -1851,6 +1866,15 @@ export type SERVICE_QUERY_RESULT = {
     slug: Slug;
     icon: string | null;
     shortDescription: string;
+  }> | null;
+  relatedPosts: Array<{
+    _id: string;
+    title: string;
+    slug: Slug;
+    excerpt: string;
+    coverImage: ImageWithAlt;
+    publishedAt: string;
+    readTime: number;
   }> | null;
   faqs?: Array<
     {
@@ -2687,7 +2711,7 @@ declare module "@sanity/client" {
     '*[_type == "contactPage"][0]': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "blogPost"] | order(publishedAt desc)[0...3]{\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': LATEST_POSTS_QUERY_RESULT;
     '*[_type == "service" && defined(slug.current)].slug.current': SERVICE_SLUGS_QUERY_RESULT;
-    '*[_type == "service" && slug.current == $slug][0]{\n    ...,\n    pricingTable->{confirmed, tiers, fallbackText},\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar},\n    relatedServices[]->{_id, title, slug, icon, shortDescription}\n  }': SERVICE_QUERY_RESULT;
+    '*[_type == "service" && slug.current == $slug][0]{\n    ...,\n    pricingTable->{confirmed, tiers, fallbackText},\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar},\n    relatedServices[]->{_id, title, slug, icon, shortDescription},\n    relatedPosts[]->{_id, title, slug, excerpt, coverImage, publishedAt, readTime}\n  }': SERVICE_QUERY_RESULT;
     '*[_type == "solutionsPage"][0]{\n    ...,\n    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, service->{title}}\n  }': SOLUTIONS_PAGE_QUERY_RESULT;
     '*[_type == "hubOffering"] | order(order asc){\n    _id, name, eyebrow, description, icon, isFeatured,\n    linkedService->{title, slug}\n  }': HUB_OFFERINGS_QUERY_RESULT;
     '*[_type == "industriesHubPage"][0]{\n    ...,\n    industries[]->{_id, title, slug, icon, shortDescription, pageBuilt},\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, industry->{title}}\n  }': INDUSTRIES_HUB_QUERY_RESULT;

@@ -104,6 +104,13 @@ export const siteSettings = defineType({
       validation: (rule) => rule.integer().min(0),
     }),
     defineField({
+      name: 'serviceCtaImage',
+      title: 'Service-page CTA photo',
+      type: 'imageWithAlt',
+      description:
+        'Background photo behind the "View more services" banner on every service page; plain Deep Blue until set',
+    }),
+    defineField({
       name: 'happyClients',
       title: 'Happy clients (count)',
       type: 'number',

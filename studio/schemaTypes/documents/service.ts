@@ -86,6 +86,34 @@ export const service = defineType({
       validation: (rule) => rule.max(80),
     }),
     defineField({
+      name: 'introEyebrow',
+      title: 'Intro eyebrow (small caps line above the intro heading)',
+      type: 'string',
+      group: 'content',
+    }),
+    defineField({
+      name: 'introHeading',
+      title: 'Intro heading',
+      type: 'string',
+      group: 'content',
+      description: 'The bold line of the image-beside-text intro section',
+    }),
+    defineField({
+      name: 'introBody',
+      title: 'Intro body',
+      type: 'text',
+      rows: 6,
+      group: 'content',
+      description:
+        'Plain text; a blank line starts a new paragraph. The intro section is hidden when this is empty.',
+    }),
+    defineField({
+      name: 'introImage',
+      title: 'Intro image (client + Zippily photo)',
+      type: 'imageWithAlt',
+      group: 'content',
+    }),
+    defineField({
       name: 'painPoints',
       title: '"Is this you?" pain points',
       type: 'array',
@@ -153,6 +181,15 @@ export const service = defineType({
       group: 'related',
       of: [defineArrayMember({type: 'reference', to: [{type: 'service'}]})],
       validation: (rule) => rule.max(3).unique(),
+    }),
+    defineField({
+      name: 'relatedPosts',
+      title: 'Helpful resources (blog posts)',
+      type: 'array',
+      group: 'related',
+      of: [{type: 'reference', to: [{type: 'blogPost'}]}],
+      validation: (rule) => rule.max(3),
+      description: 'The "Helpful resources" cards — hidden when empty',
     }),
     defineField({
       name: 'faqs',

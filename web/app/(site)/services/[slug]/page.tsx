@@ -4,7 +4,11 @@ import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
-import { SERVICE_QUERY, SERVICE_SLUGS_QUERY } from "@/sanity/queries";
+import {
+  SERVICE_QUERY,
+  SERVICE_SLUGS_QUERY,
+  SITE_SETTINGS_QUERY,
+} from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
@@ -12,20 +16,11 @@ import { QuoteMark } from "@/components/ui/QuoteMark";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { CtaBanner } from "@/components/modules/CtaBanner";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
+import { formatDate } from "@/components/modules/postCard";
 import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
 
 export const revalidate = 3600;
-
-// Stage badge for the hero — the same three custom icons the services
-// landing pills and the homepage stage cards use, keyed off the service's
-// category. Unknown or missing categories render no badge rather than a
-// wrong one.
-const STAGE_BADGE: Record<string, { icon: string; label: string }> = {
-  discover: { icon: "zl-stage-discover", label: "Discover" },
-  build: { icon: "zl-stage-build", label: "Build" },
-  scale: { icon: "zl-stage-scale", label: "Scale" },
-};
 
 export async function generateStaticParams() {
   const slugs = await client.fetch(SERVICE_SLUGS_QUERY);
@@ -58,7 +53,10 @@ export default async function ServicePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = await sanityFetch(SERVICE_QUERY, { slug });
+  const [service, settings] = await Promise.all([
+    sanityFetch(SERVICE_QUERY, { slug }),
+    sanityFetch(SITE_SETTINGS_QUERY),
+  ]);
   if (!service) {
     // A retired slug redirects rather than 404ing — the old URL keeps its
     // inbound links, and losing them is the usual cost of a rename.
@@ -112,59 +110,93 @@ export default async function ServicePage({
           { name: service.title ?? slug, url: `${SITE_URL}/services/${slug}` },
         ])}
       />
-      {/* Hero — dark breadcrumb (H1c) */}
+      {/* Hero — breadcrumb left-aligned like the case study page (the
+          designer's consistency note), stage badge removed ("the category
+          becomes confusing"), content centred. */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto max-w-4xl px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 text-center">
+        <div className="mx-auto max-w-[90rem] px-6 pb-12 pt-20 sm:pb-20 sm:pt-28">
           <nav aria-label="Breadcrumb" className="text-caption text-white/50">
             <Link href="/services" className="text-sky-blue hover:underline">
               Services
             </Link>{" "}
             › <span className="text-white/80">{service.title}</span>
           </nav>
-          {service.category && STAGE_BADGE[service.category] && (
-            <p className="mt-6 inline-flex items-center gap-3 text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10">
-                <Icon
-                  name={STAGE_BADGE[service.category].icon}
-                  className="h-8 w-8"
-                />
-              </span>
-              {STAGE_BADGE[service.category].label} stage
-            </p>
-          )}
-          <h1 className="text-pretty mt-5 text-h1-mobile md:text-h1">
-            <EmphasisedHeading
-              heading={service.hero?.heading ?? service.title ?? ""}
-              phrase={service.hero?.emphasisPhrase}
-              markerStyle={service.hero?.markerStyle}
-              color="deep-orange"
-            />
-          </h1>
-          {(service.hero?.subheading ?? service.shortDescription) && (
-            <p className="mx-auto mt-6 max-w-xl text-body-lg text-white/70">
-              {service.hero?.subheading ?? service.shortDescription}
-            </p>
-          )}
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            {service.hero?.primaryCta?.href && (
-              <ButtonLink href={service.hero.primaryCta.href} variant="orange">
-                {service.hero.primaryCta.label}
-              </ButtonLink>
+          <div className="mx-auto max-w-4xl pt-6 text-center">
+            <h1 className="text-pretty text-h1-mobile md:text-h1">
+              <EmphasisedHeading
+                heading={service.hero?.heading ?? service.title ?? ""}
+                phrase={service.hero?.emphasisPhrase}
+                markerStyle={service.hero?.markerStyle}
+                color="deep-orange"
+              />
+            </h1>
+            {(service.hero?.subheading ?? service.shortDescription) && (
+              <p className="mx-auto mt-6 max-w-xl text-body-lg text-white/70">
+                {service.hero?.subheading ?? service.shortDescription}
+              </p>
             )}
-            {service.hero?.secondaryCta?.href && (
-              <ButtonLink
-                href={service.hero.secondaryCta.href}
-                variant="ghost-light"
-              >
-                {service.hero.secondaryCta.label}
-              </ButtonLink>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              {service.hero?.primaryCta?.href && (
+                <ButtonLink href={service.hero.primaryCta.href} variant="orange">
+                  {service.hero.primaryCta.label}
+                </ButtonLink>
+              )}
+              {service.hero?.secondaryCta?.href && (
+                <ButtonLink
+                  href={service.hero.secondaryCta.href}
+                  variant="ghost-light"
+                >
+                  {service.hero.secondaryCta.label}
+                </ButtonLink>
+              )}
+            </div>
+            {pricingConfirmed && service.heroMeta && (
+              <p className="mt-6 text-caption text-white/55">
+                {service.heroMeta}
+              </p>
             )}
           </div>
-          {pricingConfirmed && service.heroMeta && (
-            <p className="mt-6 text-caption text-white/55">{service.heroMeta}</p>
-          )}
         </div>
       </section>
+
+      {/* Service intro — image beside text, per the designer's pass ("a
+          small intro into the service before jumping into pain points").
+          The eyebrow is Deep Blue caps, not the mock's orange: orange text
+          on white fails AA and Sean has not overridden this spot. */}
+      {service.introBody && (
+        <section className="bg-white">
+          <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-6 py-14 sm:py-24 lg:grid-cols-[0.9fr_1.1fr]">
+            <SanityImage
+              image={service.introImage}
+              width={520}
+              height={440}
+              className="h-72 w-full rounded-2xl object-cover lg:h-100"
+              placeholderLabel="Client + Zippily photo"
+            />
+            <div>
+              {service.introEyebrow && (
+                <p className="text-caption font-semibold uppercase tracking-[0.1em] text-deep-blue-80">
+                  {service.introEyebrow}
+                </p>
+              )}
+              {service.introHeading && (
+                <h2 className="mt-3 text-h2 text-deep-blue">
+                  {service.introHeading}
+                </h2>
+              )}
+              <div className="mt-6 flex max-w-xl flex-col gap-4 text-body text-deep-blue-80">
+                {service.introBody
+                  .split(/\n\s*\n/)
+                  .map((part) => part.trim())
+                  .filter(Boolean)
+                  .map((part) => (
+                    <p key={part.slice(0, 40)}>{part}</p>
+                  ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* "Is this you?" pain points (M20) */}
       {(service.painPoints?.length ?? 0) > 0 && (
@@ -190,28 +222,15 @@ export default async function ServicePage({
                 {service.painPointsCloser}
               </p>
             )}
-          </div>
-        </section>
-      )}
-
-      {/* Process (M19 — Sky Blue top borders on white per D4) */}
-      {(service.processSteps?.length ?? 0) > 0 && (
-        <section className="bg-white">
-          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
-            <h2 className="max-w-lg text-h2">What&apos;s included, step by step</h2>
-            <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {service.processSteps?.map((step, index) => (
-                <div
-                  key={step._key}
-                  className="border-t-[3px] border-sky-blue pt-5"
-                >
-                  <p className="text-h2 text-sky-blue">
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-3 text-h4">{step.title}</h3>
-                  <p className="mt-2 text-body text-deep-blue-80">{step.text}</p>
-                </div>
-              ))}
+            {/* Straight to the scoping chat while the pain is fresh — the
+                designer's pass puts a solid CTA under the cards. */}
+            <div className="mt-10 text-center">
+              <ButtonLink
+                href={service.hero?.primaryCta?.href ?? "/contact"}
+                variant="orange"
+              >
+                {service.hero?.primaryCta?.label ?? "Book a free scoping chat"}
+              </ButtonLink>
             </div>
           </div>
         </section>
@@ -319,87 +338,120 @@ export default async function ServicePage({
         </div>
       </section>
 
-      {/* Proof / case study (M28 dark) */}
-      {service.caseStudy && (
+      {/* Process — Deep Blue with outlined step cards and orange numerals,
+          per the designer's pass; orange on Deep Blue is the permitted
+          pairing. */}
+      {(service.processSteps?.length ?? 0) > 0 && (
         <section className="bg-deep-blue text-white">
-          <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-6 py-14 sm:py-24 lg:grid-cols-2">
-            <div>
-              <p className="text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
-                Proof it works
-              </p>
-              {service.proofStat?.value && (
-                <p className="mt-4 text-6xl font-semibold tracking-heading text-deep-orange">
-                  {service.proofStat.value}
-                </p>
-              )}
-              <h2 className="mt-4 text-h3">
-                {service.caseStudy.headline ?? service.caseStudy.client}
+          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
+            <div className="flex items-center gap-6">
+              <h2 className="shrink-0 text-h2">
+                What&apos;s included, step by step
               </h2>
-              {service.proofStat?.label && (
-                <p className="mt-2 text-body text-white/70">
-                  {service.proofStat.label}
-                </p>
-              )}
-              {service.caseStudy.status !== "comingSoon" && (
-                <Link
-                  href={`/our-work/${service.caseStudy.slug?.current}`}
-                  className="mt-6 inline-block text-body font-semibold text-deep-orange underline decoration-deep-orange decoration-2 underline-offset-4"
-                >
-                  Read the {service.caseStudy.client} story →
-                </Link>
-              )}
+              <div aria-hidden className="h-px flex-1 bg-white/20" />
             </div>
-            <SanityImage
-              image={service.caseStudy.photo}
-              width={520}
-              height={380}
-              className="h-64 w-full rounded-2xl object-cover lg:h-95"
-              placeholderLabel="Project photo"
-            />
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {service.processSteps?.map((step, index) => (
+                <div
+                  key={step._key}
+                  className="rounded-2xl border border-white/25 p-7"
+                >
+                  <p className="text-h3 font-semibold text-deep-orange">
+                    {String(index + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="mt-3 text-h4">{step.title}</h3>
+                  <p className="mt-2 text-body text-white/75">{step.text}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       )}
 
-      {/* Testimonial (M24 single) */}
+      {/* Testimonial — the case-study quote treatment; hidden when no
+          testimonial exists (the designer's rule). Attribution Deep Blue,
+          not the mock's orange (AA, not overridden here). */}
       {service.testimonial?.quote && (
         <section className="bg-white">
           <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
-            <QuoteMark className="mx-auto h-12 w-12" />
-            <blockquote className="mt-8 text-h3 font-medium">
-              {service.testimonial.quote}
+            <QuoteMark className="mx-auto h-14 w-14" />
+            <blockquote className="mt-8 text-body-lg leading-relaxed text-deep-blue md:text-h4 md:font-normal">
+              &ldquo;{service.testimonial.quote}&rdquo;
             </blockquote>
-            <p className="mt-6 text-body font-semibold">
-              {service.testimonial.name}
-            </p>
-            <p className="text-caption text-deep-blue-80">
-              {[service.testimonial.role, service.testimonial.company]
+            <p className="mt-8 text-caption font-semibold uppercase tracking-[0.1em] text-deep-blue">
+              {[service.testimonial.name, service.testimonial.company]
                 .filter(Boolean)
-                .join(" · ")}
+                .join(" — ")}
             </p>
           </div>
         </section>
       )}
 
-      {/* Related services (M17) */}
-      {(service.relatedServices?.length ?? 0) > 0 && (
-        <section className="bg-off-white-tan">
+      {/* Photo CTA — the route back out to the catalogue, over the shared
+          photo from Site settings (plain Deep Blue until it lands). The
+          designer's pass: "a way to link to the services main page again...
+          more personalised and less AI vibes". */}
+      <section className="relative overflow-hidden bg-deep-blue text-white">
+        {settings?.serviceCtaImage && (
+          <>
+            <SanityImage
+              image={settings.serviceCtaImage}
+              width={1920}
+              height={560}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div aria-hidden className="absolute inset-0 bg-deep-blue/70" />
+          </>
+        )}
+        <div className="relative mx-auto max-w-[90rem] px-6 py-20 sm:py-28">
+          <h2 className="max-w-xl text-h2">
+            One of ten ways we get teams more from HubSpot.
+          </h2>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <ButtonLink href="/services" variant="orange">
+              View more services
+            </ButtonLink>
+            <ButtonLink href="/contact" variant="ghost-light">
+              Work with us
+            </ButtonLink>
+          </div>
+        </div>
+      </section>
+
+      {/* Helpful resources — related posts picked in Studio; hidden when
+          none are set. Cards match the homepage blog teaser. */}
+      {(service.relatedPosts?.length ?? 0) > 0 && (
+        <section
+          className="bg-off-white-tan/50 bg-cover bg-center"
+          style={{ backgroundImage: "url(/blog-background.png)" }}
+        >
           <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
-            <h2 className="text-h2">Often paired with</h2>
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {service.relatedServices?.map((related) => (
+            <h2 className="text-center text-h2">Helpful resources</h2>
+            <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
+              {service.relatedPosts?.map((post) => (
                 <Link
-                  key={related._id}
-                  href={`/services/${related.slug?.current}`}
-                  className="rounded-xl border border-deep-blue-20 bg-white p-7 transition hover:-translate-y-0.5 hover:shadow-lg"
+                  key={post._id}
+                  href={`/insights/${post.slug?.current}`}
+                  className="overflow-hidden rounded-xl bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
                 >
-                  <Icon name={related.icon} className="h-6 w-6 text-deep-blue" />
-                  <h3 className="mt-4 text-h4">{related.title}</h3>
-                  <p className="mt-2 text-body text-deep-blue-80">
-                    {related.shortDescription}
-                  </p>
-                  <p className="mt-4 text-body font-semibold underline decoration-sky-blue decoration-2 underline-offset-4">
-                    Learn more →
-                  </p>
+                  <SanityImage
+                    image={post.coverImage}
+                    width={560}
+                    height={245}
+                    className="h-52 w-full object-cover"
+                    placeholderLabel="Post image"
+                  />
+                  <div className="p-7">
+                    <p className="text-caption text-deep-blue-80">
+                      {formatDate(post.publishedAt)} · {post.readTime} min read
+                    </p>
+                    <h3 className="mt-2 text-h4">{post.title}</h3>
+                    {post.excerpt && (
+                      <p className="mt-3 text-body text-deep-blue-80">
+                        {post.excerpt}
+                      </p>
+                    )}
+                  </div>
                 </Link>
               ))}
             </div>

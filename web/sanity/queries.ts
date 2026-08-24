@@ -55,7 +55,8 @@ export const SERVICE_QUERY = defineQuery(
     pricingTable->{confirmed, tiers, fallbackText},
     caseStudy->{_id, client, slug, headline, resultLine, photo, status},
     testimonial->{_id, quote, name, role, company, avatar},
-    relatedServices[]->{_id, title, slug, icon, shortDescription}
+    relatedServices[]->{_id, title, slug, icon, shortDescription},
+    relatedPosts[]->{_id, title, slug, excerpt, coverImage, publishedAt, readTime}
   }`,
 );
 
