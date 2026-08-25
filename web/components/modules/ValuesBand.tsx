@@ -15,6 +15,7 @@ export function ValuesBand({
   intro = "These four decide what we build, what we don't, and how we talk to you while we do it. They're the difference between a portal that gets used and one that gets abandoned.",
   cards,
   padding = "py-14 sm:py-24",
+  background = "bg-white",
 }: {
   heading?: string | null;
   aside?: string | null;
@@ -22,10 +23,12 @@ export function ValuesBand({
   cards?: ValueCard[] | null;
   /** The homepage runs this tight under the section above it. */
   padding?: string;
+  /** White on the homepage; tan on the Services landing per its mock. */
+  background?: string;
 }) {
   if (!heading || (cards?.length ?? 0) === 0) return null;
   return (
-    <section className="bg-white">
+    <section className={background}>
       <div className={`mx-auto max-w-[90rem] px-6 ${padding}`}>
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
           <div>

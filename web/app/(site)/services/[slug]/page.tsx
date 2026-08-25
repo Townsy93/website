@@ -237,8 +237,10 @@ export default async function ServicePage({
         </section>
       )}
 
-      {/* Pricing (M18) — never renders tiers unless confirmed */}
-      <section id="pricing" className="scroll-mt-24 bg-off-white-tan">
+      {/* Pricing (M18) — never renders tiers unless confirmed. White per
+          the mock: the tan pain-points section sits directly above, and
+          two tan sections in a row read as one. */}
+      <section id="pricing" className="scroll-mt-24 bg-white">
         <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
           <h2 className="text-center text-h2">
             {pricingConfirmed ? "Honest, fixed pricing" : "Pricing"}

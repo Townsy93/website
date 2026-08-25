@@ -85,7 +85,8 @@ export function ServiceFilterGrid({ cards }: { cards: ServiceCardData[] }) {
       >
         {active?.blurb}
       </p>
-      <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+      {/* Three across on desktop, per the designer's mock. */}
+      <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {visible.map((card) => (
           <Link
             key={card.key}

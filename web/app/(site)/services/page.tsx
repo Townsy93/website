@@ -112,9 +112,13 @@ export default async function ServicesPage() {
           designer's pass. */}
       <PartnerBand />
 
-      {/* Why Zippily — the shared numbered values block, replacing the icon
-          cards per the designer's pass. */}
-      <ValuesBand heading={page.whyHeading} cards={page.whyCards} />
+      {/* Why Zippily — the shared numbered values block, on tan per the
+          mock so the page breaks up between the white sections. */}
+      <ValuesBand
+        heading={page.whyHeading}
+        cards={page.whyCards}
+        background="bg-off-white-tan"
+      />
 
       {/* Case studies teaser (M10) */}
       {(page.caseStudies?.length ?? 0) > 0 && (
