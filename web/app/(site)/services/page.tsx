@@ -4,6 +4,7 @@ import { sanityFetch } from "@/sanity/fetch";
 import { SERVICES_LANDING_QUERY } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
+import { LeafCorners } from "@/components/ui/LeafCorners";
 import { QuoteMark } from "@/components/ui/QuoteMark";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { CtaBanner } from "@/components/modules/CtaBanner";
@@ -200,29 +201,12 @@ export default async function ServicesPage() {
           attribution is Deep Blue, not the mock's orange: orange text on
           light fails AA (~2.7:1) and this one Sean has not overridden. */}
       {page.testimonial?.quote && (
-        <section
-          className="relative overflow-hidden bg-off-white-tan/50 bg-cover bg-center"
-          style={{ backgroundImage: "url(/blog-background.png)" }}
-        >
-          <span
-            aria-hidden
-            className="pointer-events-none absolute -left-8 top-1/2 hidden -translate-y-1/2 text-deep-blue/10 lg:block"
-          >
-            <svg
-              viewBox="0 0 200 260"
-              className="h-64 w-48"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="5"
-              strokeLinecap="round"
-            >
-              <path d="M100 250c-8-70-4-130 30-190" />
-              <path d="M130 60c-30-8-44-32-40-56 28 2 44 22 40 56Z" />
-              <path d="M118 122c-32 6-52-8-58-32 26-8 50 4 58 32Z" />
-              <path d="M112 180c-30 12-52 4-64-18 24-14 50-6 64 18Z" />
-            </svg>
-          </span>
-          <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
+        // Flat stone colour + the extracted corner leaves (the real brand
+        // asset, replacing the hand-drawn sprig) — bg-cover was cropping
+        // the texture's saplings to slivers.
+        <section className="relative overflow-hidden bg-[#F8F8F2]">
+          <LeafCorners />
+          <div className="relative mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
             <QuoteMark className="mx-auto h-14 w-14" />
             <blockquote className="mt-8 text-body-lg leading-relaxed text-deep-blue md:text-h4 md:font-normal">
               &ldquo;{page.testimonial.quote}&rdquo;

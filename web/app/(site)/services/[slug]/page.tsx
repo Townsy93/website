@@ -17,6 +17,7 @@ import { SanityImage } from "@/components/ui/SanityImage";
 import { CtaBanner } from "@/components/modules/CtaBanner";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
 import { formatDate } from "@/components/modules/postCard";
+import { LeafCorners } from "@/components/ui/LeafCorners";
 import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
 
@@ -421,11 +422,11 @@ export default async function ServicePage({
       {/* Helpful resources — related posts picked in Studio; hidden when
           none are set. Cards match the homepage blog teaser. */}
       {(service.relatedPosts?.length ?? 0) > 0 && (
-        <section
-          className="bg-off-white-tan/50 bg-cover bg-center"
-          style={{ backgroundImage: "url(/blog-background.png)" }}
-        >
-          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
+        // Flat stone colour + the extracted corner leaves instead of the
+        // full texture — bg-cover was cropping the saplings to slivers.
+        <section className="relative overflow-hidden bg-[#F8F8F2]">
+          <LeafCorners />
+          <div className="relative mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
             <h2 className="text-center text-h2">Helpful resources</h2>
             <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
               {service.relatedPosts?.map((post) => (
