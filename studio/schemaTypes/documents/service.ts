@@ -114,6 +114,56 @@ export const service = defineType({
       group: 'content',
     }),
     defineField({
+      name: 'introImageSecond',
+      title: 'Intro image 2 (retainer page renders two images side by side)',
+      type: 'imageWithAlt',
+      group: 'content',
+    }),
+    defineField({
+      name: 'benefitsHeading',
+      title: 'Benefits heading (the "Why retainers?" band)',
+      type: 'string',
+      group: 'content',
+      description: 'Rendered on the bespoke RevOps retainers page; unused elsewhere for now',
+    }),
+    defineField({
+      name: 'benefitsIntro',
+      title: 'Benefits intro',
+      type: 'text',
+      rows: 3,
+      group: 'content',
+    }),
+    defineField({
+      name: 'benefits',
+      title: 'Benefit points',
+      type: 'array',
+      group: 'content',
+      validation: (rule) => rule.max(4),
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'benefitItem',
+          fields: [
+            defineField({name: 'heading', title: 'Heading', type: 'string'}),
+            defineField({name: 'text', title: 'Text', type: 'text', rows: 3}),
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'proofHeading',
+      title: 'Case study feature heading (retainer page)',
+      type: 'string',
+      group: 'related',
+    }),
+    defineField({
+      name: 'proofBody',
+      title: 'Case study feature body',
+      type: 'text',
+      rows: 4,
+      group: 'related',
+    }),
+    defineField({
       name: 'painPoints',
       title: '"Is this you?" pain points',
       type: 'array',

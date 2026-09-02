@@ -1068,6 +1068,17 @@ export type Service = {
   introHeading?: string;
   introBody?: string;
   introImage?: ImageWithAlt;
+  introImageSecond?: ImageWithAlt;
+  benefitsHeading?: string;
+  benefitsIntro?: string;
+  benefits?: Array<{
+    heading?: string;
+    text?: string;
+    _type: "benefitItem";
+    _key: string;
+  }>;
+  proofHeading?: string;
+  proofBody?: string;
   painPoints?: Array<
     {
       _key: string;
@@ -1801,7 +1812,7 @@ export type SERVICE_SLUGS_QUERY_RESULT = Array<string>;
 
 // Source: ../web/sanity/queries.ts
 // Variable: SERVICE_QUERY
-// Query: *[_type == "service" && slug.current == $slug][0]{    ...,    pricingTable->{confirmed, tiers, fallbackText},    caseStudy->{_id, client, slug, headline, resultLine, photo, status},    testimonial->{_id, quote, name, role, company, avatar},    relatedServices[]->{_id, title, slug, icon, shortDescription},    relatedPosts[]->{_id, title, slug, excerpt, coverImage, publishedAt, readTime}  }
+// Query: *[_type == "service" && slug.current == $slug][0]{    ...,    pricingTable->{confirmed, tiers, fallbackText},    caseStudy->{_id, client, slug, headline, resultLine, photo, status, stats},    testimonial->{_id, quote, name, role, company, avatar},    relatedServices[]->{_id, title, slug, icon, shortDescription},    relatedPosts[]->{_id, title, slug, excerpt, coverImage, publishedAt, readTime}  }
 export type SERVICE_QUERY_RESULT = {
   _id: string;
   _type: "service";
@@ -1821,6 +1832,17 @@ export type SERVICE_QUERY_RESULT = {
   introHeading?: string;
   introBody?: string;
   introImage?: ImageWithAlt;
+  introImageSecond?: ImageWithAlt;
+  benefitsHeading?: string;
+  benefitsIntro?: string;
+  benefits?: Array<{
+    heading?: string;
+    text?: string;
+    _type: "benefitItem";
+    _key: string;
+  }>;
+  proofHeading?: string;
+  proofBody?: string;
   painPoints?: Array<
     {
       _key: string;
@@ -1850,6 +1872,11 @@ export type SERVICE_QUERY_RESULT = {
     resultLine: string | null;
     photo: ImageWithAlt | null;
     status: "comingSoon" | "live";
+    stats: Array<
+      {
+        _key: string;
+      } & Stat
+    > | null;
   } | null;
   proofStat?: Stat;
   testimonial: {
@@ -2083,6 +2110,15 @@ export type OUR_WORK_QUERY_RESULT = {
   ctaBanner?: CtaBanner;
   seo?: Seo;
 } | null;
+
+// Source: ../web/sanity/queries.ts
+// Variable: TRUST_LOGOS_QUERY
+// Query: *[_type == "homePage"][0].trustLogos
+export type TRUST_LOGOS_QUERY_RESULT = Array<
+  {
+    _key: string;
+  } & ImageWithAlt
+> | null;
 
 // Source: ../web/sanity/queries.ts
 // Variable: CASE_STUDY_SLUGS_QUERY
@@ -2711,13 +2747,14 @@ declare module "@sanity/client" {
     '*[_type == "contactPage"][0]': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "blogPost"] | order(publishedAt desc)[0...3]{\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': LATEST_POSTS_QUERY_RESULT;
     '*[_type == "service" && defined(slug.current)].slug.current': SERVICE_SLUGS_QUERY_RESULT;
-    '*[_type == "service" && slug.current == $slug][0]{\n    ...,\n    pricingTable->{confirmed, tiers, fallbackText},\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar},\n    relatedServices[]->{_id, title, slug, icon, shortDescription},\n    relatedPosts[]->{_id, title, slug, excerpt, coverImage, publishedAt, readTime}\n  }': SERVICE_QUERY_RESULT;
+    '*[_type == "service" && slug.current == $slug][0]{\n    ...,\n    pricingTable->{confirmed, tiers, fallbackText},\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status, stats},\n    testimonial->{_id, quote, name, role, company, avatar},\n    relatedServices[]->{_id, title, slug, icon, shortDescription},\n    relatedPosts[]->{_id, title, slug, excerpt, coverImage, publishedAt, readTime}\n  }': SERVICE_QUERY_RESULT;
     '*[_type == "solutionsPage"][0]{\n    ...,\n    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, service->{title}}\n  }': SOLUTIONS_PAGE_QUERY_RESULT;
     '*[_type == "hubOffering"] | order(order asc){\n    _id, name, eyebrow, description, icon, isFeatured,\n    linkedService->{title, slug}\n  }': HUB_OFFERINGS_QUERY_RESULT;
     '*[_type == "industriesHubPage"][0]{\n    ...,\n    industries[]->{_id, title, slug, icon, shortDescription, pageBuilt},\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, industry->{title}}\n  }': INDUSTRIES_HUB_QUERY_RESULT;
     '*[_type == "industry" && defined(slug.current)].slug.current': INDUSTRY_SLUGS_QUERY_RESULT;
     '*[_type == "industry" && slug.current == $slug][0]{\n    ...,\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': INDUSTRY_QUERY_RESULT;
     '*[_type == "ourWorkPage"][0]{\n    ...,\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}},\n    videoTestimonials[]->{_id, quote, name, company, videoUrl, videoStill},\n    googleReviews[]->{_id, quote, name, company}\n  }': OUR_WORK_QUERY_RESULT;
+    '*[_type == "homePage"][0].trustLogos': TRUST_LOGOS_QUERY_RESULT;
     '*[_type == "caseStudy" && defined(slug.current)].slug.current': CASE_STUDY_SLUGS_QUERY_RESULT;
     '*[_type == "caseStudy" && slug.current == $slug][0]{\n    ...,\n    service->{title, slug},\n    industry->{title, slug},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': CASE_STUDY_QUERY_RESULT;
     '*[_type == "caseStudy" && defined(slug.current) && slug.current != $slug]\n    | order(status desc, client asc)[0...3]{\n      _id, client, slug, resultLine, photo, status, service->{title}\n    }': RELATED_CASE_STUDIES_QUERY_RESULT;

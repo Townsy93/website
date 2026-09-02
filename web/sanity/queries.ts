@@ -53,7 +53,7 @@ export const SERVICE_QUERY = defineQuery(
   `*[_type == "service" && slug.current == $slug][0]{
     ...,
     pricingTable->{confirmed, tiers, fallbackText},
-    caseStudy->{_id, client, slug, headline, resultLine, photo, status},
+    caseStudy->{_id, client, slug, headline, resultLine, photo, status, stats},
     testimonial->{_id, quote, name, role, company, avatar},
     relatedServices[]->{_id, title, slug, icon, shortDescription},
     relatedPosts[]->{_id, title, slug, excerpt, coverImage, publishedAt, readTime}
@@ -101,6 +101,11 @@ export const OUR_WORK_QUERY = defineQuery(
     videoTestimonials[]->{_id, quote, name, company, videoUrl, videoStill},
     googleReviews[]->{_id, quote, name, company}
   }`,
+);
+
+// The homepage trust-strip logos, reused inside the retainer page hero.
+export const TRUST_LOGOS_QUERY = defineQuery(
+  `*[_type == "homePage"][0].trustLogos`,
 );
 
 export const CASE_STUDY_SLUGS_QUERY = defineQuery(

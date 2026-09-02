@@ -12,6 +12,7 @@ import { Icon } from "@/components/ui/Icon";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { CtaBanner } from "@/components/modules/CtaBanner";
 import { HeroVideo } from "@/components/modules/HeroVideo";
+import { LogoTicker } from "@/components/modules/LogoTicker";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
 import { NewsletterBand } from "@/components/modules/NewsletterBand";
 import { StatsBand } from "@/components/modules/StatsBand";
@@ -144,44 +145,7 @@ export default async function Home() {
           <p className="shrink-0 text-body font-semibold text-white">
             HubSpot Platinum Partner
           </p>
-          <div
-            className="min-w-0 flex-1 overflow-hidden"
-            style={{
-              maskImage:
-                "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
-            }}
-          >
-            <div className="ticker-track flex w-max items-center gap-10">
-              {[0, 1].map((half) => (
-                <div
-                  key={half}
-                  aria-hidden={half === 1}
-                  className="flex shrink-0 items-center gap-10"
-                >
-                  {(page.trustLogos?.length ?? 0) > 0
-                    ? page.trustLogos?.map((logo) => (
-                        <span
-                          key={`${half}-${logo._key}`}
-                          className="flex h-12 shrink-0 items-center rounded-lg bg-white px-5"
-                        >
-                          <SanityImage
-                            image={logo}
-                            width={112}
-                            height={28}
-                            className="h-6 w-auto object-contain"
-                          />
-                        </span>
-                      ))
-                    : [0, 1, 2, 3, 4, 5].map((i) => (
-                        <span
-                          key={`${half}-${i}`}
-                          className="h-7 w-28 shrink-0 rounded bg-white/15"
-                        />
-                      ))}
-                </div>
-              ))}
-            </div>
-          </div>
+          <LogoTicker logos={page.trustLogos} />
         </div>
       </section>
 
