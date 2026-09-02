@@ -1,3 +1,5 @@
+import { ButtonLink } from "@/components/ui/ButtonLink";
+
 type ValueCard = {
   _key: string;
   title?: string | null;
@@ -16,6 +18,7 @@ export function ValuesBand({
   cards,
   padding = "py-14 sm:py-24",
   background = "bg-white",
+  action,
 }: {
   heading?: string | null;
   aside?: string | null;
@@ -25,6 +28,8 @@ export function ValuesBand({
   padding?: string;
   /** White on the homepage; tan on the Services landing per its mock. */
   background?: string;
+  /** Optional button under the heading (homepage: the About link). */
+  action?: { label: string; href: string } | null;
 }) {
   if (!heading || (cards?.length ?? 0) === 0) return null;
   return (
@@ -37,6 +42,11 @@ export function ValuesBand({
               <p className="mt-2 text-body-lg font-medium italic text-deep-blue">
                 {aside}
               </p>
+            )}
+            {action && (
+              <ButtonLink href={action.href} variant="navy" className="mt-6">
+                {action.label}
+              </ButtonLink>
             )}
           </div>
           <div>

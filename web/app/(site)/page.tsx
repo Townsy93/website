@@ -29,17 +29,17 @@ const SERVICE_STAGES = [
   {
     title: "Discover",
     icon: "zl-stage-discover",
-    text: "HubSpot Audit, Customer Journey Mapping, Marketing Automation (Strategy)",
+    text: "Not sure what you need? Figure it out with HubSpot audits, customer journey mapping, and marketing automation strategy.",
   },
   {
     title: "Build",
     icon: "zl-stage-build",
-    text: "CRM Implementation, Websites, Landing Pages, Post-Sales, Automation",
+    text: "Get the platforms and tools to support your strategy, with CRM implementation, websites, landing pages, post-sales, and automation.",
   },
   {
     title: "Scale",
     icon: "zl-stage-scale",
-    text: "RevOps Retainers, AI Solutions, HubSpot Training",
+    text: "Need a bit of extra support as you grow? We're here with RevOps retainers, AI solutions, and HubSpot training.",
   },
 ];
 
@@ -143,7 +143,7 @@ export default async function Home() {
       <section className="bg-deep-blue">
         <div className="mx-auto flex max-w-[90rem] flex-wrap items-center gap-x-8 gap-y-4 px-6 pb-14 pt-2">
           <p className="shrink-0 text-body font-semibold text-white">
-            HubSpot Platinum Partner
+            Other brands we&apos;ve made unreasonably excited about CRM
           </p>
           <LogoTicker logos={page.trustLogos} />
         </div>
@@ -158,17 +158,23 @@ export default async function Home() {
         style={{ backgroundImage: "url(/intro-background.png)" }}
       >
         <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24 text-center">
-          <h2 className="mx-auto max-w-3xl text-h2">
+          <p className="text-body-lg font-medium italic text-deep-blue-80">
+            One sec. Just need to keep the algorithms happy:
+          </p>
+          <h2 className="mx-auto mt-3 max-w-3xl text-h2">
             <Marker style="underline" color="sky-blue">
               HubSpot implementation
             </Marker>{" "}
             for NZ and Australian businesses
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-body-lg text-deep-blue-80">
-            At Zippily, we get B2B teams more out of HubSpot and the GTM tools
-            around it. Our HubSpot implementation service is built around how
-            your business actually works, not a generic setup.
+            Our implementation services fit the tooling around your business,
+            so B2B teams get more out of HubSpot and the surrounding GTM
+            tools.
           </p>
+          <ButtonLink href="/services" variant="navy" className="mt-8">
+            See the services
+          </ButtonLink>
           <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-3">
             {[0, 1, 2].map((i) => (
               <SanityImage
@@ -195,7 +201,7 @@ export default async function Home() {
             Our services
           </p>
           <h2 className="mx-auto mt-3 max-w-2xl text-center text-h2">
-            Everything your CRM needs. Nothing it doesn&apos;t.
+            Start us where you need us.
           </h2>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {SERVICE_STAGES.map((stage) => (
@@ -212,11 +218,11 @@ export default async function Home() {
             ))}
             <div className="flex flex-col items-center justify-center gap-6 rounded-2xl bg-deep-blue p-8 text-center text-white">
               <p className="text-body-lg font-semibold">
-                Eleven services across three stages. Find the one that matches
-                where you&apos;re actually at.
+                Ten services across three stages. Not sure which? That&apos;s
+                what the free chat is for.
               </p>
-              <ButtonLink href="/services" variant="orange">
-                View all services
+              <ButtonLink href="/contact" variant="orange">
+                Let&apos;s chat
               </ButtonLink>
             </div>
           </div>
@@ -283,8 +289,10 @@ export default async function Home() {
       {/* Why Zippily — the shared numbered values block (also on the
           Services landing, per the designer's Aug 2026 pass). */}
       <ValuesBand
-        heading="The name isn't just for fun."
-        aside="Okay, it's a little bit for fun"
+        heading="Don't let the cute name fool you"
+        aside="Adorable name, serious smarts — and a painfully sensible approach to working with clients"
+        intro="Here's how we make the work, well, work:"
+        action={{ label: "Get the full Zippily story", href: "/about-us" }}
         cards={page.whyCards}
         padding="pb-14 sm:pb-24 pt-4"
       />
@@ -298,7 +306,8 @@ export default async function Home() {
           heading, and the CLIENT FEEDBACK watermark finished rather than
           accidentally clipped. */}
       <TestimonialCards
-        heading="Kind words from people we've un-stressed"
+        heading="Don't forget to check the reviews"
+        subheading="Nice words from some of our favourite clients"
         testimonials={page.testimonials}
         action={{ label: "See our work", href: "/our-work" }}
         watermark="Client feedback"
@@ -312,7 +321,15 @@ export default async function Home() {
         <section className="bg-white">
           <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
             <div className="flex flex-wrap items-center justify-between gap-4">
-              <h2 className="text-h2">We speak your industry&apos;s language</h2>
+              <div>
+                <h2 className="text-h2">
+                  Let&apos;s face it, one size never really fits all
+                </h2>
+                <p className="mt-3 max-w-xl text-body-lg text-deep-blue-80">
+                  Custom builds fit your business and your industry — with
+                  plenty of sector-specific experience to guide us.
+                </p>
+              </div>
               {/* Orange on a white section: an explicit owner+designer
                   exception to brief rule 1, for button consistency across
                   the homepage. Label contrast (Deep Blue on orange) is
@@ -357,7 +374,7 @@ export default async function Home() {
           style={{ backgroundImage: "url(/blog-background.png)" }}
         >
           <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
-            <h2 className="text-center text-h2">Fresh from the blog</h2>
+            <h2 className="text-center text-h2">Hot off the (virtual) press</h2>
             <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
               {posts.slice(0, 2).map((post) => (
                 <Link
