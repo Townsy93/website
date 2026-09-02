@@ -8,6 +8,7 @@ import { Icon } from "@/components/ui/Icon";
 import { LeafCorners } from "@/components/ui/LeafCorners";
 import { QuoteMark } from "@/components/ui/QuoteMark";
 import { SanityImage } from "@/components/ui/SanityImage";
+import { CaseFeature } from "@/components/modules/CaseFeature";
 import { CtaBanner } from "@/components/modules/CtaBanner";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
 import { LogoTicker } from "@/components/modules/LogoTicker";
@@ -88,8 +89,6 @@ export default async function RetainersPage() {
         }
       : {}),
   };
-
-  const caseStats = (service.caseStudy?.stats ?? []).slice(0, 2);
 
   return (
     <>
@@ -327,58 +326,24 @@ export default async function RetainersPage() {
       {service.caseStudy && (
         <section className="bg-white">
           <div className="mx-auto max-w-[90rem] px-6 pb-14 sm:pb-24">
-            <div className="grid overflow-hidden rounded-3xl bg-deep-blue text-white lg:grid-cols-[1.1fr_1fr]">
-              <div className="p-10 lg:p-14">
-                <p className="text-caption font-semibold uppercase tracking-[0.14em] text-sky-blue">
-                  Proof in our promise
-                </p>
-                <h2 className="mt-4 text-pretty text-h2">
-                  {service.proofHeading ??
-                    "What a retainer actually looks like in practice"}
-                </h2>
-                {service.proofBody && (
-                  <p className="mt-5 max-w-xl text-body-lg text-white/75">
-                    {service.proofBody}
-                  </p>
-                )}
-                {caseStats.length > 0 && (
-                  <div className="mt-8 flex items-stretch gap-6">
-                    {caseStats.map((stat, index) => (
-                      <div key={stat._key} className="flex items-stretch gap-6">
-                        {index > 0 && (
-                          <span aria-hidden className="w-px self-stretch bg-white/25" />
-                        )}
-                        <div>
-                          <p className="text-h2 font-semibold leading-none text-deep-orange">
-                            {stat.value}
-                          </p>
-                          <p className="mt-2 max-w-36 text-caption text-white/75">
-                            {stat.label}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                {service.caseStudy.status !== "comingSoon" &&
-                  service.caseStudy.slug?.current && (
-                    <ButtonLink
-                      href={`/our-work/${service.caseStudy.slug.current}`}
-                      variant="orange"
-                      className="mt-9"
-                    >
-                      View case study
-                    </ButtonLink>
-                  )}
-              </div>
-              <SanityImage
-                image={service.caseStudy.photo}
-                width={720}
-                height={560}
-                className="h-64 w-full object-cover lg:h-full"
-                placeholderLabel={`${service.caseStudy.client} — project photo`}
-              />
-            </div>
+            <CaseFeature
+              eyebrow="Proof in our promise"
+              heading={
+                service.proofHeading ??
+                "What a retainer actually looks like in practice"
+              }
+              body={service.proofBody}
+              stats={service.caseStudy.stats}
+              href={
+                service.caseStudy.status !== "comingSoon" &&
+                service.caseStudy.slug?.current
+                  ? `/our-work/${service.caseStudy.slug.current}`
+                  : null
+              }
+              buttonLabel="View case study"
+              image={service.caseStudy.photo}
+              imageLabel={`${service.caseStudy.client} — project photo`}
+            />
           </div>
         </section>
       )}

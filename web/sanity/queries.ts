@@ -63,7 +63,10 @@ export const SERVICE_QUERY = defineQuery(
 export const SOLUTIONS_PAGE_QUERY = defineQuery(
   `*[_type == "solutionsPage"][0]{
     ...,
-    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, service->{title}}
+    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, stats, service->{title}},
+    "aircall": *[_type == "partnerIntegration" && slug.current == "aircall"][0]{
+      title, shortDescription, slug, "image": hero.image
+    }
   }`,
 );
 

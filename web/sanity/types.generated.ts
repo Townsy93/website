@@ -440,6 +440,14 @@ export type SolutionsPage = {
       _key: string;
     } & IconCard
   >;
+  whyHeading?: string;
+  whyBody?: string;
+  whyPoints?: Array<{
+    title?: string;
+    text?: string;
+    _type: "whyPoint";
+    _key: string;
+  }>;
   relatedCaseStudy?: CaseStudyReference;
   ctaBanner?: CtaBanner;
   seo?: Seo;
@@ -1914,7 +1922,7 @@ export type SERVICE_QUERY_RESULT = {
 
 // Source: ../web/sanity/queries.ts
 // Variable: SOLUTIONS_PAGE_QUERY
-// Query: *[_type == "solutionsPage"][0]{    ...,    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, service->{title}}  }
+// Query: *[_type == "solutionsPage"][0]{    ...,    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, stats, service->{title}},    "aircall": *[_type == "partnerIntegration" && slug.current == "aircall"][0]{      title, shortDescription, slug, "image": hero.image    }  }
 export type SOLUTIONS_PAGE_QUERY_RESULT = {
   _id: string;
   _type: "solutionsPage";
@@ -1931,6 +1939,14 @@ export type SOLUTIONS_PAGE_QUERY_RESULT = {
       _key: string;
     } & IconCard
   >;
+  whyHeading?: string;
+  whyBody?: string;
+  whyPoints?: Array<{
+    title?: string;
+    text?: string;
+    _type: "whyPoint";
+    _key: string;
+  }>;
   relatedCaseStudy: {
     _id: string;
     client: string;
@@ -1939,12 +1955,23 @@ export type SOLUTIONS_PAGE_QUERY_RESULT = {
     resultLine: string | null;
     photo: ImageWithAlt | null;
     status: "comingSoon" | "live";
+    stats: Array<
+      {
+        _key: string;
+      } & Stat
+    > | null;
     service: {
       title: string;
     };
   } | null;
   ctaBanner?: CtaBanner;
   seo?: Seo;
+  aircall: {
+    title: string;
+    shortDescription: null;
+    slug: Slug;
+    image: ImageWithAlt | null;
+  } | null;
 } | null;
 
 // Source: ../web/sanity/queries.ts
@@ -2748,7 +2775,7 @@ declare module "@sanity/client" {
     '*[_type == "blogPost"] | order(publishedAt desc)[0...3]{\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': LATEST_POSTS_QUERY_RESULT;
     '*[_type == "service" && defined(slug.current)].slug.current': SERVICE_SLUGS_QUERY_RESULT;
     '*[_type == "service" && slug.current == $slug][0]{\n    ...,\n    pricingTable->{confirmed, tiers, fallbackText},\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status, stats},\n    testimonial->{_id, quote, name, role, company, avatar},\n    relatedServices[]->{_id, title, slug, icon, shortDescription},\n    relatedPosts[]->{_id, title, slug, excerpt, coverImage, publishedAt, readTime}\n  }': SERVICE_QUERY_RESULT;
-    '*[_type == "solutionsPage"][0]{\n    ...,\n    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, service->{title}}\n  }': SOLUTIONS_PAGE_QUERY_RESULT;
+    '*[_type == "solutionsPage"][0]{\n    ...,\n    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, stats, service->{title}},\n    "aircall": *[_type == "partnerIntegration" && slug.current == "aircall"][0]{\n      title, shortDescription, slug, "image": hero.image\n    }\n  }': SOLUTIONS_PAGE_QUERY_RESULT;
     '*[_type == "hubOffering"] | order(order asc){\n    _id, name, eyebrow, description, icon, isFeatured,\n    linkedService->{title, slug}\n  }': HUB_OFFERINGS_QUERY_RESULT;
     '*[_type == "industriesHubPage"][0]{\n    ...,\n    industries[]->{_id, title, slug, icon, shortDescription, pageBuilt},\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, industry->{title}}\n  }': INDUSTRIES_HUB_QUERY_RESULT;
     '*[_type == "industry" && defined(slug.current)].slug.current': INDUSTRY_SLUGS_QUERY_RESULT;

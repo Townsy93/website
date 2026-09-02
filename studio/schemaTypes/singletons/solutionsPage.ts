@@ -56,6 +56,37 @@ export const solutionsPage = defineType({
       validation: (rule) => rule.max(3),
     }),
     defineField({
+      name: 'whyHeading',
+      title: 'Why HubSpot heading',
+      type: 'string',
+      group: 'content',
+    }),
+    defineField({
+      name: 'whyBody',
+      title: 'Why HubSpot body',
+      type: 'text',
+      rows: 8,
+      group: 'content',
+      description: 'Plain text; a blank line starts a new paragraph',
+    }),
+    defineField({
+      name: 'whyPoints',
+      title: "The platform-is points (right column of Why HubSpot)",
+      type: 'array',
+      group: 'content',
+      validation: (rule) => rule.max(4),
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'whyPoint',
+          fields: [
+            defineField({name: 'title', title: 'Title', type: 'string'}),
+            defineField({name: 'text', title: 'One-liner', type: 'string'}),
+          ],
+        }),
+      ],
+    }),
+    defineField({
       name: 'relatedCaseStudy',
       title: 'Related case study',
       type: 'reference',
