@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/fetch";
 import { INDUSTRIES_HUB_QUERY } from "@/sanity/queries";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
 import { CtaBanner } from "@/components/modules/CtaBanner";
@@ -52,6 +53,9 @@ export default async function IndustriesPage() {
               {page.hero.subheading}
             </p>
           )}
+          <ButtonLink href="/contact" variant="orange" className="mt-8">
+            Let&apos;s talk CRM
+          </ButtonLink>
         </div>
       </section>
 

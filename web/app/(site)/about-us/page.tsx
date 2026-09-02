@@ -77,11 +77,11 @@ export default async function AboutPage() {
               </p>
             )}
             <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href="/contact" variant="orange">
-                Book a free chat
+              <ButtonLink href="/our-work" variant="orange">
+                Show me the work
               </ButtonLink>
-              <ButtonLink href="/our-work" variant="ghost-light">
-                See our work
+              <ButtonLink href="/contact" variant="ghost-light">
+                Let&apos;s talk CRM
               </ButtonLink>
             </div>
           </div>
@@ -109,8 +109,12 @@ export default async function AboutPage() {
             />
             <div>
               <h2 className="text-h2 text-deep-blue">
-                Why you&apos;ll trust us
+                Hang on, why should I trust you?
               </h2>
+              <p className="mt-3 max-w-lg text-body-lg text-deep-blue-80">
+                We find that everything works better with honesty and
+                real-life relationships.
+              </p>
               <div className="mt-8 flex flex-col divide-y divide-deep-blue/15">
                 {page.trustPillars?.map((row) => (
                   <div key={row._key} className="py-6 first:pt-0 last:pb-0">
@@ -126,8 +130,11 @@ export default async function AboutPage() {
         </section>
       )}
 
-      {/* Partner credential band — the shared component. */}
-      <PartnerBand />
+      {/* Partner credential band — About-voice copy per the copywriters. */}
+      <PartnerBand
+        kicker="We're pretty chuffed about this one:"
+        text="This means we're fully certified and working across New Zealand and Australia — all from Auckland."
+      />
 
       {/* Meet the team — cards open the bio dialog. The old hover-reveal was
           unreachable on touch; the pop-up is for those who WANT the bios. */}
@@ -137,6 +144,10 @@ export default async function AboutPage() {
             <h2 className="text-center text-h2">
               {page.teamHeading ?? "Meet the team"}
             </h2>
+            <p className="mx-auto mt-3 max-w-xl text-center text-body-lg text-white/70">
+              HubSpot superfans, CRM pros, tech hotshots — meet the
+              Zippily team.
+            </p>
             <p className="mt-3 text-center text-caption text-white/50">
               Select a card to read their bio.
             </p>
@@ -160,8 +171,13 @@ export default async function AboutPage() {
             />
             <div>
               <h2 className="text-h2 text-deep-blue">
-                Why you&apos;ll love us
+                Wait, what&apos;s in it for me?
               </h2>
+              <p className="mt-3 max-w-lg text-body-lg text-deep-blue-80">
+                Great team, great approach — but how does that help when
+                you&apos;re fighting your CRM or going back to your trusty
+                spreadsheets?
+              </p>
               <div className="mt-8 flex flex-col gap-7">
                 {page.lovePillars?.map((pillar) => (
                   <div key={pillar._key}>
@@ -185,10 +201,14 @@ export default async function AboutPage() {
           <div className="mx-auto max-w-[90rem] px-6 pb-14 sm:pb-24">
             <div className="flex items-center gap-6">
               <h2 className="shrink-0 text-h2 text-deep-blue">
-                Values we work by
+                Values to work by
               </h2>
               <div aria-hidden className="h-px flex-1 bg-deep-blue/15" />
             </div>
+            <p className="mt-4 max-w-lg text-body-lg text-deep-blue-80">
+              Give us a second to be earnest, ok? These are the values that
+              ground our work.
+            </p>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {page.values?.map((value, index) => (
                 <div
@@ -214,9 +234,10 @@ export default async function AboutPage() {
 
       {/* Testimonials with the finished watermark, matching home. */}
       <TestimonialCards
-        heading="Don't take our word for it"
+        heading="Or, listen to our clients talk us up"
+        subheading="Everyone loves a good bit of feedback."
         testimonials={page.testimonials}
-        action={{ label: "See our work", href: "/our-work" }}
+        action={{ label: "Show me the work", href: "/our-work" }}
         watermark="Client feedback"
         appearance="outline"
       />
@@ -280,7 +301,7 @@ export default async function AboutPage() {
       <section className="bg-white">
         <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
           <h2 className="text-center text-h2 text-deep-blue">
-            Clients we&apos;ve worked with
+            We&apos;ve worked with:
           </h2>
           <div className="mx-auto mt-12 grid max-w-4xl grid-cols-2 items-center gap-x-10 gap-y-12 sm:grid-cols-3 lg:grid-cols-5">
             {(page.clientLogos?.length ?? 0) > 0

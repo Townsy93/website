@@ -17,6 +17,7 @@ import { SanityImage } from "@/components/ui/SanityImage";
 import { CtaBanner } from "@/components/modules/CtaBanner";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
 import { formatDate } from "@/components/modules/postCard";
+import { BenefitsBand } from "@/components/modules/BenefitsBand";
 import { PricingSection } from "@/components/modules/PricingSection";
 import { LeafCorners } from "@/components/ui/LeafCorners";
 import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
@@ -241,6 +242,16 @@ export default async function ServicePage({
           </div>
         </section>
       )}
+
+      {/* Why us — the shared benefits band; renders only for services
+          with benefits content (CRM implementation per Sean's copy brief). */}
+      <BenefitsBand
+        eyebrow="Why us?"
+        heading={service.benefitsHeading}
+        intro={service.benefitsIntro}
+        benefits={service.benefits}
+        action={{ label: "Get the full Zippily story", href: "/about-us" }}
+      />
 
       {/* Pricing (M18) — the shared section; white per the mock (the tan
           pain-points section sits directly above). */}

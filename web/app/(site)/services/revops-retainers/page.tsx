@@ -175,6 +175,9 @@ export default async function RetainersPage() {
                 <p key={part.slice(0, 40)}>{part}</p>
               ))}
             </div>
+            <ButtonLink href="/contact" variant="orange" className="mt-8">
+              Book a scoping chat now
+            </ButtonLink>
             <div className="mt-12 grid gap-6 sm:grid-cols-2">
               <SanityImage
                 image={service.introImage}
@@ -228,6 +231,47 @@ export default async function RetainersPage() {
         </section>
       )}
 
+      {/* What is a retainer — copywriter-final (Sep 2026); the inclusions
+          list is the shared baseline of both tiers. */}
+      <section className="bg-white">
+        <div className="mx-auto grid max-w-[90rem] gap-12 px-6 py-14 sm:py-24 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 className="text-h2 text-deep-blue">
+              What is a RevOps Retainer, exactly?
+            </h2>
+            <p className="mt-5 max-w-xl text-body-lg text-deep-blue-80">
+              In the simplest terms, a retainer gives you guaranteed access to
+              Zippily support, with set hours of engagement every month. But
+              it&apos;s more than just a helpdesk service — we take real
+              ownership of your HubSpot portal, helping you maximise the
+              benefits and take advantage when new features roll out.
+            </p>
+            <p className="mt-4 max-w-xl text-body-lg text-deep-blue-80">
+              We offer two retainers — Momentum and Partner.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-h4 text-deep-blue">Both include:</h3>
+            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+              {[
+                "Client portal access",
+                "Set support hours",
+                "Regular WIP meetings",
+                "Support from senior Zippily team members",
+                "Asana project access",
+                "Monthly performance reporting",
+                "Access to Zippily events, webinars, bootcamps and learning sessions",
+              ].map((item) => (
+                <li key={item} className="flex gap-2.5 text-body text-deep-blue-80">
+                  <span aria-hidden className="text-sky-blue">✓</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* Why retainers — the designer's benefits band: Deep Blue, split
           head, four numbered columns like the values block. */}
       {(service.benefits?.length ?? 0) > 0 && (
@@ -272,42 +316,79 @@ export default async function RetainersPage() {
         pricing={service.pricing}
       />
 
-      {/* Process — on stone for this page only, per the designer: "there
-          are too many blue sections". Numerals Deep Blue on the light
-          ground (orange here would fail AA and is not overridden). */}
-      {(service.processSteps?.length ?? 0) > 0 && (
-        <section className="bg-off-white-tan">
-          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
-            <div className="flex items-center gap-6">
-              <h2 className="shrink-0 text-h2 text-deep-blue">
-                What&apos;s included, step by step
-              </h2>
-              <div aria-hidden className="h-px flex-1 bg-deep-blue/15" />
+      {/* Retainers in the real world — copywriter-final tier narratives,
+          replacing the generic step cards. Stone per the designer's "too
+          many blue sections" ruling. */}
+      <section className="bg-off-white-tan">
+        <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
+          <div className="flex items-center gap-6">
+            <h2 className="shrink-0 text-h2 text-deep-blue">
+              Retainers in the real world
+            </h2>
+            <div aria-hidden className="h-px flex-1 bg-deep-blue/15" />
+          </div>
+          <p className="mt-4 max-w-xl text-body-lg text-deep-blue-80">
+            A list of services doesn&apos;t tell you much about what a HubSpot
+            retainer actually does. Here&apos;s what to expect when you sign
+            up with Zippily:
+          </p>
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            <div className="rounded-2xl bg-white p-8 shadow-sm">
+              <h3 className="text-h3 text-deep-blue">
+                Momentum — your portal, but better
+              </h3>
+              <p className="mt-4 text-body text-deep-blue-80">
+                As the name suggests, Momentum is about keeping up the energy
+                from your implementation. This means regular checks to make
+                sure workflows run smoothly, troubleshooting, tweaks and
+                process improvements. You&apos;ll always be able to get in
+                touch with one of our senior team members, and we&apos;ll have
+                fortnightly WIP sessions to make sure everything&apos;s
+                running smoothly.
+              </p>
+              <p className="mt-4 text-body font-semibold text-deep-blue">
+                Ideal if: your team has implemented HubSpot, but you
+                don&apos;t have the capacity or expertise to keep it in peak
+                condition.
+              </p>
             </div>
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {service.processSteps?.map((step, index) => (
-                <div
-                  key={step._key}
-                  className="rounded-2xl border border-deep-blue/20 bg-white p-7"
-                >
-                  <p className="text-h3 font-semibold text-deep-blue">
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-3 text-h4">{step.title}</h3>
-                  <p className="mt-2 text-body text-deep-blue-80">{step.text}</p>
-                </div>
-              ))}
+            <div className="rounded-2xl bg-white p-8 shadow-sm">
+              <h3 className="text-h3 text-deep-blue">
+                Partner — accelerating your HubSpot advantage
+              </h3>
+              <p className="mt-4 text-body text-deep-blue-80">
+                The Partner level takes support to a whole new, well, level.
+                This retainer is designed to supercharge your HubSpot portal
+                by identifying gaps, building new automations, and taking
+                advantage of new features. You&apos;ll get a dedicated team
+                member to support you, plus weekly WIP meetings. We start
+                with an audit of your portal and go from there — with a
+                jointly owned HubSpot roadmap, quarterly planning and new
+                capability built every quarter.
+              </p>
+              <p className="mt-4 text-body font-semibold text-deep-blue">
+                Ideal if: your CRM&apos;s value doesn&apos;t line up with
+                your investment — or HubSpot is already a core revenue
+                driver and you need it to deliver, fast.
+              </p>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* Testimonial — hidden when none; the designer's rule also says the
           quote must come from a different client than the case study below. */}
       {service.testimonial?.quote && (
         <section className="bg-white">
           <div className="mx-auto max-w-3xl px-6 py-14 sm:py-24 text-center">
-            <QuoteMark className="mx-auto h-14 w-14" />
+            <h2 className="text-h2 text-deep-blue">
+              Let&apos;s hear it from the client side
+            </h2>
+            <p className="mt-3 text-body-lg text-deep-blue-80">
+              We work hard to build strong relationships with our retainer
+              clients — here&apos;s how that&apos;s working out.
+            </p>
+            <QuoteMark className="mx-auto mt-10 h-14 w-14" />
             <blockquote className="mt-8 text-body-lg leading-relaxed text-deep-blue md:text-h4 md:font-normal">
               &ldquo;{service.testimonial.quote}&rdquo;
             </blockquote>

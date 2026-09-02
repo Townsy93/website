@@ -5,6 +5,7 @@ type Tier = {
   name?: string | null;
   description?: string | null;
   price?: number | null;
+  fromPrice?: boolean | null;
   priceSuffix?: string | null;
   custom?: boolean | null;
   featured?: boolean | null;
@@ -80,7 +81,7 @@ export function PricingSection({
                           floor price here would be read as a list price. */}
                       {tier.custom || typeof tier.price !== "number"
                         ? "Custom"
-                        : `$${tier.price.toLocaleString()}`}
+                        : `${tier.fromPrice ? "From " : ""}$${tier.price.toLocaleString()}`}
                       <span
                         className={`ml-2 text-caption ${featured ? "text-white/60" : "text-deep-blue-80"}`}
                       >

@@ -12,10 +12,13 @@ export function PartnerBand({
   heading = "HubSpot Platinum Partner",
   text = "Certified and delivering across New Zealand & Australia, from Auckland.",
   button,
+  kicker,
 }: {
   heading?: string;
   text?: string;
   button?: { label: string; href: string };
+  /** Small italic lead-in above the heading (About: "We're pretty chuffed…"). */
+  kicker?: string;
 }) {
   const large = Boolean(button);
   return (
@@ -34,6 +37,11 @@ export function PartnerBand({
             className={`w-auto shrink-0 ${large ? "h-36" : "h-24"}`}
           />
           <div>
+            {kicker && (
+              <p className="mb-2 text-body font-medium italic text-deep-blue-80">
+                {kicker}
+              </p>
+            )}
             <h2 className={`text-deep-blue ${large ? "text-h2" : "text-h3"}`}>
               {heading}
             </h2>

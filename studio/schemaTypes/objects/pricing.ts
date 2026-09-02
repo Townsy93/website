@@ -26,6 +26,12 @@ export const pricingTier = defineType({
         'Enterprise tiers are scoped per deal. On = the card shows "Custom" instead of a number, so a floor price never gets read as a list price.',
     }),
     defineField({
+      name: 'fromPrice',
+      title: 'Show as "From $X" (price is a floor, custom quote)',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
       name: 'price',
       title: 'Price (NZD, ex GST)',
       type: 'number',

@@ -1302,6 +1302,7 @@ export type PricingTier = {
   name: string;
   description?: string;
   custom?: boolean;
+  fromPrice?: boolean;
   price?: number;
   priceSuffix?: string;
   features?: Array<string>;
