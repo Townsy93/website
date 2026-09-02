@@ -1,3 +1,5 @@
+import { CountUp } from "@/components/ui/CountUp";
+
 export type StatItem = { value?: number | null; label: string };
 
 /**
@@ -32,7 +34,7 @@ export function StatsBand({
             )}
             <div className="px-6 py-7 sm:flex sm:w-64 sm:flex-col sm:justify-center sm:py-14">
               <p className="text-[clamp(2.5rem,3.5vw,3.25rem)] font-semibold leading-none tracking-[-0.06em] text-deep-blue">
-                {stat.value}
+                <CountUp value={stat.value} />
               </p>
               <p className="mx-auto mt-3 max-w-45 text-body text-deep-blue-80">
                 {stat.label}

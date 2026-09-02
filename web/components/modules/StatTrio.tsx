@@ -1,3 +1,5 @@
+import { CountUp } from "@/components/ui/CountUp";
+
 type Stat = { _key?: string; value?: string | null; label?: string | null };
 
 // Module M21 — centred stat row with hairline dividers, on Deep Blue.
@@ -10,7 +12,7 @@ export function StatTrio({ stats }: { stats?: Stat[] | null }) {
         {items.map((stat) => (
           <div key={stat._key ?? stat.value} className="px-4">
             <p className="text-5xl font-semibold tracking-heading text-deep-orange">
-              {stat.value}
+              <CountUp value={stat.value} />
             </p>
             <p className="mt-3 text-body text-white/70">{stat.label}</p>
           </div>

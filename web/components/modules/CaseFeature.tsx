@@ -1,4 +1,5 @@
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { CountUp } from "@/components/ui/CountUp";
 import { SanityImage } from "@/components/ui/SanityImage";
 
 type Stat = { _key: string; value?: string | null; label?: string | null };
@@ -48,7 +49,7 @@ export function CaseFeature({
                 )}
                 <div>
                   <p className="text-h2 font-semibold leading-none text-deep-orange">
-                    {stat.value}
+                    <CountUp value={stat.value} />
                   </p>
                   <p className="mt-2 max-w-36 text-caption text-white/75">
                     {stat.label}

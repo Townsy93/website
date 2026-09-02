@@ -7,6 +7,7 @@ import {
   SITE_SETTINGS_QUERY,
 } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { CountUp } from "@/components/ui/CountUp";
 import { EmphasisedHeading, Marker } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
 import { SanityImage } from "@/components/ui/SanityImage";
@@ -256,7 +257,7 @@ export default async function Home() {
                         <div>
                           {/* Orange on Deep Blue — the permitted pairing */}
                           <p className="text-[clamp(3rem,4.8vw,4.25rem)] font-semibold leading-none tracking-[-0.06em] text-deep-orange">
-                            {stat.value}
+                            <CountUp value={stat.value} />
                           </p>
                           <p className="mt-3 max-w-40 text-caption text-white/65">
                             {stat.label}

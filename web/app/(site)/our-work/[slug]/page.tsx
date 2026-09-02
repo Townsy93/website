@@ -11,6 +11,7 @@ import {
   SITE_SETTINGS_QUERY,
 } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { CountUp } from "@/components/ui/CountUp";
 import { QuoteMark } from "@/components/ui/QuoteMark";
 import { SanityImage } from "@/components/ui/SanityImage";
 import { CaseStudyCards } from "@/components/modules/CaseStudyCards";
@@ -302,7 +303,7 @@ export default async function CaseStudyPage({
                 >
                   {/* Orange on Deep Blue — the permitted pairing. */}
                   <p className="shrink-0 text-h2 font-semibold leading-none text-deep-orange">
-                    {stat.value}
+                    <CountUp value={stat.value} />
                   </p>
                   <p className="text-body text-white/85">{stat.label}</p>
                 </div>
