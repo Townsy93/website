@@ -83,6 +83,20 @@ export default async function ServicesPage() {
                 {page.hero.subheading}
               </p>
             )}
+            {/* The copywriters' goal pickers — each deep-links a stage
+                filter on the grid below (equal weight: they're a choice,
+                not a primary action). */}
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ButtonLink href="#discover" variant="ghost-light">
+                Find the gaps
+              </ButtonLink>
+              <ButtonLink href="#build" variant="ghost-light">
+                Build something new
+              </ButtonLink>
+              <ButtonLink href="#scale" variant="ghost-light">
+                Grow your business
+              </ButtonLink>
+            </div>
           </div>
           <SanityImage
             image={page.hero?.image}
@@ -97,7 +111,12 @@ export default async function ServicesPage() {
       {/* Service grid with filter pills (T2 / M7) — centred head, with the
           per-stage one-liner living inside the filter component. gridIntro is
           no longer rendered: the stage blurbs replaced its job. */}
-      <section className="bg-white">
+      <section className="relative bg-white">
+        {/* Anchor targets for the hero's goal buttons — the hash both
+            scrolls here and selects the pill (ServiceFilterGrid reads it). */}
+        <span id="discover" aria-hidden className="absolute -top-20" />
+        <span id="build" aria-hidden className="absolute -top-20" />
+        <span id="scale" aria-hidden className="absolute -top-20" />
         <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
           {page.gridHeading && (
             <h2 className="text-center text-h2">{page.gridHeading}</h2>

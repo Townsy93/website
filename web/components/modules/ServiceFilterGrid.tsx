@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 
 // The three stage pills carry the designer's custom stage icons; "All
@@ -53,6 +53,17 @@ export type ServiceCardData = {
 // Cards carry no pricing (ruling D2).
 export function ServiceFilterGrid({ cards }: { cards: ServiceCardData[] }) {
   const [filter, setFilter] = useState<string>("all");
+  // The hero's goal buttons deep-link a stage (#discover/#build/#scale) —
+  // the anchor scrolls here natively, this effect selects the matching pill.
+  useEffect(() => {
+    const applyHash = () => {
+      const stage = window.location.hash.replace("#", "");
+      if (["discover", "build", "scale"].includes(stage)) setFilter(stage);
+    };
+    applyHash();
+    window.addEventListener("hashchange", applyHash);
+    return () => window.removeEventListener("hashchange", applyHash);
+  }, []);
   const visible = cards.filter(
     (card) => filter === "all" || card.category === filter,
   );
