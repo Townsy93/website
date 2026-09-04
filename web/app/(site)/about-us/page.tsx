@@ -181,9 +181,7 @@ export default async function AboutPage() {
               <div className="mt-8 flex flex-col gap-7">
                 {page.lovePillars?.map((pillar) => (
                   <div key={pillar._key}>
-                    <h3 className="text-caption font-semibold uppercase tracking-[0.1em] text-deep-blue">
-                      {pillar.title}
-                    </h3>
+                    <h3 className="text-h4">{pillar.title}</h3>
                     <p className="mt-2 max-w-lg text-body text-deep-blue-80">
                       {pillar.text}
                     </p>

@@ -150,7 +150,7 @@ export default async function ServicesPage() {
               <p className="text-caption font-semibold uppercase tracking-[0.08em] text-deep-blue-80">
                 Our work
               </p>
-              <h2 className="mt-3 text-h2">These services, out in the wild</h2>
+              <h2 className="mt-3 text-h2">Our services, out in the wild</h2>
             </div>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {page.caseStudies?.map((caseStudy) => {

@@ -65,7 +65,7 @@ export default async function OurWorkPage() {
                 variant="navy"
                 className="mt-8"
               >
-                {page.hero.primaryCta.label} →
+                {page.hero.primaryCta.label}
               </ButtonLink>
             )}
           </div>

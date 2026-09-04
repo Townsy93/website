@@ -202,7 +202,7 @@ export default async function Home() {
             Our services
           </p>
           <h2 className="mx-auto mt-3 max-w-2xl text-center text-h2">
-            Start us where you need us.
+            Start us where you need us
           </h2>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {SERVICE_STAGES.map((stage) => (
@@ -291,7 +291,7 @@ export default async function Home() {
           Services landing, per the designer's Aug 2026 pass). */}
       <ValuesBand
         heading="Don't let the cute name fool you"
-        aside="Adorable name, serious smarts — and a painfully sensible approach to working with clients"
+        aside="Adorable name, serious smarts — and a painfully sensible approach to working with clients."
         intro="Here's how we make the work, well, work:"
         action={{ label: "Get the full Zippily story", href: "/about-us" }}
         cards={page.whyCards}
@@ -308,7 +308,7 @@ export default async function Home() {
           accidentally clipped. */}
       <TestimonialCards
         heading="Don't forget to check the reviews"
-        subheading="Nice words from some of our favourite clients"
+        subheading="Nice words from some of our favourite clients."
         testimonials={page.testimonials}
         action={{ label: "See our work", href: "/our-work" }}
         watermark="Client feedback"

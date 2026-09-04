@@ -247,7 +247,15 @@ export default async function RetainersPage() {
               benefits and take advantage when new features roll out.
             </p>
             <p className="mt-4 max-w-xl text-body-lg text-deep-blue-80">
-              We offer two retainers — Momentum and Partner.
+              We offer two retainers —{" "}
+              <a href="#pricing" className="font-semibold underline decoration-sky-blue decoration-2 underline-offset-4">
+                Momentum
+              </a>{" "}
+              and{" "}
+              <a href="#pricing" className="font-semibold underline decoration-sky-blue decoration-2 underline-offset-4">
+                Partner
+              </a>
+              .
             </p>
           </div>
           <div>
