@@ -1,6 +1,7 @@
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { CountUp } from "@/components/ui/CountUp";
 import { SanityImage } from "@/components/ui/SanityImage";
+import { VimeoEmbed } from "@/components/modules/VimeoEmbed";
 
 type Stat = { _key: string; value?: string | null; label?: string | null };
 
@@ -8,6 +9,10 @@ type Stat = { _key: string; value?: string | null; label?: string | null };
 // photo right — from the designer's retainer and platforms mocks. Shared so
 // the treatment can't drift. Stats render orange on the Deep Blue card (the
 // permitted pairing); the button only renders for a live story.
+//
+// When the case study has a film, `videoUrl` swaps the photo pane for the
+// click-to-play facade (poster + play button; the Vimeo iframe only loads
+// on click). The photo is the fallback, not a companion.
 export function CaseFeature({
   eyebrow,
   heading,
@@ -17,6 +22,8 @@ export function CaseFeature({
   buttonLabel = "Read the full story",
   image,
   imageLabel,
+  videoUrl,
+  posterUrl,
 }: {
   eyebrow?: string | null;
   heading?: string | null;
@@ -26,6 +33,8 @@ export function CaseFeature({
   buttonLabel?: string;
   image?: { asset?: { _ref?: string } | null; alt?: string | null } | null;
   imageLabel?: string;
+  videoUrl?: string | null;
+  posterUrl?: string | null;
 }) {
   const visibleStats = (stats ?? []).slice(0, 2);
   return (
@@ -65,13 +74,26 @@ export function CaseFeature({
           </ButtonLink>
         )}
       </div>
-      <SanityImage
-        image={image}
-        width={720}
-        height={560}
-        className="h-64 w-full object-cover lg:h-full"
-        placeholderLabel={imageLabel ?? "Project photo"}
-      />
+      {videoUrl ? (
+        // A fixed height on mobile, the text column's height on desktop —
+        // same box the photo occupies; the card's own rounding clips it.
+        <div className="relative h-64 w-full lg:h-full lg:min-h-96">
+          <VimeoEmbed
+            fill
+            url={videoUrl}
+            title={`${heading ?? "Case study"} — video`}
+            posterUrl={posterUrl}
+          />
+        </div>
+      ) : (
+        <SanityImage
+          image={image}
+          width={720}
+          height={560}
+          className="h-64 w-full object-cover lg:h-full"
+          placeholderLabel={imageLabel ?? "Project photo"}
+        />
+      )}
     </div>
   );
 }

@@ -14,6 +14,7 @@ import { EmphasisedHeading } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
 import { QuoteMark } from "@/components/ui/QuoteMark";
 import { SanityImage } from "@/components/ui/SanityImage";
+import { CaseFeature } from "@/components/modules/CaseFeature";
 import { CtaBanner } from "@/components/modules/CtaBanner";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
 import { formatDate } from "@/components/modules/postCard";
@@ -22,6 +23,7 @@ import { PricingSection } from "@/components/modules/PricingSection";
 import { LeafCorners } from "@/components/ui/LeafCorners";
 import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
+import { fetchVimeoPoster } from "@/lib/vimeoPoster";
 
 export const revalidate = 3600;
 
@@ -77,6 +79,8 @@ export default async function ServicePage({
     }
     notFound();
   }
+
+  const caseVideoPoster = await fetchVimeoPoster(service.caseStudy?.videoUrl);
 
   // The shared table wins; the inline block is only a fallback for services
   // not yet moved across.
@@ -305,6 +309,47 @@ export default async function ServicePage({
                 .filter(Boolean)
                 .join(" — ")}
             </p>
+          </div>
+        </section>
+      )}
+
+      {/* Case study feature — the retainer page's social-proof card, shared
+          into the template (Sean, Sep 2026: PH Digital as the proof on CRM
+          implementation and post-sales excellence). Hidden unless the
+          service references a case study; plays the film in the media pane
+          when the story has one. */}
+      {service.caseStudy && (
+        <section className="bg-white">
+          <div
+            className={`mx-auto max-w-[90rem] px-6 ${
+              // The testimonial above already carries the section rhythm;
+              // without it this card follows a full-bleed section directly
+              // and needs its own top padding.
+              service.testimonial?.quote
+                ? "pb-14 sm:pb-24"
+                : "py-14 sm:py-24"
+            }`}
+          >
+            <CaseFeature
+              eyebrow="Proof in our promise"
+              heading={
+                service.proofHeading ??
+                `How this played out for ${service.caseStudy.client}`
+              }
+              body={service.proofBody}
+              stats={service.caseStudy.stats}
+              href={
+                service.caseStudy.status !== "comingSoon" &&
+                service.caseStudy.slug?.current
+                  ? `/our-work/${service.caseStudy.slug.current}`
+                  : null
+              }
+              buttonLabel="View case study"
+              image={service.caseStudy.photo}
+              imageLabel={`${service.caseStudy.client} — project photo`}
+              videoUrl={service.caseStudy.videoUrl}
+              posterUrl={caseVideoPoster}
+            />
           </div>
         </section>
       )}

@@ -16,6 +16,7 @@ import { formatDate } from "@/components/modules/postCard";
 import { PricingSection } from "@/components/modules/PricingSection";
 import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
+import { fetchVimeoPoster } from "@/lib/vimeoPoster";
 
 export const revalidate = 3600;
 
@@ -67,6 +68,8 @@ export default async function RetainersPage() {
   const pricingSource = service.pricingTable ?? service.pricing;
   const pricingConfirmed = Boolean(pricingSource?.confirmed);
   const tiers = pricingConfirmed ? (pricingSource?.tiers ?? []) : [];
+
+  const caseVideoPoster = await fetchVimeoPoster(service.caseStudy?.videoUrl);
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
@@ -432,6 +435,8 @@ export default async function RetainersPage() {
               buttonLabel="View case study"
               image={service.caseStudy.photo}
               imageLabel={`${service.caseStudy.client} — project photo`}
+              videoUrl={service.caseStudy.videoUrl}
+              posterUrl={caseVideoPoster}
             />
           </div>
         </section>

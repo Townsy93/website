@@ -19,6 +19,10 @@ import {
  *
  * The container is a fixed aspect ratio from the start, so swapping the
  * poster for the iframe never shifts the page.
+ *
+ * `fill` drops the aspect box and stretches the video over the nearest
+ * positioned ancestor instead — for media panes whose size the layout owns,
+ * like the CaseFeature card. The parent is responsible for clipping.
  */
 export function VimeoEmbed({
   url,
@@ -26,12 +30,14 @@ export function VimeoEmbed({
   orientation = "landscape",
   posterUrl,
   caption,
+  fill = false,
 }: {
   url?: string | null;
   title?: string | null;
   orientation?: VimeoOrientation | null;
   posterUrl?: string | null;
   caption?: string | null;
+  fill?: boolean;
 }) {
   const [playing, setPlaying] = useState(false);
   const ref = url ? parseVimeoUrl(url) : null;
@@ -43,48 +49,54 @@ export function VimeoEmbed({
   const ratio = VIMEO_ASPECT[orientation ?? "landscape"];
   const label = title ?? "Video";
 
+  const inner = playing ? (
+    <iframe
+      src={buildVimeoEmbedUrl(ref, { autoplay: true })}
+      title={label}
+      loading="lazy"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowFullScreen
+      className="absolute inset-0 h-full w-full border-0"
+    />
+  ) : (
+    <button
+      type="button"
+      onClick={() => setPlaying(true)}
+      aria-label={`Play video: ${label}`}
+      className="group absolute inset-0 h-full w-full cursor-pointer"
+    >
+      {posterUrl && (
+        <Image
+          src={posterUrl}
+          alt=""
+          fill
+          sizes="(max-width: 768px) 100vw, 720px"
+          className="object-cover"
+        />
+      )}
+      <span className="absolute inset-0 flex items-center justify-center">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 shadow-lg transition group-hover:scale-105">
+          {/* Deep Blue glyph on white — orange is only ever used on a
+              Deep Blue fill, and this sits on the poster image. */}
+          <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 h-7 w-7 text-deep-blue" aria-hidden>
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </span>
+      </span>
+    </button>
+  );
+
+  if (fill) {
+    return <div className="absolute inset-0 bg-deep-blue">{inner}</div>;
+  }
+
   return (
     <figure className="mx-auto w-full" style={{ maxWidth: orientation === "portrait" ? 420 : undefined }}>
       <div
         className="relative w-full overflow-hidden rounded-3xl bg-deep-blue"
         style={{ aspectRatio: ratio }}
       >
-        {playing ? (
-          <iframe
-            src={buildVimeoEmbedUrl(ref, { autoplay: true })}
-            title={label}
-            loading="lazy"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
-            className="absolute inset-0 h-full w-full border-0"
-          />
-        ) : (
-          <button
-            type="button"
-            onClick={() => setPlaying(true)}
-            aria-label={`Play video: ${label}`}
-            className="group absolute inset-0 h-full w-full cursor-pointer"
-          >
-            {posterUrl && (
-              <Image
-                src={posterUrl}
-                alt=""
-                fill
-                sizes="(max-width: 768px) 100vw, 720px"
-                className="object-cover"
-              />
-            )}
-            <span className="absolute inset-0 flex items-center justify-center">
-              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 shadow-lg transition group-hover:scale-105">
-                {/* Deep Blue glyph on white — orange is only ever used on a
-                    Deep Blue fill, and this sits on the poster image. */}
-                <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 h-7 w-7 text-deep-blue" aria-hidden>
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </span>
-            </span>
-          </button>
-        )}
+        {inner}
       </div>
       {caption && (
         <figcaption className="mt-2 text-[13px] text-body">{caption}</figcaption>

@@ -93,7 +93,11 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "cdn.sanity.io" },
+      // Vimeo poster frames, recovered via oEmbed (lib/vimeoPoster.ts).
+      { protocol: "https", hostname: "i.vimeocdn.com" },
+    ],
   },
   async redirects() {
     return LEGACY_REDIRECTS.map((redirect) => ({

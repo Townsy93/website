@@ -53,7 +53,7 @@ export const SERVICE_QUERY = defineQuery(
   `*[_type == "service" && slug.current == $slug][0]{
     ...,
     pricingTable->{confirmed, tiers, fallbackText},
-    caseStudy->{_id, client, slug, headline, resultLine, photo, status, stats},
+    caseStudy->{_id, client, slug, headline, resultLine, photo, status, stats, videoUrl},
     testimonial->{_id, quote, name, role, company, avatar},
     relatedServices[]->{_id, title, slug, icon, shortDescription},
     relatedPosts[]->{_id, title, slug, excerpt, coverImage, publishedAt, readTime}
