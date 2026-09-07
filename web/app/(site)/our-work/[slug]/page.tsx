@@ -20,7 +20,7 @@ import { StatsBand } from "@/components/modules/StatsBand";
 import { VimeoEmbed } from "@/components/modules/VimeoEmbed";
 import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
-import { fetchVimeoPoster } from "@/lib/vimeoPoster";
+import { resolveVideoPoster } from "@/lib/vimeoPoster";
 
 export const revalidate = 3600;
 
@@ -96,7 +96,10 @@ export default async function CaseStudyPage({
     { value: settings?.happyClients, label: "Happy clients" },
   ];
 
-  const videoPoster = await fetchVimeoPoster(caseStudy.videoUrl);
+  const videoPoster = await resolveVideoPoster(
+    caseStudy.videoStill,
+    caseStudy.videoUrl,
+  );
 
   const aboutParagraphs = paragraphs(caseStudy.aboutBody);
   const hasStorySections =

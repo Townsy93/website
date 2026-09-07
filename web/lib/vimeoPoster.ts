@@ -1,4 +1,20 @@
 import { parseVimeoUrl, vimeoOembedUrl } from "@/lib/vimeo";
+import { urlFor } from "@/sanity/image";
+
+/**
+ * The poster for a case study film: the editor-uploaded still when one
+ * exists, otherwise the frame Vimeo picked (via oEmbed below). 16:9 to
+ * match the player, so the swap from poster to iframe doesn't jump.
+ */
+export async function resolveVideoPoster(
+  still: { asset?: { _ref?: string } | null } | null | undefined,
+  url?: string | null,
+): Promise<string | null> {
+  if (still?.asset?._ref) {
+    return urlFor(still).width(1600).height(900).url();
+  }
+  return fetchVimeoPoster(url);
+}
 
 /**
  * The poster frame for a Vimeo video, recovered server-side via oEmbed.

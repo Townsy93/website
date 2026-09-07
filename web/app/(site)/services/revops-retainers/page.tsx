@@ -16,7 +16,7 @@ import { formatDate } from "@/components/modules/postCard";
 import { PricingSection } from "@/components/modules/PricingSection";
 import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
-import { fetchVimeoPoster } from "@/lib/vimeoPoster";
+import { resolveVideoPoster } from "@/lib/vimeoPoster";
 
 export const revalidate = 3600;
 
@@ -69,7 +69,10 @@ export default async function RetainersPage() {
   const pricingConfirmed = Boolean(pricingSource?.confirmed);
   const tiers = pricingConfirmed ? (pricingSource?.tiers ?? []) : [];
 
-  const caseVideoPoster = await fetchVimeoPoster(service.caseStudy?.videoUrl);
+  const caseVideoPoster = await resolveVideoPoster(
+    service.caseStudy?.videoStill,
+    service.caseStudy?.videoUrl,
+  );
 
   const serviceJsonLd = {
     "@context": "https://schema.org",

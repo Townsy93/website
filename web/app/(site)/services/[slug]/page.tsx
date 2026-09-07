@@ -23,7 +23,7 @@ import { PricingSection } from "@/components/modules/PricingSection";
 import { LeafCorners } from "@/components/ui/LeafCorners";
 import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
-import { fetchVimeoPoster } from "@/lib/vimeoPoster";
+import { resolveVideoPoster } from "@/lib/vimeoPoster";
 
 export const revalidate = 3600;
 
@@ -80,7 +80,10 @@ export default async function ServicePage({
     notFound();
   }
 
-  const caseVideoPoster = await fetchVimeoPoster(service.caseStudy?.videoUrl);
+  const caseVideoPoster = await resolveVideoPoster(
+    service.caseStudy?.videoStill,
+    service.caseStudy?.videoUrl,
+  );
 
   // The shared table wins; the inline block is only a fallback for services
   // not yet moved across.

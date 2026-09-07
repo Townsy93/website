@@ -99,11 +99,20 @@ export const caseStudy = defineType({
     }),
     defineField({
       name: 'videoUrl',
-      title: 'Video URL (legacy)',
+      title: 'Case study film (Vimeo URL)',
       type: 'url',
       group: 'content',
       description:
-        'Old YouTube link. Use the Vimeo field below for anything new — Zippily hosts on Vimeo, and that field handles unlisted links and lazy loading properly.',
+        'The full case study video — drives the "Watch the full case study" section and the video pane on service-page proof cards. Paste the Vimeo URL straight from the browser (unlisted links keep their privacy key).',
+    }),
+    defineField({
+      name: 'videoStill',
+      title: 'Film poster image',
+      type: 'imageWithAlt',
+      group: 'content',
+      hidden: ({parent}) => !parent?.videoUrl,
+      description:
+        'Shown before the film is played, wherever it appears. Falls back to the Vimeo thumbnail if left empty.',
     }),
     defineField({
       name: 'videoTestimonial',
