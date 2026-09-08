@@ -54,6 +54,14 @@ export const teamMember = defineType({
       validation: (rule) => rule.max(6),
     }),
     defineField({
+      // The bio format Sean standardised in Sep 2026 ("Favourite Zippily
+      // thing: Making chaos look organised.").
+      name: 'favouriteZippilyThing',
+      title: 'Favourite Zippily thing',
+      type: 'string',
+      validation: (rule) => rule.max(160),
+    }),
+    defineField({
       name: 'favouriteHubSpotFeature',
       title: 'Favourite HubSpot feature',
       type: 'string',

@@ -12,6 +12,7 @@ export type TeamMember = {
   bio?: string | null;
   outsideWork?: string | null;
   skills?: string[] | null;
+  favouriteZippilyThing?: string | null;
   favouriteHubSpotFeature?: string | null;
   whyTheyLoveHubSpot?: string | null;
   linkedIn?: string | null;
@@ -136,6 +137,14 @@ export function TeamGrid({ team }: { team: TeamMember[] }) {
                 <p className="text-body text-deep-blue-80">
                   <span className="font-semibold text-deep-blue">Skills:</span>{" "}
                   {open.skills?.join(", ")}
+                </p>
+              )}
+              {open.favouriteZippilyThing && (
+                <p className="text-body text-deep-blue-80">
+                  <span className="font-semibold text-deep-blue">
+                    Favourite Zippily thing:
+                  </span>{" "}
+                  {open.favouriteZippilyThing}
                 </p>
               )}
               {open.favouriteHubSpotFeature && (

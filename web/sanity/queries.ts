@@ -29,7 +29,7 @@ export const SERVICES_LANDING_QUERY = defineQuery(
 export const ABOUT_PAGE_QUERY = defineQuery(
   `*[_type == "aboutPage"][0]{
     ...,
-    team[]->{_id, name, role, pronouns, photo, bio, outsideWork, skills, favouriteHubSpotFeature, whyTheyLoveHubSpot, linkedIn},
+    team[]->{_id, name, role, pronouns, photo, bio, outsideWork, skills, favouriteZippilyThing, favouriteHubSpotFeature, whyTheyLoveHubSpot, linkedIn},
     testimonials[]->{_id, quote, name, role, company, avatar}
   }`,
 );
