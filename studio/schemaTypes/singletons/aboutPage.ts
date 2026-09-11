@@ -110,6 +110,7 @@ export const aboutPage = defineType({
       name: 'storyVideoUrl',
       title: 'Our story video (Vimeo URL)',
       type: 'url',
+      group: 'content',
     }),
     defineField({
       name: 'storyHeading',

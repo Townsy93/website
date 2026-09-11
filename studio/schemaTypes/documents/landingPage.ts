@@ -23,6 +23,7 @@ export const landingPage = defineType({
       name: 'title',
       title: 'Internal title',
       type: 'string',
+      group: 'content',
       description: 'Only for finding it in this list. Not rendered.',
       validation: (rule) => rule.required().max(80),
     }),
