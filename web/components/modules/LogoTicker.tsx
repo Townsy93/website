@@ -32,24 +32,24 @@ export function LogoTicker({ logos }: { logos?: Logo[] | null }) {
               ? logos?.map((logo) => (
                   <span
                     key={`${half}-${logo._key}`}
-                    className="flex h-12 w-28 shrink-0 items-center justify-center rounded-lg bg-white px-3"
+                    className="flex h-16 w-36 shrink-0 items-center justify-center rounded-lg bg-white px-4"
                   >
                     {/* The cap is on height, not width: a wordmark is bounded
                         by the chip's width anyway, while a square logo would
                         otherwise render at a fraction of the chip. */}
                     <SanityImage
                       image={logo}
-                      width={112}
-                      height={36}
+                      width={144}
+                      height={48}
                       fit="max"
-                      className="max-h-9 w-full object-contain"
+                      className="max-h-12 w-full object-contain"
                     />
                   </span>
                 ))
               : [0, 1, 2, 3, 4, 5].map((i) => (
                   <span
                     key={`${half}-${i}`}
-                    className="h-7 w-28 shrink-0 rounded bg-white/15"
+                    className="h-9 w-36 shrink-0 rounded bg-white/15"
                   />
                 ))}
           </div>
