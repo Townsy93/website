@@ -131,14 +131,21 @@ export const caseStudy = defineType({
     }),
     defineField({
       // --- Case study v2 layout (designer, Aug 2026) ---
+      // These fields were added after the group tabs above and missed
+      // `group: 'content'` — with `groups` declared on the document, a
+      // field with no group doesn't surface under any tab, so they were
+      // silently invisible in the Studio form (not just uneditable —
+      // there was no field there at all to find). Fixed 2026-09-11.
       name: 'clientLogo',
       title: 'Client logo (hero)',
       type: 'imageWithAlt',
+      group: 'content',
     }),
     defineField({
       name: 'aboutImage',
       title: 'About-the-client image',
       type: 'imageWithAlt',
+      group: 'content',
       description: "From the client's website, with permission",
     }),
     defineField({
@@ -146,12 +153,14 @@ export const caseStudy = defineType({
       title: 'About the client',
       type: 'text',
       rows: 8,
+      group: 'content',
       description: 'Plain paragraphs — blank line starts a new paragraph',
     }),
     defineField({
       name: 'challengeItems',
       title: 'The challenge',
       type: 'array',
+      group: 'content',
       of: [
         defineArrayMember({
           name: 'storyItem',
@@ -167,6 +176,7 @@ export const caseStudy = defineType({
       name: 'solutionItems',
       title: 'The solution',
       type: 'array',
+      group: 'content',
       of: [
         defineArrayMember({
           name: 'storyItem',
@@ -182,6 +192,7 @@ export const caseStudy = defineType({
       name: 'gallery',
       title: 'Gallery (three stills)',
       type: 'array',
+      group: 'content',
       of: [defineArrayMember({type: 'imageWithAlt'})],
       validation: (rule) => rule.max(3),
       description: 'Zippily team working with the client — stills from the video if possible',
@@ -191,17 +202,20 @@ export const caseStudy = defineType({
       title: 'The results — intro',
       type: 'text',
       rows: 5,
+      group: 'content',
     }),
     defineField({
       name: 'resultsBullets',
       title: 'The results — what working together brought',
       type: 'array',
+      group: 'content',
       of: [defineArrayMember({type: 'string'})],
     }),
     defineField({
       name: 'fullBleedPhoto',
       title: 'Full-bleed photo (above the quote)',
       type: 'imageWithAlt',
+      group: 'content',
     }),
     defineField({
       name: 'body',
