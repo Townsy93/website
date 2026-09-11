@@ -244,6 +244,11 @@ export default async function Home() {
                 <h2 className="mt-4 max-w-md text-h2">
                   {page.featuredCaseStudy.headline}
                 </h2>
+                {page.featuredCaseStudy.resultLine && (
+                  <p className="mt-4 max-w-md text-body-lg text-white/75">
+                    {page.featuredCaseStudy.resultLine}
+                  </p>
+                )}
                 {(page.featuredCaseStudy.stats?.length ?? 0) > 0 && (
                   <div className="mt-10 flex flex-col gap-7 sm:flex-row sm:items-stretch sm:gap-9">
                     {page.featuredCaseStudy.stats?.map((stat, index) => (
@@ -291,7 +296,7 @@ export default async function Home() {
           Services landing, per the designer's Aug 2026 pass). */}
       <ValuesBand
         heading="Don't let the cute name fool you"
-        aside="Adorable name, serious smarts — and a painfully sensible approach to working with clients."
+        aside="We've got a painfully sensible approach to CRM implementation"
         intro="Here's how we make the work, well, work:"
         action={{ label: "Get the full Zippily story", href: "/about-us" }}
         cards={page.whyCards}

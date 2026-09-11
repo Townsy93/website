@@ -20,6 +20,7 @@ export function SanityImage({
   className = "",
   style,
   placeholderLabel = "Photo to come",
+  fit = "crop",
 }: {
   image?: ImageValue;
   width: number;
@@ -27,17 +28,32 @@ export function SanityImage({
   className?: string;
   style?: CSSProperties;
   placeholderLabel?: string;
+  // "crop" (default) fills the exact width/height box using Studio's hotspot
+  // — right for photography. "max" scales down to fit inside the box without
+  // cropping — use it for logos and other assets that must show in full
+  // (pair with an object-contain className so mismatched aspect ratios
+  // letterbox instead of stretching).
+  fit?: "crop" | "max";
 }) {
   if (image?.asset?._ref) {
+    // An editor-set size wins over the layout default. Both are doubled for
+    // retina.
+    const w = (image?.displayWidth ?? width) * 2;
+    const h = (image?.displayHeight ?? height) * 2;
+    // urlFor auto-crops to the target aspect ratio — inserting a centred
+    // `rect=` — whenever BOTH dimensions are given, and it does that before
+    // `fit` is ever considered, so `fit=max` alone cannot prevent it. That
+    // silently sliced logos down to a band of themselves (a square logo came
+    // through as a 4:1 sliver). Constraining height only leaves the URL
+    // rect-free, so the whole asset survives at its own aspect ratio and the
+    // caller's object-contain letterboxes it inside the layout box.
+    const src =
+      fit === "max"
+        ? urlFor(image).height(h).fit("max").url()
+        : urlFor(image).width(w).height(h).fit(fit).url();
     return (
       <Image
-        // An editor-set size wins over the layout default. Both are doubled
-        // for retina. Hotspot and crop from Studio are applied automatically
-        // by urlFor once both dimensions are given.
-        src={urlFor(image)
-          .width((image?.displayWidth ?? width) * 2)
-          .height((image?.displayHeight ?? height) * 2)
-          .url()}
+        src={src}
         alt={image.alt ?? ""}
         width={image?.displayWidth ?? width}
         height={image?.displayHeight ?? height}
