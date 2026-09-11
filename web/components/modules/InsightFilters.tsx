@@ -145,7 +145,12 @@ export function InsightFilters({ posts }: { posts: PostCardData[] }) {
                 image={post.coverImage}
                 width={400}
                 height={176}
-                className="h-36 w-full object-cover"
+                fit="max"
+                // Cover images range from square to 16:9 — cropping to this
+                // box's fixed ratio was slicing the top/bottom off square
+                // illustrations. object-contain shows the whole image;
+                // leftover space is invisible against the card's white bg.
+                className="h-36 w-full bg-white object-contain"
                 placeholderLabel="Post image"
               />
               <div className="p-6">

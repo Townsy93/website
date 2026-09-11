@@ -197,7 +197,10 @@ export default async function PostPage({
                     image={related.coverImage}
                     width={400}
                     height={190}
-                    className="h-40 w-full object-cover"
+                    fit="max"
+                    // Cover images range from square to 16:9 — see the same
+                    // fix in InsightFilters.tsx's grid card.
+                    className="h-40 w-full bg-white object-contain"
                     placeholderLabel="Post image"
                   />
                   <div className="p-6">
