@@ -1,7 +1,7 @@
 # Zippily Website — Project Conventions
 
 This repo is the production build of zippily.co.nz. Zippily is an Auckland-based
-HubSpot implementation and RevOps agency (HubSpot Gold Partner).
+HubSpot implementation and RevOps agency (HubSpot Platinum Partner).
 
 ## Repo structure
 

@@ -44,9 +44,9 @@ figures.
 
 ### Marketing site — not yet on the real domain
 
-`zippily.co.nz` still serves **Squarespace**. The new site runs at
-`https://website.sean-fe5.workers.dev` and moves across when DNS moves to
-Cloudflare.
+`zippily.co.nz` still serves **Squarespace** (confirmed still true 11 Sep
+2026). The new site runs at `https://website.sean-fe5.workers.dev` and moves
+across when DNS moves to Cloudflare.
 
 - **58 redirects** from the old Squarespace URLs, in `web/next.config.ts`,
   with the approved mapping in `docs/launch-redirects.csv`
@@ -54,6 +54,19 @@ Cloudflare.
 - Sanity project `phzyp5b1`, dataset `production`
 - GA4 `G-P0NVHJ6RTS`, no consent banner (NZ Privacy Act does not require one)
 - Publishing from Sanity appears live in about **52 seconds**
+- HubSpot is fully wired: portal ID + all 6 form GUIDs (contact, newsletter,
+  event, resource, careers, landing) are set in `web/.env`. No chat widget
+  exists anywhere in the code — that decision is still open, not just unbuilt.
+- Every service/industry/case-study/platform/landing-page document has a
+  `pageBuilt` boolean that gates the sitemap and search-indexing
+  (`web/app/sitemap.ts`, per-page `generateMetadata`) — **this flag, not this
+  document, is the authoritative "is it actually live" signal.** As of 11 Sep
+  2026: all 10 services, all 6 built industries (manufacturing was dropped
+  from scope, not blocked), Aircall, the free-audit landing page and Careers
+  are `pageBuilt: true`. Only two case studies remain `false`:
+  `accounting-for-nature` and `house-surveys` — `beachwood-homes`,
+  `novated-lease-australia` and `ph-digital` are built (the latter two have
+  video testimonials attached).
 
 ### Client portal — built, not open to the client
 
@@ -135,11 +148,18 @@ Secrets in use: `ASANA_PAT`, `INSTANT_ADMIN_TOKEN`, `RESEND_API_KEY`,
 
 | Decision | Detail |
 |---|---|
-| **The cost post** | `/insights/how-much-does-hubspot-implementation-cost-in-nz` is the 4th best page on the site — 676 impressions, position 12.8. Sean wants it gone for outdated pricing. Recommended: rewrite in place, keep the URL and ranking. **Not actioned.** |
-| **Hours** for Marketing Automation, Revenue Hub, Website Migration, Custom Integration, Landing Page Package | Prices locked; hours never documented, so recovery against the $207–210 standard is unverified. Owner: Erica / Bailey. |
+| **Hours** for Marketing Automation, Revenue Hub, Website Migration, Custom Integration, Landing Page Package | Prices locked (and have moved since — see the pricing table live in Sanity); hours never documented, so recovery against the $207–210 standard is unverified. Owner: Erica / Bailey. |
 | **Audit recovery exception** | Paid audit tiers run at $167–196/hr, justified as lead generation *with the free Portal Health Snapshot as the entry point*. The Snapshot was withdrawn 30 July, so half that rationale is gone. Re-justify or reprice. |
-| **Website Development vs Website Migration** | Naming unresolved; blocks building `/services/websites-and-integrations`. |
 | **`/faqs`** | Redirects to `/contact`. That URL had 330 impressions, so a real FAQ page may be worth building. |
+| **Chat widget** | Never resolved either way — no chat widget of any kind exists in the code. Decide cut vs. build. |
+| **Careers page photography** | Two "Photo to come" placeholders remain on the (otherwise finished and now-indexed) Careers page. |
+| **Two resource guides have no PDF** | "CRM Comparison Guide" and "Is HubSpot the Right Fit for You?" have no file uploaded and no fallback link, so their "Get the guide" CTA silently lands on `/contact` instead of downloading anything. Only the Claude-prompts guide has a real file. |
+
+Resolved since this doc was last touched (11 Sep 2026): **the cost post**
+(`/insights/how-much-does-hubspot-implementation-cost-in-nz` was rewritten in
+place with current pricing, same URL) and **Website Development vs Website
+Migration naming** (shipped as one page, `/services/websites-and-integrations`,
+with tiers named "Custom integration" and "Website migration").
 
 ---
 
@@ -157,6 +177,11 @@ every redirect combined, and it is what real service page copy is for.
 **Write service pages in this order**, by the traffic their old URLs earn:
 `websites-and-integrations` (967) → `marketing-automation` (451) →
 `hubspot-audit` (331) → `revops-retainers` (142, but best position at 10.2).
+
+*(Done as of 11 Sep 2026 — all four, plus every other service and industry
+page, are written and `pageBuilt: true`. The next thing to check is whether
+they actually move the impressions-but-zero-clicks terms above, now that
+they're indexable.)*
 
 ---
 

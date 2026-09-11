@@ -4,51 +4,62 @@ Companion to `template-module-inventory.md` (T# = template, M#/F# = module/
 form references). Scope: routes, per-template behaviour, interactivity model,
 integrations, and content-model implications for the Sanity schema (Phase 2).
 
+**This is a Phase 1 planning snapshot (15–24 Jul 2026) — build has since moved
+well past it.** The template/module structure below is still a reasonable
+reference, but the route-status column and every pricing figure are frozen at
+that date and several are now wrong. As of 11 Sep 2026: all 10 services, all 6
+built industries, Aircall, the free-audit landing page and Careers are live
+and indexed (each document's `pageBuilt` flag in Sanity is the authoritative
+"is this actually done" signal, not this table — see `docs/PROJECT-CONTEXT.md`
+for current status and pricing). Route rows are left as originally written
+below for history; treat every "Blocked"/"Partial" status and dollar figure
+here as superseded unless cross-checked against live Sanity content.
+
 ---
 
 ## 1. Route map
 
 From the page tracker (15 Jul 2026). Priority 1 = build first.
 
-| Route | Template | Tracker status | Priority |
+| Route | Template | Tracker status (15 Jul 2026 — superseded, see note above) | Priority |
 |-------|----------|----------------|----------|
 | `/` | T1 Home | Layout wireframed, content ready | 1 |
 | `/services` | T2 Services landing | Content blocked (pricing ruling D2) | 1 |
-| `/services/crm-implementation` | T3 | Ready — tiers $7,500/$12,000/$18,000 | 2 |
-| `/services/hubspot-audit` | T3 | Blocked — pricing tiers undefined | 2 |
-| `/services/hubspot-training` | T3 | Ready — $750 half / $1,200 full day | 3 |
-| `/services/marketing-automation` | T3 | Partial — reconcile pricing. One page, two anchors (Strategy/Implementation cards both land here) | 2 |
-| `/services/ai-solutions` | T3 | Partial — pricing gap; cross-links Claude card on `/solutions` | 2 |
-| `/services/revops-retainers` | T3 | Ready — $2,500/$3,000/$4,500 (reconcile live "from $3,200") | 3 |
-| `/services/post-sales-excellence` | T3 | Blocked — scope undefined | 3 |
-| `/services/customer-journey-mapping` | T3 | Ready — $1,250 | 3 |
-| `/services/websites-and-integrations` | T3 | Blocked — pricing both scopes; absorbs Xero content | 2 |
-| `/services/landing-page-package` | T3 | Blocked — pricing undefined | 3 |
+| `/services/crm-implementation` | T3 | Ready — tiers $7,500/$12,000/$18,000 *(live tiers are now Starter $10,500 / Advanced $15,000 / Enterprise $21,000+)* | 2 |
+| `/services/hubspot-audit` | T3 | Blocked — pricing tiers undefined *(live: Focused $1,500 / Full portal $2,750 / Complex $4,500 — built and indexed)* | 2 |
+| `/services/hubspot-training` | T3 | Ready — $750 half / $1,200 full day *(live: $2,300 half / $3,800 full day)* | 3 |
+| `/services/marketing-automation` | T3 | Partial — reconcile pricing. One page, two anchors (Strategy/Implementation cards both land here) *(live: Strategy $4,000 / Build $9,500 / Full delivery $11,500 — built and indexed)* | 2 |
+| `/services/ai-solutions` | T3 | Partial — pricing gap; cross-links Claude card on `/solutions` *(live: AI Readiness Workshop $3,500 — built and indexed)* | 2 |
+| `/services/revops-retainers` | T3 | Ready — $2,500/$3,000/$4,500 (reconcile live "from $3,200") *(live: Momentum $4,000/mo / Partner $5,500/mo — 2 tiers, not 3)* | 3 |
+| `/services/post-sales-excellence` | T3 | Blocked — scope undefined *(live: Standard $12,000 / Advanced $18,000 / Enterprise $22,000 — built and indexed)* | 3 |
+| `/services/customer-journey-mapping` | T3 | Ready — $1,250 *(live: $2,850 workshop — built and indexed)* | 3 |
+| `/services/websites-and-integrations` | T3 | Blocked — pricing both scopes; absorbs Xero content *(resolved: one page, tiers "Custom integration" $12,500 / "Website migration" $10,700 — built and indexed)* | 2 |
+| `/services/landing-page-package` | T3 | Blocked — pricing undefined *(live: $6,500 — built and indexed)* | 3 |
 | `/solutions` | T4 Solutions | Blocked (copy) | 2 |
-| `/solutions/aircall` | T5 | Partial — no prototype (D5) | 3 |
+| `/solutions/aircall` | T5 | Partial — no prototype (D5) *(now built and indexed, at `/platforms/aircall`)* | 3 |
 | `/about-us` | T12 About | Partial — team fields + video decision (D6) | 1 |
-| `/careers` | T-M Careers hub | Built — placeholder copy, awaiting copywriter | 4 |
-| `/careers/[slug]` | T-R Vacancy detail | Built — one example role, delete before launch | 4 |
-| `/about-us/events` | (none — not card-sorted; manual events, Humanatix dropped) | Blocked | 4 |
+| `/careers` | T-M Careers hub | Built — placeholder copy, awaiting copywriter *(copy is finished and the page is now built/indexed; 2 photo slots on the page still say "Photo to come")* | 4 |
+| `/careers/[slug]` | T-R Vacancy detail | Built — one example role, delete before launch *(the example role is `status: closed` + noindexed, so it no longer shows on `/careers` or the sitemap — not deleted, but effectively handled)* | 4 |
+| `/about-us/events` | (none — not card-sorted; manual events, Humanatix dropped) | Blocked *(events now ship at `/events`, not nested under About — built, with real scheduled sessions)* | 4 |
 | `/industries` | T6 Industries hub | Ready | 3 |
-| `/industries/financial-services` | T7 | Partial | 3 |
-| `/industries/manufacturing` | T7 (reduced variant) | Blocked — hub card links to CRM Implementation until built | 4 |
-| `/industries/non-profits` | T7 | Partial | 3 |
-| `/industries/saas` | T7 | Partial | 3 |
-| `/industries/agencies` | T7 (reduced) | Blocked — hub card links to CRM Implementation until built | 4 |
-| `/industries/property-development` | T7 | Partial — closest to launch-ready | 3 |
-| `/industries/land-surveying` | T7 | Blocked — House Surveys case study anchors it | 4 |
+| `/industries/financial-services` | T7 | Partial *(built and indexed)* | 3 |
+| `/industries/manufacturing` | T7 (reduced variant) | Blocked — hub card links to CRM Implementation until built *(dropped from scope — the hub's own copy now reads "we work across plenty more", not a placeholder card)* | 4 |
+| `/industries/non-profits` | T7 | Partial *(built and indexed)* | 3 |
+| `/industries/saas` | T7 | Partial *(built and indexed)* | 3 |
+| `/industries/agencies` | T7 (reduced) | Blocked — hub card links to CRM Implementation until built *(built and indexed)* | 4 |
+| `/industries/property-development` | T7 | Partial — closest to launch-ready *(built and indexed)* | 3 |
+| `/industries/land-surveying` | T7 | Blocked — House Surveys case study anchors it *(built and indexed)* | 4 |
 | `/our-work` | T8 Our Work hub | Partial | 2 |
-| `/our-work/accounting-for-nature` | T9 | Ready (needs template design, D5) | 3 |
-| `/our-work/house-surveys` | T9 | Ready | 3 |
-| `/our-work/novated-lease-australia` | T9 | Blocked — "coming soon" card state until then | 4 |
-| `/our-work/ph-digital` | T9 | Blocked | 4 |
-| `/our-work/mywave` | T9 | Blocked | 4 |
+| `/our-work/accounting-for-nature` | T9 | Ready (needs template design, D5) *(still `pageBuilt: false` as of 11 Sep — genuinely not yet flipped)* | 3 |
+| `/our-work/house-surveys` | T9 | Ready *(still `pageBuilt: false` as of 11 Sep — genuinely not yet flipped)* | 3 |
+| `/our-work/novated-lease-australia` | T9 | Blocked — "coming soon" card state until then *(now built and indexed, with video testimonial)* | 4 |
+| `/our-work/ph-digital` | T9 | Blocked *(now built and indexed, with video testimonial)* | 4 |
+| `/our-work/mywave` | T9 | Blocked *(MyWave AI has a testimonial only, no case study — a new, unrelated case study `beachwood-homes` has been added instead and is built and indexed)* | 4 |
 | `/insights` | T10 Insight Hub | Ready | 2 |
-| `/insights/[slug]` | T11 Blog post | Ready — ~20 posts to migrate, audit low-impression posts first | 3 |
+| `/insights/[slug]` | T11 Blog post | Ready — ~20 posts to migrate, audit low-impression posts first *(21 published; the HubSpot-cost post was rewritten 11 Sep with current pricing)* | 3 |
 | `/contact` | T13 Contact | Ready | 1 |
 | `/privacy-policy` | Legal | Keep as-is | — |
-| Landing pages (TBD path, e.g. `/lp/free-hubspot-audit`) | T14 | Free-audit variant designed | — |
+| Landing pages (TBD path, e.g. `/lp/free-hubspot-audit`) | T14 | Free-audit variant designed *(built and indexed at `/lp/free-hubspot-audit`)* | — |
 | `/resources` (Downloadable resources) | placeholder | Not designed — ship placeholder or defer route | 4 |
 
 Redirects: every "Existing URL (Squarespace)" in the tracker needs a 301 to
