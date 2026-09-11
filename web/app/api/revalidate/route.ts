@@ -56,12 +56,63 @@ export async function POST(req: NextRequest) {
      * live on an indexable page because of exactly this gap. Repricing is
      * the case that most needs to propagate immediately.
      */
+    // Built from an audit of every `->` dereference in web/sanity/queries.ts
+    // (2026-09-11) — a query using the `*[_type == "x"][0].field` bracket
+    // form instead of a dereference already self-tags via the regex above
+    // and needs no entry here (used deliberately by vacancy/careersPage/
+    // partnerIntegration queries for exactly this reason); only genuine `->`
+    // dereferences create this blind spot.
     const FANOUT: Record<string, string[]> = {
       pricingTable: ["service"],
-      testimonial: ["service", "industry", "caseStudy", "partnerIntegration", "landingPage"],
-      teamMember: ["blogPost", "aboutPage"],
+      // homePage, aboutPage, servicesLandingPage and ourWorkPage all
+      // dereference testimonials[]/videoTestimonials[]/googleReviews[]
+      // directly (their own picks, not just via another document) — same
+      // gap as pricingTable above: editing a testimonial published fine but
+      // left these pages' cached renders stale indefinitely. Confirmed live:
+      // Ido Drent's and Ben Madden-Holmes' quotes, both featured on the
+      // homepage, didn't update until homePage's own cache tag was purged.
+      testimonial: [
+        "service",
+        "industry",
+        "caseStudy",
+        "partnerIntegration",
+        "landingPage",
+        "homePage",
+        "aboutPage",
+        "servicesLandingPage",
+        "ourWorkPage",
+      ],
+      // event.host-> and resource.author-> also dereference teamMember.
+      teamMember: ["blogPost", "aboutPage", "event", "resource"],
       client: ["caseStudy"],
       hubOffering: ["blogPost"],
+      // caseStudy had no entry at all — the widest-reaching gap found:
+      // every one of these pages features a case study by reference, so
+      // none of them picked up a case study edit (new photos, a rewritten
+      // headline, updated stats) until something else happened to also
+      // touch that page.
+      caseStudy: [
+        "homePage",
+        "servicesLandingPage",
+        "service",
+        "solutionsPage",
+        "industriesHubPage",
+        "industry",
+        "ourWorkPage",
+        "partnerIntegration",
+      ],
+      // Also had no entry: homePage's services teaser, the services landing
+      // grid, a case study's "service delivered" reference, and the Hub
+      // carousel's "linked service" label all dereference service.
+      service: ["homePage", "servicesLandingPage", "caseStudy", "hubOffering"],
+      // Also had no entry: a recap link (events), a related-post pick
+      // (resources), and the Insight Hub's featured post all dereference
+      // blogPost.
+      blogPost: ["eventsPage", "event", "resource", "insightHubPage"],
+      // Also had no entry: a case study's industry tag, the homepage's
+      // industries teaser, and the Industries hub's own picks all
+      // dereference industry.
+      industry: ["caseStudy", "homePage", "industriesHubPage"],
     };
     for (const also of FANOUT[body._type] ?? []) tags.push(`type:${also}`);
 
