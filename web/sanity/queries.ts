@@ -8,7 +8,14 @@ export const HOME_PAGE_QUERY = defineQuery(
   `*[_type == "homePage"][0]{
     ...,
     featuredServices[]->{_id, title, slug, icon, shortDescription, whoItsFor},
-    featuredCaseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}},
+    // select() so this stays null (not a truthy empty object) when no case
+    // study is set — the page's featuredCaseStudy truthiness guard depends on it.
+    "featuredCaseStudy": select(
+      defined(featuredCaseStudy.caseStudy) => {
+        "subcopy": featuredCaseStudy.subcopy,
+        ...featuredCaseStudy.caseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}}
+      }
+    ),
     testimonials[]->{_id, quote, name, role, company, avatar},
     featuredIndustries[]->{_id, title, slug, icon, shortDescription, pageBuilt}
   }`,

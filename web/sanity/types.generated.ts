@@ -532,7 +532,10 @@ export type HomePage = {
       _key: string;
     } & ServiceReference
   >;
-  featuredCaseStudy?: CaseStudyReference;
+  featuredCaseStudy?: {
+    caseStudy: CaseStudyReference;
+    subcopy?: string;
+  };
   testimonials?: Array<
     {
       _key: string;
@@ -1551,7 +1554,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
 
 // Source: ../web/sanity/queries.ts
 // Variable: HOME_PAGE_QUERY
-// Query: *[_type == "homePage"][0]{    ...,    featuredServices[]->{_id, title, slug, icon, shortDescription, whoItsFor},    featuredCaseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}},    testimonials[]->{_id, quote, name, role, company, avatar},    featuredIndustries[]->{_id, title, slug, icon, shortDescription, pageBuilt}  }
+// Query: *[_type == "homePage"][0]{    ...,    featuredServices[]->{_id, title, slug, icon, shortDescription, whoItsFor},    // select() so this stays null (not a truthy empty object) when no case    // study is set — the page's featuredCaseStudy truthiness guard depends on it.    "featuredCaseStudy": select(      defined(featuredCaseStudy.caseStudy) => {        "subcopy": featuredCaseStudy.subcopy,        ...featuredCaseStudy.caseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}}      }    ),    testimonials[]->{_id, quote, name, role, company, avatar},    featuredIndustries[]->{_id, title, slug, icon, shortDescription, pageBuilt}  }
 export type HOME_PAGE_QUERY_RESULT = {
   _id: string;
   _type: "homePage";
@@ -1584,6 +1587,7 @@ export type HOME_PAGE_QUERY_RESULT = {
     whoItsFor: string | null;
   }> | null;
   featuredCaseStudy: {
+    subcopy: string | null;
     _id: string;
     client: string;
     slug: Slug;
@@ -1599,7 +1603,7 @@ export type HOME_PAGE_QUERY_RESULT = {
     service: {
       title: string;
     };
-  } | null;
+  };
   testimonials: Array<{
     _id: string;
     quote: string;
@@ -2775,7 +2779,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '{\n    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "platforms": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live" && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "careersBuilt": *[_type == "careersPage"][0].pageBuilt,\n    "landingPages": *[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }\n  }': SITEMAP_QUERY_RESULT;
     '*[_type == "siteSettings"][0]': SITE_SETTINGS_QUERY_RESULT;
-    '*[_type == "homePage"][0]{\n    ...,\n    featuredServices[]->{_id, title, slug, icon, shortDescription, whoItsFor},\n    featuredCaseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}},\n    testimonials[]->{_id, quote, name, role, company, avatar},\n    featuredIndustries[]->{_id, title, slug, icon, shortDescription, pageBuilt}\n  }': HOME_PAGE_QUERY_RESULT;
+    '*[_type == "homePage"][0]{\n    ...,\n    featuredServices[]->{_id, title, slug, icon, shortDescription, whoItsFor},\n    // select() so this stays null (not a truthy empty object) when no case\n    // study is set \u2014 the page\'s featuredCaseStudy truthiness guard depends on it.\n    "featuredCaseStudy": select(\n      defined(featuredCaseStudy.caseStudy) => {\n        "subcopy": featuredCaseStudy.subcopy,\n        ...featuredCaseStudy.caseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}}\n      }\n    ),\n    testimonials[]->{_id, quote, name, role, company, avatar},\n    featuredIndustries[]->{_id, title, slug, icon, shortDescription, pageBuilt}\n  }': HOME_PAGE_QUERY_RESULT;
     '*[_type == "servicesLandingPage"][0]{\n    ...,\n    serviceCards[]{\n      ...,\n      service->{_id, title, slug, category, icon, shortDescription, whoItsFor}\n    },\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}},\n    testimonial->{_id, quote, name, role, company}\n  }': SERVICES_LANDING_QUERY_RESULT;
     '*[_type == "aboutPage"][0]{\n    ...,\n    team[]->{_id, name, role, pronouns, photo, bio, outsideWork, skills, favouriteZippilyThing, favouriteHubSpotFeature, whyTheyLoveHubSpot, linkedIn},\n    testimonials[]->{_id, quote, name, role, company, avatar}\n  }': ABOUT_PAGE_QUERY_RESULT;
     '*[_type == "contactPage"][0]': CONTACT_PAGE_QUERY_RESULT;

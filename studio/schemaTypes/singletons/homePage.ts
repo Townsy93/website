@@ -62,9 +62,26 @@ export const homePage = defineType({
     defineField({
       name: 'featuredCaseStudy',
       title: 'Featured case study',
-      type: 'reference',
+      type: 'object',
       group: 'content',
-      to: [{type: 'caseStudy'}],
+      fields: [
+        defineField({
+          name: 'caseStudy',
+          title: 'Case study',
+          type: 'reference',
+          to: [{type: 'caseStudy'}],
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: 'subcopy',
+          title: 'Subheading (this block only)',
+          type: 'text',
+          rows: 3,
+          description:
+            "This block has more room than a card, so it isn't limited to the case study's short \"one-line result\" — write a proper sentence or two specifically for the homepage. Leave blank to fall back to the case study's one-line result.",
+          validation: (rule) => rule.max(300),
+        }),
+      ],
     }),
     defineField({
       name: 'testimonials',

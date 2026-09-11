@@ -244,9 +244,9 @@ export default async function Home() {
                 <h2 className="mt-4 max-w-md text-h2">
                   {page.featuredCaseStudy.headline}
                 </h2>
-                {page.featuredCaseStudy.resultLine && (
+                {(page.featuredCaseStudy.subcopy ?? page.featuredCaseStudy.resultLine) && (
                   <p className="mt-4 max-w-md text-body-lg text-white/75">
-                    {page.featuredCaseStudy.resultLine}
+                    {page.featuredCaseStudy.subcopy ?? page.featuredCaseStudy.resultLine}
                   </p>
                 )}
                 {(page.featuredCaseStudy.stats?.length ?? 0) > 0 && (
