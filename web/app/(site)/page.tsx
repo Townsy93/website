@@ -142,11 +142,17 @@ export default async function Home() {
           seamless; it pauses entirely for reduced-motion users. Placeholder
           blocks scroll until we have logos with display permission. */}
       <section className="bg-deep-blue">
-        <div className="mx-auto flex max-w-[90rem] flex-wrap items-center gap-x-8 gap-y-4 px-6 pb-14 pt-2">
-          <p className="shrink-0 text-body font-semibold text-white">
+        <div className="mx-auto max-w-[90rem] px-6 pb-14 pt-2">
+          {/* The label sits above the track, not beside it: sharing the row
+              squeezed the ticker into what was left over, so the chips had to
+              shrink and the first logo sat under the mask's fade. Full width
+              lets the chips run at their proper size. */}
+          <p className="text-body font-semibold text-white">
             Other brands we&apos;ve made unreasonably excited about CRM
           </p>
-          <LogoTicker logos={page.trustLogos} />
+          <div className="mt-6">
+            <LogoTicker logos={page.trustLogos} />
+          </div>
         </div>
       </section>
 
