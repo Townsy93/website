@@ -5,10 +5,21 @@ import { PortableBody } from "@/components/modules/PortableBody";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  alternates: { canonical: "/privacy-policy" },
-};
+// Same shape as every other route: Studio's SEO fields win, with a written
+// fallback behind them. Without a description here the page silently
+// inherited the root layout's homepage one, which read as a duplicate.
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await sanityFetch(LEGAL_PAGE_QUERY, {
+    slug: "privacy-policy",
+  });
+  return {
+    title: page?.seo?.metaTitle ?? "Privacy Policy",
+    description:
+      page?.seo?.metaDescription ??
+      "How Zippily collects, uses and protects the personal information you share with us.",
+    alternates: { canonical: "/privacy-policy" },
+  };
+}
 
 export default async function PrivacyPolicyPage() {
   const page = await sanityFetch(LEGAL_PAGE_QUERY, {
