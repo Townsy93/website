@@ -169,9 +169,9 @@ export type CareersPage = {
 
 export type VimeoEmbed = {
   _type: "vimeoEmbed";
-  url: string;
-  title: string;
-  orientation: "landscape" | "portrait" | "square";
+  url?: string;
+  title?: string;
+  orientation?: "landscape" | "portrait" | "square";
   posterImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
