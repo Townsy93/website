@@ -101,7 +101,7 @@ export default async function AboutPage() {
         <section id="trust" className="scroll-mt-24 bg-white">
           <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-6 py-14 sm:py-24 lg:grid-cols-2">
             <SanityImage
-              image={page.trustPillars?.[0]?.image}
+              image={page.trustImage}
               width={560}
               height={460}
               className="h-72 w-full rounded-2xl object-cover lg:h-110"

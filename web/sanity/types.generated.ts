@@ -341,10 +341,10 @@ export type AboutPage = {
   _updatedAt: string;
   _rev: string;
   hero: Hero;
+  trustImage?: ImageWithAlt;
   trustPillars?: Array<{
     heading: string;
     text: string;
-    image?: ImageWithAlt;
     _type: "pillarRow";
     _key: string;
   }>;
@@ -1707,10 +1707,10 @@ export type ABOUT_PAGE_QUERY_RESULT = {
   _updatedAt: string;
   _rev: string;
   hero: Hero;
+  trustImage?: ImageWithAlt;
   trustPillars?: Array<{
     heading: string;
     text: string;
-    image?: ImageWithAlt;
     _type: "pillarRow";
     _key: string;
   }>;

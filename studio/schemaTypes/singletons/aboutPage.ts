@@ -17,6 +17,18 @@ export const aboutPage = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      // Section-level, not per-row: the design shows one photo beside the
+      // whole block. It used to live on the first row's own image field,
+      // where nobody could find it — the row previews show only a heading,
+      // so nothing hinted a section photo was tucked inside row 1.
+      name: 'trustImage',
+      title: 'Trust section photo',
+      type: 'imageWithAlt',
+      group: 'content',
+      description:
+        'The photo beside the "Hang on, why should I trust you?" rows.',
+    }),
+    defineField({
       name: 'trustPillars',
       title: '"Why you\'ll trust us" rows',
       type: 'array',
@@ -40,7 +52,6 @@ export const aboutPage = defineType({
               rows: 3,
               validation: (rule) => rule.required().max(500),
             }),
-            defineField({name: 'image', title: 'Image', type: 'imageWithAlt'}),
           ],
           preview: {select: {title: 'heading'}},
         }),
