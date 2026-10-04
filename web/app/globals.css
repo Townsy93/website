@@ -73,7 +73,10 @@
   to { transform: translateX(-50%); }
 }
 .ticker-track {
-  animation: ticker 28s linear infinite;
+  /* 34s, not 28s: the duration is for the whole track, so widening the
+     chips made the same sweep cover more ground and the logos read as
+     hurried. This restores the original pixels-per-second pace. */
+  animation: ticker 34s linear infinite;
 }
 @media (prefers-reduced-motion: reduce) {
   .ticker-track { animation: none; }
