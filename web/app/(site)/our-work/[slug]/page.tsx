@@ -319,36 +319,29 @@ export default async function CaseStudyPage({
         </div>
       </section>
 
-      {/* The film — click-to-play with sound. The section always renders,
-          with a placeholder until the video URL lands in Sanity, so every
-          case study carries the full v2 shape. */}
-      <section
-        className="bg-white bg-cover bg-center"
-        style={{ backgroundImage: "url(/intro-background.png)" }}
-      >
-        <div className="mx-auto max-w-4xl px-6 py-14 sm:py-24 text-center">
-          <h2 className="text-h2 text-deep-blue">
-            Watch the full case study
-          </h2>
-          <div className="mt-10 text-left">
-            {caseStudy.videoUrl ? (
+      {/* The film — click-to-play with sound. Not every client is filmed, so
+          the whole section drops out when there is no video rather than
+          holding space with a placeholder: a "coming soon" box on a story
+          that will never have a film reads as something broken. */}
+      {caseStudy.videoUrl && (
+        <section
+          className="bg-white bg-cover bg-center"
+          style={{ backgroundImage: "url(/intro-background.png)" }}
+        >
+          <div className="mx-auto max-w-4xl px-6 py-14 sm:py-24 text-center">
+            <h2 className="text-h2 text-deep-blue">
+              Watch the full case study
+            </h2>
+            <div className="mt-10 text-left">
               <VimeoEmbed
                 url={caseStudy.videoUrl}
                 title={`${caseStudy.client} case study`}
                 posterUrl={videoPoster}
               />
-            ) : (
-              <div
-                role="img"
-                aria-label="Case study video — coming soon"
-                className="flex aspect-video w-full items-center justify-center rounded-3xl bg-[#E0ECF3] text-caption text-deep-blue-80"
-              >
-                Case study video — coming soon
-              </div>
-            )}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Full-bleed photo — always present; labelled placeholder until the
           photo is uploaded. */}
