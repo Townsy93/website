@@ -72,7 +72,10 @@ export const SOLUTIONS_PAGE_QUERY = defineQuery(
     ...,
     relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, stats, service->{title}},
     "aircall": *[_type == "partnerIntegration" && slug.current == "aircall"][0]{
-      title, shortDescription, slug, "image": hero.image
+      title, shortDescription, slug,
+      "image": hero.image,
+      "heading": hero.heading,
+      "subheading": hero.subheading
     }
   }`,
 );

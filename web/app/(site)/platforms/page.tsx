@@ -266,39 +266,49 @@ export default async function PlatformsPage() {
       )}
 
       {/* Aircall — image beside text; heading Deep Blue, not the mock's
-          orange (AA, not overridden). */}
-      <section className="bg-white">
-        <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-6 py-14 sm:py-24 lg:grid-cols-[0.9fr_1.1fr]">
-          <SanityImage
-            image={page.aircall?.image}
-            width={520}
-            height={440}
-            className="h-72 w-full rounded-2xl object-cover lg:h-100"
-            placeholderLabel="Aircall platform image"
-          />
-          <div>
-            <h2 className="text-pretty text-h2 text-deep-blue">
-              Aircall and HubSpot, properly connected.
-            </h2>
-            <p className="mt-5 max-w-xl text-body-lg font-medium text-deep-blue">
-              Every call logged, routed, and reported automatically — set up by
-              your APAC Aircall implementation partner.
-            </p>
-            {page.aircall?.shortDescription && (
-              <p className="mt-4 max-w-xl text-body text-deep-blue-80">
-                {page.aircall.shortDescription}
-              </p>
-            )}
-            <ButtonLink
-              href="/platforms/aircall"
-              variant="orange"
-              className="mt-8"
-            >
-              View details
-            </ButtonLink>
+          orange (AA, not overridden). Every string comes from the Aircall
+          partnerIntegration document: the heading and intro used to be
+          duplicated here as literals, identical to that document's own hero,
+          so editing it in Studio changed the detail page and left this teaser
+          saying something else. The section drops out entirely if the
+          document is missing rather than rendering a hardcoded ghost. */}
+      {page.aircall && (
+        <section className="bg-white">
+          <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-6 py-14 sm:py-24 lg:grid-cols-[0.9fr_1.1fr]">
+            <SanityImage
+              image={page.aircall.image}
+              width={520}
+              height={440}
+              className="h-72 w-full rounded-2xl object-cover lg:h-100"
+              placeholderLabel="Aircall platform image"
+            />
+            <div>
+              <h2 className="text-pretty text-h2 text-deep-blue">
+                {page.aircall.heading ?? page.aircall.title}
+              </h2>
+              {page.aircall.subheading && (
+                <p className="mt-5 max-w-xl text-body-lg font-medium text-deep-blue">
+                  {page.aircall.subheading}
+                </p>
+              )}
+              {page.aircall.shortDescription && (
+                <p className="mt-4 max-w-xl text-body text-deep-blue-80">
+                  {page.aircall.shortDescription}
+                </p>
+              )}
+              {page.aircall.slug?.current && (
+                <ButtonLink
+                  href={`/platforms/${page.aircall.slug.current}`}
+                  variant="orange"
+                  className="mt-8"
+                >
+                  View details
+                </ButtonLink>
+              )}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <CtaBanner data={page.ctaBanner} />
     </>

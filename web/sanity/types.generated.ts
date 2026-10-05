@@ -1932,7 +1932,7 @@ export type SERVICE_QUERY_RESULT = {
 
 // Source: ../web/sanity/queries.ts
 // Variable: SOLUTIONS_PAGE_QUERY
-// Query: *[_type == "solutionsPage"][0]{    ...,    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, stats, service->{title}},    "aircall": *[_type == "partnerIntegration" && slug.current == "aircall"][0]{      title, shortDescription, slug, "image": hero.image    }  }
+// Query: *[_type == "solutionsPage"][0]{    ...,    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, stats, service->{title}},    "aircall": *[_type == "partnerIntegration" && slug.current == "aircall"][0]{      title, shortDescription, slug,      "image": hero.image,      "heading": hero.heading,      "subheading": hero.subheading    }  }
 export type SOLUTIONS_PAGE_QUERY_RESULT = {
   _id: string;
   _type: "solutionsPage";
@@ -1981,6 +1981,8 @@ export type SOLUTIONS_PAGE_QUERY_RESULT = {
     shortDescription: null;
     slug: Slug;
     image: ImageWithAlt | null;
+    heading: string;
+    subheading: string | null;
   } | null;
 } | null;
 
@@ -2786,7 +2788,7 @@ declare module "@sanity/client" {
     '*[_type == "blogPost"] | order(publishedAt desc)[0...3]{\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': LATEST_POSTS_QUERY_RESULT;
     '*[_type == "service" && defined(slug.current)].slug.current': SERVICE_SLUGS_QUERY_RESULT;
     '*[_type == "service" && slug.current == $slug][0]{\n    ...,\n    pricingTable->{confirmed, tiers, fallbackText},\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status, stats, videoUrl, videoStill},\n    testimonial->{_id, quote, name, role, company, avatar},\n    relatedServices[]->{_id, title, slug, icon, shortDescription},\n    relatedPosts[]->{_id, title, slug, excerpt, coverImage, publishedAt, readTime}\n  }': SERVICE_QUERY_RESULT;
-    '*[_type == "solutionsPage"][0]{\n    ...,\n    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, stats, service->{title}},\n    "aircall": *[_type == "partnerIntegration" && slug.current == "aircall"][0]{\n      title, shortDescription, slug, "image": hero.image\n    }\n  }': SOLUTIONS_PAGE_QUERY_RESULT;
+    '*[_type == "solutionsPage"][0]{\n    ...,\n    relatedCaseStudy->{_id, client, slug, headline, resultLine, photo, status, stats, service->{title}},\n    "aircall": *[_type == "partnerIntegration" && slug.current == "aircall"][0]{\n      title, shortDescription, slug,\n      "image": hero.image,\n      "heading": hero.heading,\n      "subheading": hero.subheading\n    }\n  }': SOLUTIONS_PAGE_QUERY_RESULT;
     '*[_type == "hubOffering"] | order(order asc){\n    _id, name, eyebrow, description, icon, isFeatured,\n    linkedService->{title, slug}\n  }': HUB_OFFERINGS_QUERY_RESULT;
     '*[_type == "industriesHubPage"][0]{\n    ...,\n    industries[]->{_id, title, slug, icon, shortDescription, pageBuilt},\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, industry->{title}}\n  }': INDUSTRIES_HUB_QUERY_RESULT;
     '*[_type == "industry" && defined(slug.current)].slug.current': INDUSTRY_SLUGS_QUERY_RESULT;
