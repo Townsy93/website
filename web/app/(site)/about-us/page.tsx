@@ -293,9 +293,13 @@ export default async function AboutPage() {
         )
       )}
 
-      {/* Clients we've worked with — greyscale logo grid. Placeholders until
-          logos with display permission land in Sanity; the same permission
-          gate as the homepage ticker. */}
+      {/* Clients we've worked with. Logos run at full colour: greyscale
+          plus opacity-70 washed them out against the white section, and a
+          client's brand is the whole point of the row. fit="max" matters
+          here — these logos run from 1:1 to 3.5:1, and the default crop
+          sliced them to the requested box (Beachwood lost "HOMES", MyWave
+          lost its last letter). Placeholders until logos with display
+          permission land in Sanity. */}
       <section className="bg-white">
         <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
           <h2 className="text-center text-h2 text-deep-blue">
@@ -307,16 +311,17 @@ export default async function AboutPage() {
                   <SanityImage
                     key={logo._key}
                     image={logo}
-                    width={140}
-                    height={48}
-                    className="mx-auto h-10 w-auto object-contain opacity-70 grayscale"
+                    width={176}
+                    height={64}
+                    fit="max"
+                    className="mx-auto h-16 w-auto object-contain"
                   />
                 ))
               : Array.from({ length: 10 }, (_, i) => (
                   <span
                     key={i}
                     aria-hidden
-                    className="mx-auto h-10 w-28 rounded bg-deep-blue/10"
+                    className="mx-auto h-16 w-36 rounded bg-deep-blue/10"
                   />
                 ))}
           </div>
