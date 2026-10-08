@@ -2233,7 +2233,7 @@ export type CASE_STUDY_QUERY_RESULT = {
 
 // Source: ../web/sanity/queries.ts
 // Variable: RELATED_CASE_STUDIES_QUERY
-// Query: *[_type == "caseStudy" && defined(slug.current) && slug.current != $slug]    | order(status desc, client asc)[0...3]{      _id, client, slug, resultLine, photo, status, service->{title}    }
+// Query: *[_type == "caseStudy" && defined(slug.current) && pageBuilt == true && slug.current != $slug]    | order(status desc, client asc)[0...3]{      _id, client, slug, resultLine, photo, status, service->{title}    }
 export type RELATED_CASE_STUDIES_QUERY_RESULT = Array<{
   _id: string;
   client: string;
@@ -2797,7 +2797,7 @@ declare module "@sanity/client" {
     '*[_type == "homePage"][0].trustLogos': TRUST_LOGOS_QUERY_RESULT;
     '*[_type == "caseStudy" && defined(slug.current)].slug.current': CASE_STUDY_SLUGS_QUERY_RESULT;
     '*[_type == "caseStudy" && slug.current == $slug][0]{\n    ...,\n    service->{title, slug},\n    industry->{title, slug},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': CASE_STUDY_QUERY_RESULT;
-    '*[_type == "caseStudy" && defined(slug.current) && slug.current != $slug]\n    | order(status desc, client asc)[0...3]{\n      _id, client, slug, resultLine, photo, status, service->{title}\n    }': RELATED_CASE_STUDIES_QUERY_RESULT;
+    '*[_type == "caseStudy" && defined(slug.current) && pageBuilt == true && slug.current != $slug]\n    | order(status desc, client asc)[0...3]{\n      _id, client, slug, resultLine, photo, status, service->{title}\n    }': RELATED_CASE_STUDIES_QUERY_RESULT;
     '*[_type == "insightHubPage"][0]{\n    ...,\n    featuredPost->{\n      _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n      hubs[]->{name}, author->{name, photo}\n    }\n  }': INSIGHT_HUB_QUERY_RESULT;
     '*[_type == "blogPost"] | order(publishedAt desc){\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': ALL_POSTS_QUERY_RESULT;
     '*[_type == "blogPost" && defined(slug.current)].slug.current': POST_SLUGS_QUERY_RESULT;

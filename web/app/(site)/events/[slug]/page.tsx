@@ -250,26 +250,25 @@ export default async function EventDetailPage({
                 </div>
               ) : (
                 <>
-                  {event.address && (
+                  {/* Either part can be missing; joining only what exists
+                      keeps a venue with no street address from collapsing
+                      this whole section to a bare "Get directions" link. */}
+                  {(event.venueName || event.address) && (
                     <p className="mt-4 whitespace-pre-line text-body-lg leading-relaxed text-deep-blue-80">
                       {event.venueName}
-                      {"\n"}
+                      {event.venueName && event.address ? <br /> : null}
                       {event.address}
                     </p>
                   )}
-                  <div
-                    className="mt-5 flex items-center justify-center rounded-2xl bg-[#E4E2D6] text-caption text-deep-blue-80"
-                    style={{ height: 260 }}
-                    role="img"
-                    aria-label="Map showing the venue location"
-                  >
-                    Map — {event.shortLocation ?? event.venueName}
-                  </div>
+                  {/* No embedded map: the placeholder it replaced was a grey
+                      box captioned with the suburb, which told a reader less
+                      than the address directly above it. Directions go to the
+                      real thing. */}
                   <a
                     href={directionsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-block border-b-2 border-sky-blue pb-0.5 text-body font-semibold text-deep-blue"
+                    className="mt-5 inline-block border-b-2 border-sky-blue pb-0.5 text-body font-semibold text-deep-blue"
                   >
                     Get directions →
                   </a>

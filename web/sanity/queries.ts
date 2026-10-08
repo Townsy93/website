@@ -136,9 +136,12 @@ export const CASE_STUDY_QUERY = defineQuery(
 
 // The three cards that close a case study page — never the page itself.
 // "live" sorts after "comingSoon" so status desc leads with live stories;
-// coming-soon cards only ever fill out an incomplete row.
+// coming-soon cards only ever fill out an incomplete row. pageBuilt gates
+// this the same way it gates the sitemap: a case study that is still being
+// written is noindexed everywhere else, so it must not be handed a link from
+// a finished story either (House Surveys was doing exactly that).
 export const RELATED_CASE_STUDIES_QUERY = defineQuery(
-  `*[_type == "caseStudy" && defined(slug.current) && slug.current != $slug]
+  `*[_type == "caseStudy" && defined(slug.current) && pageBuilt == true && slug.current != $slug]
     | order(status desc, client asc)[0...3]{
       _id, client, slug, resultLine, photo, status, service->{title}
     }`,
