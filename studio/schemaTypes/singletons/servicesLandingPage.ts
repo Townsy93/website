@@ -22,7 +22,7 @@ export const servicesLandingPage = defineType({
       title: 'Service grid heading',
       type: 'string',
       group: 'content',
-      description: '11 cards render (Marketing Automation appears twice) — write the copy accordingly',
+      description: '10 cards render, one per service — write the copy accordingly',
       validation: (rule) => rule.max(120),
     }),
     defineField({
@@ -33,9 +33,17 @@ export const servicesLandingPage = defineType({
       group: 'content',
       validation: (rule) => rule.max(240),
     }),
-    // Cards are separate from service docs because Marketing Automation
-    // appears as two cards (Strategy/Discover + Implementation/Build) linking
-    // to the same page via anchors. No pricing on cards (ruling D2).
+    // Cards are separate from service docs so the grid's order, copy and
+    // filter category can be tuned without editing the service itself. The
+    // overrides below exist for that; leave them blank and the card inherits
+    // the service's own title, description and category, which is the normal
+    // case. No pricing on cards (ruling D2).
+    //
+    // Marketing Automation used to render as two cards ("— strategy" and
+    // "— implementation") pointing at the same page via #strategy and
+    // #implementation. The service page template has no id= anchors, so both
+    // always landed at the top of the same page. Consolidated to one card,
+    // Oct 2026.
     defineField({
       name: 'serviceCards',
       title: 'Service cards',
@@ -58,7 +66,7 @@ export const servicesLandingPage = defineType({
               name: 'titleOverride',
               title: 'Title override',
               type: 'string',
-              description: 'e.g. "Marketing automation — strategy"',
+              description: 'Leave blank to use the service’s own title',
               validation: (rule) => rule.max(60),
             }),
             defineField({

@@ -143,6 +143,14 @@ export default async function RetainersPage() {
                   </ButtonLink>
                 )}
               </div>
+              {/* Same gate and treatment as the [slug] template: this page is
+                  hand-built, so a field added there has to be added here too
+                  or an editor fills it in and nothing happens. */}
+              {pricingConfirmed && service.heroMeta && (
+                <p className="mt-6 text-caption text-white/55">
+                  {service.heroMeta}
+                </p>
+              )}
             </div>
             <SanityImage
               image={service.hero?.image}

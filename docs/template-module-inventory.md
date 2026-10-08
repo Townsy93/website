@@ -261,9 +261,12 @@ D1–D5 ruled by Sean, 24 Jul 2026. D6–D11 still open.
   pricing-blocked audit/landing-page-package) do not ship. Pricing appears
   only on individual service pages, and only where confirmed (M18's
   `pricingConfirmed` toggle).
-- **D3 — "Ten services" copy — RESOLVED: fix the copy.** 11 cards is correct
-  per tracker v3 (Marketing Automation split into two cards); the H2 is
-  stale.
+- **D3 — "Ten services" copy — RESOLVED, then reversed Oct 2026.** The
+  original ruling was that 11 cards was correct per tracker v3 (Marketing
+  Automation split into two cards) and the "Ten services" H2 was stale.
+  Sean has since consolidated Marketing Automation back to a single card,
+  so the grid is 10 cards and the H2 is correct as written. Do not "fix"
+  it back to eleven.
 - **D4 — Orange on light backgrounds — RESOLVED: strict rule stands.** Deep
   Orange only ever on Deep Blue. Prototype accents that use orange on
   white/tan (pain-point top borders and eyebrow, process-step borders,

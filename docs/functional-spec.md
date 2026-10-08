@@ -28,7 +28,7 @@ From the page tracker (15 Jul 2026). Priority 1 = build first.
 | `/services/crm-implementation` | T3 | Ready — tiers $7,500/$12,000/$18,000 *(live tiers are now Starter $10,500 / Advanced $15,000 / Enterprise $21,000+)* | 2 |
 | `/services/hubspot-audit` | T3 | Blocked — pricing tiers undefined *(live: Focused $1,500 / Full portal $2,750 / Complex $4,500 — built and indexed)* | 2 |
 | `/services/hubspot-training` | T3 | Ready — $750 half / $1,200 full day *(live: $2,300 half / $3,800 full day)* | 3 |
-| `/services/marketing-automation` | T3 | Partial — reconcile pricing. One page, two anchors (Strategy/Implementation cards both land here) *(live: Strategy $4,000 / Build $9,500 / Full delivery $11,500 — built and indexed)* | 2 |
+| `/services/marketing-automation` | T3 | Partial — reconcile pricing. One page, one card on `/services` (the Strategy/Implementation card split was consolidated Oct 2026) *(live: Strategy $4,000 / Build $9,500 / Full delivery $11,500 — built and indexed)* | 1 |
 | `/services/ai-solutions` | T3 | Partial — pricing gap; cross-links Claude card on `/solutions` *(live: AI Readiness Workshop $3,500 — built and indexed)* | 2 |
 | `/services/revops-retainers` | T3 | Ready — $2,500/$3,000/$4,500 (reconcile live "from $3,200") *(live: Momentum $4,000/mo / Partner $5,500/mo — 2 tiers, not 3)* | 3 |
 | `/services/post-sales-excellence` | T3 | Blocked — scope undefined *(live: Standard $12,000 / Advanced $18,000 / Enterprise $22,000 — built and indexed)* | 3 |
