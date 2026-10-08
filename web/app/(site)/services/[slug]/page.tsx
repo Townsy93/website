@@ -91,6 +91,7 @@ export default async function ServicePage({
   // not yet moved across.
   const pricingSource = service.pricingTable ?? service.pricing;
   const pricingConfirmed = Boolean(pricingSource?.confirmed);
+  const hasHeroImage = Boolean(service.hero?.image?.asset);
   const tiers = pricingConfirmed ? (pricingSource?.tiers ?? []) : [];
 
   const serviceJsonLd = {
@@ -128,7 +129,12 @@ export default async function ServicePage({
       />
       {/* Hero — breadcrumb left-aligned like the case study page (the
           designer's consistency note), stage badge removed ("the category
-          becomes confusing"), content centred. */}
+          becomes confusing"). Centred by default; splits to text-left with
+          the photo on the right when hero.image is set, which is the
+          retainers hero's layout made available to any service. No
+          placeholder in the empty case: the image slot simply isn't there,
+          so services without a photo keep the centred hero they have now
+          rather than gaining a grey box. */}
       <section className="bg-deep-blue text-white">
         <div className="mx-auto max-w-[90rem] px-6 pb-12 pt-20 sm:pb-20 sm:pt-28">
           <nav aria-label="Breadcrumb" className="text-caption text-white/50">
@@ -137,39 +143,66 @@ export default async function ServicePage({
             </Link>{" "}
             › <span className="text-white/80">{service.title}</span>
           </nav>
-          <div className="mx-auto max-w-4xl pt-6 text-center">
-            <h1 className="text-pretty text-h1-mobile md:text-h1">
-              <EmphasisedHeading
-                heading={service.hero?.heading ?? service.title ?? ""}
-                phrase={service.hero?.emphasisPhrase}
-                markerStyle={service.hero?.markerStyle}
-                color="deep-orange"
-              />
-            </h1>
-            {(service.hero?.subheading ?? service.shortDescription) && (
-              <p className="mx-auto mt-6 max-w-xl text-body-lg text-white/70">
-                {service.hero?.subheading ?? service.shortDescription}
-              </p>
-            )}
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              {service.hero?.primaryCta?.href && (
-                <ButtonLink href={service.hero.primaryCta.href} variant="orange">
-                  {service.hero.primaryCta.label}
-                </ButtonLink>
-              )}
-              {service.hero?.secondaryCta?.href && (
-                <ButtonLink
-                  href={service.hero.secondaryCta.href}
-                  variant="ghost-light"
+          <div
+            className={
+              hasHeroImage
+                ? "grid items-center gap-14 pt-6 lg:grid-cols-[1.05fr_0.95fr]"
+                : "mx-auto max-w-4xl pt-6 text-center"
+            }
+          >
+            <div>
+              <h1 className="text-pretty text-h1-mobile md:text-h1">
+                <EmphasisedHeading
+                  heading={service.hero?.heading ?? service.title ?? ""}
+                  phrase={service.hero?.emphasisPhrase}
+                  markerStyle={service.hero?.markerStyle}
+                  color="deep-orange"
+                />
+              </h1>
+              {(service.hero?.subheading ?? service.shortDescription) && (
+                <p
+                  className={`mt-6 max-w-xl text-body-lg text-white/70 ${
+                    hasHeroImage ? "" : "mx-auto"
+                  }`}
                 >
-                  {service.hero.secondaryCta.label}
-                </ButtonLink>
+                  {service.hero?.subheading ?? service.shortDescription}
+                </p>
+              )}
+              <div
+                className={`mt-8 flex flex-wrap gap-3 ${
+                  hasHeroImage ? "" : "justify-center"
+                }`}
+              >
+                {service.hero?.primaryCta?.href && (
+                  <ButtonLink
+                    href={service.hero.primaryCta.href}
+                    variant="orange"
+                  >
+                    {service.hero.primaryCta.label}
+                  </ButtonLink>
+                )}
+                {service.hero?.secondaryCta?.href && (
+                  <ButtonLink
+                    href={service.hero.secondaryCta.href}
+                    variant="ghost-light"
+                  >
+                    {service.hero.secondaryCta.label}
+                  </ButtonLink>
+                )}
+              </div>
+              {pricingConfirmed && service.heroMeta && (
+                <p className="mt-6 text-caption text-white/55">
+                  {service.heroMeta}
+                </p>
               )}
             </div>
-            {pricingConfirmed && service.heroMeta && (
-              <p className="mt-6 text-caption text-white/55">
-                {service.heroMeta}
-              </p>
+            {hasHeroImage && (
+              <SanityImage
+                image={service.hero?.image}
+                width={540}
+                height={420}
+                className="h-64 w-full rounded-2xl object-cover lg:h-96"
+              />
             )}
           </div>
         </div>
