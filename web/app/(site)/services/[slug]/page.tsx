@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { ogImageMeta } from "@/lib/ogImage";
 import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
@@ -47,6 +48,7 @@ export async function generateMetadata({
     title: service?.seo?.metaTitle ?? service?.title ?? "Service",
     description: service?.seo?.metaDescription ?? service?.shortDescription ?? undefined,
     alternates: { canonical: `/services/${slug}` },
+    ...ogImageMeta(service?.seo),
     // An unbuilt page still holds placeholder copy, so it is noindexed the
     // same way an unbuilt industry is. follow stays true: the links out of
     // it are real, only the wording is not.
@@ -180,13 +182,34 @@ export default async function ServicePage({
       {service.introBody && (
         <section className="bg-white">
           <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-6 py-14 sm:py-24 lg:grid-cols-[0.9fr_1.1fr]">
-            <SanityImage
-              image={service.introImage}
-              width={520}
-              height={440}
-              className="h-72 w-full rounded-2xl object-cover lg:h-100"
-              placeholderLabel="Client + Zippily photo"
-            />
+            {/* One tall photo, or two stacked when a second is set — the
+                field existed but only the retainers page ever read it. */}
+            {service.introImageSecond ? (
+              <div className="flex flex-col gap-5">
+                <SanityImage
+                  image={service.introImage}
+                  width={520}
+                  height={340}
+                  className="h-56 w-full rounded-2xl object-cover sm:h-64"
+                  placeholderLabel="Client + Zippily photo"
+                />
+                <SanityImage
+                  image={service.introImageSecond}
+                  width={520}
+                  height={340}
+                  className="h-56 w-full rounded-2xl object-cover sm:h-64"
+                  placeholderLabel="Zippily at work"
+                />
+              </div>
+            ) : (
+              <SanityImage
+                image={service.introImage}
+                width={520}
+                height={440}
+                className="h-72 w-full rounded-2xl object-cover lg:h-100"
+                placeholderLabel="Client + Zippily photo"
+              />
+            )}
             <div>
               {service.introEyebrow && (
                 <p className="text-caption font-semibold uppercase tracking-[0.1em] text-deep-blue-80">
@@ -340,7 +363,22 @@ export default async function ServicePage({
                 `How this played out for ${service.caseStudy.client}`
               }
               body={service.proofBody}
-              stats={service.caseStudy.stats}
+              // proofStat completes the proofHeading/proofBody trio this
+              // card already renders — it was the only one of the three
+              // never passed through, so editors filled it in and got an
+              // empty stat rail. The card slices to two.
+              stats={[
+                ...(service.proofStat?.value
+                  ? [
+                      {
+                        _key: "proofStat",
+                        value: service.proofStat.value,
+                        label: service.proofStat.label,
+                      },
+                    ]
+                  : []),
+                ...(service.caseStudy.stats ?? []),
+              ]}
               href={
                 service.caseStudy.status !== "comingSoon" &&
                 service.caseStudy.slug?.current
@@ -387,6 +425,39 @@ export default async function ServicePage({
           </div>
         </div>
       </section>
+
+      {/* Related services — picked in Studio and already dereferenced by
+          SERVICE_QUERY, but nothing rendered them until Oct 2026. Light
+          cards on white so this doesn't fight the stone section below. */}
+      {(service.relatedServices?.length ?? 0) > 0 && (
+        <section className="bg-white">
+          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
+            <h2 className="text-center text-h2">Often paired with</h2>
+            <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
+              {service.relatedServices?.map((related) => (
+                <Link
+                  key={related._id}
+                  href={`/services/${related.slug?.current}`}
+                  className="rounded-xl border border-[#DCDACB] bg-white p-7 transition hover:-translate-y-0.5 hover:shadow-lg"
+                >
+                  {related.icon && (
+                    <Icon
+                      name={related.icon}
+                      className="h-6 w-6 text-deep-blue"
+                    />
+                  )}
+                  <h3 className="mt-4 text-h4">{related.title}</h3>
+                  {related.shortDescription && (
+                    <p className="mt-3 text-body text-deep-blue-80">
+                      {related.shortDescription}
+                    </p>
+                  )}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Helpful resources — related posts picked in Studio; hidden when
           none are set. Cards match the homepage blog teaser. */}

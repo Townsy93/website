@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { ogImageMeta } from "@/lib/ogImage";
 import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
@@ -33,6 +34,7 @@ export async function generateMetadata({
     description:
       industry?.seo?.metaDescription ?? industry?.shortDescription ?? undefined,
     alternates: { canonical: `/industries/${slug}` },
+    ...ogImageMeta(industry?.seo),
     ...(industry?.seo?.noIndex || !industry?.pageBuilt
       ? { robots: { index: false, follow: true } }
       : {}),

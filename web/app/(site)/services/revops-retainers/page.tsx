@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { ogImageMeta } from "@/lib/ogImage";
 import { sanityFetch } from "@/sanity/fetch";
 import { SERVICE_QUERY, TRUST_LOGOS_QUERY } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -29,6 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       service?.seo?.metaDescription ?? service?.shortDescription ?? undefined,
     alternates: { canonical: `/services/${SLUG}` },
+    ...ogImageMeta(service?.seo),
     ...(service?.seo?.noIndex || !service?.pageBuilt
       ? { robots: { index: false, follow: true } }
       : {}),
@@ -436,7 +438,21 @@ export default async function RetainersPage() {
                 "What a retainer actually looks like in practice"
               }
               body={service.proofBody}
-              stats={service.caseStudy.stats}
+              // Same as the template: proofStat completes the trio with
+              // proofHeading and proofBody, and was the only one of the
+              // three this card never received.
+              stats={[
+                ...(service.proofStat?.value
+                  ? [
+                      {
+                        _key: "proofStat",
+                        value: service.proofStat.value,
+                        label: service.proofStat.label,
+                      },
+                    ]
+                  : []),
+                ...(service.caseStudy.stats ?? []),
+              ]}
               href={
                 service.caseStudy.status !== "comingSoon" &&
                 service.caseStudy.slug?.current
@@ -449,6 +465,37 @@ export default async function RetainersPage() {
               videoUrl={service.caseStudy.videoUrl}
               posterUrl={caseVideoPoster}
             />
+          </div>
+        </section>
+      )}
+
+      {/* Related services — same treatment as the template. */}
+      {(service.relatedServices?.length ?? 0) > 0 && (
+        <section className="bg-white">
+          <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
+            <h2 className="text-center text-h2">Often paired with</h2>
+            <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
+              {service.relatedServices?.map((related) => (
+                <Link
+                  key={related._id}
+                  href={`/services/${related.slug?.current}`}
+                  className="rounded-xl border border-[#DCDACB] bg-white p-7 transition hover:-translate-y-0.5 hover:shadow-lg"
+                >
+                  {related.icon && (
+                    <Icon
+                      name={related.icon}
+                      className="h-6 w-6 text-deep-blue"
+                    />
+                  )}
+                  <h3 className="mt-4 text-h4">{related.title}</h3>
+                  {related.shortDescription && (
+                    <p className="mt-3 text-body text-deep-blue-80">
+                      {related.shortDescription}
+                    </p>
+                  )}
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
       )}

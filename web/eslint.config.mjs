@@ -9,6 +9,10 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    // The OpenNext adapter's bundled worker lands here on every build and
+    // is generated, not source — without this, `npm run lint` after a
+    // build reports ~23k problems from one file.
+    ".open-next/**",
     "out/**",
     "build/**",
     "next-env.d.ts",

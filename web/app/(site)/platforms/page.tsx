@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ogImageMeta } from "@/lib/ogImage";
 import { sanityFetch } from "@/sanity/fetch";
 import { HUB_OFFERINGS_QUERY, SOLUTIONS_PAGE_QUERY } from "@/sanity/queries";
 import { EmphasisedHeading } from "@/components/ui/Marker";
@@ -19,6 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: page?.seo?.metaTitle ?? "Platforms",
     description: page?.seo?.metaDescription ?? "Not sure which HubSpot Hub fits your team? Here's what each one actually does.",
     alternates: { canonical: "/platforms" },
+    ...ogImageMeta(page?.seo),
     ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
   };
 }

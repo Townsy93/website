@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { ogImageMeta } from "@/lib/ogImage";
 import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
@@ -34,6 +35,7 @@ export async function generateMetadata({
     description:
       page?.seo?.metaDescription ?? page?.hero?.subheading ?? undefined,
     alternates: { canonical: `/platforms/${slug}` },
+    ...ogImageMeta(page?.seo),
     // Unbuilt pages still hold placeholder copy — noindexed until real
     // wording lands, but their outbound links are real so follow stays true.
     ...(page?.seo?.noIndex || !page?.pageBuilt

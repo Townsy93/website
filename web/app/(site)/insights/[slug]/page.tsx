@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { ogImageMeta } from "@/lib/ogImage";
 import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
@@ -31,6 +32,7 @@ export async function generateMetadata({
     title: post?.seo?.metaTitle ?? post?.title ?? "Insight",
     description: post?.seo?.metaDescription ?? post?.excerpt ?? undefined,
     alternates: { canonical: `/insights/${slug}` },
+    ...ogImageMeta(post?.seo),
     openGraph: { type: "article", publishedTime: post?.publishedAt ?? undefined },
     ...(post?.seo?.noIndex ? { robots: { index: false, follow: false } } : {}),
   };
