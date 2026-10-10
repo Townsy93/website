@@ -23,3 +23,35 @@ export function breadcrumbJsonLd(
     })),
   };
 }
+
+/**
+ * FAQPage markup for a page that renders a FaqAccordion.
+ *
+ * Google requires the marked-up Q&A to be visible on the page, so this
+ * applies exactly the same filter the accordion does (both a question and
+ * an answer present) and renders nothing when that leaves no items — a
+ * page with an empty faqs array shows no accordion, so it must not claim
+ * an FAQPage either. One per page: every route here renders a single
+ * accordion.
+ */
+export function FaqJsonLd({
+  faqs,
+}: {
+  faqs?: { question?: string | null; answer?: string | null }[] | null;
+}) {
+  const items = (faqs ?? []).filter((faq) => faq.question && faq.answer);
+  if (items.length === 0) return null;
+  return (
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: items.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: { "@type": "Answer", text: faq.answer },
+        })),
+      }}
+    />
+  );
+}

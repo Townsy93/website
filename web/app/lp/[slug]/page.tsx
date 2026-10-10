@@ -10,6 +10,7 @@ import {
   LANDING_PAGE_QUERY,
   LANDING_PAGE_SLUGS_QUERY,
 } from "@/sanity/queries";
+import { FaqJsonLd } from "@/components/seo/JsonLd";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
 import { FaqAccordion } from "@/components/modules/FaqAccordion";
@@ -173,6 +174,7 @@ export default async function LandingPage({
           </section>
         )}
 
+        <FaqJsonLd faqs={page.faqs} />
         <FaqAccordion heading="Questions" faqs={page.faqs} name="lp-faqs" />
       </main>
 

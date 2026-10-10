@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { SITE_URL } from "@/lib/site";
 import { ogImageMeta } from "@/lib/ogImage";
 import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
@@ -9,6 +10,7 @@ import {
   PARTNER_INTEGRATION_QUERY,
   PARTNER_INTEGRATION_SLUGS_QUERY,
 } from "@/sanity/queries";
+import { breadcrumbJsonLd, FaqJsonLd, JsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
@@ -68,6 +70,12 @@ export default async function PartnerIntegrationPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Platforms", url: `${SITE_URL}/platforms` },
+          { name: page.title ?? slug, url: `${SITE_URL}/platforms/${slug}` },
+        ])}
+      />
       {/* Hero — dark breadcrumb (H1c) */}
       <section className="bg-deep-blue text-white">
         <div className="mx-auto max-w-4xl px-6 pb-12 pt-24 sm:pb-20 sm:pt-32 text-center">
@@ -135,6 +143,7 @@ export default async function PartnerIntegrationPage({
       )}
 
       {/* FAQ (M26) */}
+      <FaqJsonLd faqs={page.faqs} />
       <FaqAccordion
         heading="Frequently asked questions"
         faqs={page.faqs}

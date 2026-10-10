@@ -6,6 +6,7 @@ import {
   LATEST_POSTS_QUERY,
   SITE_SETTINGS_QUERY,
 } from "@/sanity/queries";
+import { FaqJsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { CountUp } from "@/components/ui/CountUp";
 import { EmphasisedHeading, Marker } from "@/components/ui/Marker";
@@ -420,6 +421,7 @@ export default async function Home() {
       )}
 
       {/* FAQ preview (M26) — unchanged: heading left, accordion right */}
+      <FaqJsonLd faqs={page.faqs} />
       <FaqAccordion
         heading="Things people usually ask us"
         faqs={page.faqs}

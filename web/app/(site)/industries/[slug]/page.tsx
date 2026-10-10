@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { SITE_URL } from "@/lib/site";
 import { ogImageMeta } from "@/lib/ogImage";
 import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
 import { INDUSTRY_QUERY, INDUSTRY_SLUGS_QUERY } from "@/sanity/queries";
+import { breadcrumbJsonLd, FaqJsonLd, JsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
@@ -66,6 +68,15 @@ export default async function IndustryPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Industries", url: `${SITE_URL}/industries` },
+          {
+            name: industry.title ?? slug,
+            url: `${SITE_URL}/industries/${slug}`,
+          },
+        ])}
+      />
       {/* Hero — dark breadcrumb with industry badge (H1c) */}
       <section className="bg-deep-blue text-white">
         <div className="mx-auto max-w-[90rem] px-6 pb-12 pt-24 sm:pb-20 sm:pt-32">
@@ -224,6 +235,7 @@ export default async function IndustryPage({
       )}
 
       {/* FAQ (M26) */}
+      <FaqJsonLd faqs={industry.faqs} />
       <FaqAccordion
         heading={`${industry.title}, answered`}
         faqs={industry.faqs}

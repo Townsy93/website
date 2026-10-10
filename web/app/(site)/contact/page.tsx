@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/fetch";
 import { CONTACT_PAGE_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/queries";
+import { FaqJsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { SanityImage } from "@/components/ui/SanityImage";
@@ -151,6 +152,7 @@ export default async function ContactPage() {
       </section>
 
       {/* FAQ (M26) */}
+      <FaqJsonLd faqs={page.faqs} />
       <FaqAccordion
         heading="Questions, answered"
         faqs={page.faqs}

@@ -15,7 +15,7 @@ import { FaqAccordion } from "@/components/modules/FaqAccordion";
 import { LogoTicker } from "@/components/modules/LogoTicker";
 import { formatDate } from "@/components/modules/postCard";
 import { PricingSection } from "@/components/modules/PricingSection";
-import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, FaqJsonLd, JsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
 import { resolveVideoPoster } from "@/lib/vimeoPoster";
 
@@ -539,6 +539,7 @@ export default async function RetainersPage() {
       )}
 
       {/* FAQ — split layout per the mock, homepage wording. */}
+      <FaqJsonLd faqs={service.faqs} />
       <FaqAccordion
         heading="Things people usually ask us"
         faqs={service.faqs}

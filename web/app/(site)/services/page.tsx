@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/fetch";
 import { SERVICES_LANDING_QUERY } from "@/sanity/queries";
+import { FaqJsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { LeafCorners } from "@/components/ui/LeafCorners";
@@ -244,6 +245,7 @@ export default async function ServicesPage() {
       )}
 
       {/* FAQ (M26) */}
+      <FaqJsonLd faqs={page.faqs} />
       <FaqAccordion
         heading="Questions people ask before working with us"
         faqs={page.faqs}

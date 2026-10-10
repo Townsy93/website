@@ -6,6 +6,7 @@ import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
 import { VACANCY_QUERY, VACANCY_SLUGS_QUERY } from "@/sanity/queries";
 import { SITE_URL } from "@/lib/site";
+import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Icon } from "@/components/ui/Icon";
 import { SanityImage } from "@/components/ui/SanityImage";
@@ -89,6 +90,12 @@ export default async function VacancyPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Careers", url: `${SITE_URL}/careers` },
+          { name: vacancy.title ?? slug, url: `${SITE_URL}/careers/${slug}` },
+        ])}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

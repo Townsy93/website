@@ -22,7 +22,7 @@ import { formatDate } from "@/components/modules/postCard";
 import { BenefitsBand } from "@/components/modules/BenefitsBand";
 import { PricingSection } from "@/components/modules/PricingSection";
 import { LeafCorners } from "@/components/ui/LeafCorners";
-import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, FaqJsonLd, JsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
 import { resolveVideoPoster } from "@/lib/vimeoPoster";
 
@@ -534,6 +534,7 @@ export default async function ServicePage({
       )}
 
       {/* FAQ (M26) */}
+      <FaqJsonLd faqs={service.faqs} />
       <FaqAccordion
         heading="Before you book — the honest answers"
         faqs={service.faqs}
