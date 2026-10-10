@@ -133,15 +133,18 @@ export default async function EventDetailPage({
         ])}
       />
 
-      {/* Header image — full bleed */}
-      <SanityImage
-        image={event.heroImage}
-        width={1600}
-        height={440}
-        className="w-full rounded-b-[18px] object-cover md:rounded-b-3xl"
-        style={{ height: 440 }}
-        placeholderLabel="Wide session photo"
-      />
+      {/* Header image — full bleed, and omitted entirely when there is no
+          photo. A 440px grey box captioned "Wide session photo" is worse
+          than starting the page at the title. */}
+      {event.heroImage?.asset && (
+        <SanityImage
+          image={event.heroImage}
+          width={1600}
+          height={440}
+          className="w-full rounded-b-[18px] object-cover md:rounded-b-3xl"
+          style={{ height: 440 }}
+        />
+      )}
 
       {/* Body — two columns on desktop */}
       <section className="bg-off-white-tan">

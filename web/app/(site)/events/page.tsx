@@ -97,15 +97,23 @@ export default async function EventsPage() {
         <>
           {/* Featured next session — Deep Blue */}
           <section className="bg-deep-blue text-white">
-            <div className="mx-auto grid max-w-[90rem] items-center gap-14 px-6 py-18 sm:px-12 lg:grid-cols-[1.05fr_0.95fr]">
-              <SanityImage
-                image={featured.cardImage}
-                width={620}
-                height={440}
-                className="w-full rounded-[20px] object-cover"
-                style={{ height: 440 }}
-                placeholderLabel="Real people around a table — last session"
-              />
+            {/* Two columns with a photo, one without — the same rule the
+                event cards and detail hero follow. A grey box captioned
+                "last session" is not worth half a Deep Blue section. */}
+            <div
+              className={`mx-auto grid max-w-[90rem] items-center gap-14 px-6 py-18 sm:px-12 ${
+                featured.cardImage?.asset ? "lg:grid-cols-[1.05fr_0.95fr]" : ""
+              }`}
+            >
+              {featured.cardImage?.asset && (
+                <SanityImage
+                  image={featured.cardImage}
+                  width={620}
+                  height={440}
+                  className="w-full rounded-[20px] object-cover"
+                  style={{ height: 440 }}
+                />
+              )}
               <div>
                 <p className="text-caption font-semibold uppercase tracking-[0.08em] text-sky-blue">
                   Next session

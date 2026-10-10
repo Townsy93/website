@@ -34,23 +34,44 @@ export function EventCard({
   imageHeight?: number;
 }) {
   const spots = spotsLine(event.spotsRemaining, event.capacity);
+  const categories = event.categories ?? [];
+  const hasImage = Boolean(event.cardImage?.asset);
   return (
     <Link
       href={`/events/${event.slug?.current}`}
       className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_2px_10px_rgba(14,47,74,0.07)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_14px_36px_rgba(14,47,74,0.15)]"
     >
-      <div className="relative">
-        <SanityImage
-          image={event.cardImage}
-          width={420}
-          height={imageHeight}
-          className="w-full object-cover"
-          style={{ height: imageHeight }}
-          placeholderLabel="Session photo"
-        />
-        {(event.categories?.length ?? 0) > 0 && (
-          <div className="pointer-events-none absolute inset-x-3.5 bottom-3.5 flex flex-wrap gap-1.5">
-            {event.categories?.map((category) => (
+      {/* No photo, no image band: the card starts at its title rather than
+          with a grey box. The category chips are positioned over the image,
+          so without one they move into the body below instead of floating
+          on nothing. */}
+      {hasImage && (
+        <div className="relative">
+          <SanityImage
+            image={event.cardImage}
+            width={420}
+            height={imageHeight}
+            className="w-full object-cover"
+            style={{ height: imageHeight }}
+          />
+          {categories.length > 0 && (
+            <div className="pointer-events-none absolute inset-x-3.5 bottom-3.5 flex flex-wrap gap-1.5">
+              {categories.map((category) => (
+                <span
+                  key={category}
+                  className="rounded-full bg-deep-blue/92 px-2.5 py-1 text-[11.5px] font-semibold text-white"
+                >
+                  {category}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      <div className="flex flex-1 flex-col px-6 pb-5.5 pt-6">
+        {!hasImage && categories.length > 0 && (
+          <div className="mb-3 flex flex-wrap gap-1.5">
+            {categories.map((category) => (
               <span
                 key={category}
                 className="rounded-full bg-deep-blue/92 px-2.5 py-1 text-[11.5px] font-semibold text-white"
@@ -60,8 +81,6 @@ export function EventCard({
             ))}
           </div>
         )}
-      </div>
-      <div className="flex flex-1 flex-col px-6 pb-5.5 pt-6">
         <h3 className="text-h4 leading-tight">{event.title}</h3>
         {event.startDateTime && (
           <p className="mt-2 text-[13.5px] text-[#767666]">
