@@ -33,6 +33,14 @@ nested field use dotted/bracketed path syntax (`"hero.heading"`, `"modules[_key=
 — always `content:get` first to see the exact shape (portable-text/array fields need the matching
 `_key`, not a bare index).
 
+## `one-off/`
+
+Scripts in `scripts/one-off/` are history, not tools. Each one records a single content
+change that was worth keeping the reasoning for — where the copy came from, which figures
+were checked against which source, and what was deliberately left unpublished. They are
+dry-run by default and are not expected to be run again; read them, don't reach for them.
+`content:patch` remains the general-purpose way to edit a document.
+
 ## Rules for using this
 
 - **Always `content:get` first** and show the before/after to Sean before patching — this writes
