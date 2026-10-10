@@ -10,6 +10,7 @@ import {
   SERVICE_SLUGS_QUERY,
   SITE_SETTINGS_QUERY,
 } from "@/sanity/queries";
+import { PartnerBadge } from "@/components/ui/PartnerBadge";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
@@ -137,12 +138,17 @@ export default async function ServicePage({
           rather than gaining a grey box. */}
       <section className="bg-deep-blue text-white">
         <div className="mx-auto max-w-[90rem] px-6 pb-12 pt-20 sm:pb-20 sm:pt-28">
-          <nav aria-label="Breadcrumb" className="text-caption text-white/50">
-            <Link href="/services" className="text-sky-blue hover:underline">
-              Services
-            </Link>{" "}
-            › <span className="text-white/80">{service.title}</span>
-          </nav>
+          {/* Breadcrumb and the Platinum badge share the top row, so the
+              credential is above the fold without displacing the H1. */}
+          <div className="flex items-start justify-between gap-6">
+            <nav aria-label="Breadcrumb" className="text-caption text-white/50">
+              <Link href="/services" className="text-sky-blue hover:underline">
+                Services
+              </Link>{" "}
+              › <span className="text-white/80">{service.title}</span>
+            </nav>
+            <PartnerBadge />
+          </div>
           <div
             className={
               hasHeroImage

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ogImageMeta } from "@/lib/ogImage";
 import { sanityFetch } from "@/sanity/fetch";
 import { SERVICE_QUERY, TRUST_LOGOS_QUERY } from "@/sanity/queries";
+import { PartnerBadge } from "@/components/ui/PartnerBadge";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Icon } from "@/components/ui/Icon";
 import { LeafCorners } from "@/components/ui/LeafCorners";
@@ -111,12 +112,17 @@ export default async function RetainersPage() {
           riding along the bottom of the section. */}
       <section className="bg-deep-blue text-white">
         <div className="mx-auto max-w-[90rem] px-6 pb-2 pt-20 sm:pt-28">
-          <nav aria-label="Breadcrumb" className="text-caption text-white/50">
-            <Link href="/services" className="text-sky-blue hover:underline">
-              Services
-            </Link>{" "}
-            › <span className="text-white/80">{service.title}</span>
-          </nav>
+          {/* Breadcrumb and the Platinum badge share the top row, so the
+              credential is above the fold without displacing the H1. */}
+          <div className="flex items-start justify-between gap-6">
+            <nav aria-label="Breadcrumb" className="text-caption text-white/50">
+              <Link href="/services" className="text-sky-blue hover:underline">
+                Services
+              </Link>{" "}
+              › <span className="text-white/80">{service.title}</span>
+            </nav>
+            <PartnerBadge />
+          </div>
           <div className="grid items-center gap-14 pb-12 pt-8 lg:grid-cols-[1.05fr_0.95fr]">
             <div>
               <h1 className="text-pretty text-h1-mobile md:text-h1">

@@ -50,11 +50,17 @@ export const EXPECTED_REDIRECTS: readonly (readonly [string, string])[] = [
   ["/hubspot-integrations", "/services/websites-and-integrations"],
   ["/our-solutions", "/services"],
   ["/hubspot-integrations/xero", "/insights/hubspot-xero-integration"],
-  ["/platforms", "/solutions"],
-  ["/platforms/aircall", "/solutions/aircall"],
-  ["/platforms/attio", "/solutions"],
-  ["/platforms/folk", "/solutions"],
-  ["/platforms/pandadoc", "/solutions"],
+  // The interim build ran the hub at /solutions before it was renamed back
+  // to /platforms (Sean, 19 Aug 2026). These were recorded the old way round
+  // and never corrected: they asserted /platforms redirects to /solutions,
+  // when /platforms is the live page and /solutions is what redirects. The
+  // check could not have passed since the rename.
+  ["/solutions", "/platforms"],
+  ["/solutions/aircall", "/platforms/aircall"],
+  // Retired platform pages, pointed at the hub they used to sit under.
+  ["/platforms/attio", "/platforms"],
+  ["/platforms/folk", "/platforms"],
+  ["/platforms/pandadoc", "/platforms"],
   ["/faqs", "/contact"],
   ["/testimonials", "/our-work"],
   ["/buyer-journey-workshop", "/services/customer-journey-mapping"],
@@ -68,5 +74,5 @@ export const EXPECTED_UNCHANGED: readonly string[] = [
   "/contact",
   "/industries",
   "/privacy-policy",
-  "/solutions",
+  "/platforms",
 ];
