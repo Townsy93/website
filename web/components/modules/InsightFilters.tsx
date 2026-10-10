@@ -141,18 +141,21 @@ export function InsightFilters({ posts }: { posts: PostCardData[] }) {
               href={`/insights/${post.slug?.current}`}
               className="overflow-hidden rounded-xl bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
             >
-              <SanityImage
-                image={post.coverImage}
-                width={400}
-                height={176}
-                fit="max"
-                // Cover images range from square to 16:9 — cropping to this
-                // box's fixed ratio was slicing the top/bottom off square
-                // illustrations. object-contain shows the whole image;
-                // leftover space is invisible against the card's white bg.
-                className="h-36 w-full bg-white object-contain"
-                placeholderLabel="Post image"
-              />
+              {/* No cover, no image band — a grey box told the reader
+                  nothing the headline underneath does not. */}
+              {post.coverImage?.asset && (
+                <SanityImage
+                  image={post.coverImage}
+                  width={400}
+                  height={176}
+                  fit="max"
+                  // Cover images range from square to 16:9 — cropping to this
+                  // box's fixed ratio was slicing the top/bottom off square
+                  // illustrations. object-contain shows the whole image;
+                  // leftover space is invisible against the card's white bg.
+                  className="h-36 w-full bg-white object-contain"
+                />
+              )}
               <div className="p-6">
                 <PostPills post={post} />
                 <h3 className="mt-3 text-h4">{post.title}</h3>

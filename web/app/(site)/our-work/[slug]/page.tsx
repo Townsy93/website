@@ -98,6 +98,7 @@ export default async function CaseStudyPage({
     { value: settings?.happyClients, label: "Happy clients" },
   ];
 
+  const hasGallery = (caseStudy.gallery?.length ?? 0) > 0;
   const videoPoster = await resolveVideoPoster(
     caseStudy.videoStill,
     caseStudy.videoUrl,
@@ -258,30 +259,35 @@ export default async function CaseStudyPage({
         </section>
       )}
 
-      {/* Gallery straddling into the results section — the three stills sit
-          half on white, half on the Deep Blue below. */}
-      <section className="bg-white">
-        <div className="relative z-10 mx-auto -mb-28 grid max-w-[90rem] grid-cols-1 gap-6 px-6 sm:grid-cols-3">
-          {(caseStudy.gallery?.length
-            ? caseStudy.gallery
-            : [null, null, null]
-          ).map((image, index) => (
-            <SanityImage
-              key={index}
-              image={image}
-              width={440}
-              height={300}
-              className="h-48 w-full rounded-2xl object-cover shadow-lg sm:h-56"
-              placeholderLabel="Zippily + client — still from the video"
-            />
-          ))}
-        </div>
-      </section>
+      {/* Gallery straddling into the results section — the stills sit half
+          on white, half on the Deep Blue below. It used to pad itself out to
+          three grey boxes when the case study had no stills; now it simply
+          isn't there, and the results section below drops the top padding it
+          only needed to clear the overlap. */}
+      {hasGallery && (
+        <section className="bg-white">
+          <div className="relative z-10 mx-auto -mb-28 grid max-w-[90rem] grid-cols-1 gap-6 px-6 sm:grid-cols-3">
+            {caseStudy.gallery?.map((image, index) => (
+              <SanityImage
+                key={index}
+                image={image}
+                width={440}
+                height={300}
+                className="h-48 w-full rounded-2xl object-cover shadow-lg sm:h-56"
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* The results — Deep Blue; the case's own stats repeat as callout
           rows, per the designer's "repeat stats again for impact". */}
       <section className="bg-deep-blue text-white">
-        <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-6 pb-14 sm:pb-24 pt-44 lg:grid-cols-2">
+        <div
+          className={`mx-auto grid max-w-[90rem] items-center gap-12 px-6 pb-14 sm:pb-24 lg:grid-cols-2 ${
+            hasGallery ? "pt-44" : "pt-14 sm:pt-24"
+          }`}
+        >
           <div>
             <h2 className="text-h2">The results</h2>
             {caseStudy.resultsText && (

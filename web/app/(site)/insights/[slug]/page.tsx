@@ -195,16 +195,19 @@ export default async function PostPage({
                   href={`/insights/${related.slug?.current}`}
                   className="overflow-hidden rounded-xl bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
                 >
-                  <SanityImage
-                    image={related.coverImage}
-                    width={400}
-                    height={190}
-                    fit="max"
-                    // Cover images range from square to 16:9 — see the same
-                    // fix in InsightFilters.tsx's grid card.
-                    className="h-40 w-full bg-white object-contain"
-                    placeholderLabel="Post image"
-                  />
+                  {/* No cover, no image band — a grey box told the reader
+                      nothing the headline underneath does not. */}
+                  {related.coverImage?.asset && (
+                    <SanityImage
+                      image={related.coverImage}
+                      width={400}
+                      height={190}
+                      fit="max"
+                      // Cover images range from square to 16:9 — see the same
+                      // fix in InsightFilters.tsx's grid card.
+                      className="h-40 w-full bg-white object-contain"
+                    />
+                  )}
                   <div className="p-6">
                     <h3 className="text-h4">{related.title}</h3>
                     <p className="mt-3 text-caption text-deep-blue-80">

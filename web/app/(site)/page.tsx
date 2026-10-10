@@ -395,13 +395,16 @@ export default async function Home() {
                   href={`/insights/${post.slug?.current}`}
                   className="overflow-hidden rounded-xl bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
                 >
-                  <SanityImage
-                    image={post.coverImage}
-                    width={560}
-                    height={245}
-                    className="h-52 w-full object-cover"
-                    placeholderLabel="Post image"
-                  />
+                  {/* No cover, no image band — a grey box told the reader
+                      nothing the headline underneath does not. */}
+                  {post.coverImage?.asset && (
+                    <SanityImage
+                      image={post.coverImage}
+                      width={560}
+                      height={245}
+                      className="h-52 w-full object-cover"
+                    />
+                  )}
                   <div className="p-7">
                     <p className="text-caption text-deep-blue-80">
                       {post.publishedAt} · {post.readTime} min read
