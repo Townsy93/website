@@ -135,10 +135,17 @@ export function InsightFilters({ posts }: { posts: PostCardData[] }) {
         </p>
       ) : (
         <div className="mt-4 grid gap-6 md:grid-cols-3">
-          {matches.slice(0, shown).map((post) => (
+          {/* Every match renders; the ones past `shown` are hidden rather
+              than withheld. Slicing here meant the server HTML carried only
+              the first page — 7 links for 23 posts — and a crawler does not
+              click "Load more", so the rest had no internal link from the
+              hub at all. Same content for everyone, just progressively
+              disclosed, which is how an accordion behaves. */}
+          {matches.map((post, index) => (
             <Link
               key={post._id}
               href={`/insights/${post.slug?.current}`}
+              hidden={index >= shown}
               className="overflow-hidden rounded-xl bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
             >
               {/* No cover, no image band — a grey box told the reader

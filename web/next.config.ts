@@ -22,7 +22,7 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
   // Goes to the post rather than the service page: the post covers Xero
   // specifically and is live, where the service page is still a placeholder.
   { source: "/hubspot-integrations/xero", destination: "/insights/hubspot-xero-integration" },
-  { source: "/faqs", destination: "/contact" },
+  { source: "/faqs", destination: "/" },
   // The interim build ran the hub at /solutions before it was renamed
   // back to /platforms (Sean, 19 Aug 2026) — the Squarespace original.
   { source: "/solutions", destination: "/platforms" },
@@ -57,19 +57,22 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
     destination: "/insights/mapping-your-tech-ecosystem",
   },
   // Never migrated, so the generic rule below would send each to a slug that
-  // does not exist. The hub is a weaker landing than the post would be — if
-  // any of these still earn traffic, migrating the post beats this.
+  // does not exist. These three parked at the hub until Sean picked the
+  // closest surviving post for each (11 Oct 2026) — a specific post is a far
+  // better landing than the hub for someone arriving on a named article.
   {
     source: "/blog/common-mistakes-when-onboarding-hubspot-and-how-to-prevent-them",
-    destination: "/insights",
+    destination: "/insights/ownership-gaps-create-operational-chaos",
   },
   {
+    // The 2026 rewrite of this post, published 11 Oct.
     source: "/blog/top-hubspot-ai-features-to-accelerate-your-business-in-2025",
-    destination: "/insights",
+    destination: "/insights/hubspot-ai-features",
   },
   {
     source: "/blog/why-your-business-needs-marketing-automation-in-2025-before-you-fall-behind",
-    destination: "/insights",
+    destination:
+      "/insights/designing-a-high-performing-email-automation-strategy-a-step-by-step-guide-for-growing-businesses",
   },
   // The 2025 edition, superseded by the 2026 post. Indexed but absent from the
   // sitemap, so the generic rule below was sending it to a slug that does not
