@@ -13,7 +13,7 @@ import { TOPIC_LABELS, formatDate } from "@/components/modules/postCard";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Free resources",
+  title: "Free HubSpot Resources & Guides | Zippily NZ",
   description:
     "Guides, comparison sheets and prompt packs pulled from real client work — no fluff, no theory.",
   alternates: { canonical: "/resources" },
@@ -49,10 +49,10 @@ export default async function ResourcesPage() {
 
       {/* Intro / mission statement */}
       <section className="mx-auto grid max-w-[90rem] gap-10 px-6 pb-16 pt-36 lg:grid-cols-[0.35fr_0.65fr]">
-        <p className="flex items-start gap-3 text-body-lg">
+        <h1 className="flex items-start gap-3 text-body-lg font-normal">
           <span aria-hidden className="mt-1.5 h-3 w-3 shrink-0 bg-deep-orange" />
           Free resources
-        </p>
+        </h1>
         <p className="text-h2 font-normal tracking-body">
           Everything here is pulled from{" "}
           <Marker style="circle" color="deep-orange">
