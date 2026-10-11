@@ -112,17 +112,12 @@ export default async function RetainersPage() {
           riding along the bottom of the section. */}
       <section className="bg-deep-blue text-white">
         <div className="mx-auto max-w-[90rem] px-6 pb-2 pt-20 sm:pt-28">
-          {/* Breadcrumb and the Platinum badge share the top row, so the
-              credential is above the fold without displacing the H1. */}
-          <div className="flex items-start justify-between gap-6">
-            <nav aria-label="Breadcrumb" className="text-caption text-white/50">
-              <Link href="/services" className="text-sky-blue hover:underline">
-                Services
-              </Link>{" "}
-              › <span className="text-white/80">{service.title}</span>
-            </nav>
-            <PartnerBadge />
-          </div>
+          <nav aria-label="Breadcrumb" className="text-caption text-white/50">
+            <Link href="/services" className="text-sky-blue hover:underline">
+              Services
+            </Link>{" "}
+            › <span className="text-white/80">{service.title}</span>
+          </nav>
           <div className="grid items-center gap-14 pb-12 pt-8 lg:grid-cols-[1.05fr_0.95fr]">
             <div>
               <h1 className="text-pretty text-h1-mobile md:text-h1">
@@ -159,6 +154,7 @@ export default async function RetainersPage() {
                   {service.heroMeta}
                 </p>
               )}
+              <PartnerBadge className="mt-8" />
             </div>
             <SanityImage
               image={service.hero?.image}

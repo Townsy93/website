@@ -25,9 +25,14 @@ export function Marker({
   children: ReactNode;
 }) {
   if (!style || style === "none") return <span>{children}</span>;
+  // nowrap keeps the marker drawing cleanly around one unbroken run, but a
+  // long emphasis phrase then cannot wrap and pushes the whole heading wider
+  // than a phone screen — 24px of horizontal overflow on /services at 375px,
+  // which shifted every section below it. Wrapping is allowed below sm; the
+  // SVG stretches to whatever box that produces.
   const stroke = `var(--color-${color})`;
   return (
-    <span className="relative inline-block whitespace-nowrap">
+    <span className="relative inline-block whitespace-normal sm:whitespace-nowrap">
       {children}
       {style === "circle" ? (
         <span className={CIRCLE_BOX}>

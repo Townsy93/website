@@ -138,17 +138,12 @@ export default async function ServicePage({
           rather than gaining a grey box. */}
       <section className="bg-deep-blue text-white">
         <div className="mx-auto max-w-[90rem] px-6 pb-12 pt-20 sm:pb-20 sm:pt-28">
-          {/* Breadcrumb and the Platinum badge share the top row, so the
-              credential is above the fold without displacing the H1. */}
-          <div className="flex items-start justify-between gap-6">
-            <nav aria-label="Breadcrumb" className="text-caption text-white/50">
-              <Link href="/services" className="text-sky-blue hover:underline">
-                Services
-              </Link>{" "}
-              › <span className="text-white/80">{service.title}</span>
-            </nav>
-            <PartnerBadge />
-          </div>
+          <nav aria-label="Breadcrumb" className="text-caption text-white/50">
+            <Link href="/services" className="text-sky-blue hover:underline">
+              Services
+            </Link>{" "}
+            › <span className="text-white/80">{service.title}</span>
+          </nav>
           <div
             className={
               hasHeroImage
@@ -201,6 +196,12 @@ export default async function ServicePage({
                   {service.heroMeta}
                 </p>
               )}
+              {/* Under the intro copy rather than in the breadcrumb row: at
+                  badge size it was unreadable up there, and its height pushed
+                  the hero down. Centred with the text when there is no photo. */}
+              <PartnerBadge
+                className={hasHeroImage ? "mt-8" : "mx-auto mt-8 text-left"}
+              />
             </div>
             {hasHeroImage && (
               <SanityImage
