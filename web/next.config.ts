@@ -74,6 +74,10 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
     destination:
       "/insights/designing-a-high-performing-email-automation-strategy-a-step-by-step-guide-for-growing-businesses",
   },
+  {
+    source: "/insights/best-crm-for-small-business-in-nz-2026",
+    destination: "/insights/best-crms-for-small-business-2026",
+  },
   // The 2025 edition, superseded by the 2026 post. Indexed but absent from the
   // sitemap, so the generic rule below was sending it to a slug that does not
   // exist. Points at the current edition rather than the hub.

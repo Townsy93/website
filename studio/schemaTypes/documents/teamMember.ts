@@ -37,7 +37,7 @@ export const teamMember = defineType({
       title: 'Short bio',
       type: 'text',
       rows: 3,
-      validation: (rule) => rule.max(300),
+      validation: (rule) => rule.max(500),
     }),
     defineField({
       name: 'outsideWork',
