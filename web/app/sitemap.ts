@@ -17,6 +17,22 @@ const SITEMAP_QUERY = defineQuery(
   }`,
 );
 
+/**
+ * Hourly, matching the pages. A sitemap route is cached indefinitely by
+ * default, and in practice the tag purge below has not been reaching it:
+ * this route was observed serving 37 URLs — missing nine service pages, all
+ * six industries and all four case studies — across repeated fetches, while
+ * a fresh build of the same code produced 61. Only `rm -rf .next .open-next`
+ * put it right, which is no use between deploys and actively dangerous at
+ * launch, when a stale sitemap submitted to Search Console advertises a
+ * third of the site.
+ *
+ * Time-based revalidation is the belt to the tag's braces: when the purge
+ * works the sitemap is still correct within seconds, and when it does not
+ * the staleness is bounded at an hour instead of until someone notices.
+ */
+export const revalidate = 3600;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Tagged, so a deleted or newly published document changes the sitemap at
   // once. With the bare client it never purged, and the sitemap went on
