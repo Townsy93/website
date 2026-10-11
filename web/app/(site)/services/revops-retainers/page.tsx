@@ -348,7 +348,7 @@ export default async function RetainersPage() {
       <section className="bg-off-white-tan">
         <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
           <div className="flex items-center gap-6">
-            <h2 className="shrink-0 text-h2 text-deep-blue">
+            <h2 className="text-h2 text-deep-blue sm:shrink-0">
               Retainers in the real world
             </h2>
             <div aria-hidden className="h-px flex-1 bg-deep-blue/15" />

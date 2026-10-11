@@ -200,7 +200,7 @@ export default async function AboutPage() {
         <section className="bg-white">
           <div className="mx-auto max-w-[90rem] px-6 pb-14 sm:pb-24">
             <div className="flex items-center gap-6">
-              <h2 className="shrink-0 text-h2 text-deep-blue">
+              <h2 className="text-h2 text-deep-blue sm:shrink-0">
                 Values to work by
               </h2>
               <div aria-hidden className="h-px flex-1 bg-deep-blue/15" />

@@ -337,7 +337,7 @@ export default async function ServicePage({
         <section className="bg-deep-blue text-white">
           <div className="mx-auto max-w-[90rem] px-6 py-14 sm:py-24">
             <div className="flex items-center gap-6">
-              <h2 className="shrink-0 text-h2">
+              <h2 className="text-h2 sm:shrink-0">
                 What&apos;s included, step by step
               </h2>
               <div aria-hidden className="h-px flex-1 bg-white/20" />
