@@ -43,7 +43,7 @@ Squarespace-specific. The Worker custom domain replaces the first two.
 | CNAME | `www` | `ext-sq.squarespace.com` |
 | CNAME | `_domainconnect` | `_domainconnect.domains.squarespace.com` |
 
-## Records to KEEP (22)
+## Records to KEEP (21)
 
 Every one of these must exist in Cloudflare before the flip. Cloudflare's scan
 routinely misses TXT and DKIM entries — **diff this list against the import,
@@ -127,21 +127,84 @@ mis-entry. Harmless, but do not carry it over.
 
 ---
 
-## Order of operations
+## Two phases, not one
 
-**Before the flip**
+Done as two independently reversible steps rather than one irreversible one:
 
-1. Add `zippily.co.nz` to Cloudflare. Do not change nameservers yet.
-2. Let Cloudflare scan, then diff the import against the 22 records above.
-3. Set TTLs to 300s in Cloudflare — this is what buys fast fixes *after* the flip.
-4. Workers → `website` → Custom Domains for `www.zippily.co.nz` and `zippily.co.nz`.
-5. Add a redirect rule for apex → www. Squarespace serves that 301 today and it
+**Phase 1 — move DNS only.** Recreate the records in Cloudflare exactly as they
+were, *including* the Squarespace `A` and `CNAME www`, then change nameservers.
+The website carries on serving from Squarespace and mail carries on flowing.
+Nothing visibly changes; the only risk in play is the record migration.
+
+**Phase 2 — switch the website.** Once DNS is stable, delete those two records
+and attach the Worker. Risk is now the website alone, and it reverses in minutes
+by re-adding the Squarespace records at a low TTL.
+
+Splitting them also avoids an ordering problem: Cloudflare generally cannot
+issue certificates for a Worker custom domain until the zone is *active*, which
+requires the nameservers to have already moved.
+
+## On rollback
+
+Record TTLs govern records only while the current provider is authoritative.
+Once nameservers change, propagation is governed by the **.nz registry's NS
+TTL**, which you do not control and cannot shorten. Reverting nameservers is
+slow and is a last resort.
+
+The safety net is not rollback. It is a verified zone in Cloudflare *before* the
+flip, with low TTLs there so post-flip fixes are fast.
+
+## Phase 1 — completed 12 October 2026
+
+1. Connect a domain (not Transfer — registration stays at Squarespace).
+2. Automatic import. **It found 16 of the 24 records.** Every missed record was
+   one whose name is not guessable, which is exactly what a scanner cannot do:
+   `hs1-441648495._domainkey`, `hs2-441648495._domainkey`, `1._domainkey`,
+   `12._domainkey`, `em6991`, `MX send.mail`, `TXT send.mail`,
+   `TXT resend._domainkey.mail`. Added by hand.
+3. **Cloudflare imported every CNAME as Proxied.** That silently breaks DKIM —
+   a proxied CNAME stops returning the CNAME chain and returns Cloudflare IPs
+   instead, so a verifier never reaches the target. Every record was set to
+   DNS-only. Cloudflare then warns the domain is "not fully protected"; that
+   warning is correct and should be dismissed, because 21 of the 24 records can
+   never be proxied anyway.
+4. Verified by querying `leah.ns.cloudflare.com` and `leonard.ns.cloudflare.com`
+   **directly**, before the flip. Cloudflare answers for a zone as soon as it is
+   set up, even while the registry still points elsewhere — so the whole zone can
+   be proven correct with nothing yet committed. Both nameservers agreed on
+   every record, and the 218-character Resend DKIM key matched byte for byte.
+5. Nameservers changed at Squarespace to `leah` + `leonard`, 10:05 NZDT.
+
+Watch the registry directly rather than a recursive resolver, which caches:
+
+```bash
+nslookup -type=NS zippily.co.nz ns1.dns.net.nz
+```
+
+### Known-outstanding, deliberately
+
+`TXT send.mail` still carries a leading tab (`"	v=spf1 include:amazonses.com ~all"`),
+so strict parsers skip it, and a second `TXT send.mail` holds a bare hostname
+that belongs in the MX. Both were carried over from the Squarespace zone despite
+several attempts to correct them in Cloudflare.
+
+Neither is a regression — the tab is in the original zone too. They affect only
+SES/Resend sending from `mail.zippily.co.nz` (the client portal and the weekly
+health-check alerts), not client email, which runs on Google Workspace via the
+root SPF. The root SPF was verified as present exactly once; a second SPF record
+at the apex would be a hard `permerror` and break mail for Google *and* HubSpot.
+
+## Phase 2 — switching the website to the Worker
+
+Only once the registry shows the Cloudflare nameservers and mail has been
+confirmed arriving.
+
+1. Delete `A zippily.co.nz` → `198.185.159.144` and `CNAME www` → `ext-sq.squarespace.com`.
+2. Workers → `website` → Custom Domains for `www.zippily.co.nz` and `zippily.co.nz`.
+3. Add a redirect rule for apex → www. Squarespace serves that 301 today and it
    leaves with them.
-
-**The flip**
-
-6. Squarespace → Domain Nameservers → the two Cloudflare nameservers.
-7. Leave the Squarespace site subscribed. Do not cancel during propagation.
+4. Leave the Squarespace site subscribed until the new site has served for a few
+   days. Do not cancel during propagation.
 
 **Verify, email first**
 
