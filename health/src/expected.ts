@@ -9,7 +9,7 @@
 export const EXPECTED_REDIRECTS: readonly (readonly [string, string])[] = [
   ["/home", "/"],
   ["/blog", "/insights"],
-  ["/blog/best-crm-for-small-business-in-nz-2026", "/insights/best-crm-for-small-business-in-nz-2026"],
+  ["/blog/best-crm-for-small-business-in-nz-2026", "/insights/best-crms-for-small-business-2026"],
   ["/blog/best-crms-for-small-business-2026", "/insights/best-crms-for-small-business-2026"],
   ["/blog/designing-a-high-performing-email-automation-strategy-a-step-by-step-guide-for-growing-businesses", "/insights/designing-a-high-performing-email-automation-strategy-a-step-by-step-guide-for-growing-businesses"],
   ["/blog/do-i-need-a-crm-nz-checklist", "/insights/do-i-need-a-crm-nz-checklist"],

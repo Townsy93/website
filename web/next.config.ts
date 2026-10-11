@@ -78,6 +78,14 @@ const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
     source: "/insights/best-crm-for-small-business-in-nz-2026",
     destination: "/insights/best-crms-for-small-business-2026",
   },
+  // The Squarespace original of the post merged above. Without this explicit
+  // rule the generic /blog/:slug below sends it to the merged slug, which
+  // then redirects again — a two-hop chain for a URL that has one correct
+  // destination.
+  {
+    source: "/blog/best-crm-for-small-business-in-nz-2026",
+    destination: "/insights/best-crms-for-small-business-2026",
+  },
   // The 2025 edition, superseded by the 2026 post. Indexed but absent from the
   // sitemap, so the generic rule below was sending it to a slug that does not
   // exist. Points at the current edition rather than the hub.

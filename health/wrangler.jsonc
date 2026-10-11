@@ -21,7 +21,7 @@
   // BASE_URL is the one to change at cutover: point it at https://www.zippily.co.nz
   // and the same checks start running against the real domain.
   "vars": {
-    "BASE_URL": "https://website.sean-fe5.workers.dev",
+    "BASE_URL": "https://www.zippily.co.nz",
     "ALERT_FROM": "Zippily site health <portal@mail.zippily.co.nz>",
     "ALERT_TO": "hello@zippily.co.nz"
   },
