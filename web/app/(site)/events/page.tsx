@@ -219,7 +219,23 @@ export default async function EventsPage() {
                   <p className="text-body text-white/55">
                     {event.startDateTime ? pastDate(event.startDateTime) : ""}
                   </p>
-                  <p className="text-h4">{event.title}</p>
+                  {/* The title links to the session's own page. Without this
+                      a past event had no inbound link anywhere on the site —
+                      the row's only link went to the recap post, which most
+                      sessions do not have, so five live pages sat in the
+                      sitemap with no path to reach them. */}
+                  <p className="text-h4">
+                    {event.slug?.current ? (
+                      <Link
+                        href={`/events/${event.slug.current}`}
+                        className="hover:text-sky-blue"
+                      >
+                        {event.title}
+                      </Link>
+                    ) : (
+                      event.title
+                    )}
+                  </p>
                   <div className="flex flex-wrap gap-2">
                     {event.categories?.map((category) => (
                       <span
