@@ -3,6 +3,7 @@ import Link from "next/link";
 import { sanityFetch } from "@/sanity/fetch";
 import { SERVICES_LANDING_QUERY } from "@/sanity/queries";
 import { FaqJsonLd } from "@/components/seo/JsonLd";
+import { PartnerBadge } from "@/components/ui/PartnerBadge";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { LeafCorners } from "@/components/ui/LeafCorners";
@@ -84,20 +85,12 @@ export default async function ServicesPage() {
                 {page.hero.subheading}
               </p>
             )}
-            {/* The copywriters' goal pickers — each deep-links a stage
-                filter on the grid below (equal weight: they're a choice,
-                not a primary action). */}
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href="#discover" variant="ghost-light">
-                Find the gaps
-              </ButtonLink>
-              <ButtonLink href="#build" variant="ghost-light">
-                Build something new
-              </ButtonLink>
-              <ButtonLink href="#scale" variant="ghost-light">
-                Grow your business
-              </ButtonLink>
-            </div>
+            {/* The three goal pickers that sat here deep-linked the stage
+                filters on the grid below — the same three choices the filter
+                pills offer in place, so the hero was asking twice. The
+                credential is the better use of the space, and matches the
+                service pages. */}
+            <PartnerBadge className="mt-8" />
           </div>
           <SanityImage
             image={page.hero?.image}

@@ -53,8 +53,11 @@ export type ServiceCardData = {
 // Cards carry no pricing (ruling D2).
 export function ServiceFilterGrid({ cards }: { cards: ServiceCardData[] }) {
   const [filter, setFilter] = useState<string>("all");
-  // The hero's goal buttons deep-link a stage (#discover/#build/#scale) —
-  // the anchor scrolls here natively, this effect selects the matching pill.
+  // /services#discover|build|scale selects the matching pill, and the anchor
+  // scrolls here natively. The hero used to carry three buttons pointing at
+  // these; they were removed in Oct 2026 as a duplicate of the pills below.
+  // The hashes are kept because they are linkable from anywhere — a campaign,
+  // an email, another page — not only from the hero that once used them.
   useEffect(() => {
     const applyHash = () => {
       const stage = window.location.hash.replace("#", "");
@@ -81,8 +84,13 @@ export function ServiceFilterGrid({ cards }: { cards: ServiceCardData[] }) {
             {/* All four pills measure 408px against 327px on a phone, so they
                 cannot share a line. Left to wrap naturally they split 2/2,
                 which reads as an accident. Breaking after "All services"
-                puts the three stage filters — 315px — on one line together,
-                which is the grouping that means something. */}
+                puts the three stage filters on one line together, which is
+                the grouping that means something.
+
+                Sized against 360px, not 375: that is a common Android width
+                and leaves 312px of container. At h-6 the three pills needed
+                314px and wrapped to a third row there while looking fine on
+                a 375px test. */}
             {index === 1 && <div aria-hidden className="basis-full sm:hidden" />}
           <button
             type="button"
@@ -95,7 +103,7 @@ export function ServiceFilterGrid({ cards }: { cards: ServiceCardData[] }) {
             }`}
           >
             {/* currentColor: Deep Blue at rest, white when the pill is active */}
-            {f.icon && <Icon name={f.icon} className="h-6 w-6 sm:h-8 sm:w-8" />}
+            {f.icon && <Icon name={f.icon} className="h-5 w-5 sm:h-8 sm:w-8" />}
             {f.label}
           </button>
           </Fragment>
