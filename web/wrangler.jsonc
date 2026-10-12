@@ -8,6 +8,22 @@
   // Note the site normally deploys through Cloudflare's Git integration.
   // Now that the name is correct, a local deploy overwrites production.
   "name": "website",
+
+  // The site serves on zippily.co.nz (Custom Domain) and www (Route). Without
+  // this, wrangler re-enables website.sean-fe5.workers.dev on every deploy —
+  // it defaults to on when the key is absent, so turning it off in the
+  // dashboard lasts only until someone deploys. That put a second, fully
+  // indexable copy of the site back online once already.
+  "workers_dev": false,
+
+  // Disabling workers.dev also disables per-version preview URLs unless this
+  // is set. Those are the only pre-production check left now that the site
+  // serves on the real domain — `wrangler versions upload` publishes to an
+  // unguessable per-version URL without promoting it. robots.ts returns
+  // Disallow for any host that is not the live domain, so they stay out of
+  // the index.
+  "preview_urls": true,
+
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat"],
