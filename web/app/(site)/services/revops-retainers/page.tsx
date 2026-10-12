@@ -196,19 +196,21 @@ export default async function RetainersPage() {
             <ButtonLink href="/contact" variant="orange" className="mt-8">
               Book a scoping chat now
             </ButtonLink>
-            <div className="mt-12 grid gap-6 sm:grid-cols-2">
+            {/* Side by side on a phone too — stacked, these are a long
+                scroll past two photos of the same room. */}
+            <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-6">
               <SanityImage
                 image={service.introImage}
                 width={520}
                 height={340}
-                className="h-56 w-full rounded-2xl object-cover sm:h-64"
+                className="h-32 w-full rounded-2xl object-cover sm:h-64"
                 placeholderLabel="Zippily at work"
               />
               <SanityImage
                 image={service.introImageSecond}
                 width={520}
                 height={340}
-                className="h-56 w-full rounded-2xl object-cover sm:h-64"
+                className="h-32 w-full rounded-2xl object-cover sm:h-64"
                 placeholderLabel="Zippily at work"
               />
             </div>

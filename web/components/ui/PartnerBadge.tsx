@@ -24,7 +24,7 @@ export function PartnerBadge({ className = "" }: { className?: string }) {
         alt="HubSpot Platinum Solutions Partner badge"
         width={120}
         height={120}
-        className="h-14 w-auto shrink-0 sm:h-16"
+        className="h-[67px] w-auto shrink-0 sm:h-[77px]"
       />
       <div className="min-w-0">
         <p className="text-body font-semibold leading-tight text-white">

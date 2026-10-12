@@ -222,22 +222,25 @@ export default async function ServicePage({
       {service.introBody && (
         <section className="bg-white">
           <div className="mx-auto grid max-w-[90rem] items-center gap-12 px-6 py-14 sm:py-24 lg:grid-cols-[0.9fr_1.1fr]">
-            {/* One tall photo, or two stacked when a second is set — the
-                field existed but only the retainers page ever read it. */}
+            {/* One tall photo, or two when a second is set. Side by side on
+                a phone rather than stacked: two full-width photos one above
+                the other is a long scroll past the same room twice. They
+                stack again at lg, where they sit in a column beside the
+                copy. */}
             {service.introImageSecond ? (
-              <div className="flex flex-col gap-5">
+              <div className="grid grid-cols-2 gap-4 lg:grid-cols-1 lg:gap-5">
                 <SanityImage
                   image={service.introImage}
                   width={520}
                   height={340}
-                  className="h-56 w-full rounded-2xl object-cover sm:h-64"
+                  className="h-32 w-full rounded-2xl object-cover sm:h-44 lg:h-64"
                   placeholderLabel="Client + Zippily photo"
                 />
                 <SanityImage
                   image={service.introImageSecond}
                   width={520}
                   height={340}
-                  className="h-56 w-full rounded-2xl object-cover sm:h-64"
+                  className="h-32 w-full rounded-2xl object-cover sm:h-44 lg:h-64"
                   placeholderLabel="Zippily at work"
                 />
               </div>

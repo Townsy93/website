@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 
 // The three stage pills carry the designer's custom stage icons; "All
@@ -70,23 +70,35 @@ export function ServiceFilterGrid({ cards }: { cards: ServiceCardData[] }) {
   const active = FILTERS.find((f) => f.value === filter);
   return (
     <div>
-      <div className="flex snap-x gap-3 overflow-x-auto pb-1 sm:justify-center">
-        {FILTERS.map((f) => (
+      {/* Wraps rather than scrolls. The row used to be overflow-x-auto, which
+          put a scrollbar under the pills on a phone and hid the last filter
+          off-screen — and the brand rules say never a horizontal swipe on
+          mobile. Icons and padding shrink below sm so the three stage pills
+          sit on one line. */}
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+        {FILTERS.map((f, index) => (
+          <Fragment key={f.value}>
+            {/* All four pills measure 408px against 327px on a phone, so they
+                cannot share a line. Left to wrap naturally they split 2/2,
+                which reads as an accident. Breaking after "All services"
+                puts the three stage filters — 315px — on one line together,
+                which is the grouping that means something. */}
+            {index === 1 && <div aria-hidden className="basis-full sm:hidden" />}
           <button
-            key={f.value}
             type="button"
             onClick={() => setFilter(f.value)}
             aria-pressed={filter === f.value}
-            className={`flex shrink-0 snap-start items-center gap-2 rounded-full border py-2 text-body transition-colors ${f.icon ? "pl-4 pr-5" : "px-5"} ${
+            className={`flex shrink-0 items-center gap-1.5 rounded-full border py-2 text-body transition-colors sm:gap-2 ${f.icon ? "pl-2.5 pr-3.5 sm:pl-4 sm:pr-5" : "px-3.5 sm:px-5"} ${
               filter === f.value
                 ? "border-deep-blue bg-deep-blue font-semibold text-white"
                 : "border-deep-blue-20 bg-white text-deep-blue hover:border-deep-blue"
             }`}
           >
             {/* currentColor: Deep Blue at rest, white when the pill is active */}
-            {f.icon && <Icon name={f.icon} className="h-8 w-8" />}
+            {f.icon && <Icon name={f.icon} className="h-6 w-6 sm:h-8 sm:w-8" />}
             {f.label}
           </button>
+          </Fragment>
         ))}
       </div>
       {/* aria-live so the description change is announced with the filter. */}
