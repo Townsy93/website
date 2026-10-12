@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { shouldLoadAnalytics } from "./Analytics";
+import { shouldLoadAnalytics, shouldLoadClarity } from "./Analytics";
 
 describe("shouldLoadAnalytics", () => {
   it("loads when an id is configured on a published page", () => {
@@ -20,5 +20,25 @@ describe("shouldLoadAnalytics", () => {
     // Studio previews are editing sessions, not visits. Counting them would
     // inflate exactly the pages being worked on.
     expect(shouldLoadAnalytics("G-P0NVHJ6RTS", true)).toBe(false);
+  });
+});
+
+describe("shouldLoadClarity", () => {
+  it("loads when a project id is configured on a published page", () => {
+    expect(shouldLoadClarity("ywbc5y8nh1", false)).toBe(true);
+  });
+
+  it("ships nothing when no project id is configured", () => {
+    expect(shouldLoadClarity(undefined, false)).toBe(false);
+  });
+
+  it("treats an empty id as unconfigured", () => {
+    expect(shouldLoadClarity("", false)).toBe(false);
+  });
+
+  it("stays silent in draft mode", () => {
+    // Clarity records session replay. In draft mode that would be a recording
+    // of an editor working on unpublished copy, not a visitor.
+    expect(shouldLoadClarity("ywbc5y8nh1", true)).toBe(false);
   });
 });

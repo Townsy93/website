@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { ogImageMeta } from "@/lib/ogImage";
 import { findRedirect } from "@/lib/redirects";
+import { urlFor } from "@/sanity/image";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
 import { POST_QUERY, POST_SLUGS_QUERY } from "@/sanity/queries";
@@ -74,6 +75,16 @@ export default async function PostPage({
       jobTitle: post.author?.role,
     },
     publisher: { "@id": `${SITE_URL}/#organization` },
+    // Google wants an image on an Article and will not show the rich result
+    // without one. 1200x630 crops via the hotspot set in Studio rather than
+    // centre-cropping the subject out of frame.
+    ...(post.coverImage?.asset
+      ? {
+          image: [
+            urlFor(post.coverImage).width(1200).height(630).fit("crop").url(),
+          ],
+        }
+      : {}),
   };
 
   return (

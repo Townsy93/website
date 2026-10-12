@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { Archivo } from "next/font/google";
 import { VisualEditing } from "next-sanity/visual-editing";
-import { Analytics } from "@/components/Analytics";
+import { Analytics, Clarity } from "@/components/Analytics";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { sanityFetch } from "@/sanity/fetch";
@@ -66,10 +66,14 @@ export default async function RootLayout({
     },
     areaServed: ["NZ", "AU"],
     ...(settings?.contactEmail ? { email: settings.contactEmail } : {}),
+    // sameAs is how a search engine or model ties this site to the same
+    // entity elsewhere. The HubSpot listing is the strongest of these: a
+    // third party verifying the partner tier, not a profile we wrote.
     sameAs: [
       settings?.linkedInUrl,
       settings?.instagramUrl,
       settings?.youTubeUrl,
+      settings?.hubspotDirectoryUrl,
     ].filter(Boolean),
   };
 
@@ -79,6 +83,10 @@ export default async function RootLayout({
         <JsonLd data={organizationJsonLd} />
         <Analytics
           measurementId={process.env.NEXT_PUBLIC_GA_ID}
+          isDraftMode={isDraftMode}
+        />
+        <Clarity
+          projectId={process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}
           isDraftMode={isDraftMode}
         />
         {children}

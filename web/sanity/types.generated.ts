@@ -51,6 +51,7 @@ export type SiteSettings = {
   linkedInUrl?: string;
   instagramUrl?: string;
   youTubeUrl?: string;
+  hubspotDirectoryUrl?: string;
   googleReviewCount?: number;
   serviceCtaImage?: ImageWithAlt;
   happyClients?: number;
@@ -1481,6 +1482,36 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset;
 
+// Source: ../web/app/llms.txt/route.ts
+// Variable: LLMS_QUERY
+// Query: {  "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]    | order(title asc){ title, "slug": slug.current, shortDescription },  "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]    | order(title asc){ title, "slug": slug.current, shortDescription },  "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live" && pageBuilt == true]    | order(client asc){ client, "slug": slug.current, resultLine },  "posts": *[_type == "blogPost" && defined(slug.current)]    | order(publishedAt desc){ title, "slug": slug.current, excerpt },  "resources": *[_type == "resource"] | order(order asc){ title, summaryBullets }}
+export type LLMS_QUERY_RESULT = {
+  services: Array<{
+    title: string;
+    slug: string;
+    shortDescription: string;
+  }>;
+  industries: Array<{
+    title: string;
+    slug: string;
+    shortDescription: string;
+  }>;
+  caseStudies: Array<{
+    client: string;
+    slug: string;
+    resultLine: string | null;
+  }>;
+  posts: Array<{
+    title: string;
+    slug: string;
+    excerpt: string;
+  }>;
+  resources: Array<{
+    title: string;
+    summaryBullets: Array<string> | null;
+  }>;
+};
+
 // Source: ../web/app/sitemap.ts
 // Variable: SITEMAP_QUERY
 // Query: {    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "platforms": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live" && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },    "careersBuilt": *[_type == "careersPage"][0].pageBuilt,    "landingPages": *[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }  }
@@ -1544,6 +1575,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   linkedInUrl?: string;
   instagramUrl?: string;
   youTubeUrl?: string;
+  hubspotDirectoryUrl?: string;
   googleReviewCount?: number;
   serviceCtaImage?: ImageWithAlt;
   happyClients?: number;
@@ -2779,6 +2811,7 @@ export type POPUP_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    '{\n  "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]\n    | order(title asc){ title, "slug": slug.current, shortDescription },\n  "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]\n    | order(title asc){ title, "slug": slug.current, shortDescription },\n  "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live" && pageBuilt == true]\n    | order(client asc){ client, "slug": slug.current, resultLine },\n  "posts": *[_type == "blogPost" && defined(slug.current)]\n    | order(publishedAt desc){ title, "slug": slug.current, excerpt },\n  "resources": *[_type == "resource"] | order(order asc){ title, summaryBullets }\n}': LLMS_QUERY_RESULT;
     '{\n    "services": *[_type == "service" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "platforms": *[_type == "partnerIntegration" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "industries": *[_type == "industry" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "caseStudies": *[_type == "caseStudy" && defined(slug.current) && status == "live" && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "posts": *[_type == "blogPost" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "events": *[_type == "event" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n    "careersBuilt": *[_type == "careersPage"][0].pageBuilt,\n    "landingPages": *[_type == "landingPage" && defined(slug.current) && pageBuilt == true]{ "slug": slug.current, _updatedAt },\n    "vacancies": *[_type == "vacancy" && status == "open" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt }\n  }': SITEMAP_QUERY_RESULT;
     '*[_type == "siteSettings"][0]': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "homePage"][0]{\n    ...,\n    featuredServices[]->{_id, title, slug, icon, shortDescription, whoItsFor},\n    // select() so this stays null (not a truthy empty object) when no case\n    // study is set \u2014 the page\'s featuredCaseStudy truthiness guard depends on it.\n    "featuredCaseStudy": select(\n      defined(featuredCaseStudy.caseStudy) => {\n        "subcopy": featuredCaseStudy.subcopy,\n        ...featuredCaseStudy.caseStudy->{_id, client, slug, headline, resultLine, stats, photo, videoUrl, service->{title}}\n      }\n    ),\n    testimonials[]->{_id, quote, name, role, company, avatar},\n    featuredIndustries[]->{_id, title, slug, icon, shortDescription, pageBuilt}\n  }': HOME_PAGE_QUERY_RESULT;

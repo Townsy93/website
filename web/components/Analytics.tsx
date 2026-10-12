@@ -60,3 +60,50 @@ gtag('config', '${measurementId}');`}
     </>
   );
 }
+
+/**
+ * Whether the Clarity tag should be rendered at all. Same two reasons to
+ * stay silent as GA4, with one that matters more here: Clarity records
+ * session replays, so a draft-mode session would record an editor working
+ * on unpublished copy rather than a visitor using the site.
+ */
+export function shouldLoadClarity(
+  projectId: string | undefined,
+  isDraftMode: boolean,
+): projectId is string {
+  if (!projectId) return false;
+  if (isDraftMode) return false;
+  return true;
+}
+
+/**
+ * Microsoft Clarity — heatmaps and session replay.
+ *
+ * `afterInteractive` rather than the vendor's inline snippet so it does not
+ * block first paint; the snippet's own async insert is redundant once Next
+ * controls the loading strategy.
+ *
+ * The same no-consent-banner reasoning as GA4 above applies, and the same
+ * caveat: this is the file that changes if EU traffic ever becomes material.
+ * Clarity masks text content by default, which is worth leaving on — the
+ * careers form takes CVs and the contact form takes names.
+ */
+export function Clarity({
+  projectId,
+  isDraftMode,
+}: {
+  projectId: string | undefined;
+  isDraftMode: boolean;
+}) {
+  if (!shouldLoadClarity(projectId, isDraftMode)) return null;
+
+  return (
+    <Script id="clarity-init" strategy="afterInteractive">
+      {`(function(c,l,a,r,i,t,y){
+c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "${projectId}");`}
+    </Script>
+  );
+}

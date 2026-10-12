@@ -97,6 +97,13 @@ export const siteSettings = defineType({
       type: 'url',
     }),
     defineField({
+      name: 'hubspotDirectoryUrl',
+      title: 'HubSpot Solutions Directory URL',
+      type: 'url',
+      description:
+        'Feeds sameAs in the Organization structured data. A verified partner listing is a stronger entity signal than a social profile, which is why it belongs here rather than being hard-coded.',
+    }),
+    defineField({
       name: 'googleReviewCount',
       title: 'Google review count',
       type: 'number',
