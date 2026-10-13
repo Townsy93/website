@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { shouldLoadAnalytics, shouldLoadClarity } from "./Analytics";
+import {
+  shouldLoadAnalytics,
+  shouldLoadClarity,
+  shouldLoadHubSpot,
+} from "./Analytics";
 
 describe("shouldLoadAnalytics", () => {
   it("loads when an id is configured on a published page", () => {
@@ -40,5 +44,25 @@ describe("shouldLoadClarity", () => {
     // Clarity records session replay. In draft mode that would be a recording
     // of an editor working on unpublished copy, not a visitor.
     expect(shouldLoadClarity("ywbc5y8nh1", true)).toBe(false);
+  });
+});
+
+describe("shouldLoadHubSpot", () => {
+  it("loads when a portal id is configured on a published page", () => {
+    expect(shouldLoadHubSpot("441648495", false)).toBe(true);
+  });
+
+  it("ships nothing when no portal id is configured", () => {
+    expect(shouldLoadHubSpot(undefined, false)).toBe(false);
+  });
+
+  it("treats an empty id as unconfigured", () => {
+    expect(shouldLoadHubSpot("", false)).toBe(false);
+  });
+
+  it("stays silent in draft mode", () => {
+    // HubSpot tracking creates contacts. An editor previewing a draft would
+    // otherwise register as a visitor on a contact record.
+    expect(shouldLoadHubSpot("441648495", true)).toBe(false);
   });
 });

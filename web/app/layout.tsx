@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { Archivo } from "next/font/google";
 import { VisualEditing } from "next-sanity/visual-editing";
-import { Analytics, Clarity } from "@/components/Analytics";
+import { Analytics, Clarity, HubSpotTracking } from "@/components/Analytics";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { sanityFetch } from "@/sanity/fetch";
@@ -87,6 +87,11 @@ export default async function RootLayout({
         />
         <Clarity
           projectId={process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}
+          isDraftMode={isDraftMode}
+        />
+        <HubSpotTracking
+          portalId={process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID}
+          region={process.env.NEXT_PUBLIC_HUBSPOT_REGION}
           isDraftMode={isDraftMode}
         />
         {children}

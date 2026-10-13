@@ -37,6 +37,19 @@ export function isHubSpotConfigured(formGuid?: string): formGuid is string {
   return Boolean(PORTAL_ID && formGuid);
 }
 
+/**
+ * The visitor token HubSpot's tracking script sets. Sending it with a form
+ * submission is what attaches the submission to the visit that preceded it,
+ * so the contact's timeline shows the pages read and its source reflects how
+ * they arrived. Absent when the tracker has not loaded or the visitor blocks
+ * it, in which case the submission still works, just unattributed.
+ */
+function visitorToken(): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]+)/);
+  return match ? decodeURIComponent(match[1]) : undefined;
+}
+
 export async function submitHubSpotForm(
   formGuid: string,
   fields: Record<string, string>,
@@ -51,6 +64,7 @@ export async function submitHubSpotForm(
           .filter(([, value]) => value !== "")
           .map(([name, value]) => ({ name, value })),
         context: {
+          hutk: visitorToken(),
           pageUri: typeof window !== "undefined" ? window.location.href : undefined,
           pageName: typeof document !== "undefined" ? document.title : undefined,
         },

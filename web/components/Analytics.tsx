@@ -107,3 +107,56 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     </Script>
   );
 }
+
+/**
+ * Whether the HubSpot tracking script should be rendered at all. Same two
+ * reasons to stay silent as GA4 and Clarity, and a sharper one for HubSpot:
+ * it creates contacts. A draft-mode session would register an editor as a
+ * visitor on a contact record.
+ */
+export function shouldLoadHubSpot(
+  portalId: string | undefined,
+  isDraftMode: boolean,
+): portalId is string {
+  if (!portalId) return false;
+  if (isDraftMode) return false;
+  return true;
+}
+
+/**
+ * HubSpot tracking code.
+ *
+ * Without it HubSpot sees form submissions but never the visit that led to
+ * them: no page views on the contact timeline, and a new contact's source
+ * falls back to "Offline sources" because nothing ties the submission to a
+ * session. GA4 can say where traffic came from; only HubSpot can link that
+ * to the person who became a contact and then a deal, which is the chain
+ * this business actually sells on.
+ *
+ * Built from the portal id and region rather than pasting the vendor
+ * snippet's hard-coded URL, so it follows the same two env vars the forms
+ * use and cannot drift from them. The loader host is js-<region>.hs-scripts.com
+ * (ap1 here, from NEXT_PUBLIC_HUBSPOT_REGION).
+ *
+ * The same no-consent-banner reasoning as GA4 applies; this is also a file
+ * that changes if EU traffic ever becomes material.
+ */
+export function HubSpotTracking({
+  portalId,
+  region,
+  isDraftMode,
+}: {
+  portalId: string | undefined;
+  region: string | undefined;
+  isDraftMode: boolean;
+}) {
+  if (!shouldLoadHubSpot(portalId, isDraftMode)) return null;
+  const host = region && region !== "na1" ? `js-${region}` : "js";
+  return (
+    <Script
+      id="hs-script-loader"
+      src={`https://${host}.hs-scripts.com/${portalId}.js`}
+      strategy="afterInteractive"
+    />
+  );
+}
