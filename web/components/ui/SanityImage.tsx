@@ -47,13 +47,27 @@ export function SanityImage({
     // through as a 4:1 sliver). Constraining height only leaves the URL
     // rect-free, so the whole asset survives at its own aspect ratio and the
     // caller's object-contain letterboxes it inside the layout box.
-    const src =
+    //
+    // `auto("format")` has Sanity's CDN serve WebP or AVIF to browsers that
+    // accept it. It matters a great deal here: a 909 KB PNG headshot came back
+    // at 28 KB, and every JPEG roughly halved.
+    const base =
       fit === "max"
-        ? urlFor(image).height(h).fit("max").url()
-        : urlFor(image).width(w).height(h).fit(fit).url();
+        ? urlFor(image).height(h).fit("max")
+        : urlFor(image).width(w).height(h).fit(fit);
+    const src = base.auto("format").url();
     return (
       <Image
         src={src}
+        // Straight from Sanity's CDN, bypassing /_next/image. On Cloudflare
+        // Workers that optimiser has no image-processing backend and passes
+        // the original through untouched: w=640 and w=828 returned identical
+        // bytes, and everything came back as PNG whatever the browser
+        // accepted. Sanity already resizes and crops to the dimensions
+        // requested above, so the hop adds a Worker invocation per image and
+        // no benefit. Going direct also lets the browser's own Accept header
+        // reach Sanity, which is what auto("format") keys on.
+        unoptimized
         alt={image.alt ?? ""}
         width={image?.displayWidth ?? width}
         height={image?.displayHeight ?? height}

@@ -24,6 +24,13 @@
   // the index.
   "preview_urls": true,
 
+  // Without this the Worker leaves no trace: Ahrefs reported intermittent
+  // 503s on four pages (/contact, /services and two others) during a crawl,
+  // they did not reproduce on 60 parallel requests afterwards, and there was
+  // nothing to look back at to say what the Worker had actually done. This
+  // makes the next one diagnosable rather than a guess.
+  "observability": { "enabled": true },
+
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat"],
