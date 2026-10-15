@@ -1190,6 +1190,11 @@ export type Industry = {
   shortDescription: string;
   pageBuilt?: boolean;
   hero?: Hero;
+  certifications?: Array<
+    {
+      _key: string;
+    } & Certification
+  >;
   painPoints?: Array<
     {
       _key: string;
@@ -1314,6 +1319,13 @@ export type PricingTier = {
   features?: Array<string>;
   ctaLabel?: string;
   featured?: boolean;
+};
+
+export type Certification = {
+  _type: "certification";
+  image: ImageWithAlt;
+  title: string;
+  text?: string;
 };
 
 export type FaqItem = {
@@ -1473,6 +1485,7 @@ export type AllSanitySchemaTypes =
   | Benefit
   | IconCard
   | PricingTier
+  | Certification
   | FaqItem
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -2101,6 +2114,11 @@ export type INDUSTRY_QUERY_RESULT = {
   shortDescription: string;
   pageBuilt?: boolean;
   hero?: Hero;
+  certifications?: Array<
+    {
+      _key: string;
+    } & Certification
+  >;
   painPoints?: Array<
     {
       _key: string;
@@ -2198,7 +2216,7 @@ export type CASE_STUDY_SLUGS_QUERY_RESULT = Array<string>;
 
 // Source: ../web/sanity/queries.ts
 // Variable: CASE_STUDY_QUERY
-// Query: *[_type == "caseStudy" && slug.current == $slug][0]{    ...,    service->{title, slug},    industry->{title, slug},    testimonial->{_id, quote, name, role, company, avatar}  }
+// Query: *[_type == "caseStudy" && slug.current == $slug][0]{    ...,    service->{title, slug},    industry->{title, slug, certifications},    testimonial->{_id, quote, name, role, company, avatar}  }
 export type CASE_STUDY_QUERY_RESULT = {
   _id: string;
   _type: "caseStudy";
@@ -2216,6 +2234,11 @@ export type CASE_STUDY_QUERY_RESULT = {
   industry: {
     title: string;
     slug: Slug;
+    certifications: Array<
+      {
+        _key: string;
+      } & Certification
+    > | null;
   } | null;
   headline: string;
   resultLine?: string;
@@ -2829,7 +2852,7 @@ declare module "@sanity/client" {
     '*[_type == "ourWorkPage"][0]{\n    ...,\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}},\n    videoTestimonials[]->{_id, quote, name, company, videoUrl, videoStill},\n    googleReviews[]->{_id, quote, name, company}\n  }': OUR_WORK_QUERY_RESULT;
     '*[_type == "homePage"][0].trustLogos': TRUST_LOGOS_QUERY_RESULT;
     '*[_type == "caseStudy" && defined(slug.current)].slug.current': CASE_STUDY_SLUGS_QUERY_RESULT;
-    '*[_type == "caseStudy" && slug.current == $slug][0]{\n    ...,\n    service->{title, slug},\n    industry->{title, slug},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': CASE_STUDY_QUERY_RESULT;
+    '*[_type == "caseStudy" && slug.current == $slug][0]{\n    ...,\n    service->{title, slug},\n    industry->{title, slug, certifications},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': CASE_STUDY_QUERY_RESULT;
     '*[_type == "caseStudy" && defined(slug.current) && pageBuilt == true && slug.current != $slug]\n    | order(status desc, client asc)[0...3]{\n      _id, client, slug, resultLine, photo, status, service->{title}\n    }': RELATED_CASE_STUDIES_QUERY_RESULT;
     '*[_type == "insightHubPage"][0]{\n    ...,\n    featuredPost->{\n      _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n      hubs[]->{name}, author->{name, photo}\n    }\n  }': INSIGHT_HUB_QUERY_RESULT;
     '*[_type == "blogPost"] | order(publishedAt desc){\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': ALL_POSTS_QUERY_RESULT;

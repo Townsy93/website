@@ -59,6 +59,16 @@ export const industry = defineType({
       group: 'content',
     }),
     defineField({
+      name: 'certifications',
+      title: 'Certifications',
+      type: 'array',
+      group: 'content',
+      of: [{type: 'certification'}],
+      description:
+        'Badges we hold that are relevant to this industry. Shown on this page and on every case study in this industry.',
+      validation: (rule) => rule.max(3),
+    }),
+    defineField({
       name: 'painPoints',
       title: '"Sound familiar?" pain points',
       type: 'array',

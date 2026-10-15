@@ -9,6 +9,7 @@ import { sanityFetch } from "@/sanity/fetch";
 import { INDUSTRY_QUERY, INDUSTRY_SLUGS_QUERY } from "@/sanity/queries";
 import { breadcrumbJsonLd, FaqJsonLd, JsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { CertificationBadges } from "@/components/ui/CertificationBadges";
 import { EmphasisedHeading } from "@/components/ui/Marker";
 import { Icon } from "@/components/ui/Icon";
 import { QuoteMark } from "@/components/ui/QuoteMark";
@@ -113,6 +114,10 @@ export default async function IndustryPage({
           >
             {industry.hero?.primaryCta?.label ?? "Book a free chat"}
           </ButtonLink>
+          <CertificationBadges
+            certifications={industry.certifications}
+            className="mt-8"
+          />
         </div>
       </section>
 

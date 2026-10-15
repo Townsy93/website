@@ -1,6 +1,7 @@
 // Objects
 import {blockContent} from './objects/blockContent'
 import {ctaBanner} from './objects/ctaBanner'
+import {certification} from './objects/certification'
 import {faqItem} from './objects/faqItem'
 import {hero} from './objects/hero'
 import {iconCard} from './objects/iconCard'
@@ -74,6 +75,7 @@ export const schemaTypes = [
   hero,
   ctaBanner,
   faqItem,
+  certification,
   stat,
   pricingTier,
   pricing,

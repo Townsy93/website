@@ -129,7 +129,7 @@ export const CASE_STUDY_QUERY = defineQuery(
   `*[_type == "caseStudy" && slug.current == $slug][0]{
     ...,
     service->{title, slug},
-    industry->{title, slug},
+    industry->{title, slug, certifications},
     testimonial->{_id, quote, name, role, company, avatar}
   }`,
 );

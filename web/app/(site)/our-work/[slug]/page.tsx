@@ -12,6 +12,7 @@ import {
   SITE_SETTINGS_QUERY,
 } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { CertificationBadges } from "@/components/ui/CertificationBadges";
 import { CountUp } from "@/components/ui/CountUp";
 import { QuoteMark } from "@/components/ui/QuoteMark";
 import { SanityImage } from "@/components/ui/SanityImage";
@@ -168,6 +169,13 @@ export default async function CaseStudyPage({
                 {caseStudy.resultLine}
               </p>
             )}
+            {/* The industry's certifications, not a field of its own: a badge
+                earned for property and construction work shows here for every
+                case study in that industry from the one edit on the industry. */}
+            <CertificationBadges
+              certifications={caseStudy.industry?.certifications}
+              className="mt-8 items-center"
+            />
           </div>
         </div>
       </section>
