@@ -13,6 +13,7 @@ import {
 } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { CertificationBadges } from "@/components/ui/CertificationBadges";
+import { isSquareish } from "@/lib/imageShape";
 import { CountUp } from "@/components/ui/CountUp";
 import { QuoteMark } from "@/components/ui/QuoteMark";
 import { SanityImage } from "@/components/ui/SanityImage";
@@ -100,6 +101,7 @@ export default async function CaseStudyPage({
   ];
 
   const hasGallery = (caseStudy.gallery?.length ?? 0) > 0;
+  const squareLogo = isSquareish(caseStudy.clientLogo?.asset?._ref);
   const videoPoster = await resolveVideoPoster(
     caseStudy.videoStill,
     caseStudy.videoUrl,
@@ -135,14 +137,37 @@ export default async function CaseStudyPage({
               so headlines break later and text-pretty can kill orphans. */}
           <div className="mx-auto max-w-4xl pt-6 text-center">
             {caseStudy.clientLogo ? (
-              <span className="inline-flex h-16 items-center rounded-xl bg-white px-7">
-                <SanityImage
-                  image={caseStudy.clientLogo}
-                  width={200}
-                  height={56}
-                  className="h-9 w-auto object-contain"
-                />
-              </span>
+              // fit="max" because the default crops to the box's aspect
+              // ratio, and this box is a 200x56 strip. A square logo lost its
+              // roof mark and "HOMES" and kept a band of the wordmark;
+              // wider ones lost a quarter of their height. Every case study
+              // logo on the site was being cut this way.
+              squareLogo ? (
+                // A square logo cannot live in a 36px-tall strip — its
+                // smallest text would be a few pixels high — so it is shown
+                // as a tile at a readable size. The white ground is for a
+                // transparent square logo; an opaque one covers it entirely,
+                // which is why the rounded corners come from overflow-hidden.
+                <span className="inline-flex h-24 w-24 items-center justify-center overflow-hidden rounded-xl bg-white">
+                  <SanityImage
+                    image={caseStudy.clientLogo}
+                    width={96}
+                    height={96}
+                    fit="max"
+                    className="h-24 w-24 object-contain"
+                  />
+                </span>
+              ) : (
+                <span className="inline-flex h-16 items-center rounded-xl bg-white px-7">
+                  <SanityImage
+                    image={caseStudy.clientLogo}
+                    width={200}
+                    height={56}
+                    fit="max"
+                    className="h-9 w-auto object-contain"
+                  />
+                </span>
+              )
             ) : (
               <p className="text-h4">{caseStudy.client}</p>
             )}
