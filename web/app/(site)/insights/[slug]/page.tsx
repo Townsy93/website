@@ -12,7 +12,8 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { PortableBody } from "@/components/modules/PortableBody";
 import { NewsletterBand } from "@/components/modules/NewsletterBand";
 import { PostPills, formatDate } from "@/components/modules/postCard";
-import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { FaqJsonLd, JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { faqFromBody } from "@/lib/faqFromBody";
 import { SITE_URL } from "@/lib/site";
 
 export const revalidate = 3600;
@@ -63,7 +64,7 @@ export default async function PostPage({
 
   const articleJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
     url: `${SITE_URL}/insights/${slug}`,
@@ -90,6 +91,10 @@ export default async function PostPage({
   return (
     <>
       <JsonLd data={articleJsonLd} />
+      {/* Read from the body, so the markup is exactly what the reader sees.
+          Renders nothing for a post without a "Frequently asked questions"
+          section. */}
+      <FaqJsonLd faqs={faqFromBody(post.body)} />
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Insight hub", url: `${SITE_URL}/insights` },
@@ -131,18 +136,21 @@ export default async function PostPage({
         </div>
       </section>
 
-      {/* Lead image */}
-      <section className="bg-off-white-tan">
-        <div className="mx-auto max-w-5xl px-6">
-          <SanityImage
-            image={post.coverImage}
-            width={1040}
-            height={520}
-            className="h-72 w-full rounded-2xl object-cover md:h-130"
-            placeholderLabel="Lead image — real people"
-          />
-        </div>
-      </section>
+      {/* Lead image — omitted when the post has no cover, rather than a grey
+          box captioned "Lead image". The field is required in Studio, but a
+          post created through the API can arrive without one. */}
+      {post.coverImage?.asset && (
+        <section className="bg-off-white-tan">
+          <div className="mx-auto max-w-5xl px-6">
+            <SanityImage
+              image={post.coverImage}
+              width={1040}
+              height={520}
+              className="h-72 w-full rounded-2xl object-cover md:h-130"
+            />
+          </div>
+        </section>
+      )}
 
       {/* Body with "short version" callout (M31) */}
       <article className="bg-off-white-tan">
