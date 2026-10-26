@@ -2,7 +2,7 @@ import {defineField, defineType} from 'sanity'
 
 // The 8 Solutions carousel entries: Sales/Service/Marketing/Content/Revenue/
 // Data Hub + Breeze AI + Claude. Also referenced by blogPost.hubs for the
-// Insight Hub filter (Claude is excluded from that filter in the UI).
+// Insight Hub filter (Claude included since Oct 2026).
 export const hubOffering = defineType({
   name: 'hubOffering',
   title: 'Hub offering',

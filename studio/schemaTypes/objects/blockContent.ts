@@ -44,6 +44,9 @@ export const blockContent = defineType({
         ],
       },
     }),
+    // Comparison tables (`@sanity/table`): the first row is the header row.
+    // Rendered as a semantic <table> that scrolls inside its own container.
+    defineArrayMember({type: 'table'}),
     defineArrayMember({
       name: 'figure',
       title: 'Image with caption',

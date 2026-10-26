@@ -2,6 +2,7 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {presentationTool} from 'sanity/presentation'
 import {visionTool} from '@sanity/vision'
+import {table} from '@sanity/table'
 import {schemaTypes} from './schemaTypes'
 import {structure, singletonTypes} from './structure'
 import {withSlugRedirect} from './actions/publishWithRedirect'
@@ -12,7 +13,7 @@ import {TYPE_PATHS} from './lib/slugRules'
 // `sanity dev` to preview a local build, and update this default when the
 // real domain goes live.
 const previewOrigin =
-  process.env.SANITY_STUDIO_PREVIEW_ORIGIN ?? 'https://website.sean-fe5.workers.dev'
+  process.env.SANITY_STUDIO_PREVIEW_ORIGIN ?? 'https://www.zippily.co.nz'
 
 export default defineConfig({
   name: 'default',
@@ -30,6 +31,7 @@ export default defineConfig({
       },
     }),
     visionTool(),
+    table(),
   ],
 
   schema: {

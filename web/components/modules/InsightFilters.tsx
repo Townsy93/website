@@ -18,6 +18,7 @@ const HUBS = [
   "Revenue Hub",
   "Data Hub",
   "Breeze AI",
+  "Claude",
 ];
 
 const PAGE_SIZE = 6;

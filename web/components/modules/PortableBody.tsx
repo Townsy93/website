@@ -42,6 +42,44 @@ const components: PortableTextComponents = {
     ),
   },
   types: {
+    // `@sanity/table` data: rows[].cells[], the first row being the header.
+    // The wrapper scrolls sideways on a phone so the page itself never does.
+    table: ({ value }: { value?: { rows?: { cells?: string[] }[] } }) => {
+      const [head, ...rows] = (value?.rows ?? []).filter((r) => r.cells?.length);
+      if (!head) return null;
+      return (
+        <div className="my-4 overflow-x-auto rounded-xl ring-1 ring-deep-blue/15">
+          <table className="w-full min-w-[34rem] border-collapse text-left text-body">
+            <thead className="bg-deep-blue text-white">
+              <tr>
+                {head.cells!.map((cell, i) => (
+                  <th key={i} scope="col" className="px-4 py-3 font-semibold">
+                    {cell || <span className="sr-only">Item</span>}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="text-deep-blue-80">
+              {rows.map((row, r) => (
+                <tr key={r} className="border-t border-deep-blue/15 align-top">
+                  {row.cells!.map((cell, c) =>
+                    c === 0 ? (
+                      <th key={c} scope="row" className="px-4 py-3 font-semibold text-deep-blue">
+                        {cell}
+                      </th>
+                    ) : (
+                      <td key={c} className="px-4 py-3">
+                        {cell}
+                      </td>
+                    ),
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    },
     figure: ({ value }) => (
       <figure className="my-4">
         <SanityImage

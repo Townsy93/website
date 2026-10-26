@@ -413,6 +413,9 @@ export type BlockContent = Array<
       _type: "block";
       _key: string;
     }
+  | ({
+      _key: string;
+    } & Table)
   | {
       asset?: SanityImageAssetReference;
       media?: unknown;
@@ -1334,6 +1337,20 @@ export type FaqItem = {
   answer: string;
 };
 
+export type Table = {
+  _type: "table";
+  rows?: Array<
+    {
+      _key: string;
+    } & TableRow
+  >;
+};
+
+export type TableRow = {
+  _type: "tableRow";
+  cells?: Array<string>;
+};
+
 export type SanityImagePaletteSwatch = {
   _type: "sanity.imagePaletteSwatch";
   background?: string;
@@ -1487,6 +1504,8 @@ export type AllSanitySchemaTypes =
   | PricingTier
   | Certification
   | FaqItem
+  | Table
+  | TableRow
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
