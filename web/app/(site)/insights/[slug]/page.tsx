@@ -30,12 +30,23 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = await sanityFetch(POST_QUERY, { slug });
+  // An editor-set share image wins; otherwise the cover, so a post shared on
+  // LinkedIn shows its own picture and not the generic card.
+  const share = ogImageMeta({
+    ogImage: post?.seo?.ogImage?.asset ? post.seo.ogImage : post?.coverImage,
+  });
   return {
     title: post?.seo?.metaTitle ?? post?.title ?? "Insight",
     description: post?.seo?.metaDescription ?? post?.excerpt ?? undefined,
     alternates: { canonical: `/insights/${slug}` },
-    ...ogImageMeta(post?.seo),
-    openGraph: { type: "article", publishedTime: post?.publishedAt ?? undefined },
+    ...share,
+    // Merged, not assigned: a bare `openGraph: {...}` here replaced the one
+    // ogImageMeta returns and silently dropped og:image from every post.
+    openGraph: {
+      ...share.openGraph,
+      type: "article",
+      publishedTime: post?.publishedAt ?? undefined,
+    },
     ...(post?.seo?.noIndex ? { robots: { index: false, follow: false } } : {}),
   };
 }
