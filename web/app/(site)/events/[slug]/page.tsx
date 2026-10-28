@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/ogImage";
 import Link from "next/link";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { findRedirect } from "@/lib/redirects";
@@ -40,7 +41,7 @@ export async function generateMetadata({
     title: event?.seo?.metaTitle ?? event?.title ?? "Session",
     description:
       event?.seo?.metaDescription ?? event?.shortDescription ?? undefined,
-    alternates: { canonical: `/events/${slug}` },
+    ...pageMeta(`/events/${slug}`),
     ...(event?.seo?.noIndex ? { robots: { index: false, follow: false } } : {}),
   };
 }

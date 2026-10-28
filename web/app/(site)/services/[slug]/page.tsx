@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
-import { ogImageMeta } from "@/lib/ogImage";
+import { pageMeta } from "@/lib/ogImage";
 import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
@@ -48,8 +48,7 @@ export async function generateMetadata({
   return {
     title: service?.seo?.metaTitle ?? service?.title ?? "Service",
     description: service?.seo?.metaDescription ?? service?.shortDescription ?? undefined,
-    alternates: { canonical: `/services/${slug}` },
-    ...ogImageMeta(service?.seo),
+    ...pageMeta(`/services/${slug}`, service?.seo),
     // An unbuilt page still holds placeholder copy, so it is noindexed the
     // same way an unbuilt industry is. follow stays true: the links out of
     // it are real, only the wording is not.

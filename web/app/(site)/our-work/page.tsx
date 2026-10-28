@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/ogImage";
 import { sanityFetch } from "@/sanity/fetch";
 import { OUR_WORK_QUERY } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -15,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: page?.seo?.metaTitle ?? "Our Work",
     description: page?.seo?.metaDescription ?? "Real businesses, real before-and-afters — case studies and reviews from NZ & AU clients.",
-    alternates: { canonical: "/our-work" },
+    ...pageMeta("/our-work"),
     ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
   };
 }

@@ -40,22 +40,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 404s, which is worse than omitting them.
   const data = await sanityFetch(SITEMAP_QUERY);
 
+  // A listing page changes whenever anything under it does: a new post is a
+  // change to /insights. Without a lastmod the sitemap could not say so, and
+  // Ahrefs reported /insights as a changed page that was never submitted.
+  // ISO strings sort chronologically, so the newest is the last. Pages with
+  // no single source (home, contact, about) get no lastmod rather than a
+  // made-up one, which search engines learn to ignore.
+  const newest = (docs: { _updatedAt: string }[]) =>
+    docs.map((doc) => doc._updatedAt).sort().at(-1);
+
   const staticRoutes: MetadataRoute.Sitemap = [
     { path: "", priority: 1 },
-    { path: "/services", priority: 0.9 },
-    { path: "/platforms", priority: 0.8 },
+    { path: "/services", priority: 0.9, updated: newest(data.services) },
+    { path: "/platforms", priority: 0.8, updated: newest(data.platforms) },
     { path: "/about-us", priority: 0.8 },
-    { path: "/industries", priority: 0.7 },
-    { path: "/our-work", priority: 0.8 },
-    { path: "/insights", priority: 0.7 },
+    { path: "/industries", priority: 0.7, updated: newest(data.industries) },
+    { path: "/our-work", priority: 0.8, updated: newest(data.caseStudies) },
+    { path: "/insights", priority: 0.7, updated: newest(data.posts) },
     { path: "/resources", priority: 0.7 },
-    { path: "/events", priority: 0.7 },
+    { path: "/events", priority: 0.7, updated: newest(data.events) },
     { path: "/contact", priority: 0.9 },
     // Only once the placeholder copy has been replaced.
     ...(data.careersBuilt ? [{ path: "/careers", priority: 0.6 }] : []),
-  ].map(({ path, priority }) => ({
+  ].map(({ path, priority, updated }: { path: string; priority: number; updated?: string }) => ({
     url: `${SITE_URL}${path}`,
-    changeFrequency: "weekly",
+    ...(updated ? { lastModified: updated } : {}),
+    changeFrequency: "weekly" as const,
     priority,
   }));
 

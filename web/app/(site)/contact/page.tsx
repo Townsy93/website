@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/ogImage";
 import { sanityFetch } from "@/sanity/fetch";
 import { CONTACT_PAGE_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import { FaqJsonLd } from "@/components/seo/JsonLd";
@@ -15,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: page?.seo?.metaTitle ?? "Contact",
     description: page?.seo?.metaDescription ?? "Let's talk about your HubSpot.",
-    alternates: { canonical: "/contact" },
+    ...pageMeta("/contact"),
     ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
   };
 }

@@ -28,7 +28,8 @@ export const metadata: Metadata = {
     type: "website",
     siteName: SITE_NAME,
     locale: "en_NZ",
-    url: SITE_URL,
+    // No url here: it would be inherited by every page as the homepage.
+    // Each page sets its own through pageMeta().
   },
 };
 
@@ -44,10 +45,18 @@ export default async function RootLayout({
 
   const organizationJsonLd = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
+    // ProfessionalService is a kind of Organization, but audit tools and some
+    // consumers look for the literal type, so say both.
+    "@type": ["Organization", "ProfessionalService"],
     "@id": `${SITE_URL}/#organization`,
     name: SITE_NAME,
     url: SITE_URL,
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/icon.png`,
+      width: 300,
+      height: 300,
+    },
     description:
       "Auckland-based HubSpot implementation and RevOps agency. HubSpot Platinum Partner serving New Zealand and Australia.",
     address: {

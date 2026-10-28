@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
-import { ogImageMeta } from "@/lib/ogImage";
+import { pageMeta } from "@/lib/ogImage";
 import { findRedirect } from "@/lib/redirects";
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
@@ -42,8 +42,7 @@ export async function generateMetadata({
   return {
     title: caseStudy?.seo?.metaTitle ?? caseStudy?.client ?? "Case study",
     description: caseStudy?.seo?.metaDescription ?? caseStudy?.resultLine ?? undefined,
-    alternates: { canonical: `/our-work/${slug}` },
-    ...ogImageMeta(caseStudy?.seo),
+    ...pageMeta(`/our-work/${slug}`, caseStudy?.seo),
     // follow stays true: these pages are redirect targets for the old
     // Squarespace case study URLs, and a nofollow would strand the equity
     // arriving from them rather than passing it on.

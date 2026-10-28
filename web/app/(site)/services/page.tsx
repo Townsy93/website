@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/ogImage";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/fetch";
 import { SERVICES_LANDING_QUERY } from "@/sanity/queries";
@@ -26,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: page?.seo?.metaTitle ?? "Services",
     description: page?.seo?.metaDescription ?? "Ten ways we help you get more out of HubSpot — pick where you're starting from.",
-    alternates: { canonical: "/services" },
+    ...pageMeta("/services"),
     ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
   };
 }

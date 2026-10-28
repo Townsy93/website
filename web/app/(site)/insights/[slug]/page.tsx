@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
-import { ogImageMeta } from "@/lib/ogImage";
+import { pageMeta } from "@/lib/ogImage";
 import { findRedirect } from "@/lib/redirects";
 import { urlFor } from "@/sanity/image";
 import { client } from "@/sanity/client";
@@ -32,16 +32,17 @@ export async function generateMetadata({
   const post = await sanityFetch(POST_QUERY, { slug });
   // An editor-set share image wins; otherwise the cover, so a post shared on
   // LinkedIn shows its own picture and not the generic card.
-  const share = ogImageMeta({
-    ogImage: post?.seo?.ogImage?.asset ? post.seo.ogImage : post?.coverImage,
-  });
+  const share = pageMeta(
+    `/insights/${slug}`,
+    { ogImage: post?.seo?.ogImage?.asset ? post.seo.ogImage : post?.coverImage },
+    "article",
+  );
   return {
     title: post?.seo?.metaTitle ?? post?.title ?? "Insight",
     description: post?.seo?.metaDescription ?? post?.excerpt ?? undefined,
-    alternates: { canonical: `/insights/${slug}` },
     ...share,
-    // Merged, not assigned: a bare `openGraph: {...}` here replaced the one
-    // ogImageMeta returns and silently dropped og:image from every post.
+    // Merged, not assigned: Next replaces `openGraph` wholesale, so a bare
+    // object here would drop the url, image and site name from `share`.
     openGraph: {
       ...share.openGraph,
       type: "article",

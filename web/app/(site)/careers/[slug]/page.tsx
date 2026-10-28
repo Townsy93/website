@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/ogImage";
 import Link from "next/link";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { findRedirect } from "@/lib/redirects";
@@ -35,7 +36,7 @@ export async function generateMetadata({
   return {
     title: vacancy?.seo?.metaTitle ?? vacancy?.title ?? "Careers",
     description: vacancy?.seo?.metaDescription ?? vacancy?.summary ?? undefined,
-    alternates: { canonical: `/careers/${slug}` },
+    ...pageMeta(`/careers/${slug}`),
     // A filled role should stop appearing in search, but the page stays up
     // and its links stay worth following.
     ...(closed || vacancy?.seo?.noIndex

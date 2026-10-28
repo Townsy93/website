@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/ogImage";
 import { sanityFetch } from "@/sanity/fetch";
 import { CAREERS_PAGE_QUERY } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -19,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
       page?.seo?.metaDescription ??
       page?.hero?.subheading ??
       "HubSpot roles at a small Auckland consultancy where you work directly with senior people.",
-    alternates: { canonical: "/careers" },
+    ...pageMeta("/careers"),
     // Placeholder copy must not reach Google. follow stays true — the links
     // out of the page are real, only the wording is not.
     ...(page?.seo?.noIndex || !page?.pageBuilt

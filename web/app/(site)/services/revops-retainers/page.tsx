@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ogImageMeta } from "@/lib/ogImage";
+import { pageMeta } from "@/lib/ogImage";
 import { sanityFetch } from "@/sanity/fetch";
 import { SERVICE_QUERY, TRUST_LOGOS_QUERY } from "@/sanity/queries";
 import { PartnerBadge } from "@/components/ui/PartnerBadge";
@@ -30,8 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: service?.seo?.metaTitle ?? service?.title ?? "RevOps retainers",
     description:
       service?.seo?.metaDescription ?? service?.shortDescription ?? undefined,
-    alternates: { canonical: `/services/${SLUG}` },
-    ...ogImageMeta(service?.seo),
+    ...pageMeta(`/services/${SLUG}`, service?.seo),
     ...(service?.seo?.noIndex || !service?.pageBuilt
       ? { robots: { index: false, follow: true } }
       : {}),

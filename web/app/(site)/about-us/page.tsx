@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PortableText } from "next-sanity";
-import { ogImageMeta } from "@/lib/ogImage";
+import { pageMeta } from "@/lib/ogImage";
 import { sanityFetch } from "@/sanity/fetch";
 import { ABOUT_PAGE_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -20,8 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: page?.seo?.metaTitle ?? "About Us",
     description: page?.seo?.metaDescription ?? "A small, senior Auckland team that's spent years inside HubSpot — and likes it that way.",
-    alternates: { canonical: "/about-us" },
-    ...ogImageMeta(page?.seo),
+    ...pageMeta("/about-us", page?.seo),
     ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
   };
 }

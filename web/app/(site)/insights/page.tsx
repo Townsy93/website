@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/ogImage";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/fetch";
 import { ALL_POSTS_QUERY, INSIGHT_HUB_QUERY } from "@/sanity/queries";
@@ -15,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: page?.seo?.metaTitle ?? "Insight Hub",
     description: page?.seo?.metaDescription ?? "Practical HubSpot advice from the team that actually uses it every day.",
-    alternates: { canonical: "/insights" },
+    ...pageMeta("/insights"),
     ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
   };
 }

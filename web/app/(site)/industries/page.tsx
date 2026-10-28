@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/ogImage";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/fetch";
 import { INDUSTRIES_HUB_QUERY } from "@/sanity/queries";
@@ -15,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: page?.seo?.metaTitle ?? "Industries",
     description: page?.seo?.metaDescription ?? "HubSpot, tailored to how your industry actually works.",
-    alternates: { canonical: "/industries" },
+    ...pageMeta("/industries"),
     ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
   };
 }

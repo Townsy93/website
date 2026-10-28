@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/ogImage";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/fetch";
 import { RESOURCES_QUERY } from "@/sanity/queries";
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   title: "Free HubSpot Resources & Guides | Zippily NZ",
   description:
     "Guides, comparison sheets and prompt packs pulled from real client work — no fluff, no theory.",
-  alternates: { canonical: "/resources" },
+  ...pageMeta("/resources"),
 };
 
 // Resources library hub (brief: editorial dark page, one resource per

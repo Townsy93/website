@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/ogImage";
 import { sanityFetch } from "@/sanity/fetch";
 import { LEGAL_PAGE_QUERY } from "@/sanity/queries";
 import { PortableBody } from "@/components/modules/PortableBody";
@@ -17,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       page?.seo?.metaDescription ??
       "How Zippily collects, uses and protects the personal information you share with us.",
-    alternates: { canonical: "/privacy-policy" },
+    ...pageMeta("/privacy-policy"),
   };
 }
 

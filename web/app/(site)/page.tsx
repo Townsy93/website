@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/ogImage";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/fetch";
 import {
@@ -53,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       page?.seo?.metaDescription ??
       "Auckland-based HubSpot implementation and RevOps agency. HubSpot Platinum Partner.",
-    alternates: { canonical: "/" },
+    ...pageMeta("/"),
   };
 }
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/ogImage";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/fetch";
 import { EVENTS_PAGE_QUERY } from "@/sanity/queries";
@@ -23,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: page?.seo?.metaTitle ?? "Events",
     description: page?.seo?.metaDescription ?? "Zippily Sessions — small, free HubSpot workshops in Auckland. Real questions, no pitch.",
-    alternates: { canonical: "/events" },
+    ...pageMeta("/events"),
     ...(page?.seo?.noIndex ? { robots: { index: false, follow: true } } : {}),
   };
 }
