@@ -107,8 +107,10 @@ export async function POST(req: NextRequest) {
       service: ["homePage", "servicesLandingPage", "caseStudy", "hubOffering"],
       // Also had no entry: a recap link (events), a related-post pick
       // (resources), and the Insight Hub's featured post all dereference
-      // blogPost.
-      blogPost: ["eventsPage", "event", "resource", "insightHubPage"],
+      // blogPost. So does a service page's "Helpful resources" cards
+      // (service.relatedPosts[]->): a new cover on a post left that card
+      // showing the old one until the hourly window expired.
+      blogPost: ["eventsPage", "event", "resource", "insightHubPage", "service"],
       // Also had no entry: a case study's industry tag, the homepage's
       // industries teaser, and the Industries hub's own picks all
       // dereference industry.
