@@ -179,11 +179,21 @@ export default async function CaseStudyPage({
                   {caseStudy.service.title}
                 </Link>
               )}
-              {caseStudy.industry?.title && (
-                <span className="rounded-full border border-white/20 px-4 py-1.5 text-caption font-semibold text-white/80">
-                  {caseStudy.industry.title}
-                </span>
-              )}
+              {caseStudy.industry?.title &&
+                (caseStudy.industry.pageBuilt && caseStudy.industry.slug?.current ? (
+                  // Linked only when the industry page is live: an unbuilt
+                  // one is noindexed, and a link to it is a dead end.
+                  <Link
+                    href={`/industries/${caseStudy.industry.slug.current}`}
+                    className="rounded-full border border-white/20 px-4 py-1.5 text-caption font-semibold text-white/80 transition hover:border-white/60 hover:text-white"
+                  >
+                    {caseStudy.industry.title}
+                  </Link>
+                ) : (
+                  <span className="rounded-full border border-white/20 px-4 py-1.5 text-caption font-semibold text-white/80">
+                    {caseStudy.industry.title}
+                  </span>
+                ))}
             </div>
             <h1 className="mt-7 text-pretty text-h1-mobile md:text-h1">
               {caseStudy.headline ?? caseStudy.client}

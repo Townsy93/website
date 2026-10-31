@@ -122,9 +122,15 @@ export function Footer({ settings }: { settings?: FooterSettings }) {
       </div>
 
       <div className="mx-auto flex max-w-[90rem] flex-wrap items-center justify-between gap-4 border-t border-white/10 px-6 py-6">
-        <p className="text-caption text-white/60">
-          © {new Date().getFullYear()} zippily ltd · Auckland, New Zealand
-        </p>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-caption text-white/60">
+          <p>© {new Date().getFullYear()} zippily ltd · Auckland, New Zealand</p>
+          {/* In the footer so every page links to it. It was reachable only
+              from the free-audit landing page, which the site map would call
+              an orphan and a visitor would call missing. */}
+          <Link href="/privacy-policy" className="hover:text-white hover:underline">
+            Privacy policy
+          </Link>
+        </div>
         {/* Existing clients only. Rendered from settings so it stays absent
             until the portal is on its real domain — a workers.dev link in
             the footer reads as unfinished. Labelled "Client login" rather

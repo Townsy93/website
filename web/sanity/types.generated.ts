@@ -2235,7 +2235,7 @@ export type CASE_STUDY_SLUGS_QUERY_RESULT = Array<string>;
 
 // Source: ../web/sanity/queries.ts
 // Variable: CASE_STUDY_QUERY
-// Query: *[_type == "caseStudy" && slug.current == $slug][0]{    ...,    service->{title, slug},    industry->{title, slug, certifications},    testimonial->{_id, quote, name, role, company, avatar}  }
+// Query: *[_type == "caseStudy" && slug.current == $slug][0]{    ...,    service->{title, slug},    industry->{title, slug, pageBuilt, certifications},    testimonial->{_id, quote, name, role, company, avatar}  }
 export type CASE_STUDY_QUERY_RESULT = {
   _id: string;
   _type: "caseStudy";
@@ -2253,6 +2253,7 @@ export type CASE_STUDY_QUERY_RESULT = {
   industry: {
     title: string;
     slug: Slug;
+    pageBuilt: boolean | null;
     certifications: Array<
       {
         _key: string;
@@ -2608,7 +2609,7 @@ export type PARTNER_INTEGRATION_SLUGS_QUERY_RESULT = Array<string>;
 
 // Source: ../web/sanity/queries.ts
 // Variable: POST_QUERY
-// Query: *[_type == "blogPost" && slug.current == $slug][0]{    ...,    hubs[]->{name},    author->{name, role, photo},    "related": *[_type == "blogPost" && slug.current != $slug] | order(publishedAt desc)[0...3]{      _id, title, slug, topic, coverImage, publishedAt, readTime    }  }
+// Query: *[_type == "blogPost" && slug.current == $slug][0]{    ...,    hubs[]->{name},    author->{name, role, photo},    // The three most alike, not the three newest. Newest-three meant every    // post linked the same three and the rest of the archive had no link    // from any other post. Each shared hub counts for more than a shared topic    // (five topics, so a topic alone is a weak match). The doubled ^ in the    // hub filter is deliberate: inside it, one ^ is the candidate post, not    // this one. Ties fall back to    // newest, so a post with no match still gets three.    "related": *[_type == "blogPost" && slug.current != $slug]      | order(          (count(coalesce(hubs, [])[@._ref in coalesce(^.^.hubs[]._ref, [])]) * 2            + select(topic == ^.topic => 1, 0)) desc,          publishedAt desc        )[0...3]{      _id, title, slug, topic, coverImage, publishedAt, readTime    }  }
 export type POST_QUERY_RESULT = {
   _id: string;
   _type: "blogPost";
@@ -2871,7 +2872,7 @@ declare module "@sanity/client" {
     '*[_type == "ourWorkPage"][0]{\n    ...,\n    caseStudies[]->{_id, client, slug, headline, resultLine, photo, status, service->{title}},\n    videoTestimonials[]->{_id, quote, name, company, videoUrl, videoStill},\n    googleReviews[]->{_id, quote, name, company}\n  }': OUR_WORK_QUERY_RESULT;
     '*[_type == "homePage"][0].trustLogos': TRUST_LOGOS_QUERY_RESULT;
     '*[_type == "caseStudy" && defined(slug.current)].slug.current': CASE_STUDY_SLUGS_QUERY_RESULT;
-    '*[_type == "caseStudy" && slug.current == $slug][0]{\n    ...,\n    service->{title, slug},\n    industry->{title, slug, certifications},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': CASE_STUDY_QUERY_RESULT;
+    '*[_type == "caseStudy" && slug.current == $slug][0]{\n    ...,\n    service->{title, slug},\n    industry->{title, slug, pageBuilt, certifications},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': CASE_STUDY_QUERY_RESULT;
     '*[_type == "caseStudy" && defined(slug.current) && pageBuilt == true && slug.current != $slug]\n    | order(status desc, client asc)[0...3]{\n      _id, client, slug, resultLine, photo, status, service->{title}\n    }': RELATED_CASE_STUDIES_QUERY_RESULT;
     '*[_type == "insightHubPage"][0]{\n    ...,\n    featuredPost->{\n      _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n      hubs[]->{name}, author->{name, photo}\n    }\n  }': INSIGHT_HUB_QUERY_RESULT;
     '*[_type == "blogPost"] | order(publishedAt desc){\n    _id, title, slug, topic, excerpt, coverImage, publishedAt, readTime,\n    hubs[]->{name}\n  }': ALL_POSTS_QUERY_RESULT;
@@ -2883,7 +2884,7 @@ declare module "@sanity/client" {
     '*[_type == "legalPage" && slug.current == $slug][0]': LEGAL_PAGE_QUERY_RESULT;
     '*[_type == "partnerIntegration" && slug.current == $slug][0]{\n    ...,\n    caseStudy->{_id, client, slug, headline, resultLine, photo, status},\n    testimonial->{_id, quote, name, role, company, avatar}\n  }': PARTNER_INTEGRATION_QUERY_RESULT;
     '*[_type == "partnerIntegration" && defined(slug.current)].slug.current': PARTNER_INTEGRATION_SLUGS_QUERY_RESULT;
-    '*[_type == "blogPost" && slug.current == $slug][0]{\n    ...,\n    hubs[]->{name},\n    author->{name, role, photo},\n    "related": *[_type == "blogPost" && slug.current != $slug] | order(publishedAt desc)[0...3]{\n      _id, title, slug, topic, coverImage, publishedAt, readTime\n    }\n  }': POST_QUERY_RESULT;
+    '*[_type == "blogPost" && slug.current == $slug][0]{\n    ...,\n    hubs[]->{name},\n    author->{name, role, photo},\n    // The three most alike, not the three newest. Newest-three meant every\n    // post linked the same three and the rest of the archive had no link\n    // from any other post. Each shared hub counts for more than a shared topic\n    // (five topics, so a topic alone is a weak match). The doubled ^ in the\n    // hub filter is deliberate: inside it, one ^ is the candidate post, not\n    // this one. Ties fall back to\n    // newest, so a post with no match still gets three.\n    "related": *[_type == "blogPost" && slug.current != $slug]\n      | order(\n          (count(coalesce(hubs, [])[@._ref in coalesce(^.^.hubs[]._ref, [])]) * 2\n            + select(topic == ^.topic => 1, 0)) desc,\n          publishedAt desc\n        )[0...3]{\n      _id, title, slug, topic, coverImage, publishedAt, readTime\n    }\n  }': POST_QUERY_RESULT;
     '*[_type == "careersPage"][0]{\n    ...,\n    "openRoles": *[_type == "vacancy" && status == "open" && defined(slug.current)]\n      | order(publishedAt desc){\n        _id, title, slug, summary, workArrangement, employmentType, location, department\n      }\n  }': CAREERS_PAGE_QUERY_RESULT;
     '*[_type == "vacancy" && slug.current == $slug][0]{\n    ...,\n    "sharedBenefits": *[_type == "careersPage"][0].benefits,\n    "teamPhoto": *[_type == "careersPage"][0].teamPhoto,\n    "registerInterest": *[_type == "careersPage"][0].registerInterest,\n    "related": *[_type == "vacancy" && status == "open" && slug.current != $slug]\n      | order(publishedAt desc)[0...3]{\n        _id, title, slug, summary, workArrangement, employmentType, location\n      }\n  }': VACANCY_QUERY_RESULT;
     '*[_type == "vacancy" && defined(slug.current)].slug.current': VACANCY_SLUGS_QUERY_RESULT;

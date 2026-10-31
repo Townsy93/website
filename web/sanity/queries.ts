@@ -129,7 +129,7 @@ export const CASE_STUDY_QUERY = defineQuery(
   `*[_type == "caseStudy" && slug.current == $slug][0]{
     ...,
     service->{title, slug},
-    industry->{title, slug, certifications},
+    industry->{title, slug, pageBuilt, certifications},
     testimonial->{_id, quote, name, role, company, avatar}
   }`,
 );
@@ -234,7 +234,19 @@ export const POST_QUERY = defineQuery(
     ...,
     hubs[]->{name},
     author->{name, role, photo},
-    "related": *[_type == "blogPost" && slug.current != $slug] | order(publishedAt desc)[0...3]{
+    // The three most alike, not the three newest. Newest-three meant every
+    // post linked the same three and the rest of the archive had no link
+    // from any other post. Each shared hub counts for more than a shared topic
+    // (five topics, so a topic alone is a weak match). The doubled ^ in the
+    // hub filter is deliberate: inside it, one ^ is the candidate post, not
+    // this one. Ties fall back to
+    // newest, so a post with no match still gets three.
+    "related": *[_type == "blogPost" && slug.current != $slug]
+      | order(
+          (count(coalesce(hubs, [])[@._ref in coalesce(^.^.hubs[]._ref, [])]) * 2
+            + select(topic == ^.topic => 1, 0)) desc,
+          publishedAt desc
+        )[0...3]{
       _id, title, slug, topic, coverImage, publishedAt, readTime
     }
   }`,
