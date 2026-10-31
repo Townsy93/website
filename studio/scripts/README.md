@@ -29,6 +29,10 @@ npm run indexnow -- /insights/some-post /insights   # tell Bing a page changed (
 npm run indexnow -- --sitemap                       # every URL in the live sitemap
 ```
 
+In Git Bash on Windows use full URLs (or `MSYS_NO_PATHCONV=1`): a bare `/insights/x` is rewritten
+to `C:/Program Files/Git/insights/x`. The script fetches every URL first and refuses anything that
+is not a live 200.
+
 Run `indexnow` after publishing anything that should reach Bing quickly. The publish webhook
 does it too, but from a Cloudflare Worker, and Bing refuses those (HTTP 429), so only Yandex
 hears about it that way.

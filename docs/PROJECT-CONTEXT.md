@@ -115,7 +115,7 @@ check `npx sanity hooks list` first.
 sends IndexNow notices, but the shared endpoint and Bing's own both answer 429 to
 Workers (shared outbound addresses); only Yandex accepts. After publishing
 something that should reach Bing quickly, run `npm run indexnow -- <paths>` from
-`studio/` (see `studio/scripts/README.md`).
+`studio/` (see `studio/scripts/README.md`). Cloudflare Crawler Hints was switched on (1 Nov 2026) as a supplement; it cannot be confirmed from here whether it fires for pages Cloudflare does not cache.
 
 **Newly tagged pages do not purge on the first publish after the change.**
 Entries already cached carry no tags. One forced re-render fixes it.
