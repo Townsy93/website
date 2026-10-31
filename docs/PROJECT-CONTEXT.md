@@ -4,6 +4,8 @@
 machine. Everything here previously lived in a chat history or in machine-local
 memory, neither of which moves with you.*
 
+*The marketing-site section was rewritten on 1 November 2026, after launch.*
+
 **Read this first if you are new to the work, or picking it up in a new
 session.** It is the map. The detail lives in the repos it points at.
 
@@ -42,31 +44,45 @@ figures.
 
 ## What is deployed
 
-### Marketing site — not yet on the real domain
+### Marketing site — live on the real domain
 
-`zippily.co.nz` still serves **Squarespace** (confirmed still true 11 Sep
-2026). The new site runs at `https://website.sean-fe5.workers.dev` and moves
-across when DNS moves to Cloudflare.
+`https://www.zippily.co.nz` serves this site (confirmed 1 Nov 2026). The apex
+`zippily.co.nz` 301-redirects to `www`. The old `website.sean-fe5.workers.dev`
+address is **switched off** (`"workers_dev": false` in `web/wrangler.jsonc` —
+keep it: wrangler re-enables workers.dev on every deploy if the key is absent).
+Per-version preview URLs stay on (`"preview_urls": true`) as the
+pre-production check, and `robots.ts` disallows any host that is not the live
+domain.
 
-- **58 redirects** from the old Squarespace URLs, in `web/next.config.ts`,
-  with the approved mapping in `docs/launch-redirects.csv`
-- **All 96 health checks pass.** Nothing technical blocks the cutover
-- Sanity project `phzyp5b1`, dataset `production`
-- GA4 `G-P0NVHJ6RTS`, no consent banner (NZ Privacy Act does not require one)
-- Publishing from Sanity appears live in about **52 seconds**
+- Legacy Squarespace URLs 301 to their new pages (`LEGACY_REDIRECTS` in
+  `web/next.config.ts`, approved mapping in `docs/launch-redirects.csv`). The
+  `health/` Worker checks them, and the pages, weekly against the live site
+- Sanity project `phzyp5b1`, dataset `production`. Studio is hosted at
+  `https://zippily.sanity.studio`; its Presentation preview points at `www`
+- Analytics: GA4 `G-P0NVHJ6RTS`, Microsoft Clarity, and the HubSpot tracking
+  code (portal `441648495`, region `ap1`), all switched off in draft mode. No
+  consent banner (NZ Privacy Act does not require one)
+- **Publishing:** the Sanity webhook "Revalidate — production" calls
+  `https://www.zippily.co.nz/api/revalidate`, which purges the cache by
+  document type (a few seconds to a minute) and sends IndexNow notices. Bing
+  refuses those from a Worker, so see "Things that will bite you"
+- Search: the sitemap (`/sitemap.xml`, 64 URLs on 1 Nov 2026) is submitted to
+  Search Console and Bing. 26 blog posts are published; the Insight Hub has a
+  Claude hub filter, and post bodies support tables
 - HubSpot is fully wired: portal ID + all 6 form GUIDs (contact, newsletter,
   event, resource, careers, landing) are set in `web/.env`. No chat widget
   exists anywhere in the code — that decision is still open, not just unbuilt.
 - Every service/industry/case-study/platform/landing-page document has a
   `pageBuilt` boolean that gates the sitemap and search-indexing
   (`web/app/sitemap.ts`, per-page `generateMetadata`) — **this flag, not this
-  document, is the authoritative "is it actually live" signal.** As of 11 Sep
-  2026: all 10 services, all 6 built industries (manufacturing was dropped
-  from scope, not blocked), Aircall, the free-audit landing page and Careers
-  are `pageBuilt: true`. Only two case studies remain `false`:
-  `accounting-for-nature` and `house-surveys` — `beachwood-homes`,
-  `novated-lease-australia` and `ph-digital` are built (the latter two have
-  video testimonials attached).
+  document, is the authoritative "is it actually live" signal.** As of 1 Nov
+  2026: all 10 services, all 6 industries, Aircall, the free-audit landing page
+  and Careers are `pageBuilt: true`, as are four of five case studies
+  (`accounting-for-nature`, `beachwood-homes`, `novated-lease-australia`,
+  `ph-digital`). Only `house-surveys` is `false`.
+- **Not confirmed done:** Cloudflare "Always Use HTTPS" and the apex redirect
+  rule's hostname match (`zippily.co.nz`). Until both are set, http copies of
+  pages can still appear in audits.
 
 ### Client portal — built, not open to the client
 
