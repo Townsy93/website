@@ -79,8 +79,9 @@ export function indexNowUrls(doc: Doc): string[] {
 export async function submitIndexNow(
   urls: string[],
   fetchImpl: typeof fetch = fetch,
-): Promise<{ sent: number; status?: number; endpoint?: string; error?: string }> {
-  if (urls.length === 0) return { sent: 0 };
+): Promise<{ sent: number; status?: number; endpoint?: string; error?: string; attempts: string[] }> {
+  const attempts: string[] = [];
+  if (urls.length === 0) return { sent: 0, attempts };
   const body = JSON.stringify({
     host: new URL(SITE_URL).host,
     key: INDEXNOW_KEY,
@@ -96,13 +97,15 @@ export async function submitIndexNow(
         body,
         signal: AbortSignal.timeout(3000),
       });
+      attempts.push(`${new URL(endpoint).host}:${res.status}`);
       if (res.status >= 200 && res.status < 300) {
-        return { sent: urls.length, status: res.status, endpoint: new URL(endpoint).host };
+        return { sent: urls.length, status: res.status, endpoint: new URL(endpoint).host, attempts };
       }
       last = { status: res.status };
     } catch (error) {
+      attempts.push(`${new URL(endpoint).host}:error`);
       last = { error: String(error) };
     }
   }
-  return { sent: 0, ...last };
+  return { sent: 0, ...last, attempts };
 }

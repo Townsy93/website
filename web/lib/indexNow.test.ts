@@ -47,7 +47,7 @@ describe("submitIndexNow", () => {
       return new Response(null, { status: 202 });
     }) as unknown as typeof fetch;
     const result = await submitIndexNow([`${S}/insights/a`], fake);
-    assert.deepEqual(result, { sent: 1, status: 202, endpoint: "api.indexnow.org" });
+    assert.deepEqual(result, { sent: 1, status: 202, endpoint: "api.indexnow.org", attempts: ["api.indexnow.org:202"] });
     assert.equal(seen!.body.host, "www.zippily.co.nz");
     assert.equal(seen!.body.key, INDEXNOW_KEY);
     assert.equal(seen!.body.keyLocation, `${S}/${INDEXNOW_KEY}.txt`);
@@ -56,7 +56,7 @@ describe("submitIndexNow", () => {
 
   it("sends nothing for an empty list", async () => {
     const fake = (async () => assert.fail("should not call")) as unknown as typeof fetch;
-    assert.deepEqual(await submitIndexNow([], fake), { sent: 0 });
+    assert.deepEqual(await submitIndexNow([], fake), { sent: 0, attempts: [] });
   });
 
   it("falls back to Bing's own endpoint when the shared one answers 429", async () => {
@@ -69,12 +69,20 @@ describe("submitIndexNow", () => {
     }) as unknown as typeof fetch;
     const result = await submitIndexNow([`${S}/x`], fake);
     assert.deepEqual(tried, [INDEXNOW_ENDPOINTS[0], INDEXNOW_ENDPOINTS[1]]);
-    assert.deepEqual(result, { sent: 1, status: 202, endpoint: "www.bing.com" });
+    assert.deepEqual(result, {
+      sent: 1,
+      status: 202,
+      endpoint: "www.bing.com",
+      attempts: ["api.indexnow.org:429", "www.bing.com:202"],
+    });
   });
 
   it("reports the last failure when every endpoint refuses", async () => {
     const fake = (async () => new Response(null, { status: 429 })) as unknown as typeof fetch;
-    assert.deepEqual(await submitIndexNow([`${S}/x`], fake), { sent: 0, status: 429 });
+    const result = await submitIndexNow([`${S}/x`], fake);
+    assert.equal(result.sent, 0);
+    assert.equal(result.status, 429);
+    assert.equal(result.attempts.length, INDEXNOW_ENDPOINTS.length);
   });
 
   it("swallows a network failure so a publish never fails because of it", async () => {
