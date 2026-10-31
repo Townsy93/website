@@ -135,8 +135,8 @@ export async function POST(req: NextRequest) {
     // announcing www URLs would be wrong, and staging must stay quiet.
     if (new URL(SITE_URL).host === "www.zippily.co.nz") {
       const result = await submitIndexNow(indexNowUrls(body));
-      if (result.sent) console.log(`[indexnow] ${result.sent} url(s) -> ${result.status}`);
-      if (result.error) console.error(`[indexnow] ${result.error}`);
+      if (result.sent) console.log(`[indexnow] ${result.sent} url(s) -> ${result.status} via ${result.endpoint}`);
+      else if (result.error || result.status) console.error(`[indexnow] not sent: ${result.error ?? result.status}`);
     }
     return NextResponse.json({
       ok: true,

@@ -11,7 +11,17 @@ import { SITE_URL } from "./site.ts";
  * lives in public/.
  */
 export const INDEXNOW_KEY = "3c34f1f8bc1cc8cf357d5444ca338ba4";
-export const INDEXNOW_ENDPOINT = "https://api.indexnow.org/IndexNow";
+
+// The shared endpoint passes a submission on to every participating engine,
+// so it goes first. It answers 429 to Cloudflare Workers, whose outbound
+// addresses are shared with a great many other sites, so each engine's own
+// endpoint follows as a fallback. Bing's is the one that matters most: it
+// feeds Copilot and ChatGPT search.
+export const INDEXNOW_ENDPOINTS = [
+  "https://api.indexnow.org/IndexNow",
+  "https://www.bing.com/indexnow",
+  "https://yandex.com/indexnow",
+];
 
 type Doc = {
   _type?: string;
@@ -62,30 +72,37 @@ export function indexNowUrls(doc: Doc): string[] {
 }
 
 /**
- * Sends the URLs. Resolves to a short result and never throws: the caller is
- * a publish webhook, and a search-engine hiccup must not turn a successful
- * publish into a failed one.
+ * Sends the URLs, trying each endpoint until one accepts them. Resolves to a
+ * short result and never throws: the caller is a publish webhook, and a
+ * search-engine hiccup must not turn a successful publish into a failed one.
  */
 export async function submitIndexNow(
   urls: string[],
   fetchImpl: typeof fetch = fetch,
-): Promise<{ sent: number; status?: number; error?: string }> {
+): Promise<{ sent: number; status?: number; endpoint?: string; error?: string }> {
   if (urls.length === 0) return { sent: 0 };
-  const host = new URL(SITE_URL).host;
-  try {
-    const res = await fetchImpl(INDEXNOW_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: JSON.stringify({
-        host,
-        key: INDEXNOW_KEY,
-        keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
-        urlList: urls,
-      }),
-      signal: AbortSignal.timeout(4000),
-    });
-    return { sent: urls.length, status: res.status };
-  } catch (error) {
-    return { sent: 0, error: String(error) };
+  const body = JSON.stringify({
+    host: new URL(SITE_URL).host,
+    key: INDEXNOW_KEY,
+    keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
+    urlList: urls,
+  });
+  let last: { status?: number; error?: string } = {};
+  for (const endpoint of INDEXNOW_ENDPOINTS) {
+    try {
+      const res = await fetchImpl(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body,
+        signal: AbortSignal.timeout(3000),
+      });
+      if (res.status >= 200 && res.status < 300) {
+        return { sent: urls.length, status: res.status, endpoint: new URL(endpoint).host };
+      }
+      last = { status: res.status };
+    } catch (error) {
+      last = { error: String(error) };
+    }
   }
+  return { sent: 0, ...last };
 }

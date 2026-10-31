@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { INDEXNOW_KEY, indexNowUrls, submitIndexNow } from "./indexNow.ts";
+import { INDEXNOW_ENDPOINTS, INDEXNOW_KEY, indexNowUrls, submitIndexNow } from "./indexNow.ts";
 
 const S = "https://www.zippily.co.nz";
 
@@ -47,7 +47,7 @@ describe("submitIndexNow", () => {
       return new Response(null, { status: 202 });
     }) as unknown as typeof fetch;
     const result = await submitIndexNow([`${S}/insights/a`], fake);
-    assert.deepEqual(result, { sent: 1, status: 202 });
+    assert.deepEqual(result, { sent: 1, status: 202, endpoint: "api.indexnow.org" });
     assert.equal(seen!.body.host, "www.zippily.co.nz");
     assert.equal(seen!.body.key, INDEXNOW_KEY);
     assert.equal(seen!.body.keyLocation, `${S}/${INDEXNOW_KEY}.txt`);
@@ -57,6 +57,24 @@ describe("submitIndexNow", () => {
   it("sends nothing for an empty list", async () => {
     const fake = (async () => assert.fail("should not call")) as unknown as typeof fetch;
     assert.deepEqual(await submitIndexNow([], fake), { sent: 0 });
+  });
+
+  it("falls back to Bing's own endpoint when the shared one answers 429", async () => {
+    // Cloudflare Workers share outbound addresses, and the shared endpoint
+    // rate-limits them. Observed live, not assumed.
+    const tried: string[] = [];
+    const fake = (async (url: string) => {
+      tried.push(url);
+      return new Response(null, { status: url === INDEXNOW_ENDPOINTS[0] ? 429 : 202 });
+    }) as unknown as typeof fetch;
+    const result = await submitIndexNow([`${S}/x`], fake);
+    assert.deepEqual(tried, [INDEXNOW_ENDPOINTS[0], INDEXNOW_ENDPOINTS[1]]);
+    assert.deepEqual(result, { sent: 1, status: 202, endpoint: "www.bing.com" });
+  });
+
+  it("reports the last failure when every endpoint refuses", async () => {
+    const fake = (async () => new Response(null, { status: 429 })) as unknown as typeof fetch;
+    assert.deepEqual(await submitIndexNow([`${S}/x`], fake), { sent: 0, status: 429 });
   });
 
   it("swallows a network failure so a publish never fails because of it", async () => {
