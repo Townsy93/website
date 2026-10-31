@@ -1,6 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { parseBody } from "next-sanity/webhook";
 import { revalidateTag } from "next/cache";
+import { indexNowUrls, submitIndexNow } from "@/lib/indexNow";
+import { SITE_URL } from "@/lib/site";
 
 /**
  * Sanity publish webhook.
@@ -26,6 +28,9 @@ export async function POST(req: NextRequest) {
       _type?: string;
       _id?: string;
       slug?: { current?: string };
+      pageBuilt?: boolean;
+      status?: string;
+      seo?: { noIndex?: boolean };
     }>(req, secret);
 
     if (!isValidSignature) {
@@ -124,6 +129,15 @@ export async function POST(req: NextRequest) {
     for (const tag of tags) revalidateTag(tag, { expire: 0 });
 
     console.log(`[revalidate] ${body._type} ${body._id ?? ""} -> ${tags.join(", ")}`);
+
+    // Tell Bing and the other IndexNow engines, on the live domain only: the
+    // protocol checks the key file on the host named, so a preview deploy
+    // announcing www URLs would be wrong, and staging must stay quiet.
+    if (new URL(SITE_URL).host === "www.zippily.co.nz") {
+      const result = await submitIndexNow(indexNowUrls(body));
+      if (result.sent) console.log(`[indexnow] ${result.sent} url(s) -> ${result.status}`);
+      if (result.error) console.error(`[indexnow] ${result.error}`);
+    }
     return NextResponse.json({
       ok: true,
       revalidated: tags,
