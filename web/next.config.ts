@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { CONTENT_SIGNAL } from "./lib/robotsTxt.ts";
 
 // 301s from the old Squarespace URLs (tracker "Existing URL" column).
 // Inert until the domain points at this Worker; preserves rankings at cutover.
@@ -119,6 +120,27 @@ const nextConfig: NextConfig = {
       ...redirect,
       permanent: true,
     }));
+  },
+  async headers() {
+    return [
+      {
+        // The same preference robots.txt states, on every response. It matters
+        // most if Cloudflare's "Markdown for Agents" is ever switched on:
+        // Cloudflare adds `ai-train=yes` to converted pages unless the origin
+        // sends its own signal, which would contradict robots.txt.
+        source: "/:path*",
+        headers: [{ key: "Content-Signal", value: CONTENT_SIGNAL }],
+      },
+      {
+        // Points agents at the site's machine-readable description (RFC 8288).
+        // llms.txt is the only such resource we publish, so it is the only
+        // thing named: no api-catalog, because there is no public API.
+        source: "/",
+        headers: [
+          { key: "Link", value: '</llms.txt>; rel="describedby"; type="text/plain"' },
+        ],
+      },
+    ];
   },
 };
 
