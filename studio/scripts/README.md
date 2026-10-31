@@ -24,6 +24,15 @@ npm run content:get -- <documentId>              # read a document before touchi
 npm run content:patch -- <documentId> '<json>'    # set fields on a published document
 ```
 
+```bash
+npm run indexnow -- /insights/some-post /insights   # tell Bing a page changed (needs no token)
+npm run indexnow -- --sitemap                       # every URL in the live sitemap
+```
+
+Run `indexnow` after publishing anything that should reach Bing quickly. The publish webhook
+does it too, but from a Cloudflare Worker, and Bing refuses those (HTTP 429), so only Yandex
+hears about it that way.
+
 `<documentId>` for the pinned singletons is just the schema type name (`homePage`,
 `siteSettings`, …) — see `studio/structure.ts`. Everything else is the document's real `_id`
 (look it up with a GROQ query in Vision, or `content:get` the type via `*[_type=="..."]`).

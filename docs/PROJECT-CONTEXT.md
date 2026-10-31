@@ -90,6 +90,17 @@ A service page query says `_type == "service"` then `pricingTable->{...}`, so
 publishing a pricing table purged nothing. Handled now by a fanout map in
 `web/app/api/revalidate/route.ts` — extend it if you add a referenced type.
 
+**The Sanity publish webhook must point at the live domain.** It was left on the
+disabled workers.dev address after cutover and silently stopped purging the
+cache for weeks (step 9 of `docs/dns-cutover.md`). If publishes stop showing,
+check `npx sanity hooks list` first.
+
+**Bing refuses notifications sent from a Cloudflare Worker.** The webhook also
+sends IndexNow notices, but the shared endpoint and Bing's own both answer 429 to
+Workers (shared outbound addresses); only Yandex accepts. After publishing
+something that should reach Bing quickly, run `npm run indexnow -- <paths>` from
+`studio/` (see `studio/scripts/README.md`).
+
 **Newly tagged pages do not purge on the first publish after the change.**
 Entries already cached carry no tags. One forced re-render fixes it.
 

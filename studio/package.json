@@ -13,6 +13,7 @@
     "typegen": "sanity schema extract --enforce-required-fields --force && sanity typegen generate",
     "content:get": "node --env-file=.env --experimental-strip-types scripts/get.ts",
     "content:patch": "node --env-file=.env --experimental-strip-types scripts/patch.ts",
+    "indexnow": "node --experimental-strip-types scripts/indexnow.ts",
     "seo:import": "node --env-file=.env --experimental-strip-types scripts/seo-import.ts"
   },
   "keywords": [
