@@ -50,4 +50,5 @@ for (const endpoint of INDEXNOW_ENDPOINTS.slice(0, 2)) {
   console.log(`  ${new URL(endpoint).host.padEnd(18)} ${res.status}`)
   if (res.ok) accepted++
 }
-process.exit(accepted > 0 ? 0 : 1)
+// exitCode, not process.exit(): exiting straight after fetch trips a libuv assertion on Windows.
+process.exitCode = accepted > 0 ? 0 : 1
