@@ -16,7 +16,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Free HubSpot Resources & Guides | Zippily NZ",
   description:
-    "Guides, comparison sheets and prompt packs pulled from real client work — no fluff, no theory.",
+    "Free HubSpot guides, comparison sheets and prompt packs pulled from real client work. Practical, no fluff and no theory, for NZ and Australian teams.",
   ...pageMeta("/resources"),
 };
 
