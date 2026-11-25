@@ -23,6 +23,8 @@ import { StatsBand } from "@/components/modules/StatsBand";
 import { VimeoEmbed } from "@/components/modules/VimeoEmbed";
 import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
+import { caseStudyArticleJsonLd } from "@/lib/caseStudySchema";
+import { urlFor } from "@/sanity/image";
 import { resolveVideoPoster } from "@/lib/vimeoPoster";
 
 export const revalidate = 3600;
@@ -112,8 +114,26 @@ export default async function CaseStudyPage({
     (caseStudy.challengeItems?.length ?? 0) > 0 ||
     (caseStudy.solutionItems?.length ?? 0) > 0;
 
+  // The hero photo, cropped to the 1.91:1 shape Google wants for article
+  // images; the logo is not a picture of the work, so it is not a fallback.
+  const articleImage = caseStudy.photo?.asset
+    ? urlFor(caseStudy.photo).width(1200).height(630).fit("crop").url()
+    : null;
+
   return (
     <>
+      <JsonLd
+        data={caseStudyArticleJsonLd({
+          siteUrl: SITE_URL,
+          slug,
+          client: caseStudy.client,
+          headline: caseStudy.headline,
+          description: caseStudy.seo?.metaDescription ?? caseStudy.resultLine,
+          imageUrl: articleImage,
+          createdAt: caseStudy._createdAt,
+          updatedAt: caseStudy._updatedAt,
+        })}
+      />
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Our work", url: `${SITE_URL}/our-work` },

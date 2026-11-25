@@ -15,6 +15,7 @@ import { PortableBody } from "@/components/modules/PortableBody";
 import { RegistrationPanel } from "@/components/modules/RegistrationPanel";
 import { JsonLd, breadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
+import { eventJsonLd as buildEventJsonLd } from "@/lib/eventSchema";
 import {
   calendarLinks,
   derivePanelState,
@@ -92,37 +93,7 @@ export default async function EventDetailPage({
     ? `https://www.google.com/maps/dir/?api=1&destination=${event.geo.lat},${event.geo.lng}`
     : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationLabel)}`;
 
-  const eventJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    name: event.title,
-    description: event.shortDescription,
-    startDate: event.startDateTime,
-    endDate: event.endDateTime,
-    eventAttendanceMode: isOnline
-      ? "https://schema.org/OnlineEventAttendanceMode"
-      : "https://schema.org/OfflineEventAttendanceMode",
-    eventStatus: "https://schema.org/EventScheduled",
-    url: `${SITE_URL}/events/${slug}`,
-    location: isOnline
-      ? { "@type": "VirtualLocation", name: event.platform ?? "Online" }
-      : {
-          "@type": "Place",
-          name: event.venueName,
-          address: event.address?.replace(/\n/g, ", "),
-        },
-    organizer: { "@id": `${SITE_URL}/#organization` },
-    offers: {
-      "@type": "Offer",
-      price: event.price ?? 0,
-      priceCurrency: "NZD",
-      url: `${SITE_URL}/events/${slug}`,
-      availability:
-        (event.spotsRemaining ?? 0) > 0
-          ? "https://schema.org/InStock"
-          : "https://schema.org/SoldOut",
-    },
-  };
+  const eventJsonLd = buildEventJsonLd({ siteUrl: SITE_URL, slug, event });
 
   return (
     <>
